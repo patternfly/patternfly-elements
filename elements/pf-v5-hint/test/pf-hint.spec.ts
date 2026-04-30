@@ -29,8 +29,9 @@ describe('<pf-v5-hint>', function() {
     });
 
     it('should render body content, and not title footer, or actions', async function() {
-      const snap = await a11ySnapshot();
-      expect(snap.children?.length).to.equal(1);
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.axContainName('Welcome to the new documentation experience.');
+      expect(snapshot).to.not.axContainRole('button');
     });
   });
 
@@ -47,8 +48,9 @@ describe('<pf-v5-hint>', function() {
     });
 
     it('should render title and body content', async function() {
-      const snap = await a11ySnapshot();
-      expect(snap.children?.length).to.equal(2);
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.axContainName('Do more with Find it Fix it capabilities');
+      expect(snapshot).to.axContainName('Upgrade to Red Hat Smart Management.');
     });
   });
 
@@ -85,11 +87,10 @@ describe('<pf-v5-hint>', function() {
     });
 
     it('should render title, body, and actions', async function() {
-      const { children: [actions, title, body, ...rest] = [] } = await a11ySnapshot();
-      expect(actions.role).to.equal('button');
-      expect(title.role).to.equal('text');
-      expect(body.role).to.equal('text');
-      expect(rest.length).to.equal(0);
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.axContainQuery({ role: 'button' });
+      expect(snapshot).to.axContainName('Do more with Find it Fix it capabilities');
+      expect(snapshot).to.axContainName('Upgrade to Red Hat Smart Management.');
     });
   });
 });

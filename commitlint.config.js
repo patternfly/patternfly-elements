@@ -5,7 +5,7 @@ const normalizeWorkspace = async x => {
   const ents = await readdir(fileURLToPath(new URL(x, import.meta.url)), { withFileTypes: true });
   return ents
       .filter(ent => ent.isDirectory())
-      .map(ent => ent.name.replace('pf-', ''));
+      .map(ent => ent.name.replace(/^pf-(?:v\d+-)?/, ''));
 };
 
 

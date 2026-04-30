@@ -100,6 +100,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
         },
       }),
     ],
+    concurrency: 1,
     testFramework: {
       config: {
         ui: 'bdd',

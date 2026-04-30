@@ -281,8 +281,8 @@ describe('<pf-v5-search-input>', function() {
 
       describe('Tab', function() {
         beforeEach(press('Tab'));
-        it('does not focus the combobox button', async function() {
-          expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
+        it('collapses the listbox', async function() {
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
         });
       });
     });

@@ -70,7 +70,7 @@
     "@koa/router": "^15.1.1",
     "@lit-labs/ssr": "^4.0.0",
     "@open-wc/testing": "^4.0.0",
-    "@playwright/test": "~1.48.0",
+    "@playwright/test": "~1.57.0",
     "@pwrs/mappa": "^0.0.4",
     "@rollup/plugin-replace": "^6.0.3",
     "@web/dev-server": "^0.4.6",

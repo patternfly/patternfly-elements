@@ -71,7 +71,7 @@ describe('<pf-v5-chip-group>', async function() {
           beforeEach(updateComplete);
           it('should show all chips', async function() {
             const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
+            expect(querySnapshotAll(snapshot, { name: /^Chip/ })).to.have.length(4);
           });
           it('should show collapse button', async function() {
             const snapshot = await a11ySnapshot();
@@ -104,11 +104,8 @@ describe('<pf-v5-chip-group>', async function() {
 
     beforeEach(updateComplete);
     it('should have close button', async function() {
-      const snapshot = await a11ySnapshot();
-      const last = snapshot.children?.at(-1);
-      expect(last?.name).to.equal('Close');
-      expect(last?.role).to.equal('button');
-      expect(last?.description).to.not.be.ok;
+      expect(await a11ySnapshot())
+          .to.axContainQuery({ role: 'button', name: 'Close' });
     });
 
     describe('clicking close button', function() {
@@ -118,7 +115,7 @@ describe('<pf-v5-chip-group>', async function() {
       beforeEach(updateComplete);
       it('should remove element', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children).to.not.be.ok;
+        expect(snapshot).to.not.axContainRole('button');
       });
     });
   });
@@ -146,8 +143,7 @@ describe('<pf-v5-chip-group>', async function() {
     });
 
     it('has accessible label', function() {
-      const [offscreen] = snapshot.children!;
-      expect(offscreen?.name).to.equal('My Chip Group');
+      expect(snapshot).to.axContainName('My Chip Group');
     });
 
     it('is accessible', async function() {
@@ -185,7 +181,7 @@ describe('<pf-v5-chip-group>', async function() {
     });
     it('only 2 chips should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(2);
+      expect(querySnapshotAll(snapshot, { name: /^Chip/ })).to.have.length(2);
     });
   });
 
@@ -206,7 +202,7 @@ describe('<pf-v5-chip-group>', async function() {
 
     it('all 4 chips should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.filter(x => x.name.startsWith('Chip'))?.length).to.equal(4);
+      expect(querySnapshotAll(snapshot, { name: /^Chip/ })).to.have.length(4);
     });
 
     describe('keyboard navigating with arrow keys to third chip and pressing enter', function() {
@@ -218,7 +214,7 @@ describe('<pf-v5-chip-group>', async function() {
 
       it('should remove third chip', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.find(x => x.name === 'Chip 3')).to.not.be.ok;
+        expect(snapshot).to.not.axContainName('Chip 3');
       });
 
       it('should focus on close button', async function() {

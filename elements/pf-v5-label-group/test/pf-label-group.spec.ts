@@ -53,7 +53,7 @@ describe('<pf-v5-label-group>', function() {
       });
       it('should show all labels', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.filter(x => x.name?.startsWith('Label'))?.length).to.equal(4);
+        expect(querySnapshotAll(snapshot, { name: /^Label/ })).to.have.length(4);
       });
       it('should show collapse text', async function() {
         const snapshot = await a11ySnapshot();
@@ -80,9 +80,7 @@ describe('<pf-v5-label-group>', function() {
 
     it('should have a close button', async function() {
       const snapshot = await a11ySnapshot();
-      const last = snapshot.children?.at(-1);
-      expect(last?.name).to.equal('Close');
-      expect(last?.role).to.equal('button');
+      expect(snapshot).to.axContainQuery({ role: 'button', name: 'Close' });
     });
 
     describe('clicking close button', function() {
@@ -132,7 +130,7 @@ describe('<pf-v5-label-group>', function() {
 
     it('only 2 labels should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.filter(x => x.name?.startsWith('Label'))?.length).to.equal(2);
+      expect(querySnapshotAll(snapshot, { name: /^Label/ })).to.have.length(2);
     });
   });
 
@@ -150,7 +148,7 @@ describe('<pf-v5-label-group>', function() {
 
     it('all 4 labels should be visible', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.filter(x => x.name?.startsWith('Label'))?.length).to.equal(4);
+      expect(querySnapshotAll(snapshot, { name: /^Label/ })).to.have.length(4);
     });
   });
 
@@ -167,7 +165,7 @@ describe('<pf-v5-label-group>', function() {
 
     it('should display the category text', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.some(x => x.name === 'Group')).to.be.true;
+      expect(snapshot).to.axContainName('Group');
     });
   });
 });

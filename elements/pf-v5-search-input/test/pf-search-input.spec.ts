@@ -1,7 +1,7 @@
 import { aTimeout, expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfV5SearchInput } from '../pf-v5-search-input.js';
-import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { clickElementAtCenter, clickElementAtOffset } from '@patternfly/pfe-tools/test/utils.js';
 
@@ -772,7 +772,7 @@ describe('<pf-v5-search-input>', function() {
       beforeEach(updateComplete);
       it('does not error', async function() {
         const snapshot = await a11ySnapshot();
-        const [, , listbox] = snapshot.children ?? [];
+        const listbox = querySnapshot(snapshot, { role: 'listbox' });
         expect(listbox?.children).to.not.be.ok;
       });
     });

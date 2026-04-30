@@ -12,7 +12,7 @@ export class SlotController implements SlotControllerPublicAPI {
 
   static anonymousAttribute = 'ssr-hint-has-slotted-default' as const;
 
-  constructor(public host: ReactiveElement, ..._: SlotControllerArgs) {
+  constructor(public host: ReactiveElement, ..._args: SlotControllerArgs) {
     host.addController(this);
   }
 
@@ -24,7 +24,7 @@ export class SlotController implements SlotControllerPublicAPI {
         .map(x => x.trim());
   }
 
-  getSlotted<T extends Element = Element>(..._: (string | null)[]): T[] {
+  getSlotted<T extends Element = Element>(..._names: (string | null)[]): T[] {
     return [];
   }
 

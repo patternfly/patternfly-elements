@@ -22,9 +22,8 @@ describe('<pf-v5-hint>', function() {
   });
 
   describe('basic hint', function() {
-    let element: PfV5Hint;
     beforeEach(async function() {
-      element = await createFixture<PfV5Hint>(html`
+      await createFixture<PfV5Hint>(html`
         <pf-v5-hint>Welcome to the new documentation experience.</pf-v5-hint>
       `);
     });

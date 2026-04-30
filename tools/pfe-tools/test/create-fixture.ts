@@ -1,6 +1,6 @@
 import type { TemplateResult } from 'lit';
 import { chai, fixtureCleanup, fixture } from '@open-wc/testing';
-// @ts-ignore: colorjs.io types not resolved with Node moduleResolution on Windows CI
+// @ts-expect-error: colorjs.io types not resolved with Node moduleResolution on Windows CI
 import Color from 'colorjs.io';
 
 /**

@@ -340,7 +340,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 /** @see https://w3c.github.io/aria/#ref-for-dom-ariamixin-ariaactivedescendantelement-1 */
 declare global {
   // https://github.com/webcomponents-cg/community-protocols/pull/75
-  var _elementInternals: WeakMap<Element, ElementInternals>; // eslint-disable-line no-var
+  var _elementInternals: WeakMap<Element, ElementInternals>;
   interface ARIAMixin {
     ariaActiveDescendantElement: Element | null;
     ariaControlsElements: readonly Element[] | null;

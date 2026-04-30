@@ -1,4 +1,4 @@
-import { expect, fixture, nextFrame } from '@open-wc/testing';
+import { expect, fixture } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 

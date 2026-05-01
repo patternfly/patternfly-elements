@@ -1,6 +1,6 @@
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
-import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, querySnapshot, querySnapshotAll } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
@@ -54,7 +54,7 @@ describe('<pf-v5-tabs>', function() {
 
     it('should show the first tab as selected in the accessibility tree', async function() {
       const snapshot = await a11ySnapshot();
-      const tabs = snapshot.children?.filter(x => x.role === 'tab') ?? [];
+      const tabs = querySnapshotAll(snapshot, { role: 'tab' });
       const [first, ...rest] = tabs;
       expect(first).to.have.property('selected', true);
       for (const tab of rest) {
@@ -134,7 +134,7 @@ describe('<pf-v5-tabs>', function() {
 
       it('should show the second tab as selected in the accessibility tree', async function() {
         const snapshot = await a11ySnapshot();
-        const tabs = snapshot.children?.filter(x => x.role === 'tab') ?? [];
+        const tabs = querySnapshotAll(snapshot, { role: 'tab' });
         const [first, second, third] = tabs;
         expect(first).to.not.have.property('selected', true);
         expect(second).to.have.property('selected', true);
@@ -157,7 +157,9 @@ describe('<pf-v5-tabs>', function() {
 
       it('should activate the third panel', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('tab-3');
+        const panel = querySnapshot(snapshot, { role: 'tabpanel' });
+        expect(panel).to.not.be.null;
+        expect(panel!).to.have.property('name', 'tab-3');
       });
 
       describe('then setting the first tab\'s `disabled` attribute', function() {
@@ -169,8 +171,7 @@ describe('<pf-v5-tabs>', function() {
 
         it('should disable the button', async function() {
           const snapshot = await a11ySnapshot();
-          const disabledTab = snapshot.children?.find(x => x.role === 'tab' && x.disabled);
-          expect(disabledTab).to.be.ok;
+          expect(snapshot).to.axContainQuery({ role: 'tab', disabled: true });
         });
 
         describe('and clicking the disabled tab', function() {
@@ -186,8 +187,7 @@ describe('<pf-v5-tabs>', function() {
           });
 
           it('should present the third panel to the ax tree', async function() {
-            const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('tab-3');
+            expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-3' });
           });
         });
 
@@ -203,8 +203,7 @@ describe('<pf-v5-tabs>', function() {
           });
 
           it('should present the third panel to the ax tree', async function() {
-            const snapshot = await a11ySnapshot();
-            expect(snapshot.children?.find(x => x.role === 'tabpanel')?.name).to.equal('tab-3');
+            expect(await a11ySnapshot()).to.axContainQuery({ role: 'tabpanel', name: 'tab-3' });
           });
         });
       });

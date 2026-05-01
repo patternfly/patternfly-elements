@@ -5,10 +5,7 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
 import { PfV5BackToTop } from '../pf-v5-back-to-top.js';
-import { type A11yTreeSnapshot, a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-
-const takeProps = (props: string[]) => (obj: object) =>
-  Object.fromEntries(Object.entries(obj).filter(([k]) => props.includes(k)));
+import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pf-v5-back-to-top>', function() {
   it('imperatively instantiates', function() {
@@ -33,7 +30,6 @@ describe('<pf-v5-back-to-top>', function() {
 
   describe('when rendered in a viewport with a height smaller then content length', function() {
     let element: PfV5BackToTop;
-    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       await setViewport({ width: 320, height: 640 });
@@ -46,18 +42,17 @@ describe('<pf-v5-back-to-top>', function() {
         </div>
       `);
       element = container.querySelector('pf-v5-back-to-top')!;
-      snapshot = await a11ySnapshot();
-
       await allUpdates(element);
     });
 
-    it('should be hidden on init', function() {
-      const { children } = snapshot;
-      expect(children).to.be.undefined;
+    it('should be hidden on init', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.not.axContainRole('link');
     });
 
-    it('should not be accessible', function() {
-      expect(snapshot.children).to.be.undefined;
+    it('should not be accessible', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.not.axContainName('Back to top');
     });
 
     describe('when scrolled 401px', function() {
@@ -65,11 +60,11 @@ describe('<pf-v5-back-to-top>', function() {
         window.scrollTo({ top: 401, behavior: 'instant' });
         await nextFrame();
         await allUpdates(element);
-        snapshot = await a11ySnapshot();
       });
 
-      it('should be visible', function() {
-        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      it('should be visible', async function() {
+        expect(await a11ySnapshot())
+            .to.axContainQuery({ role: 'link', name: 'Back to top' });
       });
 
       it('should be accessible', async function() {
@@ -95,11 +90,11 @@ describe('<pf-v5-back-to-top>', function() {
         await nextFrame();
         element.alwaysVisible = true;
         await allUpdates(element);
-        snapshot = await a11ySnapshot();
       });
 
-      it('should be visible', function() {
-        expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      it('should be visible', async function() {
+        expect(await a11ySnapshot())
+            .to.axContainQuery({ role: 'link', name: 'Back to top' });
       });
 
       it('should be accessible', async function() {
@@ -122,12 +117,10 @@ describe('<pf-v5-back-to-top>', function() {
       beforeEach(async function() {
         element.scrollDistance = 1000;
         await allUpdates(element);
-        snapshot = await a11ySnapshot();
       });
 
-      it('should be hidden', function() {
-        const { children } = snapshot;
-        expect(children).to.be.undefined;
+      it('should be hidden', async function() {
+        expect(await a11ySnapshot()).to.not.axContainRole('link');
       });
 
       describe('when scrolled 1001px', function() {
@@ -135,11 +128,11 @@ describe('<pf-v5-back-to-top>', function() {
           window.scrollTo({ top: 1001, behavior: 'instant' });
           await nextFrame();
           await allUpdates(element);
-          snapshot = await a11ySnapshot();
         });
 
-        it('should be visible', function() {
-          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+        it('should be visible', async function() {
+          expect(await a11ySnapshot())
+              .to.axContainQuery({ role: 'link', name: 'Back to top' });
         });
       });
     });
@@ -147,7 +140,6 @@ describe('<pf-v5-back-to-top>', function() {
 
   describe('when rendered in an element with an overflowed height', function() {
     let element: PfV5BackToTop;
-    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -160,13 +152,11 @@ describe('<pf-v5-back-to-top>', function() {
       `);
       element = container.querySelector('pf-v5-back-to-top')!;
       await allUpdates(element);
-
-      snapshot = await a11ySnapshot({ selector: 'pf-v5-back-to-top' });
     });
 
-    it('should be hidden on init', function() {
-      const { children } = snapshot;
-      expect(children).to.be.undefined;
+    it('should be hidden on init', async function() {
+      const snapshot = await a11ySnapshot({ selector: 'pf-v5-back-to-top' });
+      expect(snapshot?.children).to.not.be.ok;
     });
 
     describe('when scrolled 401px', function() {
@@ -176,18 +166,17 @@ describe('<pf-v5-back-to-top>', function() {
         scrollableElement.dispatchEvent(new Event('scroll'));
         await nextFrame();
         await allUpdates(element);
-        snapshot = await a11ySnapshot();
       });
 
-      it('should be visible', function() {
-        expect(snapshot.children?.at(0)?.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+      it('should be visible', async function() {
+        expect(await a11ySnapshot())
+            .to.axContainQuery({ role: 'link', name: 'Back to top' });
       });
     });
   });
 
   describe('when no text is provided', function() {
     let element: PfV5BackToTop;
-    let snapshot: A11yTreeSnapshot;
 
     describe('as a link', function() {
       beforeEach(async function() {
@@ -209,11 +198,11 @@ describe('<pf-v5-back-to-top>', function() {
           window.scrollTo({ top: 401, behavior: 'instant' });
           await nextFrame();
           await allUpdates(element);
-          snapshot = await a11ySnapshot();
         });
 
-        it('should have a label of "Back to top"', function() {
-          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Back to top' }]);
+        it('should have a label of "Back to top"', async function() {
+          expect(await a11ySnapshot())
+              .to.axContainQuery({ role: 'link', name: 'Back to top' });
         });
       });
     });
@@ -238,11 +227,11 @@ describe('<pf-v5-back-to-top>', function() {
           window.scrollTo({ top: 401, behavior: 'instant' });
           await nextFrame();
           await allUpdates(element);
-          snapshot = await a11ySnapshot();
         });
 
-        it('should have a label of "Back to top"', function() {
-          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'button', name: 'Back to top' }]);
+        it('should have a label of "Back to top"', async function() {
+          expect(await a11ySnapshot())
+              .to.axContainQuery({ role: 'button', name: 'Back to top' });
         });
       });
     });
@@ -250,7 +239,6 @@ describe('<pf-v5-back-to-top>', function() {
 
   describe('when a label is provided', function() {
     let element: PfV5BackToTop;
-    let snapshot: A11yTreeSnapshot;
 
     describe('as a link', function() {
       beforeEach(async function() {
@@ -272,11 +260,11 @@ describe('<pf-v5-back-to-top>', function() {
           window.scrollTo({ top: 401, behavior: 'instant' });
           await nextFrame();
           await allUpdates(element);
-          snapshot = await a11ySnapshot();
         });
 
-        it('should have a label of "Return to top"', function() {
-          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'link', name: 'Return to top' }]);
+        it('should have a label of "Return to top"', async function() {
+          expect(await a11ySnapshot())
+              .to.axContainQuery({ role: 'link', name: 'Return to top' });
         });
       });
     });
@@ -301,11 +289,11 @@ describe('<pf-v5-back-to-top>', function() {
           window.scrollTo({ top: 401, behavior: 'instant' });
           await nextFrame();
           await allUpdates(element);
-          snapshot = await a11ySnapshot();
         });
 
-        it('should have a label of "Return to top"', function() {
-          expect(snapshot.children?.map(takeProps(['name', 'role']))).to.deep.equal([{ role: 'button', name: 'Return to top' }]);
+        it('should have a label of "Return to top"', async function() {
+          expect(await a11ySnapshot())
+              .to.axContainQuery({ role: 'button', name: 'Return to top' });
         });
       });
     });

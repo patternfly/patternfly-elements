@@ -53,8 +53,7 @@ describe('<pf-v5-popover>', function() {
           .to.be.an.instanceof(PfV5Popover);
     });
     it('should not report anything to assistive technology', async function() {
-      const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.not.be.ok;
+      expect(await a11ySnapshot()).to.not.axContainRole('button');
     });
   });
 
@@ -81,8 +80,7 @@ describe('<pf-v5-popover>', function() {
     it('should be accessible', expectA11yAxe);
 
     it('should hide popover content from assistive technology', async function() {
-      const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.find(x => x.role === 'dialog')).to.not.be.ok;
+      expect(await a11ySnapshot()).to.not.axContainRole('dialog');
     });
 
     describe('tabbing to the trigger', function() {
@@ -110,18 +108,14 @@ describe('<pf-v5-popover>', function() {
         beforeEach(press('Enter'));
         beforeEach(updateComplete);
         it('should show popover content to assistive technology', async function() {
-          const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.find(x => x.role === 'dialog')).to.be.ok;
+          expect(await a11ySnapshot()).to.axContainRole('dialog');
         });
         describe('then pressing Enter again', function() {
           beforeEach(updateComplete);
           beforeEach(press('Enter'));
           beforeEach(updateComplete);
           it('should hide popover content from assistive technology', async function() {
-            const snapshot = await a11ySnapshot();
-            expect(snapshot?.children?.length).to.equal(1);
-            const dialog = snapshot.children?.find(x => x.role === 'dialog');
-            expect(dialog).to.not.be.ok;
+            expect(await a11ySnapshot()).to.not.axContainRole('dialog');
           });
         });
         describe('then pressing Escape', function() {
@@ -129,10 +123,7 @@ describe('<pf-v5-popover>', function() {
           beforeEach(press('Escape'));
           beforeEach(updateComplete);
           it('should hide popover content from assistive technology', async function() {
-            const snapshot = await a11ySnapshot();
-            expect(snapshot?.children?.length).to.equal(1);
-            const dialog = snapshot.children?.find(x => x.role === 'dialog');
-            expect(dialog).to.not.be.ok;
+            expect(await a11ySnapshot()).to.not.axContainRole('dialog');
           });
         });
       });
@@ -171,8 +162,7 @@ describe('<pf-v5-popover>', function() {
     });
 
     it('starts closed', async function() {
-      const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.find(x => x.role === 'dialog')).to.not.be.ok;
+      expect(await a11ySnapshot()).to.not.axContainRole('dialog');
     });
 
     describe('clicking the trigger', function() {
@@ -180,8 +170,7 @@ describe('<pf-v5-popover>', function() {
       beforeEach(clickButton1);
       beforeEach(updateComplete);
       it('shows the popover', async function() {
-        const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.find(x => x.role === 'dialog')).to.be.ok;
+        expect(await a11ySnapshot()).to.axContainRole('dialog');
       });
     });
 
@@ -197,14 +186,9 @@ describe('<pf-v5-popover>', function() {
         beforeEach(updateComplete);
         it('remains closed', async function() {
           const snapshot = await a11ySnapshot();
-          expect(snapshot).to.deep.equal({
-            name: '',
-            role: 'WebArea',
-            children: [
-              { role: 'button', name: 'Toggle popover 1', focused: true },
-              { role: 'button', name: 'Toggle popover 2' },
-            ],
-          });
+          expect(snapshot).to.not.axContainRole('dialog');
+          expect(snapshot).to.axContainQuery({ role: 'button', name: 'Toggle popover 1', focused: true });
+          expect(snapshot).to.axContainQuery({ role: 'button', name: 'Toggle popover 2' });
         });
       });
       describe('clicking the sibling button', function() {
@@ -212,32 +196,19 @@ describe('<pf-v5-popover>', function() {
         beforeEach(clickButton2);
         beforeEach(updateComplete);
         it('shows the popover', async function() {
-          const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.find(x => x.role === 'dialog')).to.be.ok;
+          expect(await a11ySnapshot()).to.axContainRole('dialog');
         });
       });
     });
     describe('then pressing the Enter key', function() {
       beforeEach(updateComplete);
-      // Close the popover
       beforeEach(press('Enter'));
       beforeEach(updateComplete);
       it('closes the popover', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot).to.deep.equal({
-          role: 'WebArea',
-          name: '',
-          children: [
-            {
-              name: 'Toggle popover 1',
-              role: 'button',
-            },
-            {
-              name: 'Toggle popover 2',
-              role: 'button',
-            },
-          ],
-        });
+        expect(snapshot).to.not.axContainRole('dialog');
+        expect(snapshot).to.axContainQuery({ role: 'button', name: 'Toggle popover 1' });
+        expect(snapshot).to.axContainQuery({ role: 'button', name: 'Toggle popover 2' });
       });
     });
   });

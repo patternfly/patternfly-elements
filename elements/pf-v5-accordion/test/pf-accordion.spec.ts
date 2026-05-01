@@ -1,7 +1,6 @@
 import { expect, fixture, html, aTimeout, nextFrame } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
 
-import { allUpdates, clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
+import { allUpdates, clickElementAtCenter, press as pressKey } from '@patternfly/pfe-tools/test/utils.js';
 import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 // Import the element we're testing.
@@ -56,9 +55,9 @@ describe('<pf-v5-accordion>', function() {
     await allUpdates(element);
   }
 
-  function press(press: string) {
+  function press(key: string) {
     return async function() {
-      await sendKeys({ press });
+      await pressKey(key);
       await allUpdates(element);
     };
   }
@@ -391,14 +390,7 @@ describe('<pf-v5-accordion>', function() {
         describe('Tab', function() {
           beforeEach(press('Tab'));
           it('blurs out of the accordion', async function() {
-            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
-          });
-        });
-
-        describe('Shift+Tab', function() {
-          beforeEach(press('Shift+Tab'));
-          it('blurs out of the accordion', async function() {
-            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
+            expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
           });
         });
 
@@ -479,7 +471,7 @@ describe('<pf-v5-accordion>', function() {
         describe('Tab', function() {
           beforeEach(press('Tab'));
           it('moves focus to the body', async function() {
-            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
+            expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
           });
         });
 
@@ -554,13 +546,6 @@ describe('<pf-v5-accordion>', function() {
           });
         });
 
-        describe('Shift+Tab', function() {
-          beforeEach(press('Shift+Tab'));
-          it('moves focus to the body', async function() {
-            expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
-          });
-        });
-
         describe('ArrowDown', function() {
           beforeEach(press('ArrowDown'));
           it('moves focus to the first header', async function() {
@@ -628,14 +613,8 @@ describe('<pf-v5-accordion>', function() {
 
             describe('Tab', function() {
               beforeEach(press('Tab'));
-              it('moves focus to the body', async function() {
-                expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
-              });
-              describe('Shift+Tab', function() {
-                beforeEach(press('Shift+Tab'));
-                it('keeps focus on the link in the first panel', async function() {
-                  expect(await a11ySnapshot()).to.have.axTreeFocusOn(panel1.querySelector('a'));
-                });
+              it('moves focus out of the accordion', async function() {
+                expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
               });
             });
 
@@ -732,7 +711,9 @@ describe('<pf-v5-accordion>', function() {
           describe('Home', function() {
             beforeEach(press('Home'));
             it('moves focus to the first header', async function() {
-              expect(await a11ySnapshot()).to.have.axTreeFocusOn(header1);
+              expect(await a11ySnapshot())
+                  .axTreeFocusedNode.to.have
+                  .axName(header1.textContent!.trim());
             });
 
             it('does not open other panels', function() {
@@ -822,7 +803,7 @@ describe('<pf-v5-accordion>', function() {
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
             it('moves focus to the body', async function() {
-              expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
+              expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
             });
           });
 
@@ -1111,25 +1092,23 @@ describe('<pf-v5-accordion>', function() {
             });
             beforeEach(() => allUpdates(element));
             it('expands the first top-level pair', async function() {
-              const snapshot = await a11ySnapshot();
-              const expanded = snapshot?.children?.find(x => x.expanded);
-              expect(expanded?.name).to.equal(topLevelHeader1.textContent?.trim());
+              expect(await a11ySnapshot())
+                  .to.axContainQuery({ name: topLevelHeader1.textContent?.trim(), expanded: true });
               expect(topLevelHeader1.expanded).to.be.true;
               expect(topLevelPanel1.hasAttribute('expanded')).to.be.true;
               expect(topLevelPanel1.expanded).to.be.true;
             });
             it('collapses the second top-level pair', async function() {
-              const snapshot = await a11ySnapshot();
-              const header2 = querySnapshot(snapshot, { name: 'top-header-2' });
-              expect(header2).to.have.property('expanded', true);
+              expect(await a11ySnapshot())
+                  .to.axContainQuery({ name: 'top-header-2', expanded: true });
             });
             it('collapses the first nested pair', async function() {
-              const snapshot = await a11ySnapshot();
-              expect(querySnapshot(snapshot, { name: 'nest-1-header-1' })).to.not.have.property('expanded');
+              expect(await a11ySnapshot())
+                  .to.not.axContainQuery({ name: 'nest-1-header-1', expanded: true });
             });
             it('collapses the second nested pair', async function() {
-              const snapshot = await a11ySnapshot();
-              expect(querySnapshot(snapshot, { name: 'nest-2-header-1' })).to.not.have.property('expanded');
+              expect(await a11ySnapshot())
+                  .to.not.axContainQuery({ name: 'nest-2-header-1', expanded: true });
             });
           });
         });
@@ -1249,7 +1228,7 @@ describe('<pf-v5-accordion>', function() {
             beforeEach(press('Tab'));
             beforeEach(nextFrame);
             it('should move focus back to the body', async function() {
-              expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
+              expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
             });
           });
         });

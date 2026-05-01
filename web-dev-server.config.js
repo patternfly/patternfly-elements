@@ -1,7 +1,4 @@
-import {
-  pfeDevServerConfig,
-  getPatternflyIconNodemodulesImports,
-} from '@patternfly/pfe-tools/dev-server/config.js';
+import { pfeDevServerConfig } from '@patternfly/pfe-tools/dev-server/config.js';
 import { makeDemoEnv } from '@patternfly/pfe-tools/environment.js';
 
 import { writeFile, mkdir } from 'node:fs/promises';

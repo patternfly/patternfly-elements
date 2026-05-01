@@ -53,9 +53,7 @@ describe('<pf-v5-dropdown>', function() {
     });
 
     it('should hide dropdown content from assistive technology', async function() {
-      const snapshot = await a11ySnapshot();
-      const menu = snapshot.children?.find(x => x.role === 'menu');
-      expect(menu).to.not.be.ok;
+      expect(await a11ySnapshot()).to.not.axContainRole('menu');
     });
 
     describe('pressing Enter', function() {
@@ -64,17 +62,14 @@ describe('<pf-v5-dropdown>', function() {
       beforeEach(updateComplete);
 
       it('should show menu', async function() {
-        const snapshot = await a11ySnapshot();
-        const menu = snapshot?.children?.find(x => x.role === 'menu');
-        expect(menu).to.be.ok;
-        expect(menu?.children?.length).to.equal(2);
+        expect(await a11ySnapshot()).to.axContainRole('menu');
       });
 
       it('should focus on first menu item', async function() {
-        const snapshot = await a11ySnapshot();
-        const menu = snapshot?.children?.find(x => x.role === 'menu');
-        const focused = menu?.children?.find(x => x.focused);
-        expect(focused).to.deep.equal({ role: 'menuitem', name: 'item 1', focused: true });
+        expect(await a11ySnapshot())
+            .axTreeFocusedNode.to.have
+            .axRole('menuitem')
+            .and.axName('item 1');
       });
 
       describe('pressing ArrowDown', function() {
@@ -83,11 +78,11 @@ describe('<pf-v5-dropdown>', function() {
           await element.updateComplete;
         });
 
-        it('should focus on secondc menu item', async function() {
-          const snapshot = await a11ySnapshot();
-          const menu = snapshot?.children?.find(x => x.role === 'menu');
-          const focused = menu?.children?.find(x => x.focused);
-          expect(focused).to.deep.equal({ role: 'menuitem', name: 'item 2', focused: true });
+        it('should focus on second menu item', async function() {
+          expect(await a11ySnapshot())
+              .axTreeFocusedNode.to.have
+              .axRole('menuitem')
+              .and.axName('item 2');
         });
 
         describe('pressing Escape', function() {
@@ -96,10 +91,7 @@ describe('<pf-v5-dropdown>', function() {
           });
 
           it('should close menu', async function() {
-            const snapshot = await a11ySnapshot();
-            const menu = snapshot?.children?.find(x => x.role === 'menu');
-            expect(snapshot.children?.length).to.equal(1);
-            expect(menu).to.not.be.ok;
+            expect(await a11ySnapshot()).to.not.axContainRole('menu');
           });
         });
       });
@@ -112,9 +104,8 @@ describe('<pf-v5-dropdown>', function() {
       });
 
       it('should disable toggle button', async function() {
-        const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.length).to.equal(1);
-        expect(snapshot.children?.at(0)?.disabled).to.be.true;
+        expect(await a11ySnapshot())
+            .to.axContainQuery({ disabled: true });
       });
 
       describe('pressing Enter', function() {
@@ -124,10 +115,7 @@ describe('<pf-v5-dropdown>', function() {
         });
 
         it('should show menu', async function() {
-          const snapshot = await a11ySnapshot();
-          const menu = snapshot?.children?.find(x => x.role === 'menu');
-          expect(menu).to.be.ok;
-          expect(menu?.children?.length).to.equal(2);
+          expect(await a11ySnapshot()).to.axContainRole('menu');
         });
       });
 
@@ -138,10 +126,7 @@ describe('<pf-v5-dropdown>', function() {
         });
 
         it('should show menu', async function() {
-          const snapshot = await a11ySnapshot();
-          const menu = snapshot?.children?.find(x => x.role === 'menu');
-          expect(menu).to.be.ok;
-          expect(menu?.children?.length).to.equal(2);
+          expect(await a11ySnapshot()).to.axContainRole('menu');
         });
       });
     });

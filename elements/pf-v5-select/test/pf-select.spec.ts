@@ -2,7 +2,7 @@ import { expect, html, aTimeout, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfV5Select } from '../pf-v5-select.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, querySnapshot, querySnapshotAll } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { clickElementAtCenter, clickElementAtOffset } from '@patternfly/pfe-tools/test/utils.js';
 import type { PfV5Option } from '../pf-v5-option.js';
 
@@ -766,15 +766,15 @@ describe('<pf-v5-select variant="checkbox">', function() {
 
       it('expands the listbox', async function() {
         expect(element.expanded).to.be.true;
-        const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.at(1)).to.be.ok;
-        expect(snapshot.children?.at(1)?.role).to.equal('listbox');
+        expect(await a11ySnapshot()).to.axContainRole('listbox');
       });
 
       it('should NOT use checkbox role for options', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.at(1)?.children?.filter(x => x.role === 'checkbox')?.length)
-            .to.equal(0);
+        const listbox = querySnapshot(snapshot, { role: 'listbox' });
+        expect(listbox).to.be.ok;
+        const checkboxes = querySnapshotAll(listbox!, { role: 'checkbox' });
+        expect(checkboxes.length).to.equal(0);
       });
     });
 
@@ -828,9 +828,7 @@ describe('<pf-v5-select variant="checkbox">', function() {
           expect(element.expanded).to.be.false;
         });
         it('hides the listbox', async function() {
-          const snapshot = await a11ySnapshot();
-          const listbox = snapshot.children?.find(x => x.role === 'listbox');
-          expect(listbox).to.be.undefined;
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
         });
       });
 
@@ -841,13 +839,12 @@ describe('<pf-v5-select variant="checkbox">', function() {
           expect(element.expanded).to.be.false;
         });
         it('hides the listbox', async function() {
-          const snapshot = await a11ySnapshot();
-          expect(snapshot.children?.at(1)).to.be.undefined;
+          expect(await a11ySnapshot()).to.not.axContainRole('listbox');
         });
         it('focuses the button', async function() {
-          const snapshot = await a11ySnapshot();
-          const focused = querySnapshot(snapshot, { focused: true });
-          expect(focused?.role).to.equal('combobox');
+          expect(await a11ySnapshot())
+              .to.have.axTreeFocusedNode
+              .and.to.have.axRole('combobox');
         });
       });
 
@@ -1485,7 +1482,7 @@ describe('<pf-v5-select variant="typeahead">', function() {
     beforeEach(updateComplete);
     it('does not error', async function() {
       const snapshot = await a11ySnapshot();
-      const [, , listbox] = snapshot.children ?? [];
+      const listbox = querySnapshot(snapshot, { role: 'listbox' });
       expect(listbox?.children).to.not.be.ok;
     });
   });

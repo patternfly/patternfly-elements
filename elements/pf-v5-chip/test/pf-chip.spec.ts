@@ -3,7 +3,7 @@ import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { PfV5Chip } from '../pf-v5-chip.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 
 
@@ -47,8 +47,8 @@ describe('<pf-v5-chip>', async function() {
       beforeEach(() => element.focus());
       it('should focus', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.at(0)?.name).to.equal(element.accessibleCloseLabel);
-        expect(snapshot.children?.at(0)?.focused).to.be.true;
+        const focused = querySnapshot(snapshot, { focused: true });
+        expect(focused).to.have.property('name', element.accessibleCloseLabel);
       });
     });
 
@@ -56,8 +56,8 @@ describe('<pf-v5-chip>', async function() {
       beforeEach(press('Tab'));
       it('should focus', async function() {
         const snapshot = await a11ySnapshot();
-        expect(snapshot.children?.at(0)?.name).to.equal(element.accessibleCloseLabel);
-        expect(snapshot.children?.at(0)?.focused).to.be.true;
+        const focused = querySnapshot(snapshot, { focused: true });
+        expect(focused).to.have.property('name', element.accessibleCloseLabel);
       });
 
       describe('pressing Enter', async function() {
@@ -85,7 +85,7 @@ describe('<pf-v5-chip>', async function() {
 
     it('should not have a close button', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.find(x => x.name === 'Close')).to.not.be.ok;
+      expect(snapshot).to.not.axContainName('Close');
     });
 
     describe('calling focus', function() {
@@ -133,7 +133,7 @@ describe('<pf-v5-chip>', async function() {
 
     it('should not have a button', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children).to.be.undefined;
+      expect(snapshot).to.not.axContainRole('button');
     });
   });
 });

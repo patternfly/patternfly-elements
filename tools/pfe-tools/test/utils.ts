@@ -1,5 +1,27 @@
-import { sendMouse } from '@web/test-runner-commands';
+import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import type { ReactiveElement } from 'lit';
+
+const MODIFIERS = ['Shift', 'Control', 'Alt', 'Meta'] as const;
+
+/**
+ * Press a key or key combination (e.g. 'Shift+Tab').
+ * Decomposes modifier combos for Puppeteer compatibility.
+ */
+export async function press(key: string): Promise<void> {
+  const parts = key.split('+');
+  const mainKey = parts.pop()!;
+  type Mod = typeof MODIFIERS[number];
+  const isMod = (m: string): m is Mod =>
+    MODIFIERS.includes(m as Mod);
+  const mods = parts.filter(isMod);
+  for (const mod of mods) {
+    await sendKeys({ down: mod });
+  }
+  await sendKeys({ press: mainKey });
+  for (const mod of [...mods].reverse()) {
+    await sendKeys({ up: mod });
+  }
+}
 
 export type Position = [x: number, y: number];
 

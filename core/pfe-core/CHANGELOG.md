@@ -1,5 +1,16 @@
 # @patternfly/pfe-core
 
+## 6.0.0
+### Major Changes
+
+- bd4397a: **`CascadeController`** and **`@cascades`** decorator are removed. Use [`@lit/context`](https://lit.dev/docs/data/context/) instead for sharing data between parent and child elements.
+  **`SlotController.anonymous`** is removed. Use `SlotController.default` instead.
+
+### Patch Changes
+
+- 6d1520a: `FloatingDOMController`: support usage within iframes
+- 3a64fd3: `InternalsController`: allows accessibility auditing tools to access element internals.
+
 ## 5.0.8
 ### Patch Changes
 

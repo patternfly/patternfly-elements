@@ -27,6 +27,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
+          version: npx changeset version && npm install --package-lock-only
           publish: npx changeset publish
           commit: "chore: prepare release"
           title: "chore: prepare release"
@@ -43,12 +44,12 @@ jobs:
       - name: Transform Tags
         id: get-tags
         if: ${{ steps.changesets.outputs.published == 'true' }}
-        run: echo "tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )" >> $GITHUB_OUTPUT
+        run: echo "tags=$( echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c 'map([.name,.version]) | map(join("@")) | join(", ")' )" >> "$GITHUB_OUTPUT"
 
       - name: Bundle
         id: bundle
         if: ${{ steps.changesets.outputs.published == 'true' }}
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
           github-token: ${{ secrets.WORKFLOWS_PAT }}

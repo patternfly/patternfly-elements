@@ -1,5 +1,17 @@
 # @patternfly/pfe-tools
 
+## 7.0.0
+### Major Changes
+
+- 74318a1: **Test Runner**: migrate config from playwright-backed to puppeteer.
+  
+  Transitive dependencies have changed, so if your test files relied on playwright imports,
+  you'll need to update them.
+
+### Patch Changes
+
+- 73b2389: Corrected usage of config for tagPrefix in `DocsPage` for alias
+
 ## 6.0.1
 ### Patch Changes
 

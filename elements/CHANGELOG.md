@@ -1,5 +1,40 @@
 # @patternfly/elements
 
+## 5.0.0
+### Major Changes
+
+- 73b2389: Removed the bundled entrypoint (`pfe.min.js`). Import individual
+  elements directly instead, e.g. `import '@patternfly/elements/pf-button/pf-button.js'`.
+  
+  The bundled entrypoint caused custom element double-registration issues
+  and is not recommended for production use.
+- bd4397a: `<pf-popover>`: the `close-label` attribute and `closeButtonLabel` property are removed. Use `accessible-close-label` instead.
+  
+  Before:
+  ```html
+  <pf-popover close-label="close"></pf-popover>
+  ```
+  
+  After:
+  ```html
+  <pf-v5-popover accessible-close-label="close"></pf-v5-popover>
+  ```
+- 73b2389: All elements are now versioned with a `pf-v5-` prefix.
+  
+  This is a breaking change. Update your HTML to use the new element names,
+  e.g. `<pf-button>` becomes `<pf-v5-button>`, `<pf-accordion>` becomes
+  `<pf-v5-accordion>`, etc.
+  
+  CSS custom properties are also renamed from `--pf-c-*` to `--pf-v5-c-*`.
+  Global tokens (`--pf-global--*`) are unchanged.
+
+### Patch Changes
+
+- Updated dependencies [bd4397a]
+- Updated dependencies [6d1520a]
+- Updated dependencies [3a64fd3]
+  - @patternfly/pfe-core@6.0.0
+
 ## 4.4.0
 ### Minor Changes
 

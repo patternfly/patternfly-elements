@@ -27,7 +27,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: npx changeset version && npm install --package-lock-only
+          version: scripts/version.sh
           publish: npx changeset publish
           commit: "chore: prepare release"
           title: "chore: prepare release"

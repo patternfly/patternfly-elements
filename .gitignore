@@ -133,3 +133,5 @@ browserstack.err
 
 # Local Netlify folder
 .netlify
+!.claude/skills
+!.claude/settings.json

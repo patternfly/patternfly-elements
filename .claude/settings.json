@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npm test:*)",
+      "Bash(ls:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git fetch:*)",
+      "Read(../patternfly/**)",
+      "WebFetch(domain:www.patternfly.org)"
+    ],
+    "additionalDirectories": [
+      "../patternfly-react",
+      "../patternfly"
+    ]
+  }
+}

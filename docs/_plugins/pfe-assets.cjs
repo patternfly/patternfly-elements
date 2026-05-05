@@ -16,9 +16,7 @@ function getFilesToCopy(options) {
     return null;
   }
 
-  const files = {
-    [path.join(cwd, 'node_modules/element-internals-polyfill')]: 'element-internals-polyfill',
-  };
+  const files = {};
 
   const corePkgs = fs.readdirSync(path.join(cwd, 'core'));
 

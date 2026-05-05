@@ -269,14 +269,7 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     globalThis._elementInternals.set(this.host, this.internals);
   }
 
-  /**
-   * We need to polyfill :disabled
-   * see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
-   */
   #polyfillDisabledPseudo() {
-    // START polyfill-disabled
-    // We need to polyfill :disabled
-    // see https://github.com/calebdwilliams/element-internals-polyfill/issues/88
     const orig = (this.element as FACE).formDisabledCallback;
     (this.element as FACE).formDisabledCallback = disabled => {
       this._formDisabled = disabled;

@@ -27,7 +27,6 @@ module.exports = async function() {
       'tslib': readPackageVersion('tslib'),
       '@rhds/elements': readPackageVersion('@rhds/elements'),
       'prismjs': readPackageVersion('prismjs'),
-      'element-internals-polyfill': readPackageVersion('element-internals-polyfill'),
       'fuse.js': readPackageVersion('fuse.js'),
       'lit': readPackageVersion('lit'),
       '@lit-labs/ssr-client': readPackageVersion('@lit-labs/ssr-client'),

@@ -13,7 +13,7 @@ Prefer Opus 4.6 with 1 Million tokens context for these jobs
 - SCSS sources: `../patternfly/src/patternfly/components/`
 - Existing v5 elements: `elements/pf-v5-*/`
 - v6 elements: `elements/pf-v6-*/`
-- Migration plan: `V6-MIGRATION-PLAN.md`
+- Migration plan: `.claude/V6-MIGRATION-PLAN.md`
 
 Ensure the user has cloned `patternfly-react` and `patternfly` repos in sibling directories.
 Treat the `patternfly` and `patternfly-react` repos as read-only source material.
@@ -36,7 +36,10 @@ Use these skills for the corresponding tasks:
 - `/review-demos` - review element demos and docs quality before PR
 - API design rules: `.claude/ADVICE.md` (referenced by both element skills)
 
-Run /review-a11y, /review-api, and /review-demos on each set of changes, and before opening any PR
+Run before opening any PR, in parallel agents:
+- /review-a11y
+- /review-api
+- /review-demos
 
 ## Element Conventions
 

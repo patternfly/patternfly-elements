@@ -1,5 +1,4 @@
 import '@rhds/elements/rh-footer/rh-footer-universal.js';
-import 'element-internals-polyfill';
 import { PfV5Icon } from '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 import '@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js';
 import '@patternfly/elements/pf-v5-alert/pf-v5-alert.js';

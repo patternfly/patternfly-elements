@@ -34,6 +34,7 @@ how to install and configure them.
 4. Identify all element states: default, hover, focus, active, disabled,
    expanded, checked, loading, error, etc. (whatever the element supports), including
    the states of sub elements (e.g. aria active descendant for a select)
+5. Identify relevant [ARIA APG Patterns](https://w3.org/WAI/ARIA/apg/patterns/) for the element
 
 ### Phase 2: Check Internal ARIA
 

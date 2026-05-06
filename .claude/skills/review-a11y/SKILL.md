@@ -62,6 +62,7 @@ Using Chrome and Firefox MCP to issue real keyboard commands, validate that
 - All demos demonstrate accessible patterns (no bad advice)?
 - No redundant ARIA roles on elements with implicit roles?
 - Don't treat div as button, etc
+- Check for WCAG color contrast violations.
 
 ### Phase 6: Verify Accessibility Tree in Both Browsers
 
@@ -150,7 +151,8 @@ For each composite element:
 declaratively, they must (as of Spring 2026) use ARIA IDL attrs like
 `element.ariaDescribedByElements`. Verify these relationships work via
 ElementInternals ARIA IDL properties or other workarounds.
-Flag any broken cross-root references.
+Flag any broken cross-root references. Ensure that all ax tree states in demo
+are suitably covered by a11ySnapshot tests in element's test files.
 
 #### Cross-browser differences to flag
 
@@ -186,6 +188,8 @@ Flag any broken cross-root references.
 ### Recommendations
 [Specific fixes with corrected code]
 ```
+
+In "Critical Issues", all items should be linked to its WCAG success criterion.......
 
 ## Principles
 

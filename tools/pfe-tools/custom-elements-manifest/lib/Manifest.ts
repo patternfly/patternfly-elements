@@ -214,10 +214,10 @@ export class Manifest {
   /**
    */
   getTagNames(): string[] {
-    return this.manifest?.modules
+    return [...new Set(this.manifest?.modules
         ?.flatMap?.(m => m.exports
             ?.filter?.(x => x.kind === 'custom-element-definition')
-            ?.map?.(x => x.name)) as string[] ?? [];
+            ?.map?.(x => x.name)) as string[] ?? [])];
   }
 
   /**

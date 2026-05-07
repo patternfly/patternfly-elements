@@ -1,4 +1,3 @@
-sourceControlRootUrl: https://github.com/patternfly/patternfly-elements/tree/main/
 generate:
   files:
     - ./*/*.ts

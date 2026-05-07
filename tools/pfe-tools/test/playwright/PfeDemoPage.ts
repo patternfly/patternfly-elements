@@ -24,9 +24,10 @@ export class PfeDemoPage {
     const selectorOverride =
         typeof pathnameOrOptions === 'string' ? undefined
       : pathnameOrOptions?.selector;
+    const slug = this.tagName.replace(/^pf-(?:v\d+-)?/, '');
     const pathname =
         typeof pathnameOrOptions === 'string' ? pathnameOrOptions
-      : `${this.workspace}/${this.tagName.replace('pf-', '')}/demo`;
+      : `${this.workspace}/${slug}/demo`;
     const url = new URL(pathname, this.origin).toString();
     // eslint-disable-next-line no-console
     console.log(`NAVIGATING to ${url}`);

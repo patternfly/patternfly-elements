@@ -15,6 +15,7 @@
     "./pf-v5-accordion/pf-v5-accordion.js": "./pf-v5-accordion/pf-v5-accordion.js",
     "./pf-v5-alert/pf-v5-alert.js": "./pf-v5-alert/pf-v5-alert.js",
     "./pf-v5-avatar/pf-v5-avatar.js": "./pf-v5-avatar/pf-v5-avatar.js",
+    "./pf-v6-avatar/pf-v6-avatar.js": "./pf-v6-avatar/pf-v6-avatar.js",
     "./pf-v5-back-to-top/pf-v5-back-to-top.js": "./pf-v5-back-to-top/pf-v5-back-to-top.js",
     "./pf-v5-background-image/pf-v5-background-image.js": "./pf-v5-background-image/pf-v5-background-image.js",
     "./pf-v5-badge/pf-v5-badge.js": "./pf-v5-badge/pf-v5-badge.js",

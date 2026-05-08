@@ -18,6 +18,7 @@
     "./pf-v5-back-to-top/pf-v5-back-to-top.js": "./pf-v5-back-to-top/pf-v5-back-to-top.js",
     "./pf-v5-background-image/pf-v5-background-image.js": "./pf-v5-background-image/pf-v5-background-image.js",
     "./pf-v5-badge/pf-v5-badge.js": "./pf-v5-badge/pf-v5-badge.js",
+    "./pf-v6-badge/pf-v6-badge.js": "./pf-v6-badge/pf-v6-badge.js",
     "./pf-v5-banner/pf-v5-banner.js": "./pf-v5-banner/pf-v5-banner.js",
     "./pf-v5-button/pf-v5-button.js": "./pf-v5-button/pf-v5-button.js",
     "./pf-v5-card/pf-v5-card.js": "./pf-v5-card/pf-v5-card.js",

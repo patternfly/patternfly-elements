@@ -32,6 +32,13 @@ describe('<pf-v6-avatar>', function() {
       expect(element.offsetWidth).to.equal(36);
       expect(element.offsetHeight).to.equal(36);
     });
+
+    it('hides the placeholder from the accessibility tree', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot?.children?.find(
+        (child: { role: string }) => child.role === 'img'
+      )).to.not.be.ok;
+    });
   });
 
   describe('with a src attr', function() {
@@ -72,6 +79,19 @@ describe('<pf-v6-avatar>', function() {
       expect(snapshot?.children?.find(
         (child: { name: string }) => child.name === 'User avatar'
       )).to.be.ok;
+    });
+  });
+
+  describe('with size="md"', function() {
+    let element: PfV6Avatar;
+    beforeEach(async function() {
+      element = await createFixture(html`<pf-v6-avatar size="md"></pf-v6-avatar>`);
+      await nextFrame();
+    });
+
+    it('renders at the medium size', function() {
+      expect(element.offsetWidth).to.equal(36);
+      expect(element.offsetHeight).to.equal(36);
     });
   });
 
@@ -122,8 +142,7 @@ describe('<pf-v6-avatar>', function() {
     });
 
     it('renders with a visible border', function() {
-      // The element should still render with a size larger than 0
-      expect(element.offsetWidth).to.be.greaterThan(0);
+      expect(element.offsetWidth).to.be.greaterThan(36);
     });
   });
 });

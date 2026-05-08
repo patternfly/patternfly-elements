@@ -36,7 +36,7 @@ export class PfV6AvatarLoadEvent extends Event {
  */
 @customElement('pf-v6-avatar')
 export class PfV6Avatar extends LitElement {
-  static readonly styles: CSSStyleSheet[] = [style];
+  static styles = [style];
 
   /** The URL to the user's custom avatar image. */
   @property() src?: string;
@@ -50,7 +50,7 @@ export class PfV6Avatar extends LitElement {
   /** Whether to display a border around the avatar */
   @property({ type: Boolean, reflect: true }) bordered = false;
 
-  override render(): TemplateResult<1> {
+  override render(): TemplateResult {
     return this.src != null ? html`
       <img id="img"
            alt="${this.alt ?? ''}"

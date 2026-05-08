@@ -45,7 +45,7 @@
 
 svg,
 img {
-  display: inline;
+  display: block;
   object-fit: cover;
   width: var(--_width);
   height: var(--_height);

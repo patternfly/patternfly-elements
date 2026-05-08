@@ -36,7 +36,7 @@ export class PfV6AvatarLoadEvent extends Event {
  */
 @customElement('pf-v6-avatar')
 export class PfV6Avatar extends LitElement {
-  static styles = [style];
+  static readonly styles: CSSStyleSheet[] = [style];
 
   /** The URL to the user's custom avatar image. */
   @property() src?: string;

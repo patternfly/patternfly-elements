@@ -31,7 +31,7 @@ export type BadgeState = 'unread' | 'read';
  */
 @customElement('pf-v6-badge')
 export class PfV6Badge extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /**
    * Denotes the state-of-affairs this badge represents.

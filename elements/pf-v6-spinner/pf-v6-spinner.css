@@ -74,18 +74,18 @@ circle {
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg);
+    rotate: 0deg;
   }
 
   100% {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
 }
 
 @keyframes dash {
   0% {
     stroke-dashoffset: 280;
-    transform: rotate(0);
+    rotate: 0deg;
   }
 
   15% {
@@ -100,6 +100,13 @@ circle {
 
   100% {
     stroke-dashoffset: 280;
-    transform: rotate(720deg);
+    rotate: 720deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg,
+  circle {
+    animation-duration: 0s;
   }
 }

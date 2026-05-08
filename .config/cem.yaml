@@ -1,5 +1,6 @@
 sourceControlRootUrl: https://github.com/patternfly/patternfly-elements/tree/main/
 generate:
+  output: ./elements/custom-elements.json
   files:
     - ./elements/*/*.ts
     - ./core/*/*.ts

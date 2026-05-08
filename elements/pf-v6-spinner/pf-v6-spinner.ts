@@ -1,6 +1,5 @@
 import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { property } from 'lit/decorators/property.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -20,7 +19,7 @@ export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
  */
 @customElement('pf-v6-spinner')
 export class PfV6Spinner extends LitElement {
-  static readonly styles: CSSStyleSheet[] = [styles];
+  static styles = [styles];
 
   /** Preset sizes for the spinner */
   @property({ reflect: true }) size?: SpinnerSize;
@@ -45,17 +44,22 @@ export class PfV6Spinner extends LitElement {
 
   override willUpdate(changed: Map<PropertyKey, unknown>): void {
     if (changed.has('accessibleLabel')) {
-      this.#internals.ariaLabel = this.accessibleLabel ?? 'Loading...';
+      const label = this.accessibleLabel ?? 'Loading...';
+      this.#internals.ariaLabel = label;
+      this.#internals.ariaValueText = label;
+    }
+    if (changed.has('diameter')) {
+      if (this.diameter) {
+        this.style.setProperty('--pf-v6-c-spinner--diameter', this.diameter);
+      } else {
+        this.style.removeProperty('--pf-v6-c-spinner--diameter');
+      }
     }
   }
 
-  override render(): TemplateResult<1> {
-    const { diameter } = this;
+  override render(): TemplateResult {
     return html`
-      <svg viewBox="0 0 100 100"
-           style="${styleMap({
-              '--pf-v6-c-spinner--diameter': diameter ?? null,
-            })}">
+      <svg viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="45" fill="none" />
       </svg>
     `;

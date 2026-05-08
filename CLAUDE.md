@@ -28,6 +28,7 @@ patternfly-react/
 
 Use these skills for the corresponding tasks:
 
+- `/claim-element` - claim a v6 element to work on, assigns issue, checks project stuts.
 - `/update-element` - port existing pf-v5 element to pf-v6
 - `/create-element` - build new pf-v6 element based on the SCSS and React source 
   (for when no v5 exists)

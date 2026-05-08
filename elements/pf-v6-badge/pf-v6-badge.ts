@@ -44,21 +44,21 @@ export class PfV6Badge extends LitElement {
    * You can pair it with `threshold` attribute to add a `+` sign
    * if the number exceeds the threshold value.
    */
-  @property({ reflect: true, type: Number }) number?: number;
+  @property({ type: Number }) number?: number;
 
   /**
    * Sets a threshold for the numeric value and adds `+` sign if
    * the numeric value exceeds the threshold value.
    */
-  @property({ reflect: true, type: Number }) threshold?: number;
+  @property({ type: Number }) threshold?: number;
 
   /** Disables the badge */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-  override render(): TemplateResult<1> {
+  override render(): TemplateResult {
     const { threshold, number } = this;
     const displayText =
-        (threshold && number && (threshold < number)) ? `${threshold.toString()}+`
+        (threshold && number && (threshold <= number)) ? `${threshold.toString()}+`
       : (number != null) ? number.toString()
       : '';
     return html`${!displayText ? html`<slot></slot>` : displayText}`;

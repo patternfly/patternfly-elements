@@ -46,6 +46,8 @@ describe('<pf-v6-spinner>', function() {
         (child: { role: string }) => child.role === 'progressbar'
       );
       expect(spinnerNode).to.exist;
+      expect(spinnerNode?.name).to.equal('Loading...');
+      expect(spinnerNode?.valuetext).to.equal('Loading...');
     });
   });
 
@@ -68,6 +70,7 @@ describe('<pf-v6-spinner>', function() {
       );
       expect(spinnerNode).to.exist;
       expect(spinnerNode?.name).to.equal('Loading results');
+      expect(spinnerNode?.valuetext).to.equal('Loading results');
     });
   });
 

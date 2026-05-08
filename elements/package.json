@@ -49,6 +49,7 @@
     "./pf-v5-progress/pf-v5-progress.js": "./pf-v5-progress/pf-v5-progress.js",
     "./pf-v5-search-input/pf-v5-search-input.js": "./pf-v5-search-input/pf-v5-search-input.js",
     "./pf-v5-spinner/pf-v5-spinner.js": "./pf-v5-spinner/pf-v5-spinner.js",
+    "./pf-v6-spinner/pf-v6-spinner.js": "./pf-v6-spinner/pf-v6-spinner.js",
     "./pf-v5-switch/pf-v5-switch.js": "./pf-v5-switch/pf-v5-switch.js",
     "./pf-v5-table/context.js": "./pf-v5-table/context.js",
     "./pf-v5-table/pf-v5-caption.js": "./pf-v5-table/pf-v5-caption.js",

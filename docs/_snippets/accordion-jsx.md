@@ -3,7 +3,7 @@ import {
   Accordion,
   AccordionPanel,
   AccordionHeader,
-} from "@patternfly/elements/react/pf-v5-accordion/pf-v5-accordion.js";
+} from "@patternfly/elements/react/pf-v6-accordion/pf-v6-accordion.js";
 
 export default function App() {
   const data = [

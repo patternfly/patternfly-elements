@@ -2,9 +2,9 @@
   const CLASS_KEY = 'html-lit-react-snippets';
   const LS_KEY = `${CLASS_KEY}-index`;
   document.addEventListener('expand', async function(event) {
-    const PfV5Tabs = await customElements.whenDefined('pf-v5-tabs');
-    if (PfV5Tabs.isExpandEvent(event)) {
-      const tabs = event.tab.closest('pf-v5-tabs');
+    const PfV6Tabs = await customElements.whenDefined('pf-v6-tabs');
+    if (PfV6Tabs.isExpandEvent(event)) {
+      const tabs = event.tab.closest('pf-v6-tabs');
       if (tabs.classList.contains(CLASS_KEY)) {
         await tabs.updateComplete;
         localStorage.setItem(LS_KEY, tabs.activeIndex);
@@ -13,7 +13,7 @@
     }
   });
   async function update() {
-    for (const tabs of document.querySelectorAll(`pf-v5-tabs.${CLASS_KEY}`)) {
+    for (const tabs of document.querySelectorAll(`pf-v6-tabs.${CLASS_KEY}`)) {
       await tabs.updateComplete;
       tabs.activeIndex = parseInt(localStorage.getItem(LS_KEY) ?? '0');
     }

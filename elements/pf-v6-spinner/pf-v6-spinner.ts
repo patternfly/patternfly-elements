@@ -19,7 +19,7 @@ export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
  */
 @customElement('pf-v6-spinner')
 export class PfV6Spinner extends LitElement {
-  static styles = [styles];
+  static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Preset sizes for the spinner */
   @property({ reflect: true }) size?: SpinnerSize;
@@ -59,7 +59,7 @@ export class PfV6Spinner extends LitElement {
 
   override render(): TemplateResult {
     return html`
-      <svg viewBox="0 0 100 100">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
         <circle cx="50" cy="50" r="45" fill="none" />
       </svg>
     `;

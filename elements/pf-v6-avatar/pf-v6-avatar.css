@@ -4,8 +4,8 @@
   --_border-radius: var(--pf-v6-c-avatar--BorderRadius, var(--pf-t--global--border--radius--pill, 30em));
   --_border-color: var(--pf-v6-c-avatar--BorderColor, transparent);
   --_border-width: var(--pf-v6-c-avatar--BorderWidth, 0);
-  --_placeholder-bg: light-dark(#f0f0f0, #212427);
-  --_placeholder-fg: light-dark(#d2d2d2, #6a6e73);
+  --_placeholder-bg: var(--pf-t--global--background--color--200, light-dark(var(--pf-t--color--gray--10, #f2f2f2), var(--pf-t--color--gray--80, #292929)));
+  --_placeholder-fg: var(--pf-t--global--icon--color--subtle, light-dark(var(--pf-t--color--gray--50, #707070), var(--pf-t--color--gray--40, #a3a3a3)));
 
   display: inline-block;
   width: var(--_width);

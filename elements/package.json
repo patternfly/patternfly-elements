@@ -5,12 +5,11 @@
   "description": "PatternFly Elements",
   "customElements": "custom-elements.json",
   "type": "module",
-  "module": "./pfe.js",
-  "types": "./pfe.d.ts",
   "exports": {
     "./form-control.css": "./form-control.css",
     "./form-control.css.js": "./form-control.css.js",
-    "./react/*": "./react/*"
+    "./react/*": "./react/*",
+    "./*": "./*"
   },
   "publishConfig": {
     "access": "public",

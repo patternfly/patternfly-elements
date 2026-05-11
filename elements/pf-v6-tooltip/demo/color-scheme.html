@@ -1,0 +1,44 @@
+---
+description: Tooltip inverts to contrast with the page color scheme.
+---
+<section class="light">
+  <h3>Light mode</h3>
+  <pf-v6-tooltip content="Dark tooltip on light background">
+    <pf-v5-button>Light page trigger</pf-v5-button>
+  </pf-v6-tooltip>
+</section>
+
+<section class="dark">
+  <h3>Dark mode</h3>
+  <pf-v6-tooltip content="Light tooltip on dark background">
+    <pf-v5-button>Dark page trigger</pf-v5-button>
+  </pf-v6-tooltip>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 3em;
+    text-align: center;
+  }
+
+  .light {
+    color-scheme: light;
+    background-color: #fff;
+    color: #1f1f1f;
+  }
+
+  .dark {
+    color-scheme: dark;
+    background-color: #1b1d21;
+    color: #f2f2f2;
+  }
+
+  h3 {
+    margin-block-start: 0;
+  }
+</style>

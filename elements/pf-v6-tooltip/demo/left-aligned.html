@@ -1,0 +1,21 @@
+---
+description: Tooltip text can be left-aligned instead of centered.
+---
+<section>
+  <pf-v6-tooltip alignment="start"
+                 content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.">
+    <pf-v5-button>Left-aligned tooltip</pf-v5-button>
+  </pf-v6-tooltip>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 6em;
+    text-align: center;
+  }
+</style>

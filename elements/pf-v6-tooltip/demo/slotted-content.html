@@ -1,0 +1,28 @@
+---
+description: Tooltip content can include formatted HTML via the content slot.
+---
+<section>
+  <p>A tooltip may contain
+    <pf-v6-tooltip>
+      <samp tabindex="0">HTML content</samp>
+      <span slot="content">
+        Slotted content can be <mark>formatted</mark>, using HTML
+        tags like <em>em</em>, <strong>strong</strong>, or <code>code</code>.
+      </span>
+    </pf-v6-tooltip> by using the <code>content</code> slot.
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 6em;
+  }
+
+  samp {
+    font-weight: bold;
+  }
+</style>

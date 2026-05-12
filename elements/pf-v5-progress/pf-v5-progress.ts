@@ -74,7 +74,7 @@ export class PfV5Progress extends LitElement {
       import('@patternfly/elements/pf-v5-icon/pf-v5-icon.js');
     }
     if (this.descriptionTruncated) {
-      import('@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js');
+      import('@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js');
     }
   }
 
@@ -97,8 +97,8 @@ export class PfV5Progress extends LitElement {
         <div id="description" aria-hidden="true">${description ?? ''}</div>
 
         ${!descriptionTruncated ? '' : html`
-        <pf-v5-tooltip content="${this.description ?? ''}"
-                    trigger="description"></pf-v5-tooltip>
+        <pf-v6-tooltip content="${this.description ?? ''}"
+                    trigger="description"></pf-v6-tooltip>
         `}
 
         ${measureLocation === 'none' ? '' : html`

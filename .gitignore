@@ -103,6 +103,9 @@ core/pfe-core/demo/*
 .sonarlint
 .history
 
+# AI
+.claude/settings.local.json
+
 # Temp files
 *~
 *.swp

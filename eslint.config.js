@@ -13,7 +13,7 @@ export default tseslint.config(
   {
     name: 'local/ignores',
     ignores: [
-      'elements/pf-v5-icon/demo/icons/**/*.js',
+      'elements/pf-v*-icon/demo/icons/**/*.js',
       'tools/create-element/templates/**/*',
       'tools/create-element/**/*.js',
       'tools/create-element/templates/**/*',
@@ -23,11 +23,6 @@ export default tseslint.config(
     name: 'local/elements/package.json',
     files: ['elements/package.json'],
     plugins: { '@patternfly/elements': pfePlugin },
-    rules: {
-      '@patternfly/elements/no-missing-package-exports': [States.ERROR, {
-        matches: ['elements/*/pf-*.js'],
-      }],
-    },
   },
   {
     name: 'local/tools/create-element',

@@ -1,0 +1,39 @@
+---
+name: Status
+description: When a banner conveys status, use the status attribute. Include an icon and screen-reader-text for accessibility.
+---
+<pf-v6-banner status="success" screen-reader-text="Success banner">
+  <pf-v5-icon icon="check-circle"></pf-v5-icon>
+  Success banner
+</pf-v6-banner>
+
+<pf-v6-banner status="warning" screen-reader-text="Warning banner">
+  <pf-v5-icon icon="exclamation-triangle"></pf-v5-icon>
+  Warning banner
+</pf-v6-banner>
+
+<pf-v6-banner status="danger" screen-reader-text="Danger banner">
+  <pf-v5-icon icon="exclamation-circle"></pf-v5-icon>
+  Danger banner
+</pf-v6-banner>
+
+<pf-v6-banner status="info" screen-reader-text="Info banner">
+  <pf-v5-icon icon="info-circle"></pf-v5-icon>
+  Info banner
+</pf-v6-banner>
+
+<pf-v6-banner status="custom" screen-reader-text="Custom banner">
+  <pf-v5-icon icon="bell"></pf-v5-icon>
+  Custom banner
+</pf-v6-banner>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-banner/pf-v6-banner.js';
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+</script>
+
+<style>
+pf-v6-banner + pf-v6-banner {
+  margin-block-start: 0.5rem;
+}
+</style>

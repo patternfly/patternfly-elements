@@ -224,6 +224,6 @@ progress[value]::-webkit-progress-value {
   );
 }
 
-pf-v5-tooltip {
+pf-v6-tooltip {
   height: 0.01px;
 }

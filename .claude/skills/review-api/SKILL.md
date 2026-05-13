@@ -106,6 +106,7 @@ Read `.claude/ADVICE.md` for reference rules.
 - [ ] `static styles = [styles]` array form?
 - [ ] Controllers for cross-cutting concerns?
 - [ ] `isServer` guards on browser-only APIs?
+- [ ] Quoting attribute values in Lit templates `src="{$this.src}"`?
 
 #### Lint
 ```bash

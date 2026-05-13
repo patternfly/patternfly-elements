@@ -18,21 +18,6 @@ export class PfV6AvatarLoadEvent extends Event {
  * or a placeholder graphic.
  * @summary Displays a user's avatar image
  * @fires {PfV6AvatarLoadEvent} load - when the avatar image loads
- * @cssprop {<length>} --pf-v6-c-avatar--Width - Width of the avatar
- * @cssprop {<length>} --pf-v6-c-avatar--Height - Height of the avatar
- * @cssprop {<length>} --pf-v6-c-avatar--BorderRadius - Border radius of the avatar
- * @cssprop {<color>} --pf-v6-c-avatar--BorderColor - Border color of the avatar
- * @cssprop {<length>} --pf-v6-c-avatar--BorderWidth - Border width of the avatar
- * @cssprop {<length>} --pf-v6-c-avatar--m-sm--Width - Width when size is `sm`
- * @cssprop {<length>} --pf-v6-c-avatar--m-sm--Height - Height when size is `sm`
- * @cssprop {<length>} --pf-v6-c-avatar--m-md--Width - Width when size is `md`
- * @cssprop {<length>} --pf-v6-c-avatar--m-md--Height - Height when size is `md`
- * @cssprop {<length>} --pf-v6-c-avatar--m-lg--Width - Width when size is `lg`
- * @cssprop {<length>} --pf-v6-c-avatar--m-lg--Height - Height when size is `lg`
- * @cssprop {<length>} --pf-v6-c-avatar--m-xl--Width - Width when size is `xl`
- * @cssprop {<length>} --pf-v6-c-avatar--m-xl--Height - Height when size is `xl`
- * @cssprop {<color>} --pf-v6-c-avatar--m-bordered--BorderColor - Border color when bordered
- * @cssprop {<length>} --pf-v6-c-avatar--m-bordered--BorderWidth - Border width when bordered
  */
 @customElement('pf-v6-avatar')
 export class PfV6Avatar extends LitElement {

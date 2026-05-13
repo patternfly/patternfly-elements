@@ -1,9 +1,19 @@
 :host {
-  --_width: var(--pf-v6-c-avatar--Width, 2.25rem);
-  --_height: var(--pf-v6-c-avatar--Height, 2.25rem);
-  --_border-radius: var(--pf-v6-c-avatar--BorderRadius, var(--pf-t--global--border--radius--pill, 30em));
-  --_border-color: var(--pf-v6-c-avatar--BorderColor, transparent);
-  --_border-width: var(--pf-v6-c-avatar--BorderWidth, 0);
+  --_width:
+    /** Width of the avatar */
+    var(--pf-v6-c-avatar--Width, 2.25rem);
+  --_height:
+    /** Height of the avatar */
+    var(--pf-v6-c-avatar--Height, 2.25rem);
+  --_border-radius:
+    /** Border radius of the avatar */
+    var(--pf-v6-c-avatar--BorderRadius, var(--pf-t--global--border--radius--pill, 30em));
+  --_border-color:
+    /** Border color of the avatar */
+    var(--pf-v6-c-avatar--BorderColor, transparent);
+  --_border-width:
+    /** Border width of the avatar */
+    var(--pf-v6-c-avatar--BorderWidth, 0);
   --_placeholder-bg: var(--pf-t--global--background--color--200, light-dark(var(--pf-t--color--gray--10, #f2f2f2), var(--pf-t--color--gray--80, #292929)));
   --_placeholder-fg: var(--pf-t--global--icon--color--subtle, light-dark(var(--pf-t--color--gray--50, #707070), var(--pf-t--color--gray--40, #a3a3a3)));
 
@@ -19,28 +29,48 @@
 }
 
 :host([bordered]) {
-  --_border-color: var(--pf-v6-c-avatar--m-bordered--BorderColor, var(--pf-t--global--border--color--default, #d2d2d2));
-  --_border-width: var(--pf-v6-c-avatar--m-bordered--BorderWidth, var(--pf-t--global--border--width--box--default, 1px));
+  --_border-color:
+    /** Border color when bordered */
+    var(--pf-v6-c-avatar--m-bordered--BorderColor, var(--pf-t--global--border--color--default, #d2d2d2));
+  --_border-width:
+    /** Border width when bordered */
+    var(--pf-v6-c-avatar--m-bordered--BorderWidth, var(--pf-t--global--border--width--box--default, 1px));
 }
 
 :host([size="sm"]) {
-  --_width: var(--pf-v6-c-avatar--m-sm--Width, 1.5rem);
-  --_height: var(--pf-v6-c-avatar--m-sm--Height, 1.5rem);
+  --_width:
+    /** Width when size is sm */
+    var(--pf-v6-c-avatar--m-sm--Width, 1.5rem);
+  --_height:
+    /** Height when size is sm */
+    var(--pf-v6-c-avatar--m-sm--Height, 1.5rem);
 }
 
 :host([size="md"]) {
-  --_width: var(--pf-v6-c-avatar--m-md--Width, 2.25rem);
-  --_height: var(--pf-v6-c-avatar--m-md--Height, 2.25rem);
+  --_width:
+    /** Width when size is md */
+    var(--pf-v6-c-avatar--m-md--Width, 2.25rem);
+  --_height:
+    /** Height when size is md */
+    var(--pf-v6-c-avatar--m-md--Height, 2.25rem);
 }
 
 :host([size="lg"]) {
-  --_width: var(--pf-v6-c-avatar--m-lg--Width, 4.5rem);
-  --_height: var(--pf-v6-c-avatar--m-lg--Height, 4.5rem);
+  --_width:
+    /** Width when size is lg */
+    var(--pf-v6-c-avatar--m-lg--Width, 4.5rem);
+  --_height:
+    /** Height when size is lg */
+    var(--pf-v6-c-avatar--m-lg--Height, 4.5rem);
 }
 
 :host([size="xl"]) {
-  --_width: var(--pf-v6-c-avatar--m-xl--Width, 8rem);
-  --_height: var(--pf-v6-c-avatar--m-xl--Height, 8rem);
+  --_width:
+    /** Width when size is xl */
+    var(--pf-v6-c-avatar--m-xl--Width, 8rem);
+  --_height:
+    /** Height when size is xl */
+    var(--pf-v6-c-avatar--m-xl--Height, 8rem);
 }
 
 svg,

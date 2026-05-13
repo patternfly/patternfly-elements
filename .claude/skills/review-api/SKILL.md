@@ -124,13 +124,16 @@ npx stylelint elements/pf-v6-{name}/**/*.css
 - [ ] No arrow functions in test blocks?
 - [ ] Behavioral expectations from React tests covered?
 
-### Phase 5: JSDoc
+### Phase 5: JSDoc and cem documentation comments
 
 - [ ] `@summary` present on element class?
 - [ ] All public properties/methods have `/** */` JSDoc (not `//` comments)?
-- [ ] `@cssprop` with CSS data types: `@cssprop {color} --pf-v6-c-button--Color`?
-- [ ] `@csspart` for all exposed parts?
-- [ ] `@slot` for all slots (prescriptive descriptions)?
+- [ ] CSS custom properties documented with `/** */` comments in the CSS file,
+co-located with the declaration or `var()` reference?
+- [ ] CSS parts documented with `<!-- summary: ... -->` HTML comments before the
+`part="..."` element in the template?
+- [ ] Slots documented with `<!-- summary: ... -->` HTML comments before the `<slot>`
+element in the template?
 - [ ] `@fires` for all dispatched events?
 - [ ] No unnecessary `@default` tags (analyzer picks up initializers)?
 

@@ -257,7 +257,7 @@ See `.claude/skills/review-api/SKILL.md` Phase 4 for full test checklist.
 
 ### Phase 8: Delete v5 element
 
-Delete the directory and it's contents from ./elements/`pf-v5-{name}`
+Delete the directory and it's contents from ./elements/`pf-v5-{name}`. replace all references to `pf-v5-{name}`, except historical changelogs, and update their usage to conform to new APIs. This includes demos for v6 elements which use v5 dependencies.
 
 ### Phase 9: Audit
 

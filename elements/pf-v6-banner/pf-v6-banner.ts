@@ -67,13 +67,10 @@ export class PfV6Banner extends LitElement {
   @property({ attribute: 'screen-reader-text' }) screenReaderText?: string;
 
   override render(): TemplateResult {
+    const { color = '', status = '', screenReaderText } = this;
     return html`
-      <div id="container" class=${classMap({
-        [this.color ?? '']: !!this.color,
-        [this.status ?? '']: !!this.status,
-      })}>
-        ${!this.screenReaderText ? nothing
-          : html`<span class="sr-only">${this.screenReaderText}</span>`}
+      <div id="container" class=${classMap({ [color]: !!color, [status]: !!status })}>
+        <span ?hidden="${!screenReaderText}" class="sr-only">${screenReaderText}</span>
         <slot></slot>
       </div>
     `;

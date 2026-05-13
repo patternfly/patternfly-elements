@@ -12,6 +12,7 @@
 svg {
   overflow: hidden;
   width: var(--pf-v6-c-spinner--Width,
+    /** Custom diameter of the spinner */
     var(--pf-v6-c-spinner--diameter,
       var(--pf-t--global--icon--size--2xl, 3.5rem)));
   height: var(--pf-v6-c-spinner--Height,
@@ -19,7 +20,9 @@ svg {
       var(--pf-t--global--icon--size--2xl, 3.5rem)));
   animation:
     rotate
-    calc(var(--pf-v6-c-spinner--AnimationDuration, 1.4s) * 2)
+    calc(
+      /** Duration of one animation cycle */
+      var(--pf-v6-c-spinner--AnimationDuration, 1.4s) * 2)
     var(--pf-v6-c-spinner--AnimationTimingFunction, linear) infinite;
 }
 
@@ -30,9 +33,13 @@ circle {
   stroke-linecap: round;
   stroke-dasharray: 283;
   stroke-dashoffset: 280;
-  stroke: var(--pf-v6-c-spinner--Color,
-    var(--pf-t--global--icon--color--brand--default, #0066cc));
-  stroke-width: var(--pf-v6-c-spinner--StrokeWidth, 10);
+  stroke:
+    /** Color of the spinner stroke */
+    var(--pf-v6-c-spinner--Color,
+      var(--pf-t--global--icon--color--brand--default, #0066cc));
+  stroke-width:
+    /** Width of the spinner stroke */
+    var(--pf-v6-c-spinner--StrokeWidth, 10);
   animation:
     dash
     var(--pf-v6-c-spinner--AnimationDuration, 1.4s)

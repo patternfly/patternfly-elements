@@ -12,10 +12,6 @@ export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
  * A **spinner** is an animated visual that indicates when a quick action is
  * in progress. For actions that may take a long time, use a progress bar instead.
  * @summary Indicates that an action is in progress.
- * @cssprop {<length>} [--pf-v6-c-spinner--diameter] - Custom diameter of the spinner
- * @cssprop {<color>} [--pf-v6-c-spinner--Color] - Color of the spinner stroke
- * @cssprop {<time>} [--pf-v6-c-spinner--AnimationDuration=1.4s] - Duration of one animation cycle
- * @cssprop {<number>} [--pf-v6-c-spinner--StrokeWidth=10] - Width of the spinner stroke
  */
 @customElement('pf-v6-spinner')
 export class PfV6Spinner extends LitElement {

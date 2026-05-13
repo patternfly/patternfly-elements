@@ -255,7 +255,11 @@ Update existing tests -- don't rewrite from scratch:
 
 See `.claude/skills/review-api/SKILL.md` Phase 4 for full test checklist.
 
-### Phase 8: Audit
+### Phase 8: Delete v5 element
+
+Delete the directory and it's contents from ./elements/`pf-v5-{name}`
+
+### Phase 9: Audit
 
 Prompt the user to activate /review-api, /review-demos, and /review-a11y
 

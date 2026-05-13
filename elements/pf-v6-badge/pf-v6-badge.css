@@ -1,24 +1,40 @@
 :host {
   position: relative;
   display: inline-block;
-  min-width: var(--pf-v6-c-badge--MinWidth,
-    var(--pf-t--global--spacer--xl, 2rem));
-  padding-inline-start: var(--pf-v6-c-badge--PaddingInlineStart,
-    var(--pf-t--global--spacer--sm, 0.5rem));
-  padding-inline-end: var(--pf-v6-c-badge--PaddingInlineEnd,
-    var(--pf-t--global--spacer--sm, 0.5rem));
-  font-size: var(--pf-v6-c-badge--FontSize,
-    var(--pf-t--global--font--size--body--sm, 0.75rem));
-  font-weight: var(--pf-v6-c-badge--FontWeight,
-    var(--pf-t--global--font--weight--body--bold, 700));
-  color: var(--pf-v6-c-badge--Color,
-    var(--pf-t--global--text--color--nonstatus--on-gray--default, #151515));
+  min-width:
+    /** Minimum width of the badge */
+    var(--pf-v6-c-badge--MinWidth,
+      var(--pf-t--global--spacer--xl, 2rem));
+  padding-inline-start:
+    /** Inline start padding */
+    var(--pf-v6-c-badge--PaddingInlineStart,
+      var(--pf-t--global--spacer--sm, 0.5rem));
+  padding-inline-end:
+    /** Inline end padding */
+    var(--pf-v6-c-badge--PaddingInlineEnd,
+      var(--pf-t--global--spacer--sm, 0.5rem));
+  font-size:
+    /** Font size of the badge text */
+    var(--pf-v6-c-badge--FontSize,
+      var(--pf-t--global--font--size--body--sm, 0.75rem));
+  font-weight:
+    /** Font weight of the badge text */
+    var(--pf-v6-c-badge--FontWeight,
+      var(--pf-t--global--font--weight--body--bold, 700));
+  color:
+    /** Text color of the badge */
+    var(--pf-v6-c-badge--Color,
+      var(--pf-t--global--text--color--nonstatus--on-gray--default, #151515));
   text-align: center;
   white-space: nowrap;
-  background-color: var(--pf-v6-c-badge--BackgroundColor,
-    var(--pf-t--global--color--nonstatus--gray--default, #f0f0f0));
-  border-radius: var(--pf-v6-c-badge--BorderRadius,
-    var(--pf-t--global--border--radius--pill, 180em));
+  background-color:
+    /** Background color of the badge */
+    var(--pf-v6-c-badge--BackgroundColor,
+      var(--pf-t--global--color--nonstatus--gray--default, #f0f0f0));
+  border-radius:
+    /** Border radius of the badge */
+    var(--pf-v6-c-badge--BorderRadius,
+      var(--pf-t--global--border--radius--pill, 180em));
 }
 
 :host::after {
@@ -26,33 +42,54 @@
   inset: 0;
   pointer-events: none;
   content: "";
-  border: var(--pf-v6-c-badge--BorderWidth,
-    var(--pf-t--global--border--width--regular, 1px)) solid var(--pf-v6-c-badge--BorderColor, transparent);
+  border:
+    /** Border width of the badge */
+    var(--pf-v6-c-badge--BorderWidth,
+      var(--pf-t--global--border--width--regular, 1px))
+    solid
+    /** Border color of the badge */
+    var(--pf-v6-c-badge--BorderColor, transparent);
   border-radius: inherit;
 }
 
 :host([state="read"]) {
-  --pf-v6-c-badge--Color: var(--pf-v6-c-badge--m-read--Color,
-    var(--pf-t--global--text--color--nonstatus--on-gray--default, #151515));
-  --pf-v6-c-badge--BackgroundColor: var(--pf-v6-c-badge--m-read--BackgroundColor,
-    var(--pf-t--global--color--nonstatus--gray--default, #f0f0f0));
-  --pf-v6-c-badge--BorderColor: var(--pf-v6-c-badge--m-read--BorderColor,
-    var(--pf-t--global--border--color--high-contrast, #151515));
+  --pf-v6-c-badge--Color:
+    /** Text color in read state */
+    var(--pf-v6-c-badge--m-read--Color,
+      var(--pf-t--global--text--color--nonstatus--on-gray--default, #151515));
+  --pf-v6-c-badge--BackgroundColor:
+    /** Background color in read state */
+    var(--pf-v6-c-badge--m-read--BackgroundColor,
+      var(--pf-t--global--color--nonstatus--gray--default, #f0f0f0));
+  --pf-v6-c-badge--BorderColor:
+    /** Border color in read state */
+    var(--pf-v6-c-badge--m-read--BorderColor,
+      var(--pf-t--global--border--color--high-contrast, #151515));
 }
 
 :host([state="unread"]) {
-  --pf-v6-c-badge--Color: var(--pf-v6-c-badge--m-unread--Color,
-    var(--pf-t--global--text--color--on-brand--default, #fff));
-  --pf-v6-c-badge--BackgroundColor: var(--pf-v6-c-badge--m-unread--BackgroundColor,
-    var(--pf-t--global--color--brand--default, #06c));
+  --pf-v6-c-badge--Color:
+    /** Text color in unread state */
+    var(--pf-v6-c-badge--m-unread--Color,
+      var(--pf-t--global--text--color--on-brand--default, #fff));
+  --pf-v6-c-badge--BackgroundColor:
+    /** Background color in unread state */
+    var(--pf-v6-c-badge--m-unread--BackgroundColor,
+      var(--pf-t--global--color--brand--default, #06c));
 }
 
 :host([disabled]) {
-  --pf-v6-c-badge--Color: var(--pf-v6-c-badge--m-disabled--Color,
-    var(--pf-t--global--text--color--on-disabled, #6a6e73));
-  --pf-v6-c-badge--BackgroundColor: var(--pf-v6-c-badge--m-disabled--BackgroundColor,
-    var(--pf-t--global--background--color--disabled--default, #d2d2d2));
-  --pf-v6-c-badge--BorderColor: var(--pf-v6-c-badge--m-disabled--BorderColor,
-    var(--pf-t--global--border--color--disabled, #d2d2d2));
+  --pf-v6-c-badge--Color:
+    /** Text color when disabled */
+    var(--pf-v6-c-badge--m-disabled--Color,
+      var(--pf-t--global--text--color--on-disabled, #6a6e73));
+  --pf-v6-c-badge--BackgroundColor:
+    /** Background color when disabled */
+    var(--pf-v6-c-badge--m-disabled--BackgroundColor,
+      var(--pf-t--global--background--color--disabled--default, #d2d2d2));
+  --pf-v6-c-badge--BorderColor:
+    /** Border color when disabled */
+    var(--pf-v6-c-badge--m-disabled--BorderColor,
+      var(--pf-t--global--border--color--disabled, #d2d2d2));
   pointer-events: none;
 }

@@ -10,29 +10,47 @@
 :host([sticky]) {
   position: sticky;
   inset-block-start: 0;
-  z-index: var(--pf-v6-c-banner--m-sticky--ZIndex,
-    var(--pf-t--global--z-index--md, 300));
-  box-shadow: var(--pf-v6-c-banner--m-sticky--BoxShadow,
-    var(--pf-t--global--box-shadow--md));
+  z-index:
+    /** Overrides the z-index when sticky */
+    var(--pf-v6-c-banner--m-sticky--ZIndex,
+      var(--pf-t--global--z-index--md, 300));
+  box-shadow:
+    /** Overrides the box shadow when sticky */
+    var(--pf-v6-c-banner--m-sticky--BoxShadow,
+      var(--pf-t--global--box-shadow--md));
 }
 
 #container {
-  --_bg: var(--pf-v6-c-banner--BackgroundColor,
-    var(--pf-t--global--color--nonstatus--gray--default,
-      light-dark(var(--pf-t--color--gray--20, #e0e0e0), var(--pf-t--color--gray--60, #4d4d4d))));
-  --_color: var(--pf-v6-c-banner--Color,
-    var(--pf-t--global--text--color--nonstatus--on-gray--default,
-      light-dark(var(--pf-t--color--gray--100, #151515), var(--pf-t--color--white, #ffffff))));
-  --_padding-block: var(--pf-v6-c-banner--PaddingBlockStart,
-    var(--pf-t--global--spacer--xs, 0.25rem));
-  --_padding-inline: var(--pf-v6-c-banner--PaddingInlineStart,
-    var(--pf-t--global--spacer--md, 1rem));
-  --_font-size: var(--pf-v6-c-banner--FontSize,
-    var(--pf-t--global--font--size--body--default, 0.875rem));
-  --_border-color: var(--pf-v6-c-banner--BorderColor,
-    var(--pf-t--global--border--color--high-contrast, transparent));
-  --_border-width: var(--pf-v6-c-banner--BorderWidth,
-    var(--pf-t--global--border--width--high-contrast--regular, 0));
+  --_bg:
+    /** Overrides the banner background color */
+    var(--pf-v6-c-banner--BackgroundColor,
+      var(--pf-t--global--color--nonstatus--gray--default,
+        light-dark(var(--pf-t--color--gray--20, #e0e0e0), var(--pf-t--color--gray--60, #4d4d4d))));
+  --_color:
+    /** Overrides the banner text color */
+    var(--pf-v6-c-banner--Color,
+      var(--pf-t--global--text--color--nonstatus--on-gray--default,
+        light-dark(var(--pf-t--color--gray--100, #151515), var(--pf-t--color--white, #ffffff))));
+  --_padding-block:
+    /** Overrides the block padding */
+    var(--pf-v6-c-banner--PaddingBlockStart,
+      var(--pf-t--global--spacer--xs, 0.25rem));
+  --_padding-inline:
+    /** Overrides the inline padding */
+    var(--pf-v6-c-banner--PaddingInlineStart,
+      var(--pf-t--global--spacer--md, 1rem));
+  --_font-size:
+    /** Overrides the font size */
+    var(--pf-v6-c-banner--FontSize,
+      var(--pf-t--global--font--size--body--default, 0.875rem));
+  --_border-color:
+    /** Overrides the block border color, visible in high-contrast mode */
+    var(--pf-v6-c-banner--BorderColor,
+      var(--pf-t--global--border--color--high-contrast, transparent));
+  --_border-width:
+    /** Overrides the block border width, visible in high-contrast mode */
+    var(--pf-v6-c-banner--BorderWidth,
+      var(--pf-t--global--border--width--high-contrast--regular, 0));
 
   flex-shrink: 0;
   padding-block: var(--_padding-block);
@@ -44,8 +62,10 @@
   border-block: var(--_border-width) solid var(--_border-color);
 
   @media (min-width: 768px) {
-    --_padding-inline: var(--pf-v6-c-banner--md--PaddingInlineStart,
-      var(--pf-t--global--spacer--lg, 1.5rem));
+    --_padding-inline:
+      /** Overrides the inline padding at the medium breakpoint */
+      var(--pf-v6-c-banner--md--PaddingInlineStart,
+        var(--pf-t--global--spacer--lg, 1.5rem));
   }
 
   /* Non-status color modifiers (before status so status takes precedence) */

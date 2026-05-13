@@ -36,19 +36,6 @@ export type BannerStatus =
  * remains focusable via Tab.
  *
  * @summary Provides a full-width banner for brief, non-dismissible messages.
- * @slot - Banner content, including text, links, or icons. For accessibility,
- *         status banners MUST include `screen-reader-text` and SHOULD include
- *         a status icon so sighted users can identify the status at a glance.
- * @cssprop {<color>} [--pf-v6-c-banner--BackgroundColor] - Overrides the banner background color. Defaults to `--pf-t--global--color--nonstatus--gray--default`.
- * @cssprop {<color>} [--pf-v6-c-banner--Color] - Overrides the banner text color. Defaults to `--pf-t--global--text--color--nonstatus--on-gray--default`.
- * @cssprop {<length>} [--pf-v6-c-banner--PaddingBlockStart] - Overrides the block padding. Defaults to `--pf-t--global--spacer--xs`.
- * @cssprop {<length>} [--pf-v6-c-banner--PaddingInlineStart] - Overrides the inline padding. Defaults to `--pf-t--global--spacer--md`.
- * @cssprop {<length>} [--pf-v6-c-banner--md--PaddingInlineStart] - Overrides the inline padding at the medium breakpoint. Defaults to `--pf-t--global--spacer--lg`.
- * @cssprop {<length>} [--pf-v6-c-banner--FontSize] - Overrides the font size. Defaults to `--pf-t--global--font--size--body--default`.
- * @cssprop {<color>} [--pf-v6-c-banner--BorderColor] - Overrides the block border color, visible in high-contrast mode. Defaults to `--pf-t--global--border--color--high-contrast`.
- * @cssprop {<length>} [--pf-v6-c-banner--BorderWidth] - Overrides the block border width, visible in high-contrast mode. Defaults to `--pf-t--global--border--width--high-contrast--regular`.
- * @cssprop {<integer>} [--pf-v6-c-banner--m-sticky--ZIndex] - Overrides the z-index when sticky. Defaults to `--pf-t--global--z-index--md`.
- * @cssprop [--pf-v6-c-banner--m-sticky--BoxShadow] - Overrides the box shadow when sticky. Defaults to `--pf-t--global--box-shadow--md`.
  */
 @customElement('pf-v6-banner')
 export class PfV6Banner extends LitElement {
@@ -71,7 +58,7 @@ export class PfV6Banner extends LitElement {
     return html`
       <div id="container" class=${classMap({ [color]: !!color, [status]: !!status })}>
         <span ?hidden="${!screenReaderText}" class="sr-only">${screenReaderText}</span>
-        <slot></slot>
+        <!-- Banner content, including text, links, or icons. For accessibility, status banners MUST include screen-reader-text and SHOULD include a status icon so sighted users can identify the status at a glance. --><slot></slot>
       </div>
     `;
   }

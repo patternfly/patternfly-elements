@@ -103,11 +103,11 @@ describe('<pf-v6-spinner>', function() {
     }
   });
 
-  describe('diameter attribute', function() {
+  describe('custom diameter via CSS custom property', function() {
     it('sets the element diameter', async function() {
       const customDiameterValue = 80;
       const element = await createFixture<PfV6Spinner>(html`
-        <pf-v6-spinner diameter="${customDiameterValue}px">Loading...</pf-v6-spinner>
+        <pf-v6-spinner style="--pf-v6-c-spinner--diameter: ${customDiameterValue}px">Loading...</pf-v6-spinner>
       `);
       expect(element.offsetWidth).to.equal(customDiameterValue);
     });

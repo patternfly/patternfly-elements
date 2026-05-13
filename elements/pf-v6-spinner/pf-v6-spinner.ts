@@ -30,9 +30,6 @@ export class PfV6Spinner extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) inline = false;
 
-  /** Custom diameter of spinner set as CSS variable */
-  @property({ reflect: true }) diameter?: string;
-
   /** Accessible label describing what is loading */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
@@ -47,13 +44,6 @@ export class PfV6Spinner extends LitElement {
       const label = this.accessibleLabel ?? 'Loading...';
       this.#internals.ariaLabel = label;
       this.#internals.ariaValueText = label;
-    }
-    if (changed.has('diameter')) {
-      if (this.diameter) {
-        this.style.setProperty('--pf-v6-c-spinner--diameter', this.diameter);
-      } else {
-        this.style.removeProperty('--pf-v6-c-spinner--diameter');
-      }
     }
   }
 

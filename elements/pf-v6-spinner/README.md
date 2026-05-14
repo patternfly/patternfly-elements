@@ -1,30 +1,9 @@
-# PatternFly Elements Spinner
+# `<pf-v6-spinner>`
 
-`<pf-v6-spinner>` is used to indicate to users that an action is in progress.
-
-Read more about Spinner in the [PatternFly Elements Spinner documentation](https://patternflyelements.org/components/spinner)
-
-## Installation
-
-Load `<pf-v6-spinner>` via CDN:
-
-```html
-<script src="https://jspm.dev/@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js"></script>
-```
-
-Or, if you are using [NPM](https://npm.im), install it
-
-```bash
-npm install @patternfly/elements
-```
-
-Then once installed, import it to your application:
-
-```js
-import '@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js';
-```
+A spinner indicates that an action is in progress.
 
 ## Usage
+
 ```html
 <pf-v6-spinner>Loading...</pf-v6-spinner>
 ```
@@ -44,8 +23,28 @@ import '@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js';
 <pf-v6-spinner style="--pf-v6-c-spinner--diameter: 80px">Loading...</pf-v6-spinner>
 ```
 
-## Discrepancies from React
+## Divergences from React `Spinner`
 
-| React Prop | Web Component | Rationale |
-|------------|---------------|-----------|
-| `diameter` | `--pf-v6-c-spinner--diameter` CSS custom property | React's `diameter` prop abstracts setting this CSS custom property. In HTML, authors can set the custom property directly via `style`, so a dedicated attribute is not needed. |
+### Not implemented
+
+| React prop | Notes |
+|------------|-------|
+| `aria-labelledBy` | Use `accessible-label` attribute instead, or set `aria-labelledby` via ElementInternals from a framework wrapper. |
+
+### Changed API
+
+| React prop | Web component | Difference |
+|------------|---------------|------------|
+| `diameter` | `--pf-v6-c-spinner--diameter` CSS custom property | React abstracts the CSS custom property behind a prop. In HTML, set it directly via `style`. |
+| `aria-valuetext` | `accessible-label` attribute | Sets both `aria-label` and `aria-valuetext` on the element internals. Defaults to `"Loading..."`. |
+| `aria-label` | `accessible-label` attribute | Merged with `aria-valuetext` into a single `accessible-label` attribute. |
+
+### Added
+
+| Web component API | Notes |
+|-------------------|-------|
+| `size="xs"` | Extra-small size preset not available in React. |
+| `inline` attribute | Boolean attribute equivalent to React's `isInline`. |
+| `--pf-v6-c-spinner--Color` | CSS custom property to change the spinner stroke color. |
+| `--pf-v6-c-spinner--StrokeWidth` | CSS custom property to change the spinner stroke width. |
+| `--pf-v6-c-spinner--AnimationDuration` | CSS custom property to change the animation cycle duration. |

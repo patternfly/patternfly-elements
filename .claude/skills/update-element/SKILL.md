@@ -255,11 +255,47 @@ Update existing tests -- don't rewrite from scratch:
 
 See `.claude/skills/review-api/SKILL.md` Phase 4 for full test checklist.
 
-### Phase 8: Delete v5 element
+### Phase 8: Write README
+
+Create `elements/pf-v6-{name}/README.md` documenting divergences from
+the React component API. Structure:
+
+1. **Title and summary** -- element tag, one-line description
+2. **Usage** -- 2-3 HTML snippets showing common patterns
+3. **Divergences from React `{Name}`** -- three tables:
+
+#### "Not implemented" table (2 columns: React prop | Notes)
+React props with no web component equivalent and no workaround.
+Only truly absent features belong here.
+
+#### "Changed API" table (3 columns: React prop | Web component | Difference)
+React props that have a web component equivalent but with different API shape.
+Include props where:
+- Name changed (e.g. `enableFlip` -> `no-flip`)
+- Type changed (e.g. boolean -> enum, prop -> CSS custom property)
+- Mechanism changed (e.g. callback -> DOM event, declarative -> imperative)
+- Not configurable but has a fixed internal value (note "Not supported" or
+  "Hardcoded to X")
+
+**Omit** props that map 1:1 as camelCase properties with dash-case attributes
+and identical semantics (e.g. React `entryDelay` -> attribute `entry-delay`).
+These are standard web component conventions, not divergences.
+
+#### "Added" table (2 columns: Web component API | Notes)
+Web-component-only APIs not present in React (events, methods, slots, CSS
+custom properties).
+
+**Accuracy rule:** verify each claim against the actual CSS and TS source.
+Don't claim CSS properties on the host affect shadow DOM internals. Check
+whether values are actually configurable or hardcoded.
+
+See `elements/pf-v6-tooltip/README.md` for a reference example.
+
+### Phase 9: Delete v5 element
 
 Delete the directory and it's contents from ./elements/`pf-v5-{name}`. replace all references to `pf-v5-{name}`, except historical changelogs, and update their usage to conform to new APIs. This includes demos for v6 elements which use v5 dependencies.
 
-### Phase 9: Audit
+### Phase 10: Audit
 
 Prompt the user to activate /review-api, /review-demos, and /review-a11y
 

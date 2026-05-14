@@ -6,6 +6,8 @@ import { property } from 'lit/decorators/property.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
+
 import {
   FloatingDOMController,
   type Placement,
@@ -66,7 +68,10 @@ const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
 export class PfV6Tooltip extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-  /** Position of the tooltip relative to the trigger element */
+  /** When true, the tooltip is displayed. */
+  @property({ type: Boolean }) visible = false;
+
+  /** Position of the tooltip relative to the trigger element. */
   @property() position: Placement = 'top';
 
   /** Tooltip content text. Overridden by the content slot. */
@@ -190,25 +195,33 @@ export class PfV6Tooltip extends LitElement {
 
   /** Show the tooltip programmatically */
   async show(): Promise<void> {
+    this.visible = true;
     await this.updateComplete;
     const placement = this.position;
     const offset =
-        !placement?.match(/top|bottom/) ? 15
-      : { mainAxis: 15, alignmentAxis: -4 };
-    await this.#float.show({
-      offset,
-      placement,
-      flip: !this.noFlip,
-      fallbackPlacements: this.flipBehavior,
-    });
+          !placement?.match(/top|bottom/) ? 15
+        : { mainAxis: 15, alignmentAxis: -4 };
+    const flip = !this.noFlip;
+    const fallbackPlacements = this.flipBehavior;
+    await this.#float.show({ offset, placement, flip, fallbackPlacements });
     this.#setAriaDescribedBy(true);
   }
 
   /** Hide the tooltip programmatically */
   async hide(): Promise<void> {
+    this.visible = false;
     this.#clearTimers();
     this.#setAriaDescribedBy(false);
     await this.#float.hide();
+  }
+
+  @observes('visible')
+  protected _visibleChanged(): void {
+    if (this.visible) {
+      this.show();
+    } else {
+      this.hide();
+    }
   }
 
   #setAriaDescribedBy(add: boolean): void {

@@ -127,12 +127,12 @@
       var(--pf-t--global--motion--timing-function--default, cubic-bezier(0.25, 0.1, 0.25, 1))
       both;
   }
-}
 
-:host([variant="danger"]) #status-icon {
-  animation: fade-in
-    var(--pf-t--global--motion--duration--fade--default, 0.3s)
-    var(--pf-t--global--motion--timing-function--default, cubic-bezier(0.25, 0.1, 0.25, 1));
+  :host([variant="danger"]) #status-icon {
+    animation: fade-in
+      var(--pf-t--global--motion--duration--fade--default, 0.3s)
+      var(--pf-t--global--motion--timing-function--default, cubic-bezier(0.25, 0.1, 0.25, 1));
+  }
 }
 
 /* Description truncation */

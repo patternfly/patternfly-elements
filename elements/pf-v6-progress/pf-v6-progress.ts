@@ -39,7 +39,7 @@ export class PfV6Progress extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
   /** Represents the value of the progress bar */
-  @property({ reflect: true, type: Number }) value = 0;
+  @property({ type: Number }) value = 0;
 
   /** Description (title) above the progress bar */
   @property() description?: string;
@@ -79,7 +79,7 @@ export class PfV6Progress extends LitElement {
     attribute: 'static-width',
   }) staticWidth = false;
 
-  #internals = InternalsController.of(this);
+  #internals = InternalsController.of(this, { role: 'progressbar' });
 
   #hasHelperText = false;
 
@@ -103,6 +103,14 @@ export class PfV6Progress extends LitElement {
   override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('value') || changed.has('min') || changed.has('max')) {
       this.#internals.ariaValueNow = this.#calculatedPercentage.toString();
+      this.#internals.ariaValueMin = '0';
+      this.#internals.ariaValueMax = '100';
+    }
+    if (changed.has('valueText')) {
+      this.#internals.ariaValueText = this.valueText ?? null;
+    }
+    if (changed.has('description')) {
+      this.#internals.ariaLabel = this.description ?? 'Progress status';
     }
   }
 
@@ -127,15 +135,7 @@ export class PfV6Progress extends LitElement {
         ${icon}
       </div>
 
-      <div id="bar"
-           role="progressbar"
-           aria-valuenow="${pct}"
-           aria-valuemin="0"
-           aria-valuemax="${this.max}"
-           aria-valuetext="${ifDefined(this.valueText)}"
-           aria-labelledby="${ifDefined(hasDescription ? 'description' : undefined)}"
-           aria-label="${ifDefined(!hasDescription ? 'Progress status' : undefined)}"
-           aria-describedby="${ifDefined(this.#hasHelperText ? 'helper-text' : undefined)}">
+      <div id="bar">
         <div id="indicator"
              style="${styleMap({ width: `${pct}%` })}">
           ${inside && !noMeasure ? html`<span id="measure">${displayText}</span>` : nothing}

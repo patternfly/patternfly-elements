@@ -1,0 +1,20 @@
+---
+description: Progress bar with outside measure using a static minimum width for alignment across multiple bars.
+---
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>
+
+<div class="stack">
+  <pf-v6-progress value="1" description="1%" measure-location="outside" static-width></pf-v6-progress>
+  <pf-v6-progress value="50" description="50%" measure-location="outside" static-width></pf-v6-progress>
+  <pf-v6-progress value="100" description="100%" measure-location="outside" static-width></pf-v6-progress>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-progress/pf-v6-progress.js';
+</script>

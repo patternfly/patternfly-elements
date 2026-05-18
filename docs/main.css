@@ -291,26 +291,12 @@ header.band h1 {
   color: var(--pf-theme--color--white, #fff);
 }
 
-.example-preview.pf-background-image pf-v5-background-image {
+.example-preview.pf-v6-background-image pf-v6-background-image {
   position: absolute;
   z-index: -1;
-  top: 0;
-  left: 0;
-}
-
-.example-preview.pf-background-image pf-v5-background-image::part(container) {
-  position: relative;
-}
-
-.example-preview.pf-background-image pf-v5-background-image,
-.example-preview.pf-background-image pf-v5-background-image::part(container) {
+  inset: 0;
   height: 100%;
   width: 100%;
-}
-
-.example-preview.pf-background-image pf-v5-background-image::part(container)::after {
-  position: absolute;
-  background-size: cover;
 }
 
 section.api.band.api-properties dl {

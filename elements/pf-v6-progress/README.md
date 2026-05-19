@@ -36,8 +36,7 @@ With helper text:
 | React prop | Notes |
 |---|---|
 | `label` | Use `value-text` for custom measure text. Rich content (ReactNode) not supported. |
-| `tooltipPosition` | Browser-native `title` tooltip used when `truncated` is set. |
-| `hideStatusIcon` | No equivalent. Use CSS to hide the icon if needed. |
+| `tooltipPosition` | Not implemented. |
 | `aria-describedby` | Not supported. Use the `helper-text` slot for supplementary text. |
 
 ### Changed API
@@ -51,6 +50,7 @@ With helper text:
 | `size` `"md"` | Default (no attribute) | React's `"md"` is the default size; omitting `size` produces the same result. |
 | `helperText` | `helper-text` slot | Slot instead of prop, accepts rich content. |
 | `aria-label` | `accessible-label` attribute | Screen reader name only, set via ElementInternals. Falls back to `description`, then `"Progress status"`. |
+| `hideStatusIcon` | `hide-status-icon` attribute | Boolean. Hides the variant status icon while keeping variant coloring on the bar. |
 | `aria-labelledby` | `accessible-labelledby` attribute | Accepts space-separated element ID(s). Resolves cross-root `aria-labelledby` via `ariaLabelledByElements` on ElementInternals. Takes precedence over `accessible-label` and `description`. |
 
 ### Added

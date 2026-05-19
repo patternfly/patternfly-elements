@@ -3,7 +3,6 @@ import { LitElement, html, nothing, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
@@ -61,6 +60,8 @@ export class PfV6Progress extends LitElement {
   // (two U+2026 characters). The attribute value could set a private CSS custom
   // property like --_truncation-string, used as text-overflow: var(--_truncation-string, ellipsis).
   // text-overflow accepts arbitrary strings, so any value works (e.g. "……", "Read more").
+  // TODO: blocked on pf-v6-tooltip — React shows a positioned tooltip with the
+  // full description text on hover when truncated. Add tooltip-position attribute to match.
   /** Truncate the description with ellipsis when it overflows */
   @property({ type: Boolean }) truncated = false;
 
@@ -81,6 +82,9 @@ export class PfV6Progress extends LitElement {
 
   /** Variant of the progress bar */
   @property() variant?: ProgressVariant;
+
+  /** Hide the status icon when a variant is set. Useful in tight layouts like table cells. */
+  @property({ type: Boolean, attribute: 'hide-status-icon' }) hideStatusIcon = false;
 
   /** Custom text for aria-valuetext, used for finite step and step instruction displays */
   @property({ attribute: 'value-text' }) valueText?: string;
@@ -107,6 +111,9 @@ export class PfV6Progress extends LitElement {
   }
 
   get #icon(): TemplateResult | typeof nothing {
+    if (this.hideStatusIcon) {
+      return nothing;
+    }
     return VARIANT_ICONS.get(this.variant!) ?? nothing;
   }
 
@@ -141,7 +148,7 @@ export class PfV6Progress extends LitElement {
     const noMeasure = this.measureLocation === 'none';
     const inside = this.measureLocation === 'inside';
     const hasDescription = this.description != null;
-    const hasIcon = this.variant != null;
+    const hasIcon = this.variant != null && !this.hideStatusIcon;
     const singleline = !hasDescription;
 
     const classes = {
@@ -156,7 +163,7 @@ export class PfV6Progress extends LitElement {
       <div id="container" class="${classMap(classes)}">
         <div id="description"
              ?hidden="${!hasDescription}"
-             title="${ifDefined(this.truncated ? this.description : undefined)}">${this.description ?? ''}</div>
+>${this.description ?? ''}</div>
 
         <div id="status"
              aria-hidden="true"

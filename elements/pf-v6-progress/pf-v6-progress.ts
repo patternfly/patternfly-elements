@@ -1,11 +1,13 @@
 import type { PropertyValues, TemplateResult } from 'lit';
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html, nothing, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import styles from './pf-v6-progress.css';
 
@@ -13,6 +15,7 @@ export type ProgressSize = 'sm' | 'lg';
 export type ProgressMeasureLocation = 'outside' | 'inside' | 'none' | 'singleline';
 export type ProgressVariant = 'success' | 'danger' | 'warning';
 
+// TODO: replace inline SVGs with <pf-v6-icon> when available
 const checkCircleIcon = html`<svg id="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>`;
 const triangleExclamationIcon = html`<svg id="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>`;
 const circleExclamationIcon = html`<svg id="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>`;
@@ -24,15 +27,23 @@ const VARIANT_ICONS = new Map<ProgressVariant, TemplateResult>([
 ]);
 
 /**
- * A progress bar gives the user a visual representation of their completion
- * status of an ongoing process or task.
- * @summary Display completion status of ongoing process or task.
- * @slot helper-text - Helper text displayed below the progress bar.
- * @cssprop {<color>} --pf-v6-c-progress__bar--BackgroundColor - Background color of the progress bar track
- * @cssprop {<color>} --pf-v6-c-progress__indicator--BackgroundColor - Background color of the progress indicator
- * @cssprop {<length>} --pf-v6-c-progress__bar--Height - Height of the progress bar
- * @cssprop {<color>} --pf-v6-c-progress__status-icon--Color - Color of the status icon
- * @cssprop {<length>} --pf-v6-c-progress--GridGap - Gap between progress bar grid rows
+ * A progress bar provides a visual representation of completion status for an
+ * ongoing process or task. Authors SHOULD provide a `description` attribute for
+ * visible title text above the bar. The accessible name is resolved in order:
+ * `accessible-labelledby`, then `accessible-label`, then `description`, then
+ * a fallback of `"Progress status"`. Authors SHOULD set the `variant` attribute
+ * to `success`, `warning`, or `danger` when the progress reaches a terminal
+ * state. Authors SHOULD AVOID using `measure-location="inside"` without
+ * `size="lg"`, as the measure text will not fit inside the bar at the default
+ * size.
+ *
+ * This element uses `role="progressbar"` via ElementInternals. `aria-valuenow`,
+ * `aria-valuemin`, and `aria-valuemax` are managed internally based on the
+ * `value`, `min`, and `max` properties. This element is non-interactive and
+ * does not receive keyboard focus.
+ *
+ * @summary Displays completion status of an ongoing process or task.
+ * @slot helper-text - Supplementary text below the progress bar, such as status messages or additional context. SHOULD use `pf-v6-helper-text` or plain text. Content is not associated to the progressbar via `aria-describedby`; authors SHOULD ensure helper text is perceivable to assistive technology users.
  */
 @customElement('pf-v6-progress')
 export class PfV6Progress extends LitElement {
@@ -41,15 +52,20 @@ export class PfV6Progress extends LitElement {
   /** Represents the value of the progress bar */
   @property({ type: Number }) value = 0;
 
-  /** Description (title) above the progress bar */
+  /** Visible title text above the progress bar */
   @property() description?: string;
 
-  /** Indicate whether to truncate the string description (title) */
-  @property({
-    type: Boolean,
-    reflect: true,
-    attribute: 'description-truncated',
-  }) descriptionTruncated = false;
+  // TODO: consider promoting to an enum attribute (e.g. truncated="…" or
+  // truncated="……") to support locale-specific truncation. CSS text-overflow:
+  // ellipsis always renders U+2026 (three dots); Chinese convention is six dots
+  // (two U+2026 characters). The attribute value could set a private CSS custom
+  // property like --_truncation-string, used as text-overflow: var(--_truncation-string, ellipsis).
+  // text-overflow accepts arbitrary strings, so any value works (e.g. "……", "Read more").
+  /** Truncate the description with ellipsis when it overflows */
+  @property({ type: Boolean }) truncated = false;
+
+  /** Screen reader label for the progress bar, set via ElementInternals. Overrides `description` for the accessible name when both are set. */
+  @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
   /** Maximum value for the progress bar */
   @property({ type: Number }) max = 100;
@@ -58,30 +74,24 @@ export class PfV6Progress extends LitElement {
   @property({ type: Number }) min = 0;
 
   /** Size of the progress bar (height) */
-  @property({ reflect: true }) size?: ProgressSize;
+  @property() size?: ProgressSize;
 
   /** Where the percentage will be displayed with the progress element */
-  @property({
-    reflect: true,
-    attribute: 'measure-location',
-  }) measureLocation?: ProgressMeasureLocation;
+  @property({ attribute: 'measure-location' }) measureLocation?: ProgressMeasureLocation;
 
   /** Variant of the progress bar */
-  @property({ reflect: true }) variant?: ProgressVariant;
+  @property() variant?: ProgressVariant;
 
   /** Custom text for aria-valuetext, used for finite step and step instruction displays */
   @property({ attribute: 'value-text' }) valueText?: string;
 
-  /** When true, applies a fixed minimum width to the measure display for visual alignment */
-  @property({
-    type: Boolean,
-    reflect: true,
-    attribute: 'static-width',
-  }) staticWidth = false;
+  /** Space-separated ID(s) of elements that label this progress bar. Resolves cross-root aria-labelledby via ElementInternals. */
+  @property({ attribute: 'accessible-labelledby' }) accessibleLabelledby?: string;
+
 
   #internals = InternalsController.of(this, { role: 'progressbar' });
 
-  #hasHelperText = false;
+  #slots = new SlotController(this, 'helper-text');
 
   get #calculatedPercentage(): number {
     const { value, min, max } = this;
@@ -109,8 +119,18 @@ export class PfV6Progress extends LitElement {
     if (changed.has('valueText')) {
       this.#internals.ariaValueText = this.valueText ?? null;
     }
-    if (changed.has('description')) {
-      this.#internals.ariaLabel = this.description ?? 'Progress status';
+    if (changed.has('accessibleLabelledby')) {
+      if (!isServer && this.accessibleLabelledby) {
+        const elements = this.accessibleLabelledby.trim().split(/\s+/)
+            .map(id => document.getElementById(id))
+            .filter((el): el is Element => el != null);
+        this.#internals.ariaLabelledByElements = elements.length ? elements : null;
+      } else {
+        this.#internals.ariaLabelledByElements = null;
+      }
+    }
+    if (changed.has('accessibleLabel') || changed.has('description') || !this.hasUpdated) {
+      this.#internals.ariaLabel = this.accessibleLabel ?? this.description ?? 'Progress status';
     }
   }
 
@@ -123,35 +143,39 @@ export class PfV6Progress extends LitElement {
     const hasDescription = this.description != null;
     const hasIcon = this.variant != null;
 
+    const classes = {
+      [this.size ?? '']: !!this.size,
+      [this.measureLocation ?? '']: !!this.measureLocation && this.measureLocation !== 'none',
+      [this.variant ?? '']: !!this.variant,
+      truncated: this.truncated,
+    };
+
     return html`
-      <div id="description"
-           ?hidden="${!hasDescription}"
-           title="${ifDefined(this.descriptionTruncated ? this.description : undefined)}">${this.description ?? ''}</div>
+      <div id="container" class="${classMap(classes)}">
+        <div id="description"
+             ?hidden="${!hasDescription}"
+             title="${ifDefined(this.truncated ? this.description : undefined)}">${this.description ?? ''}</div>
 
-      <div id="status"
-           aria-hidden="true"
-           ?hidden="${noMeasure && !hasIcon}">
-        ${!inside && !noMeasure ? html`<span id="measure">${displayText}</span>` : nothing}
-        ${icon}
-      </div>
+        <div id="status"
+             aria-hidden="true"
+             ?hidden="${noMeasure && !hasIcon}">
+          ${!inside && !noMeasure ? html`<span id="measure">${displayText}</span>` : nothing}
+          ${icon}
+        </div>
 
-      <div id="bar">
-        <div id="indicator"
-             style="${styleMap({ width: `${pct}%` })}">
-          ${inside && !noMeasure ? html`<span id="measure">${displayText}</span>` : nothing}
+        <div id="bar">
+          <div id="indicator"
+               style="${styleMap({ width: `${pct}%` })}">
+            ${inside && !noMeasure ? html`<span id="measure">${displayText}</span>` : nothing}
+          </div>
+        </div>
+
+        <div id="helper-text" ?hidden="${this.#slots.isEmpty('helper-text')}">
+          <!-- summary: Supplementary text below the progress bar -->
+          <slot name="helper-text"></slot>
         </div>
       </div>
-
-      <div id="helper-text" ?hidden="${!this.#hasHelperText}">
-        <slot name="helper-text" @slotchange="${this.#onHelperTextSlotchange}"></slot>
-      </div>
     `;
-  }
-
-  #onHelperTextSlotchange(event: Event) {
-    const slot = event.currentTarget as HTMLSlotElement;
-    this.#hasHelperText = slot.assignedNodes().length > 0;
-    this.requestUpdate();
   }
 }
 

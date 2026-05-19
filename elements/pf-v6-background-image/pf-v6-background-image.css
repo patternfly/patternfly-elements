@@ -32,6 +32,6 @@
   );
 }
 
-:host(:dir(rtl)) #background {
+:dir(rtl) #background {
   background-position: var(--pf-v6-c-background-image--BackgroundPosition, bottom left);
 }

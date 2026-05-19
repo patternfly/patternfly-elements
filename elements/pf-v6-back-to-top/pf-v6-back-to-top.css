@@ -47,6 +47,10 @@
   /** Design system brand color for the trigger background. */
   background-color: var(--pf-t--global--color--brand--default, #92c5f9);
 
+  &[hidden] {
+    display: none;
+  }
+
   &:hover {
     /** Design system hover text color on brand surfaces. */
     color: var(--pf-t--global--text--color--on-brand--hover, #1f1f1f);
@@ -70,10 +74,6 @@
     /** Design system focus ring gap between the element and its outline. */
     outline-offset: var(--pf-t--global--spacer--focus-ring--gap, 2px);
   }
-}
-
-#trigger[hidden] {
-  display: none;
 }
 
 svg {

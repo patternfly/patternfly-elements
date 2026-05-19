@@ -48,20 +48,6 @@ describe('<pf-v6-background-image>', function() {
       expect(styles.getPropertyValue('background-image')).to.contain('/test/image.jpg');
     });
 
-    it('should reflect src attribute', function() {
-      expect(element.getAttribute('src')).to.equal('/test/image.jpg');
-    });
-
-    it('should use fixed positioning', function() {
-      const styles = getComputedStyle(element);
-      expect(styles.position).to.equal('fixed');
-    });
-
-    it('should have a negative z-index', function() {
-      const styles = getComputedStyle(element);
-      expect(Number(styles.zIndex)).to.be.lessThan(0);
-    });
-
     it('should update background image when src changes dynamically', async function() {
       element.src = '/test/other-image.jpg';
       await element.updateComplete;

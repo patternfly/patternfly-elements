@@ -17,7 +17,3 @@ The element uses fixed positioning and sits behind all other content at `z-index
 | React prop  | Notes                                          |
 |-------------|-------------------------------------------------|
 | `className` | Not needed; shadow DOM provides encapsulation. |
-
-### Changed API
-
-No changed APIs. The `src` attribute maps directly to the React `src` prop.

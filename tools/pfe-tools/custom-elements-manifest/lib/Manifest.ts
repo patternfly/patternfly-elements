@@ -324,7 +324,8 @@ export class Manifest {
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';
-      const prefix = `${options.tagPrefix.replace(/-$/, '')}-`;
+      const prefixes = [options.tagPrefix].flat().map(p => `${p.replace(/-$/, '')}-`);
+      const prefix = prefixes.find(p => tagName.startsWith(p)) ?? prefixes[0];
       const title = isMainElementDemo ? prettyTag(tagName, options.aliases, prefix)
         : last
             .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())

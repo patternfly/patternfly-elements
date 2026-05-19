@@ -26,7 +26,8 @@ export class DocsPage {
     this.docsTemplatePath = options?.docsTemplatePath;
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
-    const prefix = `${config.tagPrefix.replace(/-$/, '')}-`;
+    const prefixes = [config.tagPrefix].flat().map(p => `${p.replace(/-$/, '')}-`);
+    const prefix = prefixes.find(p => this.tagName.startsWith(p)) ?? prefixes[0];
     const aliased = config.aliases[this.tagName] ?? this.tagName.replace(prefix, '');
     this.title = options?.title ?? Manifest.prettyTag(this.tagName, config.aliases, prefix);
     this.slug = slugify(aliased, { strict: true, lower: true });

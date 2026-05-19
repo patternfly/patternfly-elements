@@ -30,8 +30,8 @@ export interface PfeConfig {
   sourceControlURLPrefix?: string ;
   /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
   demoURLPrefix?: string ;
-  /** custom elements namespace. Default 'pf' */
-  tagPrefix?: string;
+  /** custom elements namespace. Default 'pf'. Accepts an array for repos with multiple prefixes. */
+  tagPrefix?: string | string[];
   /** Dev Server site options */
   site?: SiteOptions;
 }
@@ -102,6 +102,8 @@ export function deslugify(
   rootDir: string = process.cwd(),
 ): string {
   const { slugs, config } = getSlugsMap(rootDir);
-  const prefixedSlug = (slug.startsWith(`${config.tagPrefix}-`)) ? slug : `${config.tagPrefix}-${slug}`;
+  const prefixes = [config.tagPrefix].flat();
+  const hasPrefix = prefixes.some(p => slug.startsWith(`${p}-`));
+  const prefixedSlug = hasPrefix ? slug : `${prefixes[0]}-${slug}`;
   return slugs.get(slug) ?? prefixedSlug;
 }

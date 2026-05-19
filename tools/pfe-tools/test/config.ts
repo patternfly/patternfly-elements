@@ -50,7 +50,8 @@ const exists = async (path: string | URL) => {
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
 
-  const { elementsDir, tagPrefix } = getPfeConfig();
+  const { elementsDir, tagPrefix: rawPrefix } = getPfeConfig();
+  const tagPrefixes = [rawPrefix].flat();
 
   const configuredReporter = opts.reporter ?? 'default';
 
@@ -121,7 +122,7 @@ export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunne
        */
       async function(ctx, next) {
         if (ctx.path.endsWith('.js')
-            && ctx.path.startsWith(`/${elementsDir}/${tagPrefix}-`)
+            && tagPrefixes.some(p => ctx.path.startsWith(`/${elementsDir}/${p}-`))
             && await exists(`./${ctx.path}`.replace('.js', '.ts').replace('//', '/'))) {
           ctx.redirect(ctx.path.replace('.js', '.ts'));
         } else {

@@ -4,7 +4,7 @@ import type { Manifest } from '@patternfly/pfe-tools/custom-elements-manifest/li
 export interface DemoRecord {
   title: string;
   tagName: string;
-  tagPrefix: string;
+  tagPrefix: string | string[];
   primaryElementName: string;
   manifest: Manifest;
   slug: string;

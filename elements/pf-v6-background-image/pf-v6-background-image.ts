@@ -20,7 +20,7 @@ export class PfV6BackgroundImage extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
   /** URL or file path of the background image */
-  @property({ reflect: true }) src?: string;
+  @property() src?: string;
 
   override render(): TemplateResult<1> {
     return html`<div id="background" aria-hidden="true" style="${styleMap({

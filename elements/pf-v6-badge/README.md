@@ -28,7 +28,7 @@ A badge is used to annotate other information like a label or an object name.
 
 | React prop | Notes |
 | --- | --- |
-| `screenReaderText` | No built-in screen reader text span. Authors should provide their own visually-hidden text adjacent to the badge. |
+| `screenReaderText` | Authors slot visually-hidden text alongside the badge content for screen reader context, e.g. `<pf-v6-badge>3 <span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge>`. |
 
 ### Changed API
 

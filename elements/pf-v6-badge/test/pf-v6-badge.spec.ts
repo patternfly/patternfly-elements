@@ -33,7 +33,6 @@ describe('<pf-v6-badge>', function() {
 
     it('should be visible in the accessibility tree', async function() {
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.length).to.be.greaterThan(0);
       const badgeNode = snapshot.children?.find(
         (child: { name?: string }) => child.name?.includes('100')
       );
@@ -155,12 +154,22 @@ describe('<pf-v6-badge>', function() {
   });
 
   describe('accessibility', function() {
+    it('should be accessible', async function() {
+      const element = await createFixture<PfV6Badge>(html`
+        <pf-v6-badge state="read" number="10">10</pf-v6-badge>
+      `);
+      await expect(element).to.be.accessible();
+    });
+
     it('should contain text in the accessibility tree', async function() {
       await createFixture<PfV6Badge>(html`
         <pf-v6-badge state="read" number="10">10</pf-v6-badge>
       `);
       const snapshot = await a11ySnapshot();
-      expect(snapshot.children?.length).to.be.greaterThan(0);
+      const badgeNode = snapshot.children?.find(
+        (child: { name?: string }) => child.name?.includes('10')
+      );
+      expect(badgeNode).to.exist;
     });
   });
 

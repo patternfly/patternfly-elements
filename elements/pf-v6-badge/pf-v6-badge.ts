@@ -9,6 +9,8 @@ export type BadgeState = 'unread' | 'read';
 /**
  * A **badge** is used to annotate other information like a label or an object name.
  * @summary Displays a numeric value as an annotation
+ * @slot - Badge content, typically a number or short text. Include a visually-hidden
+ *         `<span>` for screen reader context when the number alone is not descriptive.
  */
 @customElement('pf-v6-badge')
 export class PfV6Badge extends LitElement {
@@ -42,7 +44,7 @@ export class PfV6Badge extends LitElement {
         (threshold && number && (threshold <= number)) ? `${threshold.toString()}+`
       : (number != null) ? number.toString()
       : '';
-    return html`${!displayText ? html`<!-- Badge content, typically a number or short text --><slot></slot>` : displayText}`;
+    return html`${!displayText ? html`<!-- Badge content, typically a number or short text with visually-hidden screen reader support text --><slot></slot>` : displayText}`;
   }
 }
 

@@ -34,7 +34,7 @@ when no image is provided.
 | React prop   | Web component     | Difference                                                      |
 | ------------ | ----------------- | --------------------------------------------------------------- |
 | `isBordered` | `bordered`        | Boolean attribute without `is` prefix                           |
-| `alt`        | `alt`             | Optional in web component (React requires it)                   |
+| `alt`        | `alt`             | Optional (defaults to `""`, marking the image as decorative for screen readers). Set `alt` to a descriptive string when the avatar conveys meaning. |
 | `src`        | `src`             | React defaults to empty string; web component renders a placeholder SVG when omitted |
 
 ### Not implemented
@@ -47,20 +47,5 @@ when no image is provided.
 
 | Web component API                          | Notes                                           |
 | ------------------------------------------ | ----------------------------------------------- |
-| `load` event (`PfV6AvatarLoadEvent`)       | Fires when the avatar image loads successfully  |
+| `load` event (`PfV6AvatarLoadEvent`)       | Fires when the `src` image loads successfully (not emitted for the placeholder SVG) |
 | Placeholder SVG                            | Rendered automatically when `src` is not set    |
-| `--pf-v6-c-avatar--Width`                 | Avatar width (default `2.25rem`)                |
-| `--pf-v6-c-avatar--Height`                | Avatar height (default `2.25rem`)               |
-| `--pf-v6-c-avatar--BorderRadius`          | Border radius (default pill)                    |
-| `--pf-v6-c-avatar--BorderColor`           | Border color (default `transparent`)            |
-| `--pf-v6-c-avatar--BorderWidth`           | Border width (default `0`)                      |
-| `--pf-v6-c-avatar--m-bordered--BorderColor` | Border color when `bordered` is set           |
-| `--pf-v6-c-avatar--m-bordered--BorderWidth` | Border width when `bordered` is set (default `1px`) |
-| `--pf-v6-c-avatar--m-sm--Width`           | Width override for `size="sm"` (default `1.5rem`) |
-| `--pf-v6-c-avatar--m-sm--Height`          | Height override for `size="sm"`                 |
-| `--pf-v6-c-avatar--m-md--Width`           | Width override for `size="md"` (default `2.25rem`) |
-| `--pf-v6-c-avatar--m-md--Height`          | Height override for `size="md"`                 |
-| `--pf-v6-c-avatar--m-lg--Width`           | Width override for `size="lg"` (default `4.5rem`) |
-| `--pf-v6-c-avatar--m-lg--Height`          | Height override for `size="lg"`                 |
-| `--pf-v6-c-avatar--m-xl--Width`           | Width override for `size="xl"` (default `8rem`) |
-| `--pf-v6-c-avatar--m-xl--Height`          | Height override for `size="xl"`                 |

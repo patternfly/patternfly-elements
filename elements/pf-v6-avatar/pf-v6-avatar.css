@@ -14,6 +14,8 @@
   --_border-width:
     /** Border width of the avatar */
     var(--pf-v6-c-avatar--BorderWidth, 0);
+
+  /* SVG foreground and background colors */
   --_placeholder-bg: var(--pf-t--global--background--color--200, light-dark(var(--pf-t--color--gray--10, #f2f2f2), var(--pf-t--color--gray--80, #292929)));
   --_placeholder-fg: var(--pf-t--global--icon--color--subtle, light-dark(var(--pf-t--color--gray--50, #707070), var(--pf-t--color--gray--40, #a3a3a3)));
 

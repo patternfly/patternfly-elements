@@ -92,6 +92,9 @@ export class PfV6Progress extends LitElement {
   /** Space-separated ID(s) of elements that label this progress bar. Resolves cross-root aria-labelledby via ElementInternals. */
   @property({ attribute: 'accessible-labelledby' }) accessibleLabelledby?: string;
 
+  /** Space-separated ID(s) of elements that describe this progress bar. Resolves cross-root aria-describedby via ElementInternals. */
+  @property({ attribute: 'accessible-describedby' }) accessibleDescribedby?: string;
+
 
   #internals = InternalsController.of(this, { role: 'progressbar' });
 
@@ -134,6 +137,16 @@ export class PfV6Progress extends LitElement {
         this.#internals.ariaLabelledByElements = elements.length ? elements : null;
       } else {
         this.#internals.ariaLabelledByElements = null;
+      }
+    }
+    if (changed.has('accessibleDescribedby')) {
+      if (!isServer && this.accessibleDescribedby) {
+        const elements = this.accessibleDescribedby.trim().split(/\s+/)
+            .map(id => document.getElementById(id))
+            .filter((el): el is Element => el != null);
+        this.#internals.ariaDescribedByElements = elements.length ? elements : null;
+      } else {
+        this.#internals.ariaDescribedByElements = null;
       }
     }
     if (changed.has('accessibleLabel') || changed.has('description') || !this.hasUpdated) {

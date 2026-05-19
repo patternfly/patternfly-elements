@@ -37,7 +37,6 @@ With helper text:
 |---|---|
 | `label` | Use `value-text` for custom measure text. Rich content (ReactNode) not supported. |
 | `tooltipPosition` | Not implemented. |
-| `aria-describedby` | Not supported. Use the `helper-text` slot for supplementary text. |
 
 ### Changed API
 
@@ -52,6 +51,7 @@ With helper text:
 | `aria-label` | `accessible-label` attribute | Screen reader name only, set via ElementInternals. Falls back to `description`, then `"Progress status"`. |
 | `hideStatusIcon` | `hide-status-icon` attribute | Boolean. Hides the variant status icon while keeping variant coloring on the bar. |
 | `aria-labelledby` | `accessible-labelledby` attribute | Accepts space-separated element ID(s). Resolves cross-root `aria-labelledby` via `ariaLabelledByElements` on ElementInternals. Takes precedence over `accessible-label` and `description`. |
+| `aria-describedby` | `accessible-describedby` attribute | Accepts space-separated element ID(s). Resolves cross-root `aria-describedby` via `ariaDescribedByElements` on ElementInternals. |
 
 ### Added
 

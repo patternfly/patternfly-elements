@@ -1,10 +1,11 @@
-import type { PropertyValues, TemplateResult } from 'lit';
+import type { TemplateResult } from 'lit';
 import { LitElement, html, nothing, isServer } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
+import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
@@ -120,38 +121,48 @@ export class PfV6Progress extends LitElement {
     return VARIANT_ICONS.get(this.variant!) ?? nothing;
   }
 
-  override willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('value') || changed.has('min') || changed.has('max')) {
-      this.#internals.ariaValueNow = this.#calculatedPercentage.toString();
-      this.#internals.ariaValueMin = '0';
-      this.#internals.ariaValueMax = '100';
+  @observes('value')
+  @observes('min')
+  @observes('max')
+  private _updateAriaValue() {
+    this.#internals.ariaValueNow = this.#calculatedPercentage.toString();
+    this.#internals.ariaValueMin = '0';
+    this.#internals.ariaValueMax = '100';
+  }
+
+  @observes('valueText')
+  private _updateAriaValueText() {
+    this.#internals.ariaValueText = this.valueText ?? null;
+  }
+
+  @observes('accessibleLabelledby', { waitFor: 'connected' })
+  private _updateAriaLabelledBy() {
+    if (!isServer && this.accessibleLabelledby) {
+      const elements = this.accessibleLabelledby.trim().split(/\s+/)
+          .map(id => document.getElementById(id))
+          .filter((el): el is HTMLElement => el != null);
+      this.#internals.ariaLabelledByElements = elements.length ? elements : null;
+    } else {
+      this.#internals.ariaLabelledByElements = null;
     }
-    if (changed.has('valueText')) {
-      this.#internals.ariaValueText = this.valueText ?? null;
+  }
+
+  @observes('accessibleDescribedby', { waitFor: 'connected' })
+  private _updateAriaDescribedBy() {
+    if (!isServer && this.accessibleDescribedby) {
+      const elements = this.accessibleDescribedby.trim().split(/\s+/)
+          .map(id => document.getElementById(id))
+          .filter((el): el is HTMLElement => el != null);
+      this.#internals.ariaDescribedByElements = elements.length ? elements : null;
+    } else {
+      this.#internals.ariaDescribedByElements = null;
     }
-    if (changed.has('accessibleLabelledby')) {
-      if (!isServer && this.accessibleLabelledby) {
-        const elements = this.accessibleLabelledby.trim().split(/\s+/)
-            .map(id => document.getElementById(id))
-            .filter((el): el is Element => el != null);
-        this.#internals.ariaLabelledByElements = elements.length ? elements : null;
-      } else {
-        this.#internals.ariaLabelledByElements = null;
-      }
-    }
-    if (changed.has('accessibleDescribedby')) {
-      if (!isServer && this.accessibleDescribedby) {
-        const elements = this.accessibleDescribedby.trim().split(/\s+/)
-            .map(id => document.getElementById(id))
-            .filter((el): el is Element => el != null);
-        this.#internals.ariaDescribedByElements = elements.length ? elements : null;
-      } else {
-        this.#internals.ariaDescribedByElements = null;
-      }
-    }
-    if (changed.has('accessibleLabel') || changed.has('description') || !this.hasUpdated) {
-      this.#internals.ariaLabel = this.accessibleLabel ?? this.description ?? 'Progress status';
-    }
+  }
+
+  @observes('accessibleLabel', { waitFor: 'connected' })
+  @observes('description', { waitFor: 'connected' })
+  private _updateAriaLabel() {
+    this.#internals.ariaLabel = this.accessibleLabel ?? this.description ?? 'Progress status';
   }
 
   override render(): TemplateResult<1> {

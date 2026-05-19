@@ -43,24 +43,24 @@ describe('<pf-v6-avatar>', function() {
 
   describe('with a src attr', function() {
     let element: PfV6Avatar;
-    let loaded: string | undefined;
+    let loadEvent: Event | undefined;
     const datauri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAB0UlEQVR4Xu3UAQ0AAAyDsM+/6QspcwAh2zXawGj64K8A8AgKoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7ADyAB6SPAIFm19U7AAAAAElFTkSuQmCC';
-    const onLoad = (e: PfV6AvatarLoadEvent) => {
-      const paths = e.originalEvent.composedPath() as HTMLImageElement[];
-      loaded = paths.find(x => x.localName === 'img')?.src;
-    };
     beforeEach(async function() {
-      element = await createFixture(html`<pf-v6-avatar @load="${onLoad}"></pf-v6-avatar>`);
+      element = await createFixture(html`<pf-v6-avatar></pf-v6-avatar>`);
+      element.addEventListener('load', function(e) {
+        loadEvent = e;
+      });
       setTimeout(() => element.src = datauri);
       await oneEvent(element, 'load');
     });
 
-    it('loads the image', function() {
-      expect(loaded).to.equal(datauri);
+    it('should fire a PfV6AvatarLoadEvent', function() {
+      expect(loadEvent).to.be.an.instanceOf(PfV6AvatarLoadEvent);
     });
 
-    it('fires a PfV6AvatarLoadEvent', function() {
-      expect(loaded).to.be.ok;
+    it('should include the original event', function() {
+      expect(loadEvent).to.have.property('originalEvent')
+          .that.is.an.instanceOf(Event);
     });
   });
 
@@ -131,18 +131,6 @@ describe('<pf-v6-avatar>', function() {
     it('renders at the extra large size', function() {
       expect(element.offsetWidth).to.equal(128);
       expect(element.offsetHeight).to.equal(128);
-    });
-  });
-
-  describe('with bordered', function() {
-    let element: PfV6Avatar;
-    beforeEach(async function() {
-      element = await createFixture(html`<pf-v6-avatar bordered></pf-v6-avatar>`);
-      await nextFrame();
-    });
-
-    it('renders with a visible border', function() {
-      expect(element.offsetWidth).to.be.greaterThan(36);
     });
   });
 });

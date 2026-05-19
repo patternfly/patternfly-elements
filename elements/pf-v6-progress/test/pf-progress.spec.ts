@@ -195,17 +195,13 @@ describe('<pf-v6-progress>', function() {
     });
   });
 
-  describe('with measure-location="singleline"', function() {
+  describe('without description (singleline)', function() {
     let element: PfV6Progress;
 
     beforeEach(async function() {
       element = await createFixture<PfV6Progress>(html`
-        <pf-v6-progress measure-location="singleline" value="33"></pf-v6-progress>
+        <pf-v6-progress value="33"></pf-v6-progress>
       `);
-    });
-
-    it('should reflect attribute', function() {
-      expect(element.getAttribute('measure-location')).to.equal('singleline');
     });
 
     it('should have fallback accessible name when no description', async function() {

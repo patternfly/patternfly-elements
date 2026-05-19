@@ -12,7 +12,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import styles from './pf-v6-progress.css';
 
 export type ProgressSize = 'sm' | 'lg';
-export type ProgressMeasureLocation = 'outside' | 'inside' | 'none' | 'singleline';
+export type ProgressMeasureLocation = 'outside' | 'inside' | 'none';
 export type ProgressVariant = 'success' | 'danger' | 'warning';
 
 // TODO: replace inline SVGs with <pf-v6-icon> when available
@@ -142,11 +142,13 @@ export class PfV6Progress extends LitElement {
     const inside = this.measureLocation === 'inside';
     const hasDescription = this.description != null;
     const hasIcon = this.variant != null;
+    const singleline = !hasDescription;
 
     const classes = {
       [this.size ?? '']: !!this.size,
       [this.measureLocation ?? '']: !!this.measureLocation && this.measureLocation !== 'none',
       [this.variant ?? '']: !!this.variant,
+      singleline,
       truncated: this.truncated,
     };
 

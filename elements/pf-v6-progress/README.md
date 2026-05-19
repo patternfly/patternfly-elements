@@ -47,7 +47,7 @@ With helper text:
 | `title` | `description` attribute | Visible title text above the bar. Renamed to avoid shadowing the native HTML `title` attribute. |
 | `isTitleTruncated` | `truncated` attribute | Boolean. Truncates `description` with CSS ellipsis and adds a native `title` tooltip. |
 | `measureLocation` `"top"` | Default (no attribute) | React's `"top"` is the default; omitting `measure-location` produces the same layout. |
-| `measureLocation` | `measure-location` attribute | Adds `"singleline"` value not in React. React achieves singleline via `measureLocation="outside"` without a `title`. |
+| `measureLocation` | `measure-location` attribute | Singleline layout is derived automatically when no `description` is set, matching React behavior. |
 | `size` `"md"` | Default (no attribute) | React's `"md"` is the default size; omitting `size` produces the same result. |
 | `helperText` | `helper-text` slot | Slot instead of prop, accepts rich content. |
 | `aria-label` | `accessible-label` attribute | Screen reader name only, set via ElementInternals. Falls back to `description`, then `"Progress status"`. |

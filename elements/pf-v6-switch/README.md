@@ -13,13 +13,14 @@ explicit, visible representation on a setting.
 ### Without visible label
 
 ```html
-<pf-v6-switch accessible-label="Wi-Fi" checked></pf-v6-switch>
+<pf-v6-switch accessible-label="Wi-Fi" show-check-icon checked></pf-v6-switch>
 ```
 
-### With check icon
+### With external label
 
 ```html
-<pf-v6-switch checked show-check-icon>Notifications</pf-v6-switch>
+<pf-v6-switch id="wifi"></pf-v6-switch>
+<label for="wifi">Wi-Fi</label>
 ```
 
 ## Divergences from React `Switch`
@@ -41,12 +42,13 @@ explicit, visible representation on a setting.
 | `hasCheckIcon` | `show-check-icon` | Attribute name carried over from v5 for clarity |
 | `aria-label` | `accessible-label` | Abstracted behind custom attribute per PFE convention |
 | `aria-labelledby` | External `<label for="id">` | Use native label association instead |
-| `onChange` | `change` event | Standard DOM event instead of React callback |
+| `onChange` | `change` event | Standard DOM event; cancelable via `preventDefault()` to reject state change |
 
 ### Added
 
 | Web component API | Notes |
 |---|---|
-| `data-state="on\|off"` on slotted children | Show different label text per state; children hidden/shown automatically |
 | External `<label>` support | FACE element works with native `<label for="id">` or nesting in `<label>` |
 | Form association | Submits `"on"` when checked, omitted when unchecked (matches native checkbox) |
+| Form reset | Reverts to initial `checked` value on form reset |
+| Cancelable `change` event | Call `preventDefault()` to reject the toggle and revert state |

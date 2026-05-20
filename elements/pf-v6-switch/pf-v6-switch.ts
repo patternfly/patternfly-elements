@@ -2,6 +2,7 @@ import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import styles from './pf-v6-switch.css';
 
@@ -28,6 +29,8 @@ export class PfV6Switch extends LitElement {
 
   #internals = InternalsController.of(this, { role: 'switch' });
 
+  #slots = new SlotController(this, null);
+
   /**
    * Accessible label for the switch when there is no visible label text.
    * Should describe the checked state, e.g. "Wi-Fi" (not "Wi-Fi on/off").
@@ -45,8 +48,6 @@ export class PfV6Switch extends LitElement {
 
   /** Reverses the layout so the label appears before the toggle. */
   @property({ reflect: true, type: Boolean }) reversed = false;
-
-  #hasSlottedContent = false;
 
   #initialChecked = false;
 
@@ -96,11 +97,6 @@ export class PfV6Switch extends LitElement {
     this.#internals.setFormValue(this.checked ? 'on' : null);
   }
 
-  override updated(): void {
-    this.#updateLabels();
-    this.#updateSlottedLabels();
-  }
-
   override render(): TemplateResult<1> {
     return html`
       <span id="toggle" class="${this.#classes}">
@@ -117,8 +113,9 @@ export class PfV6Switch extends LitElement {
       </span>
       <span id="label"
             class="${this.#classes}"
-            ?hidden=${!this.#hasSlottedContent}>
-        <slot @slotchange=${this.#onSlotchange}></slot>
+            ?hidden=${this.#slots.isEmpty()}>
+        <!-- summary: Label text displayed beside the switch toggle -->
+        <slot></slot>
       </span>
     `;
   }
@@ -160,30 +157,6 @@ export class PfV6Switch extends LitElement {
         this.checked = !this.checked;
       }
     }
-  }
-
-  #onSlotchange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
-    this.#hasSlottedContent = !!slot.assignedNodes({ flatten: true })
-        .some(n => n.nodeType === Node.ELEMENT_NODE || n.textContent?.trim());
-    this.requestUpdate();
-    this.#updateSlottedLabels();
-  }
-
-  #updateSlottedLabels() {
-    const labelState = this.checked ? 'on' : 'off';
-    for (const child of this.querySelectorAll<HTMLElement>('[data-state]')) {
-      child.hidden = child.dataset.state !== labelState;
-    }
-  }
-
-  #updateLabels() {
-    const labelState = this.checked ? 'on' : 'off';
-    this.labels.forEach(label => {
-      for (const state of label.querySelectorAll<HTMLElement>('[data-state]')) {
-        state.hidden = state.dataset.state !== labelState;
-      }
-    });
   }
 }
 

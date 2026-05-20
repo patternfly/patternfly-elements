@@ -85,54 +85,14 @@ describe('<pf-v6-switch>', function() {
     });
   });
 
-  describe('with data-state labels', function() {
-    let element: PfV6Switch;
-    beforeEach(async function() {
-      element = await createFixture<PfV6Switch>(html`
-        <pf-v6-switch>
-          <span data-state="on">Enabled</span>
-          <span data-state="off">Disabled</span>
-        </pf-v6-switch>
-      `);
-      await element.updateComplete;
-      await nextFrame();
-    });
-
-    it('shows the off label when unchecked', function() {
-      const on = element.querySelector('[data-state="on"]') as HTMLElement;
-      const off = element.querySelector('[data-state="off"]') as HTMLElement;
-      expect(on.hidden).to.be.true;
-      expect(off.hidden).to.be.false;
-    });
-
-    describe('toggling the switch', function() {
-      beforeEach(async function() {
-        element.focus();
-        await sendKeys({ press: ' ' });
-        await element.updateComplete;
-        await nextFrame();
-      });
-
-      it('shows the on label when checked', function() {
-        const on = element.querySelector('[data-state="on"]') as HTMLElement;
-        const off = element.querySelector('[data-state="off"]') as HTMLElement;
-        expect(on.hidden).to.be.false;
-        expect(off.hidden).to.be.true;
-      });
-    });
-  });
-
-  describe('with external label for on and off state', function() {
+  describe('with external label', function() {
     let element: PfV6Switch;
     let snapshot: A11yTreeSnapshot;
     beforeEach(async function() {
       const container = await createFixture<PfV6Switch>(html`
         <div>
           <pf-v6-switch id="switch"></pf-v6-switch>
-          <label for="switch">
-            <span data-state="on">Message when on</span>
-            <span data-state="off" hidden>Message when off</span>
-          </label>
+          <label for="switch">Dark Mode</label>
         </div>
       `);
       element = container.querySelector('pf-v6-switch')!;
@@ -141,12 +101,8 @@ describe('<pf-v6-switch>', function() {
 
     it('is accessible', function() {
       expect(snapshot.role).to.equal('switch');
-      expect(snapshot.name).to.be.ok;
+      expect(snapshot.name).to.equal('Dark Mode');
       expect(snapshot.checked).to.be.false;
-    });
-
-    it('shows the label for the unchecked state', function() {
-      expect(snapshot.name).to.equal('Message when off');
     });
 
     describe('toggling the switch', function() {
@@ -163,8 +119,8 @@ describe('<pf-v6-switch>', function() {
         expect(snapshot.checked).to.be.true;
       });
 
-      it('shows the label for the checked state', function() {
-        expect(snapshot.name).to.equal('Message when on');
+      it('keeps the same label', function() {
+        expect(snapshot.name).to.equal('Dark Mode');
       });
     });
   });

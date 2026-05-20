@@ -1,0 +1,146 @@
+:host {
+  display: flex;
+  align-items: flex-start;
+  gap:
+    /** Space between icon and text. Maps to --pf-t--global--spacer--xs. */
+    var(--pf-v6-c-helper-text__item-icon--MarginInlineEnd, 0.25rem);
+  font-size:
+    /** Base font size for helper text items. Maps to --pf-t--global--font--size--body--sm. */
+    var(--pf-v6-c-helper-text--FontSize, 0.75rem);
+  font-weight:
+    /** Font weight for helper text items. Maps to --pf-t--global--font--weight--body--default. */
+    var(--pf-v6-c-helper-text__item-text--FontWeight, 400);
+  color:
+    /** Text color for helper text items. Maps to --pf-t--global--text--color--regular. */
+    var(--pf-v6-c-helper-text__item-text--Color, light-dark(#151515, #e0e0e0));
+  line-height: 1.5;
+}
+
+:host([variant="indeterminate"]) {
+  color:
+    /** Text color for indeterminate variant. Maps to --pf-t--global--text--color--subtle. */
+    var(--pf-v6-c-helper-text__item-text--m-indeterminate--Color, light-dark(#4d4d4d, #a3a3a3));
+
+  #icon {
+    color:
+      /** Icon color for indeterminate variant. Maps to --pf-t--global--icon--color--subtle. */
+      var(--pf-v6-c-helper-text__item-icon--m-indeterminate--Color, light-dark(#707070, #8f8f8f));
+  }
+}
+
+:host([variant="warning"]) {
+  font-weight:
+    /** Font weight for warning variant. Maps to --pf-t--global--font--weight--body--bold. */
+    var(--pf-v6-c-helper-text__item-text--m-warning--FontWeight, 500);
+
+  #icon {
+    color:
+      /** Icon color for warning variant. Maps to --pf-t--global--icon--color--status--warning--default. */
+      var(--pf-v6-c-helper-text__item-icon--m-warning--Color, light-dark(#dca614, #f0ab00));
+  }
+}
+
+:host([variant="success"]) {
+  font-weight:
+    /** Font weight for success variant. Maps to --pf-t--global--font--weight--body--bold. */
+    var(--pf-v6-c-helper-text__item-text--m-success--FontWeight, 500);
+
+  #icon {
+    color:
+      /** Icon color for success variant. Maps to --pf-t--global--icon--color--status--success--default. */
+      var(--pf-v6-c-helper-text__item-icon--m-success--Color, light-dark(#3d7317, #5ba352));
+  }
+}
+
+:host([variant="error"]) {
+  font-weight:
+    /** Font weight for error variant. Maps to --pf-t--global--font--weight--body--bold. */
+    var(--pf-v6-c-helper-text__item-text--m-error--FontWeight, 500);
+  animation: item-fade-in
+    /** Fade-in duration for error items. Maps to --pf-t--global--motion--duration--fade--default. */
+    var(--pf-v6-c-helper-text__item--m-error--TransitionDuration--Opacity, 200ms)
+    /** Fade-in easing for error items. Maps to --pf-t--global--motion--timing-function--default. */
+    var(--pf-v6-c-helper-text__item--m-error--TransitionTimingFunction--Opacity, cubic-bezier(0.4, 0, 0.2, 1));
+
+  #icon {
+    color:
+      /** Icon color for error variant. Maps to --pf-t--global--icon--color--status--danger--default. */
+      var(--pf-v6-c-helper-text__item-icon--m-error--Color, light-dark(#b1380b, #fe5142));
+  }
+}
+
+:host([dynamic]) {
+  #icon {
+    color:
+      /** Icon color for dynamic default items. Maps to --pf-t--global--icon--color--regular. */
+      var(--pf-v6-c-helper-text--m-dynamic__item-icon--Color, light-dark(#1f1f1f, #d4d4d4));
+  }
+}
+
+:host([dynamic][variant="indeterminate"]) {
+  #icon {
+    color:
+      /** Icon color for dynamic indeterminate items. Maps to --pf-t--global--icon--color--subtle. */
+      var(--pf-v6-c-helper-text--m-dynamic--m-indeterminate__item-icon--Color, light-dark(#707070, #8f8f8f));
+  }
+}
+
+:host([dynamic][variant="warning"]) {
+  #icon {
+    color:
+      /** Icon color for dynamic warning items. Maps to --pf-t--global--icon--color--status--warning--default. */
+      var(--pf-v6-c-helper-text--m-dynamic--m-warning__item-icon--Color, light-dark(#dca614, #f0ab00));
+  }
+}
+
+:host([dynamic][variant="success"]) {
+  #icon {
+    color:
+      /** Icon color for dynamic success items. Maps to --pf-t--global--icon--color--status--success--default. */
+      var(--pf-v6-c-helper-text--m-dynamic--m-success__item-icon--Color, light-dark(#3d7317, #5ba352));
+  }
+}
+
+:host([dynamic][variant="error"]) {
+  #icon {
+    color:
+      /** Icon color for dynamic error items. Maps to --pf-t--global--icon--color--status--danger--default. */
+      var(--pf-v6-c-helper-text--m-dynamic--m-error__item-icon--Color, light-dark(#b1380b, #fe5142));
+  }
+}
+
+#icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  block-size: 1lh;
+  color:
+    /** Default icon color. Maps to --pf-t--global--icon--color--regular. */
+    var(--pf-v6-c-helper-text__item-icon--Color, light-dark(#1f1f1f, #d4d4d4));
+}
+
+#icon svg {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes item-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

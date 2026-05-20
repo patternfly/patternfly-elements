@@ -1,7 +1,6 @@
 import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-
 import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
 
 import styles from './pf-v6-switch.css';
@@ -14,10 +13,6 @@ import styles from './pf-v6-switch.css';
  * Uses ARIA `switch` role via ElementInternals (WCAG 1.3.1, 4.1.2, 2.1.1).
  *
  * @summary Toggle control for on/off settings
- *
- * @slot - Label text displayed beside the switch toggle.
- *         Place `<span data-state="on">` and `<span data-state="off">` children
- *         to show different text for each state.
  *
  * @fires {Event} change - Fires when the switch is toggled. Uses the native
  *        `Event` interface with no custom detail payload.
@@ -54,6 +49,14 @@ export class PfV6Switch extends LitElement {
   #hasSlottedContent = false;
 
   #initialChecked = false;
+
+  get #classes() {
+    return [
+      this.checked && 'checked',
+      this.disabled && 'disabled',
+      this.reversed && 'reversed',
+    ].filter(Boolean).join(' ');
+  }
 
   get labels(): NodeListOf<HTMLLabelElement> {
     return this.#internals.labels as NodeListOf<HTMLLabelElement>;
@@ -100,8 +103,9 @@ export class PfV6Switch extends LitElement {
 
   override render(): TemplateResult<1> {
     return html`
-      <span id="toggle">
-        <span id="check-icon" ?hidden=${!this.showCheckIcon}>
+      <span id="toggle" class="${this.#classes}">
+        <span id="check-icon"
+              ?hidden=${!this.showCheckIcon || !this.checked}>
           <svg role="presentation"
                fill="currentColor"
                height="1em"
@@ -111,8 +115,9 @@ export class PfV6Switch extends LitElement {
           </svg>
         </span>
       </span>
-      <span id="label" ?hidden=${!this.#hasSlottedContent}>
-        <!-- summary: Label text displayed beside the switch toggle -->
+      <span id="label"
+            class="${this.#classes}"
+            ?hidden=${!this.#hasSlottedContent}>
         <slot @slotchange=${this.#onSlotchange}></slot>
       </span>
     `;

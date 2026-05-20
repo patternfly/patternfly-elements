@@ -2,6 +2,7 @@
   display: inline-grid;
   grid-template-columns: auto;
   grid-auto-columns: 1fr;
+  color-scheme: light dark;
   /** Gap between toggle and label */
   column-gap: var(--pf-v6-c-switch--ColumnGap, 0.5rem);
   /** Switch container height */
@@ -15,15 +16,13 @@
   outline: none;
 }
 
-:host([reversed]) {
-  #label,
-  #toggle {
-    grid-row: 1;
-  }
+#toggle.reversed,
+#label.reversed {
+  grid-row: 1;
+}
 
-  #label {
-    grid-column: 1;
-  }
+#label.reversed {
+  grid-column: 1;
 }
 
 :host([disabled]) {
@@ -33,16 +32,16 @@
 #toggle {
   /** Toggle track background color (unchecked). Overrides the `--pf-t--global--background--color--control--default` design token. */
   --_bg: var(--pf-v6-c-switch__toggle--BackgroundColor,
-    var(--pf-t--global--background--color--control--default));
+    var(--pf-t--global--background--color--control--default, light-dark(#ffffff, #383838)));
   /** Toggle track border color. Overrides the `--pf-t--global--border--color--control--default` design token. */
   --_border-color: var(--pf-v6-c-switch__toggle--BorderColor,
-    var(--pf-t--global--border--color--control--default));
+    var(--pf-t--global--border--color--control--default, light-dark(#c7c7c7, #a3a3a3)));
   /** Toggle track border width. Overrides the `--pf-t--global--border--width--control--default` design token. */
   --_border-width: var(--pf-v6-c-switch__toggle--BorderWidth,
-    var(--pf-t--global--border--width--control--default));
+    var(--pf-t--global--border--width--control--default, 1px));
   /** Knob background color (unchecked). Overrides the `--pf-t--global--icon--color--subtle` design token. */
   --_knob-bg: var(--pf-v6-c-switch__input--not-checked__toggle--before--BackgroundColor,
-    var(--pf-t--global--icon--color--subtle));
+    var(--pf-t--global--icon--color--subtle, light-dark(#707070, #a3a3a3)));
 
   position: relative;
   display: inline-block;
@@ -61,7 +60,7 @@
   border-radius: var(--pf-v6-c-switch__toggle--BorderRadius,
     var(--pf-t--global--border--radius--pill, 999px));
 
-  &::before {
+  &:before {
     position: absolute;
     inset-block-start: 50%;
     /** Knob horizontal offset (unchecked) */
@@ -81,7 +80,6 @@
         calc(var(--pf-v6-c-switch--FontSize, 0.875rem) - var(--pf-v6-c-switch__toggle-icon--Offset, 0.125rem))));
     content: "";
     background-color: var(--_knob-bg);
-    /** Knob border width (high-contrast mode) */
     border: var(--pf-v6-c-switch__toggle--before--BorderWidth,
       var(--pf-t--global--border--width--high-contrast--regular, 0)) solid transparent;
     /** Knob border radius. Overrides the `--pf-t--global--border--radius--large` design token. */
@@ -101,13 +99,51 @@
     translate: 0 -50%;
   }
 
-  &::after {
+  &:after {
     position: absolute;
     inset: 0;
     content: "";
     border: var(--_border-width) solid var(--_border-color);
     border-radius: var(--pf-v6-c-switch__toggle--BorderRadius,
       var(--pf-t--global--border--radius--pill, 999px));
+  }
+
+  &.checked {
+    /** Toggle track background color (checked). Overrides the `--pf-t--global--color--brand--default` design token. */
+    --_bg: var(--pf-v6-c-switch__input--checked__toggle--BackgroundColor,
+      var(--pf-t--global--color--brand--default, light-dark(#0066cc, #92c5f9)));
+    /** Toggle track border width (checked) */
+    --_border-width: var(--pf-v6-c-switch__input--checked__toggle--BorderWidth,
+      var(--pf-t--global--border--width--high-contrast--regular, 0));
+    /** Toggle track border color (checked) */
+    --_border-color: var(--pf-v6-c-switch__input--checked__toggle--BorderColor, transparent);
+    /** Knob background color (checked). Overrides the `--pf-t--global--icon--color--inverse` design token. */
+    --_knob-bg: var(--pf-v6-c-switch__input--checked__toggle--before--BackgroundColor,
+      var(--pf-t--global--icon--color--inverse, light-dark(#ffffff, #1f1f1f)));
+
+    &::before {
+      /** Knob translate distance (checked). Base offset for knob positioning. */
+      translate: var(--pf-v6-c-switch__input--checked__toggle--before--TranslateX,
+        calc(100% + var(--pf-v6-c-switch__toggle-icon--Offset, 0.125rem))) -50%;
+    }
+  }
+
+  &.disabled {
+    /** Toggle track background color (disabled). Overrides the `--pf-t--global--background--color--disabled--default` design token. */
+    --_bg: var(--pf-v6-c-switch__input--disabled__toggle--BackgroundColor,
+      var(--pf-t--global--background--color--disabled--default, light-dark(#c7c7c7, #a3a3a3)));
+    /** Toggle track border color (disabled). Overrides the `--pf-t--global--border--color--high-contrast` design token. */
+    --_border-color: var(--pf-v6-c-switch__input--disabled__toggle--BorderColor,
+      var(--pf-t--global--border--color--high-contrast, transparent));
+    /** Knob background color (disabled). Overrides the `--pf-t--global--icon--color--on-disabled` design token. */
+    --_knob-bg: var(--pf-v6-c-switch__input--disabled__toggle--before--BackgroundColor,
+      var(--pf-t--global--icon--color--on-disabled, light-dark(#4d4d4d, #383838)));
+
+    #check-icon {
+      /** Check icon color (disabled). Overrides the `--pf-t--global--icon--color--disabled` design token. */
+      color: var(--pf-v6-c-switch__input--disabled__toggle-icon--Color,
+        var(--pf-t--global--icon--color--disabled, light-dark(#a3a3a3, #707070)));
+    }
   }
 }
 
@@ -125,7 +161,7 @@
     calc(var(--pf-v6-c-switch--FontSize, 0.875rem) * .625));
   /** Check icon color. Overrides the `--pf-t--global--icon--color--on-brand--default` design token. */
   color: var(--pf-v6-c-switch__toggle-icon--Color,
-    var(--pf-t--global--icon--color--on-brand--default));
+    var(--pf-t--global--icon--color--on-brand--default, light-dark(#ffffff, #1f1f1f)));
 }
 
 #label {
@@ -134,78 +170,28 @@
   vertical-align: top;
   /** Label text color (unchecked). Overrides the `--pf-t--global--text--color--subtle` design token. */
   color: var(--pf-v6-c-switch__input--not-checked__label--Color,
-    var(--pf-t--global--text--color--subtle));
+    var(--pf-t--global--text--color--subtle, light-dark(#4d4d4d, #c7c7c7)));
+
+  &.checked {
+    /** Label text color (checked). Overrides the `--pf-t--global--text--color--regular` design token. */
+    color: var(--pf-v6-c-switch__input--checked__label--Color,
+      var(--pf-t--global--text--color--regular, light-dark(#151515, #ffffff)));
+  }
+
+  &.disabled {
+    /** Label text color (disabled). Overrides the `--pf-t--global--text--color--disabled` design token. */
+    color: var(--pf-v6-c-switch__input--disabled__label--Color,
+      var(--pf-t--global--text--color--disabled, light-dark(#a3a3a3, #707070)));
+  }
 }
 
-:host(:is(:focus, :focus-within)) #toggle {
+:host(:is(:focus, :focus-within)) #toggle:not(.disabled) {
   /** Focus outline width. Overrides the `--pf-t--global--border--width--strong` design token. */
   /** Focus outline color. Overrides the `--pf-t--global--color--brand--default` design token. */
   outline: var(--pf-v6-c-switch__input--focus__toggle--OutlineWidth,
     var(--pf-t--global--border--width--strong, 2px)) solid var(--pf-v6-c-switch__input--focus__toggle--OutlineColor,
-      var(--pf-t--global--color--brand--default));
+      var(--pf-t--global--color--brand--default, light-dark(#0066cc, #92c5f9)));
   /** Focus outline offset. Overrides the `--pf-t--global--spacer--xs` design token. */
   outline-offset: var(--pf-v6-c-switch__input--focus__toggle--OutlineOffset,
     var(--pf-t--global--spacer--xs, 0.25rem));
-}
-
-:host([checked]) #toggle {
-  /** Toggle track background color (checked). Overrides the `--pf-t--global--color--brand--default` design token. */
-  --_bg: var(--pf-v6-c-switch__input--checked__toggle--BackgroundColor,
-    var(--pf-t--global--color--brand--default));
-  /** Toggle track border width (checked) */
-  --_border-width: var(--pf-v6-c-switch__input--checked__toggle--BorderWidth,
-    var(--pf-t--global--border--width--high-contrast--regular, 0));
-  /** Toggle track border color (checked) */
-  --_border-color: var(--pf-v6-c-switch__input--checked__toggle--BorderColor, transparent);
-  /** Knob background color (checked). Overrides the `--pf-t--global--icon--color--inverse` design token. */
-  --_knob-bg: var(--pf-v6-c-switch__input--checked__toggle--before--BackgroundColor,
-    var(--pf-t--global--icon--color--inverse));
-
-  &::before {
-    /** Knob translate distance (checked). Base offset for knob positioning. */
-    translate: var(--pf-v6-c-switch__input--checked__toggle--before--TranslateX,
-      calc(100% + var(--pf-v6-c-switch__toggle-icon--Offset, 0.125rem))) -50%;
-  }
-}
-
-:host([checked]:not([show-check-icon])) #check-icon {
-  display: none;
-}
-
-:host(:not([checked])) #check-icon {
-  display: none;
-}
-
-:host([checked]) #label {
-  /** Label text color (checked). Overrides the `--pf-t--global--text--color--regular` design token. */
-  color: var(--pf-v6-c-switch__input--checked__label--Color,
-    var(--pf-t--global--text--color--regular));
-}
-
-:host([disabled]) #toggle {
-  /** Toggle track background color (disabled). Overrides the `--pf-t--global--background--color--disabled--default` design token. */
-  --_bg: var(--pf-v6-c-switch__input--disabled__toggle--BackgroundColor,
-    var(--pf-t--global--background--color--disabled--default));
-  /** Toggle track border color (disabled). Overrides the `--pf-t--global--border--color--high-contrast` design token. */
-  --_border-color: var(--pf-v6-c-switch__input--disabled__toggle--BorderColor,
-    var(--pf-t--global--border--color--high-contrast));
-  /** Knob background color (disabled). Overrides the `--pf-t--global--icon--color--on-disabled` design token. */
-  --_knob-bg: var(--pf-v6-c-switch__input--disabled__toggle--before--BackgroundColor,
-    var(--pf-t--global--icon--color--on-disabled));
-}
-
-:host([disabled]) #check-icon {
-  /** Check icon color (disabled). Overrides the `--pf-t--global--icon--color--disabled` design token. */
-  color: var(--pf-v6-c-switch__input--disabled__toggle-icon--Color,
-    var(--pf-t--global--icon--color--disabled));
-}
-
-:host([disabled]) #label {
-  /** Label text color (disabled). Overrides the `--pf-t--global--text--color--disabled` design token. */
-  color: var(--pf-v6-c-switch__input--disabled__label--Color,
-    var(--pf-t--global--text--color--disabled));
-}
-
-:host([disabled]:focus-within) #toggle {
-  outline: none;
 }

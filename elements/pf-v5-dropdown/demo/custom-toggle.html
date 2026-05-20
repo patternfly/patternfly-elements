@@ -3,7 +3,7 @@
     <em>Note:</em> When using a custom toggle, you must slot in a <code>pf-v5-dropdown-menu</code>.
   </small>
   <span id="switch-group">
-    <pf-v5-switch id="disable-all"></pf-v5-switch>
+    <pf-v6-switch id="disable-all"></pf-v6-switch>
     <label for="disable-all"><span data-state="on">Enable</span><span data-state="off">Disable</span> all dropdowns</label>
   </span>
 </p>
@@ -113,7 +113,7 @@
 
 <script type="module">
   import '@patternfly/elements/pf-v5-dropdown/pf-v5-dropdown.js';
-  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
   const sw = document.getElementById('disable-all')
   sw.addEventListener('click', function() {
     document.querySelectorAll('main pf-v5-dropdown').forEach(x => x.disabled = sw.checked);

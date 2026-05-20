@@ -1,0 +1,189 @@
+import { LitElement, html, isServer, type TemplateResult } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+
+import { InternalsController } from '@patternfly/pfe-core/controllers/internals-controller.js';
+
+import styles from './pf-v6-switch.css';
+
+/**
+ * A **switch** provides a toggle control for turning a setting on or off.
+ * Each switch MUST have a visible label or an `accessible-label` attribute.
+ * Switches without visible labels SHOULD set `show-check-icon`.
+ * Keyboard: `Space` or `Enter` toggles the switch.
+ * Uses ARIA `switch` role via ElementInternals (WCAG 1.3.1, 4.1.2, 2.1.1).
+ *
+ * @summary Toggle control for on/off settings
+ *
+ * @slot - Label text displayed beside the switch toggle.
+ *         Place `<span data-state="on">` and `<span data-state="off">` children
+ *         to show different text for each state.
+ *
+ * @fires {Event} change - Fires when the switch is toggled. Uses the native
+ *        `Event` interface with no custom detail payload.
+ *        Cancelable: call `preventDefault()` to reject the state change.
+ */
+@customElement('pf-v6-switch')
+export class PfV6Switch extends LitElement {
+  static readonly styles: CSSStyleSheet[] = [styles];
+
+  static readonly formAssociated = true;
+
+  declare shadowRoot: ShadowRoot;
+
+  #internals = InternalsController.of(this, { role: 'switch' });
+
+  /**
+   * Accessible label for the switch when there is no visible label text.
+   * Should describe the checked state, e.g. "Wi-Fi" (not "Wi-Fi on/off").
+   */
+  @property({ reflect: true, attribute: 'accessible-label' }) accessibleLabel?: string;
+
+  /** Flag to show a check icon on the toggle when checked. */
+  @property({ reflect: true, type: Boolean, attribute: 'show-check-icon' }) showCheckIcon = false;
+
+  /** Whether the switch is checked. */
+  @property({ reflect: true, type: Boolean }) checked = false;
+
+  /** Whether the switch is disabled. */
+  @property({ reflect: true, type: Boolean }) disabled = false;
+
+  /** Reverses the layout so the label appears before the toggle. */
+  @property({ reflect: true, type: Boolean }) reversed = false;
+
+  #hasSlottedContent = false;
+
+  #initialChecked = false;
+
+  get labels(): NodeListOf<HTMLLabelElement> {
+    return this.#internals.labels as NodeListOf<HTMLLabelElement>;
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    if (!isServer) {
+      this.#initialChecked = this.checked;
+      this.addEventListener('click', this.#onClick);
+      this.addEventListener('keyup', this.#onKeyup);
+      this.addEventListener('keydown', this.#onKeydown);
+    }
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('click', this.#onClick);
+    this.removeEventListener('keyup', this.#onKeyup);
+    this.removeEventListener('keydown', this.#onKeydown);
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.disabled = disabled;
+    this.requestUpdate();
+  }
+
+  formResetCallback(): void {
+    this.checked = this.#initialChecked;
+  }
+
+  override willUpdate(): void {
+    this.tabIndex = this.disabled ? -1 : 0;
+    this.#internals.ariaChecked = String(!!this.checked);
+    this.#internals.ariaDisabled = String(!!this.disabled);
+    this.#internals.ariaLabel = this.accessibleLabel || null;
+    this.#internals.setFormValue(this.checked ? 'on' : null);
+  }
+
+  override updated(): void {
+    this.#updateLabels();
+    this.#updateSlottedLabels();
+  }
+
+  override render(): TemplateResult<1> {
+    return html`
+      <span id="toggle">
+        <span id="check-icon" ?hidden=${!this.showCheckIcon}>
+          <svg role="presentation"
+               fill="currentColor"
+               height="1em"
+               width="1em"
+               viewBox="0 0 512 512">
+            <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+          </svg>
+        </span>
+      </span>
+      <span id="label" ?hidden=${!this.#hasSlottedContent}>
+        <!-- summary: Label text displayed beside the switch toggle -->
+        <slot @slotchange=${this.#onSlotchange}></slot>
+      </span>
+    `;
+  }
+
+  #onClick(event: Event) {
+    // @ts-expect-error: firefox workaround for double-firing when switch is nested in a label
+    const { originalTarget, explicitOriginalTarget } = event;
+    if (explicitOriginalTarget) {
+      let labels: HTMLLabelElement[];
+      if (originalTarget === event.target
+          && !(labels = Array.from(this.labels)).includes(explicitOriginalTarget)
+          && labels.includes(this.closest('label') as HTMLLabelElement)) {
+        return;
+      }
+    }
+    this.#toggle();
+  }
+
+  #onKeyup(event: KeyboardEvent) {
+    switch (event.key) {
+      case ' ':
+      case 'Enter':
+        event.preventDefault();
+        this.#toggle();
+    }
+  }
+
+  #onKeydown(event: KeyboardEvent) {
+    if (event.key === ' ') {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+
+  #toggle() {
+    if (!this.disabled) {
+      this.checked = !this.checked;
+      if (!this.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }))) {
+        this.checked = !this.checked;
+      }
+    }
+  }
+
+  #onSlotchange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    this.#hasSlottedContent = !!slot.assignedNodes({ flatten: true })
+        .some(n => n.nodeType === Node.ELEMENT_NODE || n.textContent?.trim());
+    this.requestUpdate();
+    this.#updateSlottedLabels();
+  }
+
+  #updateSlottedLabels() {
+    const labelState = this.checked ? 'on' : 'off';
+    for (const child of this.querySelectorAll<HTMLElement>('[data-state]')) {
+      child.hidden = child.dataset.state !== labelState;
+    }
+  }
+
+  #updateLabels() {
+    const labelState = this.checked ? 'on' : 'off';
+    this.labels.forEach(label => {
+      for (const state of label.querySelectorAll<HTMLElement>('[data-state]')) {
+        state.hidden = state.dataset.state !== labelState;
+      }
+    });
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'pf-v6-switch': PfV6Switch;
+  }
+}

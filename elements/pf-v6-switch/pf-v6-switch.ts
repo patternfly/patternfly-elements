@@ -102,7 +102,7 @@ export class PfV6Switch extends LitElement {
     return html`
       <span id="toggle" class="${this.#classes}">
         <span id="check-icon"
-              ?hidden=${!this.showCheckIcon || !this.checked}>
+              ?hidden=${!this.showCheckIcon || (this.showCheckIcon && !this.checked)}>
           <svg role="presentation"
                fill="currentColor"
                height="1em"

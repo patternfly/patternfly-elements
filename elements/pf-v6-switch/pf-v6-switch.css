@@ -162,6 +162,11 @@
   /** Check icon color. Overrides the `--pf-t--global--icon--color--on-brand--default` design token. */
   color: var(--pf-v6-c-switch__toggle-icon--Color,
     var(--pf-t--global--icon--color--on-brand--default, light-dark(#ffffff, #1f1f1f)));
+
+  &[hidden] {
+    display: none;
+  }
+
 }
 
 #label {

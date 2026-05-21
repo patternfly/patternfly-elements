@@ -25,17 +25,6 @@
   {% endhtmlexample %}
 
 
-  ### Checked with label
-  Use `data-state` children to show different labels for checked and unchecked states.
-
-  {% htmlexample %}
-  <pf-v6-switch checked>
-    <span data-state="on">Message when on</span>
-    <span data-state="off">Message when off</span>
-  </pf-v6-switch>
-  {% endhtmlexample %}
-
-
   ### Disabled
 
   {% htmlexample %}

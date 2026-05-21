@@ -25,8 +25,6 @@ export class PfV6Switch extends LitElement {
 
   static readonly formAssociated = true;
 
-  declare shadowRoot: ShadowRoot;
-
   #internals = InternalsController.of(this, { role: 'switch' });
 
   #slots = new SlotController(this, null);

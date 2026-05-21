@@ -47,6 +47,9 @@ export class PfV6Switch extends LitElement {
   /** Reverses the layout so the label appears before the toggle. */
   @property({ reflect: true, type: Boolean }) reversed = false;
 
+  /** Form value defaults to undefined */
+  @property({ type: String }) value?;
+
   #initialChecked = false;
 
   get #classes() {
@@ -92,7 +95,7 @@ export class PfV6Switch extends LitElement {
     this.#internals.ariaChecked = String(!!this.checked);
     this.#internals.ariaDisabled = String(!!this.disabled);
     this.#internals.ariaLabel = this.accessibleLabel || null;
-    this.#internals.setFormValue(this.checked ? 'on' : null);
+    this.#internals.setFormValue(this.checked ? (this.value ?? null) : null);
   }
 
   override render(): TemplateResult<1> {

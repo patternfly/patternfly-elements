@@ -48,7 +48,7 @@ export class PfV6Switch extends LitElement {
   @property({ reflect: true, type: Boolean }) reversed = false;
 
   /** Form value defaults to undefined */
-  @property({ type: String }) value?;
+  @property() value?: string;
 
   #initialChecked = false;
 

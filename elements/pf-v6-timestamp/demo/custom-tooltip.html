@@ -2,13 +2,16 @@
 name: Custom tooltip
 description: >
   Display any custom content within a tooltip by placing it in the tooltip's
-  content slot.
+  content slot. Use an anchor element around the trigger for keyboard
+  accessibility.
 ---
 <section>
   <p>
     <pf-v5-tooltip>
-      <pf-v6-timestamp help-text date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-v6-timestamp>
-      <span slot="content">Last updated on <pf-v6-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" date-format="long" time-format="short" utc></pf-v6-timestamp></span>
+      <a href="#">
+        <pf-v6-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-v6-timestamp>
+      </a>
+      <span slot="content">Last updated on <pf-v6-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" date-format="long" time-format="short" time-zone="UTC"></pf-v6-timestamp></span>
     </pf-v5-tooltip>
   </p>
   <p>

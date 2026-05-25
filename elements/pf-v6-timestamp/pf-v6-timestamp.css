@@ -1,41 +1,9 @@
 :host {
   display: inline-block;
-  /** Font size for the timestamp text */
+  /** Maps to `--pf-t--global--font--size--body--sm` */
   font-size: var(--pf-v6-c-timestamp--FontSize, 0.75rem);
-  /** Text color for the timestamp */
+  /** Maps to `--pf-t--global--text--color--regular` */
   color: var(--pf-v6-c-timestamp--Color, inherit);
-  /** Outline offset for focus indicators */
+  /** Focus ring offset per PatternFly v6 spacing tokens */
   outline-offset: var(--pf-v6-c-timestamp--OutlineOffset, 0.1875rem);
-}
-
-:host([help-text]) {
-  /** Text decoration line style when indicating a tooltip */
-  --_text-decoration-line: var(--pf-v6-c-timestamp--m-help-text--TextDecorationLine, underline);
-  /** Text decoration style when indicating a tooltip */
-  --_text-decoration-style: var(--pf-v6-c-timestamp--m-help-text--TextDecorationStyle, dashed);
-  /** Space between text and underline decoration */
-  --_text-underline-offset: var(--pf-v6-c-timestamp--m-help-text--TextUnderlineOffset, 0.25rem);
-
-  /** Subtle text color when acting as a tooltip trigger
-   *  Falls back to the global subtle text color token */
-  color: var(--pf-v6-c-timestamp--m-help-text--Color, var(--pf-t--global--text--color--subtle, #4d4d4d));
-  cursor: pointer;
-}
-
-:host([help-text]:hover),
-:host([help-text]:focus) {
-  /** Text decoration line on hover or focus */
-  --_text-decoration-line: var(--pf-v6-c-timestamp--m-help-text--hover--TextDecorationLine, underline);
-  /** Text decoration style on hover or focus */
-  --_text-decoration-style: var(--pf-v6-c-timestamp--m-help-text--hover--TextDecorationStyle, dashed);
-
-  /** Regular text color on hover or focus
-   *  Falls back to the global regular text color token */
-  color: var(--pf-v6-c-timestamp--m-help-text--hover--Color, var(--pf-t--global--text--color--regular, #151515));
-}
-
-time {
-  text-decoration-line: var(--_text-decoration-line, none);
-  text-decoration-style: var(--_text-decoration-style, solid);
-  text-underline-offset: var(--_text-underline-offset, initial);
 }

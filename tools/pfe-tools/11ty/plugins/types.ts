@@ -1,17 +1,7 @@
 import type { PfeConfig } from '@patternfly/pfe-tools/config';
-import type { Manifest } from '@patternfly/pfe-tools/custom-elements-manifest/lib/Manifest.js';
 
-export interface DemoRecord {
-  title: string;
-  tagName: string;
-  tagPrefix: string;
-  primaryElementName: string;
-  manifest: Manifest;
-  slug: string;
-  filePath: string;
-  permalink: string;
-  url: string;
-}
+export type { DemoRecord } from '@patternfly/pfe-tools/custom-elements-manifest/lib/Manifest.js';
+import type { DemoRecord } from '@patternfly/pfe-tools/custom-elements-manifest/lib/Manifest.js';
 
 export interface PluginOptions extends PfeConfig {
   /** list of extra demo records not included in the custom-elements-manifest. Default [] */

@@ -8,7 +8,7 @@ import { junitReporter } from '@web/test-runner-junit-reporter';
 import { a11ySnapshotPlugin } from '@web/test-runner-commands/plugins';
 
 import { pfeDevServerConfig, type PfeDevServerConfigOptions } from '../dev-server/config.js';
-import { getPfeConfig } from '../config.js';
+import { getPfeConfig, getPrefixes } from '../config.js';
 
 export interface PfeTestRunnerConfigOptions extends PfeDevServerConfigOptions {
   files?: string[];
@@ -50,8 +50,9 @@ const exists = async (path: string | URL) => {
 export function pfeTestRunnerConfig(opts: PfeTestRunnerConfigOptions): TestRunnerConfig {
   const { open, ...devServerConfig } = pfeDevServerConfig({ ...opts, loadDemo: false });
 
-  const { elementsDir, tagPrefix: rawPrefix } = getPfeConfig();
-  const tagPrefixes = [rawPrefix].flat();
+  const config = getPfeConfig();
+  const { elementsDir } = config;
+  const tagPrefixes = getPrefixes(config);
 
   const configuredReporter = opts.reporter ?? 'default';
 

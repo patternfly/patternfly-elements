@@ -21,7 +21,7 @@ import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
 import slugify from 'slugify';
-import { deslugify } from '@patternfly/pfe-tools/config.js';
+import { deslugify, matchPrefix } from '@patternfly/pfe-tools/config.js';
 
 type PredicateFn = (x: unknown) => boolean;
 
@@ -324,8 +324,7 @@ export class Manifest {
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';
-      const prefixes = [options.tagPrefix].flat().map(p => `${p.replace(/-$/, '')}-`);
-      const prefix = prefixes.find(p => tagName.startsWith(p)) ?? prefixes[0];
+      const prefix = matchPrefix(tagName, options);
       const title = isMainElementDemo ? prettyTag(tagName, options.aliases, prefix)
         : last
             .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())

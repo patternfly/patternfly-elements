@@ -37,7 +37,7 @@ title: Get started
   [bare module specifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#importing_modules_as_bare_names) to import the components.
 
   ```javascript
-  import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
   ```
 
   ### In HTML
@@ -55,7 +55,7 @@ title: Get started
   }
   </script>
   <script type="module">
-    import "@patternfly/elements/pf-v5-card/pf-v5-card.js";
+    import "@patternfly/elements/pf-v6-card/pf-v6-card.js";
   </script>
   ```
 
@@ -65,18 +65,18 @@ title: Get started
   When you have the import map script loaded on the page, you can add a [card component](/components/card) using html.
 
   ```html
-  <pf-v5-card>
+  <pf-v6-card>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
-  </pf-v5-card>
+    <p>This is the pf-v6-card body.</p>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
+  </pf-v6-card>
   ```
 
-  <pf-v5-card>
+  <pf-v6-card>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
-  </pf-v5-card>
+    <p>This is the pf-v6-card body.</p>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
+  </pf-v6-card>
 
 ### Importmap and Markup
 
@@ -91,18 +91,18 @@ Altogether your import map code could look something like this [Lit Playground D
   component to see which attributes are available.
 
   ```html
-  <pf-v5-card rounded>
+  <pf-v6-card rounded>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
-  </pf-v5-card>
+    <p>This is the pf-v6-card body.</p>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
+  </pf-v6-card>
   ```
 
-  <pf-v5-card rounded>
+  <pf-v6-card rounded>
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
-  </pf-v5-card>
+    <p>This is the pf-v6-card body.</p>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
+  </pf-v6-card>
 {% endband %}
 
 {% band header="Use CSS variables to customize or theme your components" %}
@@ -116,14 +116,14 @@ Altogether your import map code could look something like this [Lit Playground D
   ```css
   /* your-page.css */
   :root {
-    --pf-v5-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);
+    --pf-v6-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);
   }
   ```
-  <pf-v5-card flat rounded style="--pf-v5-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);">
+  <pf-v6-card flat rounded style="--pf-v6-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);">
     <h3 slot="header">Card header</h3>
-    <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
-  </pf-v5-card>
+    <p>This is the pf-v6-card body.</p>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
+  </pf-v6-card>
 {% endband %}
 
 {% band header="Avoiding the flash of unstyled content (FOUC)" %}
@@ -148,12 +148,12 @@ Altogether your import map code could look something like this [Lit Playground D
         --reveal-duration: 0.2s;
       }
 
-      pf-v5-card {
+      pf-v6-card {
         opacity: 1;
         transition: opacity var(--reveal-duration) ease var(--reveal-delay);
       }
 
-      pf-v5-card:not(:defined) {
+      pf-v6-card:not(:defined) {
         opacity: 0;
       }
     </style>
@@ -161,18 +161,18 @@ Altogether your import map code could look something like this [Lit Playground D
     <!-- Add noscript styles to immediately reveal content when JavaScript is disabled -->
     <noscript>
       <style>
-        pf-v5-card:not(:defined) {
+        pf-v6-card:not(:defined) {
           opacity: 1;
         }
       </style>
     </noscript>
-    <script type="module" src="https://jspm.dev/@patternfly/elements/pf-v5-card/pf-v5-card.js"></script>
+    <script type="module" src="https://jspm.dev/@patternfly/elements/pf-v6-card/pf-v6-card.js"></script>
   </head>
   <body>
-    <pf-v5-card>
+    <pf-v6-card>
       <h1 slot="header">No FOUC</h1>
       <p>Content will remain hidden until component definitions are loaded.</p>
-    </pf-v5-card>
+    </pf-v6-card>
   </body>
   </html>
   ```

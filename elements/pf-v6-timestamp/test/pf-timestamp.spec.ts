@@ -29,10 +29,6 @@ describe('<pf-v6-timestamp>', function() {
       expect(element.time).to.equal(expected);
     });
 
-    it('does not have help-text enabled', function() {
-      expect(element.helpText).to.be.false;
-    });
-
     it('is accessible', async function() {
       const snapshot = await a11ySnapshot();
       expect(snapshot).to.have.property('children');
@@ -141,17 +137,32 @@ describe('<pf-v6-timestamp>', function() {
     });
   });
 
-  describe('with hour-12="false"', function() {
+  describe('with hour-cycle="h23"', function() {
     const dateString = 'Sat Jan 01 2022 13:00:00';
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" hour-12="false"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" hour-cycle="h23"></pf-v6-timestamp>
       `);
     });
 
-    it('shows 24 hour time', function() {
-      const expected = new Date(dateString).toLocaleString('en-US', { hour12: false });
+    it('shows 24-hour time', function() {
+      const expected = new Date(dateString).toLocaleString('en-US', { hourCycle: 'h23' });
+      expect(element.time).to.equal(expected);
+    });
+  });
+
+  describe('with hour-cycle="h12"', function() {
+    const dateString = 'Sat Jan 01 2022 13:00:00';
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Timestamp>(html`
+        <pf-v6-timestamp date="${dateString}" hour-cycle="h12"></pf-v6-timestamp>
+      `);
+    });
+
+    it('shows 12-hour time', function() {
+      const expected = new Date(dateString).toLocaleString('en-US', { hourCycle: 'h12' });
       expect(element.time).to.equal(expected);
     });
   });
@@ -179,39 +190,39 @@ describe('<pf-v6-timestamp>', function() {
       `);
     });
 
-    it('shows 12 hour time by default', function() {
+    it('uses locale default hour cycle', function() {
       const date = new Date(2022, 1, 1, 13, 0).toString();
       const expected = new Date(date).toLocaleString('en-US');
       expect(element.time).to.equal(expected);
     });
   });
 
-  describe('with locale="en-US" and hour-12="false"', function() {
+  describe('with locale="en-US" and hour-cycle="h23"', function() {
     beforeEach(async function() {
       const date = new Date(2022, 1, 1, 13, 0).toString();
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${date}" locale="en-US" hour-12="false"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${date}" locale="en-US" hour-cycle="h23"></pf-v6-timestamp>
       `);
     });
 
-    it('shows 24 hour time', function() {
+    it('shows 24-hour time', function() {
       const date = new Date(2022, 1, 1, 13, 0).toString();
-      const expected = new Date(date).toLocaleString('en-US', { hour12: false });
+      const expected = new Date(date).toLocaleString('en-US', { hourCycle: 'h23' });
       expect(element.time).to.equal(expected);
     });
   });
 
-  describe('with locale="en-GB" and hour-12', function() {
+  describe('with locale="en-GB" and hour-cycle="h12"', function() {
     beforeEach(async function() {
       const date = new Date(2022, 1, 1, 13, 0).toString();
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${date}" locale="en-GB" hour-12></pf-v6-timestamp>
+        <pf-v6-timestamp date="${date}" locale="en-GB" hour-cycle="h12"></pf-v6-timestamp>
       `);
     });
 
-    it('shows 12 hour time for a 24 hour locale', function() {
+    it('shows 12-hour time for a 24-hour locale', function() {
       const date = new Date(2022, 1, 1, 13, 0).toString();
-      const expected = new Date(date).toLocaleString('en-GB', { hour12: true });
+      const expected = new Date(date).toLocaleString('en-GB', { hourCycle: 'h12' });
       expect(element.time).to.equal(expected);
     });
   });
@@ -257,35 +268,6 @@ describe('<pf-v6-timestamp>', function() {
     });
   });
 
-  describe('with help-text', function() {
-    beforeEach(async function() {
-      element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp help-text></pf-v6-timestamp>
-      `);
-    });
-
-    it('reflects the help-text attribute', function() {
-      expect(element.hasAttribute('help-text')).to.be.true;
-      expect(element.helpText).to.be.true;
-    });
-
-    it('is keyboard-focusable', function() {
-      expect(element.tabIndex).to.equal(0);
-    });
-  });
-
-  describe('without help-text', function() {
-    beforeEach(async function() {
-      element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp></pf-v6-timestamp>
-      `);
-    });
-
-    it('is not keyboard-focusable', function() {
-      expect(element.tabIndex).to.equal(-1);
-    });
-  });
-
   describe('with slotted content', function() {
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
@@ -308,15 +290,67 @@ describe('<pf-v6-timestamp>', function() {
     });
   });
 
-  describe('with utc', function() {
+  describe('with time-zone="UTC"', function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="Sat Jan 01 2022 00:00:00" utc></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" time-zone="UTC"></pf-v6-timestamp>
       `);
     });
 
-    it('displays UTC time with UTC suffix', function() {
-      expect(element.time).to.include('UTC');
+    it('displays UTC time', function() {
+      const expected = new Date(dateString).toLocaleString('en-US', { timeZone: 'UTC' });
+      expect(element.time).to.equal(expected);
+    });
+  });
+
+  describe('with time-zone="UTC" and display-suffix="UTC"', function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Timestamp>(html`
+        <pf-v6-timestamp date="${dateString}" time-zone="UTC" display-suffix="UTC"></pf-v6-timestamp>
+      `);
+    });
+
+    it('displays UTC time with suffix', function() {
+      const expected = `${new Date(dateString).toLocaleString('en-US', { timeZone: 'UTC' })} UTC`;
+      expect(element.time).to.equal(expected);
+    });
+  });
+
+  describe('with time-zone="America/New_York"', function() {
+    const dateString = 'Sat Jan 01 2022 12:00:00 GMT+0000';
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Timestamp>(html`
+        <pf-v6-timestamp date="${dateString}" time-zone="America/New_York"></pf-v6-timestamp>
+      `);
+    });
+
+    it('displays time in the specified timezone', function() {
+      const expected = new Date(dateString).toLocaleString('en-US', { timeZone: 'America/New_York' });
+      expect(element.time).to.equal(expected);
+    });
+  });
+
+  describe('date property round-trips as ISO string', function() {
+    const dateString = 'Sat Jan 01 2022 00:00:00';
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Timestamp>(html`
+        <pf-v6-timestamp date="${dateString}"></pf-v6-timestamp>
+      `);
+    });
+
+    it('returns ISO string from date getter', function() {
+      const expected = new Date(dateString).toISOString();
+      expect(element.date).to.equal(expected);
+    });
+
+    it('date getter matches isoString', function() {
+      expect(element.date).to.equal(element.isoString);
     });
   });
 });

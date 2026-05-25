@@ -1,4 +1,4 @@
-import type { ComplexAttributeConverter, PropertyValues, TemplateResult } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
 
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
@@ -7,23 +7,21 @@ import { property } from 'lit/decorators/property.js';
 import {
   TimestampController,
   type DateTimeFormat,
+  type HourCycle,
 } from '@patternfly/pfe-core/controllers/timestamp-controller.js';
 
 import styles from './pf-v6-timestamp.css';
 
-export type { DateTimeFormat };
-
-const BooleanStringConverter: ComplexAttributeConverter = {
-  fromAttribute(value) {
-    return !value || value === 'true';
-  },
-};
+export type { DateTimeFormat, HourCycle };
 
 /**
  * A timestamp provides consistent formats for displaying date and time values.
  * Authors should set `date` to display a specific time. Defaults to now.
- * Set `help-text` when wrapping in a tooltip. The `<time datetime>` element
- * provides screen reader accessible semantics.
+ * The `<time datetime>` element provides screen reader accessible semantics.
+ *
+ * For tooltip display, wrap the timestamp in a `<pf-v6-tooltip>` using
+ * composition rather than built-in configuration.
+ *
  * @summary Consistently formatted date and time display.
  * @slot - Custom content to display instead of the formatted date/time.
  *         Useful for relative time text or prefacing content.
@@ -56,21 +54,21 @@ export class PfV6Timestamp extends LitElement {
   /** Display a relative time string (e.g. "3 hours ago") instead of an absolute date. */
   @property({ reflect: true, type: Boolean }) relative?: boolean;
 
-  /** Display the time in UTC instead of the local timezone. */
-  @property({ reflect: true, type: Boolean }) utc?: boolean;
+  /**
+   * IANA timezone identifier for display (e.g. "UTC", "America/New_York").
+   * When absent, uses the local timezone.
+   */
+  @property({ reflect: true, attribute: 'time-zone' }) timeZone?: string;
 
   /**
-   * Display time in 12-hour format. When absent, uses the locale default.
-   * Set `hour-12="false"` to force 24-hour display.
+   * Hour cycle for time display. Values follow the Intl.DateTimeFormat spec:
+   * - `h11`: 12-hour (0-11)
+   * - `h12`: 12-hour (1-12)
+   * - `h23`: 24-hour (0-23)
+   * - `h24`: 24-hour (1-24)
+   * When absent, uses the locale default.
    */
-  @property({
-    reflect: true,
-    attribute: 'hour-12',
-    converter: BooleanStringConverter,
-  }) hour12?: boolean;
-
-  /** Applies dashed underline styling, indicating a tooltip is available. */
-  @property({ reflect: true, type: Boolean, attribute: 'help-text' }) helpText = false;
+  @property({ reflect: true, attribute: 'hour-cycle' }) hourCycle?: HourCycle;
 
   /**
    * The date/time to display. Accepts any value parseable by `new Date()`.
@@ -78,7 +76,7 @@ export class PfV6Timestamp extends LitElement {
    */
   @property({ reflect: true })
   get date(): string {
-    return this.#timestamp.localeString;
+    return this.#timestamp.isoString;
   }
 
   set date(string) {
@@ -100,12 +98,6 @@ export class PfV6Timestamp extends LitElement {
   override willUpdate(changedProperties: PropertyValues<this>): void {
     for (const [prop] of changedProperties) {
       this.#timestamp.set(prop, this[prop as keyof this]);
-    }
-    // Keyboard-focusable when acting as a tooltip trigger (WCAG 2.1.1)
-    if (this.helpText) {
-      this.setAttribute('tabindex', '0');
-    } else {
-      this.removeAttribute('tabindex');
     }
   }
 

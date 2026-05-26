@@ -1,7 +1,7 @@
 import { expect, html, fixture } from '@open-wc/testing';
 
 import { PfV6Tooltip, TooltipShowEvent, TooltipHideEvent } from '../pf-v6-tooltip.js';
-import { setViewport, sendMouse } from '@web/test-runner-commands';
+import { setViewport, sendMouse, sendKeys } from '@web/test-runner-commands';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pf-v6-tooltip>', function() {
@@ -112,6 +112,31 @@ describe('<pf-v6-tooltip>', function() {
     });
   });
 
+  describe('with both content attribute and content slot', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Attribute content">
+          <button>Trigger</button>
+          <span slot="content">Slot content</span>
+        </pf-v6-tooltip>
+      `);
+    });
+
+    describe('after calling show()', function() {
+      beforeEach(async function() {
+        await element.show();
+        await element.updateComplete;
+      });
+
+      it('should show slotted content instead of attribute content', async function() {
+        const snapshot = await a11ySnapshot();
+        const text = JSON.stringify(snapshot);
+        expect(text).to.include('Slot content');
+        expect(text).to.not.include('Attribute content');
+      });
+    });
+  });
+
   describe('with position attribute', function() {
     beforeEach(async function() {
       element = await fixture<PfV6Tooltip>(html`
@@ -137,6 +162,20 @@ describe('<pf-v6-tooltip>', function() {
 
     it('should accept no-flip attribute', function() {
       expect(element.noFlip).to.be.true;
+    });
+  });
+
+  describe('with flip-behavior attribute', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Flip" flip-behavior="top,bottom">
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+    });
+
+    it('should parse comma-separated placements', function() {
+      expect(element.flipBehavior).to.deep.equal(['top', 'bottom']);
     });
   });
 
@@ -166,6 +205,23 @@ describe('<pf-v6-tooltip>', function() {
 
     it('should accept alignment attribute', function() {
       expect(element.alignment).to.equal('start');
+    });
+  });
+
+  describe('with visible attribute', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Visible" visible>
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+      await element.updateComplete;
+      await new Promise(r => setTimeout(r, 100));
+    });
+
+    it('should show tooltip content', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.axContainName('Visible');
     });
   });
 
@@ -201,6 +257,33 @@ describe('<pf-v6-tooltip>', function() {
     });
   });
 
+  describe('with trigger property set to Element reference', function() {
+    let triggerButton: HTMLButtonElement;
+
+    beforeEach(async function() {
+      triggerButton = await fixture<HTMLButtonElement>(html`
+        <button>Ref trigger</button>
+      `);
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Ref tooltip"></pf-v6-tooltip>
+      `);
+      element.trigger = triggerButton;
+      await element.updateComplete;
+    });
+
+    describe('after calling show()', function() {
+      beforeEach(async function() {
+        await element.show();
+        await element.updateComplete;
+      });
+
+      it('should show tooltip content', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.axContainName('Ref tooltip');
+      });
+    });
+  });
+
   describe('show event', function() {
     let showEvent: TooltipShowEvent | null;
 
@@ -226,6 +309,37 @@ describe('<pf-v6-tooltip>', function() {
       it('should fire show event with reason', function() {
         expect(showEvent).to.be.an.instanceOf(TooltipShowEvent);
         expect(showEvent!.reason).to.equal('mouseenter');
+      });
+    });
+  });
+
+  describe('hide event', function() {
+    let hideEvent: TooltipHideEvent | null;
+
+    beforeEach(async function() {
+      hideEvent = null;
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Hide test" entry-delay="0">
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+      element.addEventListener('hide', function(e) {
+        hideEvent = e as TooltipHideEvent;
+      });
+    });
+
+    describe('hovering then leaving the element', function() {
+      beforeEach(async function() {
+        const { x, y } = element.getBoundingClientRect();
+        await sendMouse({ position: [x + 5, y + 5], type: 'move' });
+        await new Promise(r => setTimeout(r, 50));
+        await sendMouse({ position: [0, 0], type: 'move' });
+        await new Promise(r => setTimeout(r, 50));
+      });
+
+      it('should fire hide event with reason', function() {
+        expect(hideEvent).to.be.an.instanceOf(TooltipHideEvent);
+        expect(hideEvent!.reason).to.equal('mouseleave');
       });
     });
   });
@@ -257,6 +371,73 @@ describe('<pf-v6-tooltip>', function() {
     });
   });
 
+  describe('cancelling hide event', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Stay visible" entry-delay="0" exit-delay="0">
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+      await element.show();
+      await element.updateComplete;
+      element.addEventListener('hide', function(e) {
+        e.preventDefault();
+      });
+    });
+
+    describe('leaving the element', function() {
+      beforeEach(async function() {
+        await sendMouse({ position: [0, 0], type: 'move' });
+        await new Promise(r => setTimeout(r, 100));
+        await element.updateComplete;
+      });
+
+      it('should remain visible', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.axContainName('Stay visible');
+      });
+    });
+  });
+
+  describe('focus triggers', function() {
+    let button: HTMLButtonElement;
+
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Focus tip" entry-delay="0" exit-delay="0">
+          <button>Focus me</button>
+        </pf-v6-tooltip>
+      `);
+      button = element.querySelector('button')!;
+    });
+
+    describe('focusing the trigger', function() {
+      beforeEach(async function() {
+        button.focus();
+        await new Promise(r => setTimeout(r, 50));
+        await element.updateComplete;
+      });
+
+      it('should show tooltip', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.axContainName('Focus tip');
+      });
+
+      describe('then blurring the trigger', function() {
+        beforeEach(async function() {
+          button.blur();
+          await new Promise(r => setTimeout(r, 50));
+          await element.updateComplete;
+        });
+
+        it('should hide tooltip', async function() {
+          const snapshot = await a11ySnapshot();
+          expect(snapshot).to.not.axContainName('Focus tip');
+        });
+      });
+    });
+  });
+
   describe('Escape key', function() {
     beforeEach(async function() {
       element = await fixture<PfV6Tooltip>(html`
@@ -270,7 +451,7 @@ describe('<pf-v6-tooltip>', function() {
 
     describe('pressing Escape', function() {
       beforeEach(async function() {
-        element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
         await element.updateComplete;
         await new Promise(r => setTimeout(r, 50));
       });
@@ -279,6 +460,51 @@ describe('<pf-v6-tooltip>', function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot).to.not.axContainName('Escapable');
       });
+    });
+  });
+
+  describe('Escape key with external trigger', function() {
+    let triggerButton: HTMLButtonElement;
+
+    beforeEach(async function() {
+      const container = await fixture(html`
+        <div>
+          <button id="esc-trigger">Escape trigger</button>
+          <pf-v6-tooltip trigger="esc-trigger" content="Escape external"></pf-v6-tooltip>
+        </div>
+      `);
+      triggerButton = container.querySelector('#esc-trigger')!;
+      element = container.querySelector('pf-v6-tooltip')!;
+      await element.updateComplete;
+      await element.show();
+      await element.updateComplete;
+    });
+
+    describe('pressing Escape on document', function() {
+      beforeEach(async function() {
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        await element.updateComplete;
+        await new Promise(r => setTimeout(r, 50));
+      });
+
+      it('should hide tooltip', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.not.axContainName('Escape external');
+      });
+    });
+  });
+
+  describe('with silent attribute', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Silent tip" silent>
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+    });
+
+    it('should accept silent attribute', function() {
+      expect(element.silent).to.be.true;
     });
   });
 });

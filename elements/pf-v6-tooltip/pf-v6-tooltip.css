@@ -1,6 +1,5 @@
 :host {
   display: inline;
-  color-scheme: light dark;
 }
 
 * {
@@ -26,7 +25,7 @@
 
   &.open {
     opacity: 1;
-    user-select: initial;
+    user-select: auto;
     pointer-events: auto;
   }
 }

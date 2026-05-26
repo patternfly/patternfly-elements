@@ -19,7 +19,7 @@ import styles from './pf-v6-tooltip.css';
 
 export type { Placement };
 
-export type TooltipAlignment = 'start' | 'end' | 'left' | 'right';
+export type TooltipAlignment = 'start' | 'end';
 
 export type TooltipTriggerReason =
   | 'mouseenter'
@@ -43,32 +43,89 @@ const ENTRY_EVENTS: readonly string[] = ['focusin', 'mouseenter'];
 const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
 
 /**
- * A tooltip is in-app messaging used to identify elements on a page with
- * short, clarifying text.
+ * A tooltip provides short, clarifying text for a UI element when the user
+ * hovers over or focuses the trigger. Use tooltips for supplementary
+ * information that SHOULD NOT contain interactive content. The trigger element
+ * MUST be focusable so keyboard and screen reader users can access the tooltip.
+ *
+ * The tooltip automatically sets `aria-describedby` on the trigger via the
+ * cross-root `ariaDescribedByElements` IDL property. Pressing Escape
+ * dismisses an open tooltip. Focus remains on the trigger while the tooltip
+ * is visible.
+ *
+ * Colors invert automatically via `light-dark()` using PatternFly inverse
+ * background and text tokens (`--pf-t--global--background--color--inverse--default`,
+ * `--pf-t--global--text--color--inverse`).
+ *
  * @summary Supplementary text popup on hover or focus.
- * @slot - Trigger element that invokes the tooltip on hover or focus.
- * @slot content - Rich tooltip content. Overrides the `content` attribute.
- * @cssprop {<length>} [--pf-v6-c-tooltip--MaxWidth=18.75rem] - Maximum width of the tooltip.
- * @cssprop {<color>} [--pf-v6-c-tooltip__content--Color] - Tooltip text color.
- * @cssprop {<color>} [--pf-v6-c-tooltip__content--BackgroundColor] - Tooltip background color.
- * @cssprop {<length>} [--pf-v6-c-tooltip__content--FontSize] - Tooltip font size.
- * @cssprop {<length>} [--pf-v6-c-tooltip__content--BorderRadius] - Tooltip border radius.
- * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingBlockStart] - Block start padding.
- * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingBlockEnd] - Block end padding.
- * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingInlineStart] - Inline start padding.
- * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingInlineEnd] - Inline end padding.
- * @cssprop [--pf-v6-c-tooltip--BoxShadow] - Tooltip box shadow.
+ *
+ * @slot - Focusable trigger element. MUST be keyboard-accessible (e.g. `<button>`, or an element with `tabindex="0"`).
+ * @slot content - Rich tooltip content. Overrides the `content` attribute. SHOULD contain only text and inline formatting; MUST NOT contain interactive elements.
+ *
+ * @cssprop {<length>} [--pf-v6-c-tooltip--MaxWidth=18.75rem] - Maximum width of the tooltip. Maps to `--pf-t--global--spacer` scale.
+ * @cssprop {<color>} [--pf-v6-c-tooltip__content--Color] - Tooltip text color. Defaults to `--pf-t--global--text--color--inverse`.
+ * @cssprop {<color>} [--pf-v6-c-tooltip__content--BackgroundColor] - Tooltip background color. Defaults to `--pf-t--global--background--color--inverse--default`.
+ * @cssprop {<length>} [--pf-v6-c-tooltip__content--FontSize] - Tooltip font size. Defaults to `--pf-t--global--font--size--body--sm`.
+ * @cssprop {<length>} [--pf-v6-c-tooltip__content--BorderRadius] - Tooltip border radius. Defaults to `--pf-t--global--border--radius--small`.
+ * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingBlockStart] - Block start padding. Defaults to `--pf-t--global--spacer--sm`.
+ * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingBlockEnd] - Block end padding. Defaults to `--pf-t--global--spacer--sm`.
+ * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingInlineStart] - Inline start padding. Defaults to `--pf-t--global--spacer--md`.
+ * @cssprop {<length>} [--pf-v6-c-tooltip__content--PaddingInlineEnd] - Inline end padding. Defaults to `--pf-t--global--spacer--md`.
+ * @cssprop {<shadow>} [--pf-v6-c-tooltip--BoxShadow] - Tooltip box shadow. Defaults to `--pf-t--global--box-shadow--md`.
  * @cssprop {<length>} [--pf-v6-c-tooltip__arrow--Width=0.9375rem] - Arrow width.
  * @cssprop {<length>} [--pf-v6-c-tooltip__arrow--Height=0.9375rem] - Arrow height.
- * @cssprop {<color>} [--pf-v6-c-tooltip__arrow--BackgroundColor] - Arrow background color.
- * @fires {TooltipShowEvent} show - Cancelable event fired before the tooltip shows. The `reason` field indicates what triggered it.
- * @fires {TooltipHideEvent} hide - Cancelable event fired before the tooltip hides. The `reason` field indicates what triggered it.
+ * @cssprop {<color>} [--pf-v6-c-tooltip__arrow--BackgroundColor] - Arrow background color. Defaults to `--pf-t--global--background--color--inverse--default`.
+ * @cssprop {<shadow>} [--pf-v6-c-tooltip__arrow--BoxShadow] - Arrow box shadow. Defaults to `--pf-t--global--box-shadow--md`.
+ *
+ * @fires {TooltipShowEvent} show - Cancelable event fired before the tooltip shows. The `reason` property on the event is a `TooltipTriggerReason` string indicating what triggered it (`'mouseenter'` or `'focusin'`). Call `preventDefault()` to cancel.
+ * @fires {TooltipHideEvent} hide - Cancelable event fired before the tooltip hides. The `reason` property on the event is a `TooltipTriggerReason` string indicating what triggered it (`'mouseleave'` or `'focusout'`). Call `preventDefault()` to cancel.
  */
 @customElement('pf-v6-tooltip')
 export class PfV6Tooltip extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-  /** When true, the tooltip is displayed. */
+  static #instances = new Set<PfV6Tooltip>();
+
+  static #announcer: HTMLElement;
+
+  static {
+    if (!isServer) {
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          for (const instance of PfV6Tooltip.#instances) {
+            if (instance.#float.open) {
+              instance.hide();
+            }
+          }
+        }
+      });
+      PfV6Tooltip.#initAnnouncer();
+    }
+  }
+
+  static #initAnnouncer(): void {
+    document.body.append((this.#announcer = Object.assign(document.createElement('div'), {
+      role: 'status',
+      style: /* css */`
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        white-space: nowrap;
+        border: 0;`,
+    })));
+  }
+
+  static #announce(message: string): void {
+    this.#announcer.innerText = message;
+  }
+
+  /**
+   * When true, the tooltip is displayed. Setting this property
+   * programmatically calls show()/hide() via the `@observes` decorator;
+   * show()/hide() also set it back, which Lit deduplicates.
+   */
   @property({ type: Boolean }) visible = false;
 
   /** Position of the tooltip relative to the trigger element. */
@@ -104,9 +161,25 @@ export class PfV6Tooltip extends LitElement {
   /** Text alignment within the tooltip content */
   @property() alignment?: TooltipAlignment;
 
+  /** When true, disables screen reader announcements for tooltip content. Only use when another accessible label is provided. */
+  @property({ type: Boolean }) silent = false;
+
   #entryTimeout?: ReturnType<typeof setTimeout>;
   #exitTimeout?: ReturnType<typeof setTimeout>;
   #triggerElement?: HTMLElement | null;
+
+  get #accessibleContent(): string {
+    if (!this.#float.open || isServer) {
+      return '';
+    }
+    const contentSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('#content-slot');
+    const slotted = contentSlot
+        ?.assignedNodes()
+        ?.map(n => n.textContent ?? '')
+        ?.join('')
+        ?.trim() ?? '';
+    return slotted || this.content || '';
+  }
 
   get #invoker(): HTMLSlotElement | null {
     return this.shadowRoot?.querySelector('#invoker') ?? null;
@@ -150,16 +223,16 @@ export class PfV6Tooltip extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     if (!isServer) {
+      PfV6Tooltip.#instances.add(this);
       this.#updateTriggerListeners();
-      this.addEventListener('keydown', this.#onKeydown);
     }
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+    PfV6Tooltip.#instances.delete(this);
     this.#clearTimers();
     this.#removeTriggerListeners();
-    this.removeEventListener('keydown', this.#onKeydown);
   }
 
   override willUpdate(changed: PropertyValues<this>): void {
@@ -187,7 +260,7 @@ export class PfV6Tooltip extends LitElement {
              style="${styleMap({
                ...this.alignment && { 'text-align': this.alignment },
              })}">
-          <slot name="content">${this.content}</slot>
+          <slot id="content-slot" name="content">${this.content}</slot>
         </div>
       </div>
     `;
@@ -205,6 +278,9 @@ export class PfV6Tooltip extends LitElement {
     const fallbackPlacements = this.flipBehavior;
     await this.#float.show({ offset, placement, flip, fallbackPlacements });
     this.#setAriaDescribedBy(true);
+    if (!this.silent) {
+      PfV6Tooltip.#announce(this.#accessibleContent);
+    }
   }
 
   /** Hide the tooltip programmatically */
@@ -213,6 +289,9 @@ export class PfV6Tooltip extends LitElement {
     this.#clearTimers();
     this.#setAriaDescribedBy(false);
     await this.#float.hide();
+    if (!this.silent) {
+      PfV6Tooltip.#announcer.innerText = '';
+    }
   }
 
   @observes('visible')
@@ -224,6 +303,10 @@ export class PfV6Tooltip extends LitElement {
     }
   }
 
+  // ariaDescribedByElements is the correct cross-root ARIA API, but browsers
+  // currently reject light-to-shadow element refs (see WICG/aom#192,
+  // whatwg/html#5401). Kept as progressive enhancement: will start working
+  // once Reference Target (WICG/webcomponents#1086) ships.
   #setAriaDescribedBy(add: boolean): void {
     const trigger = this.#invokerElement;
     const content = this.shadowRoot?.querySelector('#content') ?? null;
@@ -308,12 +391,6 @@ export class PfV6Tooltip extends LitElement {
     }
     this.#clearTimers();
     this.#exitTimeout = setTimeout(() => this.hide(), this.exitDelay);
-  };
-
-  #onKeydown = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape' && this.#float.open) {
-      this.hide();
-    }
   };
 }
 

@@ -45,7 +45,7 @@ External trigger:
 | `content` (required prop)  | `content` attribute or `content` slot | Attribute is optional when slot is used                                                 |
 | `enableFlip`               | `no-flip`                             | Inverted boolean; flip enabled by default                                               |
 | `flipBehavior`             | `flip-behavior`                       | Attribute accepts comma-separated list instead of array                                 |
-| `isContentLeftAligned`     | `alignment`                           | Accepts `'start'`, `'end'`, `'left'`, `'right'` instead of boolean                      |
+| `isContentLeftAligned`     | `alignment`                           | Accepts `'start'` or `'end'` instead of boolean; uses logical properties for RTL support |
 | `maxWidth`                 | `--pf-v6-c-tooltip--MaxWidth`         | CSS custom property instead of prop                                                     |
 | `children` / `triggerRef`  | default slot or `trigger` attribute   | Trigger is slotted child or ID string/Element reference                                 |
 | `onTooltipHidden`          | `hide` event                          | Cancelable DOM event with `reason` field. Also fires `show` event (no React equivalent) |

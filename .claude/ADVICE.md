@@ -641,8 +641,13 @@ Icons are decorative or informational, not interactive. Click handlers belong on
 
 > "You must not add click listeners to icons." (PFE PR #2951)
 
+### Use a static live-region announcer for tooltip/popover content
+Tooltip and popover content lives in shadow DOM, which prevents `aria-describedby` from working cross-root. Use a shared static `role="status"` announcer element (visually hidden, appended to `document.body`) to announce content to screen readers. Announce on show, clear on hide. Provide a `silent` boolean attribute to opt out when authors provide their own accessible label.
+
+> Pattern established in `rh-tooltip` (RHDS): static `initAnnouncer()` + `announce(text)` in `show()`, clear in `hide()`. Adopted in `pf-v6-tooltip` (PFE).
+
 ### Consider cross-root ARIA limitations
-When composing elements across shadow boundaries, cross-root ARIA references don't work declaratively yet. This may require duplicating internal elements as a workaround. Client-side, ARIA IDL DOM properties (baseline 2025) can resolve cross-root references imperatively via JavaScript. Upcoming APIs like Reference Target will provide declarative solutions.
+When composing elements across shadow boundaries, cross-root ARIA references don't work declaratively yet. `ariaDescribedByElements` and similar IDL properties silently fail for light-to-shadow references. The [WPT test](https://github.com/web-platform-tests/wpt/blob/master/custom-elements/element-internals-aria-element-reflection.html) explicitly asserts cross-root refs produce an empty computed label. See also [WICG/aom#192](https://github.com/WICG/aom/issues/192) and [whatwg/html#5401](https://github.com/whatwg/html/issues/5401). Upcoming APIs like Reference Target ([WICG/webcomponents#1086](https://github.com/WICG/webcomponents/issues/1086)) will provide solutions. Keep cross-root IDL assignments as progressive enhancement.
 
 > "We can't use pf-button until browser vendors ship a solution for x-root aria." (PFE PR #2676)
 

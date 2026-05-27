@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#background {
+  width: 100%;
+  height: 100%;
+  /** Background color shown behind or instead of the image */
+  background-color: var(--pf-v6-c-background-image--BackgroundColor, var(--pf-t--global--background--color--primary--default, #292929));
+  /** Background image URL, automatically set via the `src` attribute */
+  background-image: var(--pf-v6-c-background-image--BackgroundImage, none);
+  background-repeat: no-repeat;
+  /** Position of the background image within the viewport */
+  background-position: var(--pf-v6-c-background-image--BackgroundPosition, bottom right);
+  /** Computed background size using clamp() for responsive scaling */
+  background-size: var(--pf-v6-c-background-image--BackgroundSize,
+    clamp(
+      /** Minimum width for responsive background sizing */
+      var(--pf-v6-c-background-image--BackgroundSize--min-width, 200px),
+      /** Responsive width percentage for background sizing */
+      var(--pf-v6-c-background-image--BackgroundSize--width, 60%),
+      /** Maximum width for responsive background sizing */
+      var(--pf-v6-c-background-image--BackgroundSize--max-width, 600px)
+    )
+  );
+}
+
+:dir(rtl) #background {
+  background-position: var(--pf-v6-c-background-image--BackgroundPosition, bottom left);
+}

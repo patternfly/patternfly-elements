@@ -1,5 +1,5 @@
 import type { PfeConfig } from '../config.js';
-import { getPfeConfig } from '../config.js';
+import { getPfeConfig, matchPrefix } from '../config.js';
 import { Manifest } from '../custom-elements-manifest/lib/Manifest.js';
 
 import slugify from 'slugify';
@@ -26,7 +26,7 @@ export class DocsPage {
     this.docsTemplatePath = options?.docsTemplatePath;
     this.summary = this.manifest.getSummary(this.tagName);
     this.description = this.manifest.getDescription(this.tagName);
-    const prefix = `${config.tagPrefix.replace(/-$/, '')}-`;
+    const prefix = matchPrefix(this.tagName, config);
     const aliased = config.aliases[this.tagName] ?? this.tagName.replace(prefix, '');
     this.title = options?.title ?? Manifest.prettyTag(this.tagName, config.aliases, prefix);
     this.slug = slugify(aliased, { strict: true, lower: true });

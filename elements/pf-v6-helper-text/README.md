@@ -33,12 +33,12 @@ React splits this into two components: `HelperText` (container) and
 representing one item. For grouping, use standard HTML containers with
 appropriate ARIA attributes.
 
-### Not implemented
+### Changed
 
 | React prop | Notes |
 | --- | --- |
 | `HelperText` `component` (`'div'` \| `'ul'`) | Use a standard HTML `<div>` or `<ul>` wrapper instead. |
-| `HelperText` `isLiveRegion` | Apply `aria-live="polite"` directly on a wrapper element. |
+| `HelperText` `isLiveRegion` | Apply `role="status"` directly on a wrapper element. |
 | `HelperText` `aria-label` | Apply `aria-label` directly on the wrapper element. |
 | `HelperTextItem` `component` (`'div'` \| `'li'`) | The custom element renders as its own tag; use `role="listitem"` if needed. |
 

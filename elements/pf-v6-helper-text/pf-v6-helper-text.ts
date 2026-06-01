@@ -34,13 +34,6 @@ export class PfV6HelperText extends LitElement {
   @property({ reflect: true }) variant: HelperTextVariant = 'default';
 
   /**
-   * Whether this item should display the default variant icon.
-   * When true, shows the built-in SVG icon for the current variant.
-   * Has no effect when `variant="default"` since no default icon exists.
-   */
-  @property({ type: Boolean, attribute: 'has-icon', reflect: true }) hasIcon = false;
-
-  /**
    * Marks this item as dynamically shown/hidden, enabling the "dynamic"
    * styling modifier (e.g. icon color changes in dynamic context).
    */
@@ -70,7 +63,7 @@ export class PfV6HelperText extends LitElement {
 
   /** Whether to render the icon area */
   get #showIcon(): boolean {
-    return this.hasIcon || this.#slots.hasSlotted('icon');
+    return this.#slots.hasSlotted('icon') || this.variant !== 'default';
   }
 
   override render(): TemplateResult<1> {
@@ -98,8 +91,10 @@ export class PfV6HelperText extends LitElement {
     `;
   }
 
+  // TODO: when pf-v6-icon exists, replace inline SVGs with <pf-v6-icon>
+  // and add an `icon` @property to complete the attr/slot pair
   #renderDefaultIcon(): TemplateResult<1> | string {
-    if (!this.hasIcon || this.variant === 'default') {
+    if (this.variant === 'default') {
       return '';
     }
     switch (this.variant) {

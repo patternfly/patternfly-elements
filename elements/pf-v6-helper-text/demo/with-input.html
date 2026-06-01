@@ -25,13 +25,13 @@ description: Input field linked to helper text via aria-describedby for accessib
            aria-describedby="password-help"
            placeholder="Enter a password">
     <div class="helper-text-group" id="password-help" aria-live="polite">
-      <pf-v6-helper-text id="length-check" variant="error" has-icon dynamic>
+      <pf-v6-helper-text id="length-check" variant="error" dynamic>
         Must be at least 8 characters
       </pf-v6-helper-text>
-      <pf-v6-helper-text id="number-check" variant="error" has-icon dynamic>
+      <pf-v6-helper-text id="number-check" variant="error" dynamic>
         Must include a number
       </pf-v6-helper-text>
-      <pf-v6-helper-text id="special-check" variant="error" has-icon dynamic>
+      <pf-v6-helper-text id="special-check" variant="error" dynamic>
         Must include a special character
       </pf-v6-helper-text>
     </div>
@@ -82,7 +82,6 @@ description: Input field linked to helper text via aria-describedby for accessib
    *  constraints and reflects validity in the helper text variant. */
   function validateUsername() {
     usernameHelp.variant = username.validity.valid ? 'default' : 'error';
-    usernameHelp.hasIcon = !username.validity.valid;
   }
 
   password.addEventListener('input', validatePassword);

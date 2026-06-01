@@ -60,13 +60,13 @@ describe('<pf-v6-helper-text>', function() {
     });
   });
 
-  describe('has-icon attribute', function() {
-    describe('when has-icon is absent', function() {
+  describe('default variant icon', function() {
+    describe('when variant is default', function() {
       let element: PfV6HelperText;
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="success">Text</pf-v6-helper-text>`
+          html`<pf-v6-helper-text>Text</pf-v6-helper-text>`
         );
       });
 
@@ -76,16 +76,17 @@ describe('<pf-v6-helper-text>', function() {
       });
     });
 
-    describe('when has-icon is present', function() {
+    describe('when variant is non-default', function() {
       let element: PfV6HelperText;
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="success" has-icon>Text</pf-v6-helper-text>`
+          html`<pf-v6-helper-text variant="success">Text</pf-v6-helper-text>`
         );
+        await element.updateComplete;
       });
 
-      it('should display the icon', function() {
+      it('should display the icon automatically', function() {
         const icon = element.shadowRoot!.querySelector('[part="icon"]') as HTMLElement;
         expect(icon.offsetWidth).to.be.greaterThan(0);
       });
@@ -116,7 +117,7 @@ describe('<pf-v6-helper-text>', function() {
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="error" has-icon>Error text</pf-v6-helper-text>`
+          html`<pf-v6-helper-text variant="error">Error text</pf-v6-helper-text>`
         );
       });
 
@@ -146,7 +147,7 @@ describe('<pf-v6-helper-text>', function() {
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="error" accessible-label="danger" has-icon>Error</pf-v6-helper-text>`
+          html`<pf-v6-helper-text variant="error" accessible-label="danger">Error</pf-v6-helper-text>`
         );
       });
 
@@ -162,7 +163,7 @@ describe('<pf-v6-helper-text>', function() {
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="error" accessible-label="" has-icon>Error</pf-v6-helper-text>`
+          html`<pf-v6-helper-text variant="error" accessible-label="">Error</pf-v6-helper-text>`
         );
       });
 
@@ -179,7 +180,7 @@ describe('<pf-v6-helper-text>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6HelperText>(
-        html`<pf-v6-helper-text variant="success" has-icon dynamic>Dynamic text</pf-v6-helper-text>`
+        html`<pf-v6-helper-text variant="success" dynamic>Dynamic text</pf-v6-helper-text>`
       );
     });
 
@@ -192,7 +193,7 @@ describe('<pf-v6-helper-text>', function() {
   describe('accessibility', function() {
     it('should expose text content in accessibility tree', async function() {
       await createFixture(html`
-        <pf-v6-helper-text variant="error" has-icon>Password is too short</pf-v6-helper-text>
+        <pf-v6-helper-text variant="error">Password is too short</pf-v6-helper-text>
       `);
       const snapshot = await a11ySnapshot();
       expect(snapshot.children?.some(
@@ -202,7 +203,7 @@ describe('<pf-v6-helper-text>', function() {
 
     it('should not expose icon in accessibility tree', async function() {
       await createFixture(html`
-        <pf-v6-helper-text variant="success" has-icon>Success text</pf-v6-helper-text>
+        <pf-v6-helper-text variant="success">Success text</pf-v6-helper-text>
       `);
       const snapshot = await a11ySnapshot();
       const hasImgRole = snapshot.children?.some(

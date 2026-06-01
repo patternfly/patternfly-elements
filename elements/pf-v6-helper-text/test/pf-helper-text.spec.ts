@@ -110,7 +110,7 @@ describe('<pf-v6-helper-text>', function() {
     });
   });
 
-  describe('screen reader text', function() {
+  describe('accessible-label', function() {
     describe('with non-default variant', function() {
       let element: PfV6HelperText;
 
@@ -141,12 +141,12 @@ describe('<pf-v6-helper-text>', function() {
       });
     });
 
-    describe('with custom screen-reader-text', function() {
+    describe('with custom accessible-label', function() {
       let element: PfV6HelperText;
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="error" screen-reader-text="danger" has-icon>Error</pf-v6-helper-text>`
+          html`<pf-v6-helper-text variant="error" accessible-label="danger" has-icon>Error</pf-v6-helper-text>`
         );
       });
 
@@ -157,12 +157,12 @@ describe('<pf-v6-helper-text>', function() {
       });
     });
 
-    describe('with screen-reader-text set to empty string', function() {
+    describe('with accessible-label set to empty string', function() {
       let element: PfV6HelperText;
 
       beforeEach(async function() {
         element = await createFixture<PfV6HelperText>(
-          html`<pf-v6-helper-text variant="error" screen-reader-text="" has-icon>Error</pf-v6-helper-text>`
+          html`<pf-v6-helper-text variant="error" accessible-label="" has-icon>Error</pf-v6-helper-text>`
         );
       });
 

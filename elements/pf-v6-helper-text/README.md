@@ -48,7 +48,7 @@ appropriate ARIA attributes.
 | --- | --- | --- |
 | `HelperTextItem` `variant` | `variant` attribute | Same values (`default`, `indeterminate`, `warning`, `success`, `error`). Identical behavior for styling. Icon display is controlled separately via `has-icon`. |
 | `HelperTextItem` `icon` (ReactNode) | `icon` slot | React accepts a React node as a prop. Web component uses a named slot for custom icon markup. |
-| `HelperTextItem` `screenReaderText` | `screen-reader-text` attribute | Same behavior: announces variant status to assistive tech. Defaults to "${variant} status" for non-default variants. Set to empty string to suppress. |
+| `HelperTextItem` `screenReaderText` | `accessible-label` attribute | Appends status context for assistive technologies (e.g. "error status") that sighted users receive from the variant icon. Defaults to "${variant} status" for non-default variants. Set to empty string to suppress. |
 
 ### Added
 

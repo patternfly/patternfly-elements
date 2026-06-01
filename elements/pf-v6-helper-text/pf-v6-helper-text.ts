@@ -47,21 +47,20 @@ export class PfV6HelperText extends LitElement {
   @property({ type: Boolean, reflect: true }) dynamic = false;
 
   /**
-   * Custom screen reader text to announce the variant status.
+   * Accessible label appended to the visible text for assistive technologies,
+   * providing status context that sighted users receive from the variant icon.
    * Defaults to "${variant} status" for non-default variants.
-   * Set to empty string to suppress screen reader announcement.
    */
-  @property({ attribute: 'screen-reader-text' }) screenReaderText?: string;
+  @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
   #slots = new SlotController(this, 'icon', null);
 
-  /**
-   * Effective screen reader text. When variant is not "default", provides
-   * status context for assistive technologies.
-   */
-  get #effectiveScreenReaderText(): string | undefined {
-    if (this.screenReaderText !== undefined) {
-      return this.screenReaderText;
+  /** Resolves the accessible label for the current variant and its icon.
+   *  Uses the author-provided `accessible-label` if set, otherwise
+   *  generates "${variant} status" for non-default variants. */
+  get #variantStatusLabel(): string | undefined {
+    if (this.accessibleLabel !== undefined) {
+      return this.accessibleLabel;
     }
     if (this.variant !== 'default') {
       return `${this.variant} status`;
@@ -75,7 +74,7 @@ export class PfV6HelperText extends LitElement {
   }
 
   override render(): TemplateResult<1> {
-    const srText = this.#effectiveScreenReaderText;
+    const srText = this.#variantStatusLabel;
     return html`
       <!-- summary: Icon container
            description: Displays the status icon (default or custom). -->

@@ -2,13 +2,12 @@ import { test } from '@playwright/test';
 import { PfeDemoPage } from '@patternfly/pfe-tools/test/playwright/PfeDemoPage.js';
 import { SSRPage } from '@patternfly/pfe-tools/test/playwright/SSRPage.js';
 
-const tagName = 'pf-v5-timestamp';
+const tagName = 'pf-v6-timestamp';
 
 test.describe(tagName, () => {
   test('snapshot', async ({ page }) => {
     const componentPage = new PfeDemoPage(page, tagName);
     await componentPage.navigate();
-    await page.$eval('#realtime', el => el.closest('section')?.remove());
     await componentPage.snapshot();
   });
 

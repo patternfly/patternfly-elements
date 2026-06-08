@@ -1,0 +1,31 @@
+---
+name: Default tooltip
+description: >
+  To render a tooltip that displays the timestamp content as a UTC time, wrap
+  the timestamp in a tooltip and add a UTC-formatted timestamp in the content
+  slot. Use an anchor element around the trigger timestamp for keyboard
+  accessibility.
+---
+<section>
+  <p>
+    <pf-v5-tooltip>
+      <a href="#">
+        <pf-v6-timestamp date="Mon Apr 21 2025 14:30:00"></pf-v6-timestamp>
+      </a>
+      <pf-v6-timestamp slot="content" date="Mon Apr 21 2025 14:30:00" time-zone="UTC" display-suffix="UTC"></pf-v6-timestamp>
+    </pf-v5-tooltip>
+  </p>
+  <p>
+    <pf-v5-tooltip>
+      <a href="#">
+        <pf-v6-timestamp date="Mon Apr 21 2025 14:30:00"></pf-v6-timestamp>
+      </a>
+      <pf-v6-timestamp slot="content" date="Mon Apr 21 2025 14:30:00" time-zone="UTC" display-suffix="Coordinated Universal Time"></pf-v6-timestamp>
+    </pf-v5-tooltip>
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+  import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+</script>

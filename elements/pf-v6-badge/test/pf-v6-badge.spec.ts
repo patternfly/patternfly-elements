@@ -17,74 +17,12 @@ describe('<pf-v6-badge>', function() {
         .to.be.an.instanceOf(PfV6Badge);
   });
 
-  describe('with number attribute', function() {
-    let element: PfV6Badge;
-
-    beforeEach(async function() {
-      element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge number="100">100</pf-v6-badge>
-      `);
-      await element.updateComplete;
-    });
-
-    it('should have the number property set', function() {
-      expect(element.number).to.equal(100);
-    });
-
-    it('should be visible in the accessibility tree', async function() {
-      const snapshot = await a11ySnapshot();
-      const badgeNode = snapshot.children?.find(
-        (child: { name?: string }) => child.name?.includes('100')
-      );
-      expect(badgeNode).to.exist;
-    });
-  });
-
-  describe('with number exceeding threshold', function() {
-    let element: PfV6Badge;
-
-    beforeEach(async function() {
-      element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge number="900" threshold="100">900</pf-v6-badge>
-      `);
-      await element.updateComplete;
-    });
-
-    it('should display threshold with "+" in the accessibility tree', async function() {
-      const snapshot = await a11ySnapshot();
-      const badgeNode = snapshot.children?.find(
-        (child: { name?: string }) => child.name?.includes('100+')
-      );
-      expect(badgeNode).to.exist;
-    });
-  });
-
-  describe('with number below threshold', function() {
-    let element: PfV6Badge;
-
-    beforeEach(async function() {
-      element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge number="50" threshold="100">50</pf-v6-badge>
-      `);
-      await element.updateComplete;
-    });
-
-    it('should display the number without "+" in the accessibility tree', async function() {
-      const snapshot = await a11ySnapshot();
-      const badgeNode = snapshot.children?.find(
-        (child: { name?: string }) =>
-          child.name?.includes('50') && !child.name?.includes('+')
-      );
-      expect(badgeNode).to.exist;
-    });
-  });
-
   describe('without state attribute', function() {
     let element: PfV6Badge;
 
     beforeEach(async function() {
       element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge number="10">10</pf-v6-badge>
+        <pf-v6-badge>10</pf-v6-badge>
       `);
       await element.updateComplete;
     });
@@ -100,7 +38,7 @@ describe('<pf-v6-badge>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge state="read" number="10">10</pf-v6-badge>
+        <pf-v6-badge state="read">10</pf-v6-badge>
       `);
       await element.updateComplete;
     });
@@ -116,7 +54,7 @@ describe('<pf-v6-badge>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge state="unread" number="10">10</pf-v6-badge>
+        <pf-v6-badge state="unread">10</pf-v6-badge>
       `);
       await element.updateComplete;
     });
@@ -137,7 +75,7 @@ describe('<pf-v6-badge>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge state="read" disabled number="10">10</pf-v6-badge>
+        <pf-v6-badge state="read" disabled>10</pf-v6-badge>
       `);
       await element.updateComplete;
     });
@@ -156,14 +94,14 @@ describe('<pf-v6-badge>', function() {
   describe('accessibility', function() {
     it('should be accessible', async function() {
       const element = await createFixture<PfV6Badge>(html`
-        <pf-v6-badge state="read" number="10">10</pf-v6-badge>
+        <pf-v6-badge state="read">10</pf-v6-badge>
       `);
       await expect(element).to.be.accessible();
     });
 
     it('should contain text in the accessibility tree', async function() {
       await createFixture<PfV6Badge>(html`
-        <pf-v6-badge state="read" number="10">10</pf-v6-badge>
+        <pf-v6-badge state="read">10</pf-v6-badge>
       `);
       const snapshot = await a11ySnapshot();
       const badgeNode = snapshot.children?.find(
@@ -183,7 +121,7 @@ describe('<pf-v6-badge>', function() {
       await element.updateComplete;
     });
 
-    it('should display slotted text content when no number is set', function() {
+    it('should display slotted text content', function() {
       expect(element.textContent?.trim()).to.equal('Custom Text');
     });
   });

@@ -9,7 +9,7 @@ describe('<pf-v5-avatar>', function() {
 
   it('should upgrade', async function() {
     const el = await createFixture(html`<pf-v5-avatar></pf-v5-avatar>`);
-    expect(el, 'pf-v5-badge should be an instance of PfV5Avatar')
+    expect(el, 'pf-v6-badge should be an instance of PfV5Avatar')
         .to.be.an.instanceOf(customElements.get('pf-v5-avatar'))
         .and
         .to.be.an.instanceOf(PfV5Avatar);

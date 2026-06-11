@@ -26,20 +26,24 @@ export class PfV6Spinner extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) inline = false;
 
-  /** Accessible label describing what is loading */
+  /** Accessible name for the spinner */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
+
+  /** Text describing the current progress state */
+  @property({ attribute: 'value-text' }) valueText?: string;
 
   #internals = InternalsController.of(this, {
     role: 'progressbar',
-    ariaValueText: 'Loading...',
     ariaLabel: 'Loading...',
+    ariaValueText: 'Loading...',
   });
 
   override willUpdate(changed: Map<PropertyKey, unknown>): void {
     if (changed.has('accessibleLabel')) {
-      const label = this.accessibleLabel ?? 'Loading...';
-      this.#internals.ariaLabel = label;
-      this.#internals.ariaValueText = label;
+      this.#internals.ariaLabel = this.accessibleLabel ?? 'Loading...';
+    }
+    if (changed.has('valueText')) {
+      this.#internals.ariaValueText = this.valueText ?? 'Loading...';
     }
   }
 

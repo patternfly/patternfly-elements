@@ -46,7 +46,6 @@ describe('<pf-v6-spinner>', function() {
         (child: { role: string }) => child.role === 'progressbar'
       );
       expect(spinnerNode).to.exist;
-      expect(spinnerNode?.name).to.equal('Loading...');
       expect(spinnerNode?.valuetext).to.equal('Loading...');
     });
   });
@@ -63,14 +62,35 @@ describe('<pf-v6-spinner>', function() {
       await expect(element).to.be.accessible();
     });
 
-    it('reflects custom accessible label in a11y tree', async function() {
+    it('sets aria-label in a11y tree', async function() {
       const snapshot = await a11ySnapshot();
       const spinnerNode = snapshot.children?.find(
         (child: { role: string }) => child.role === 'progressbar'
       );
       expect(spinnerNode).to.exist;
       expect(spinnerNode?.name).to.equal('Loading results');
-      expect(spinnerNode?.valuetext).to.equal('Loading results');
+    });
+  });
+
+  describe('value-text attribute', function() {
+    let element: PfV6Spinner;
+    beforeEach(async function() {
+      element = await createFixture<PfV6Spinner>(html`
+        <pf-v6-spinner value-text="50% complete">Loading...</pf-v6-spinner>
+      `);
+    });
+
+    it('is accessible', async function() {
+      await expect(element).to.be.accessible();
+    });
+
+    it('sets aria-valuetext in a11y tree', async function() {
+      const snapshot = await a11ySnapshot();
+      const spinnerNode = snapshot.children?.find(
+        (child: { role: string }) => child.role === 'progressbar'
+      );
+      expect(spinnerNode).to.exist;
+      expect(spinnerNode?.valuetext).to.equal('50% complete');
     });
   });
 

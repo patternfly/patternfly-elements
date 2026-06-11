@@ -25,26 +25,21 @@ A spinner indicates that an action is in progress.
 
 ## Divergences from React `Spinner`
 
-### Not implemented
-
-| React prop | Notes |
-|------------|-------|
-| `aria-labelledBy` | Use `accessible-label` attribute instead, or set `aria-labelledby` via ElementInternals from a framework wrapper. |
-
 ### Changed API
 
 | React prop | Web component | Difference |
 |------------|---------------|------------|
 | `diameter` | `--pf-v6-c-spinner--diameter` CSS custom property | React abstracts the CSS custom property behind a prop. In HTML, set it directly via `style`. |
-| `aria-valuetext` | `accessible-label` attribute | Sets both `aria-label` and `aria-valuetext` on the element internals. Defaults to `"Loading..."`. |
-| `aria-label` | `accessible-label` attribute | Merged with `aria-valuetext` into a single `accessible-label` attribute. |
+| `aria-valuetext` | `value-text` attribute | Sets `aria-valuetext` on element internals. Defaults to `"Loading..."`. |
+| `aria-label` | `accessible-label` attribute | Sets `aria-label` on element internals. |
+| `isInline` | `inline` attribute | Boolean attribute. |
+| `size` | `size` attribute | Adds `xs` preset from PatternFly CSS not exposed in React. |
 
-### Added
+### CSS custom properties
 
-| Web component API | Notes |
-|-------------------|-------|
-| `size="xs"` | Extra-small size preset not available in React. |
-| `inline` attribute | Boolean attribute equivalent to React's `isInline`. |
-| `--pf-v6-c-spinner--Color` | CSS custom property to change the spinner stroke color. |
-| `--pf-v6-c-spinner--StrokeWidth` | CSS custom property to change the spinner stroke width. |
-| `--pf-v6-c-spinner--AnimationDuration` | CSS custom property to change the animation cycle duration. |
+| Custom property | Description |
+|-----------------|-------------|
+| `--pf-v6-c-spinner--diameter` | Spinner diameter. |
+| `--pf-v6-c-spinner--Color` | Spinner stroke color. |
+| `--pf-v6-c-spinner--StrokeWidth` | Spinner stroke width. |
+| `--pf-v6-c-spinner--AnimationDuration` | Animation cycle duration. |

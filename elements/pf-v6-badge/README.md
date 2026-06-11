@@ -37,17 +37,3 @@ A badge is used to annotate other information like a label or an object name.
 | --- | --- | --- |
 | `isRead` | `state` attribute | Boolean replaced with `'read' \| 'unread'` enum. Omitting `state` gives neutral styling (no read/unread indication). |
 
-### Added
-
-| Web component API | Notes |
-| --- | --- |
-| `--pf-v6-c-badge--MinWidth` | Minimum width of the badge. |
-| `--pf-v6-c-badge--PaddingInlineStart` | Inline start padding. |
-| `--pf-v6-c-badge--PaddingInlineEnd` | Inline end padding. |
-| `--pf-v6-c-badge--FontSize` | Font size of the badge text. |
-| `--pf-v6-c-badge--FontWeight` | Font weight of the badge text. |
-| `--pf-v6-c-badge--Color` | Text color of the badge. |
-| `--pf-v6-c-badge--BackgroundColor` | Background color of the badge. |
-| `--pf-v6-c-badge--BorderRadius` | Border radius of the badge. |
-| `--pf-v6-c-badge--BorderWidth` | Border width of the badge. |
-| `--pf-v6-c-badge--BorderColor` | Border color of the badge. |

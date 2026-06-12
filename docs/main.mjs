@@ -2,7 +2,7 @@ import '@rhds/elements/rh-footer/rh-footer-universal.js';
 import { PfV5Icon } from '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 import '@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js';
 import '@patternfly/elements/pf-v5-alert/pf-v5-alert.js';
-import '@patternfly/elements/pf-v5-avatar/pf-v5-avatar.js';
+import '@patternfly/elements/pf-v6-avatar/pf-v6-avatar.js';
 import '@patternfly/elements/pf-v5-back-to-top/pf-v5-back-to-top.js';
 import '@patternfly/elements/pf-v6-background-image/pf-v6-background-image.js';
 import '@patternfly/elements/pf-v5-badge/pf-v5-badge.js';

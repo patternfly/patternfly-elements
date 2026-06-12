@@ -10,10 +10,10 @@ A full-width banner for communicating short, non-dismissible messages.
 <pf-v6-banner>Default banner</pf-v6-banner>
 ```
 
-### Status banner with screen reader text
+### Status banner with accessible label
 
 ```html
-<pf-v6-banner status="danger" screen-reader-text="Danger banner:">
+<pf-v6-banner status="danger" accessible-label="Danger banner:">
   An error has occurred. Contact support for help.
 </pf-v6-banner>
 ```

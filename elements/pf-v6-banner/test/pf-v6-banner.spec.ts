@@ -66,18 +66,18 @@ describe('<pf-v6-banner>', function() {
     });
   });
 
-  describe('with screen-reader-text', function() {
+  describe('with accessible-label', function() {
     let element: PfV6Banner;
 
     beforeEach(async function() {
       element = await createFixture<PfV6Banner>(html`
-        <pf-v6-banner status="danger" screen-reader-text="Danger alert:">
+        <pf-v6-banner status="danger" accessible-label="Danger alert:">
           An error has occurred.
         </pf-v6-banner>
       `);
     });
 
-    it('should include screen reader text in the accessibility tree', async function() {
+    it('should include accessible label in the accessibility tree', async function() {
       const snapshot = await a11ySnapshot();
       const node = snapshot.children?.find(
         (child: { name?: string }) => child.name?.includes('Danger alert:')
@@ -98,14 +98,14 @@ describe('<pf-v6-banner>', function() {
     });
   });
 
-  describe('without screen-reader-text', function() {
+  describe('without accessible-label', function() {
     beforeEach(async function() {
       await createFixture<PfV6Banner>(html`
-        <pf-v6-banner>No screen reader text</pf-v6-banner>
+        <pf-v6-banner>No accessible label</pf-v6-banner>
       `);
     });
 
-    it('should not include screen reader text in the accessibility tree', async function() {
+    it('should not include accessible label in the accessibility tree', async function() {
       const snapshot = await a11ySnapshot();
       const hasScreenReaderNode = snapshot.children?.some(
         (child: { name?: string }) => child.name === ''

@@ -95,7 +95,7 @@ export class PfV6Switch extends LitElement {
     this.#internals.ariaChecked = String(!!this.checked);
     this.#internals.ariaDisabled = String(!!this.disabled);
     this.#internals.ariaLabel = this.accessibleLabel || null;
-    this.#internals.setFormValue(this.checked ? (this.value ?? null) : null);
+    this.#internals.setFormValue(this.checked ? (this.value ?? 'on') : null);
   }
 
   override render(): TemplateResult<1> {

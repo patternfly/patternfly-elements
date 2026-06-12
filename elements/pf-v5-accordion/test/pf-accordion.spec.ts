@@ -5,7 +5,7 @@ import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-sna
 
 // Import the element we're testing.
 import { PfV5Accordion, PfV5AccordionPanel, PfV5AccordionHeader } from '@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js';
-import { PfV5Switch } from '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+import { PfV6Switch } from '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -1349,7 +1349,7 @@ describe('<pf-v5-accordion>', function() {
     let element: PfV5Accordion;
     let panels: NodeListOf<PfV5AccordionPanel>;
     let checkbox: HTMLInputElement;
-    let pfswitch: PfV5Switch;
+    let pfswitch: PfV6Switch;
     let accordionPanelOne: PfV5AccordionPanel;
 
     beforeEach(async function() {

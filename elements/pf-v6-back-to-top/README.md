@@ -17,12 +17,6 @@
 
 ## Divergences from React `BackToTop`
 
-### Not implemented
-
-| React prop  | Notes                                                  |
-|-------------|--------------------------------------------------------|
-| `className` | Not needed; shadow DOM provides encapsulation.         |
-
 ### Changed API
 
 | React prop          | Web component           | Difference                                                                 |

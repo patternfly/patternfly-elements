@@ -37,12 +37,6 @@ when no image is provided.
 | `alt`        | `alt`             | Optional (defaults to `""`, marking the image as decorative for screen readers). Set `alt` to a descriptive string when the avatar conveys meaning. |
 | `src`        | `src`             | React defaults to empty string; web component renders a placeholder SVG when omitted |
 
-### Not implemented
-
-| React prop                   | Notes                                                        |
-| ---------------------------- | ------------------------------------------------------------ |
-| Native `<img>` attributes   | React spreads all `HTMLImageElement` attributes; web component only exposes `src` and `alt` |
-
 ### Added
 
 | Web component API                          | Notes                                           |

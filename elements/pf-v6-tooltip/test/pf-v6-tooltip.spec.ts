@@ -494,6 +494,69 @@ describe('<pf-v6-tooltip>', function() {
     });
   });
 
+  describe('announcer live region', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Announced text">
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+    });
+
+    describe('after calling show()', function() {
+      beforeEach(async function() {
+        await element.show();
+        await element.updateComplete;
+      });
+
+      it('should populate the live region with tooltip content', async function() {
+        const snapshot = await a11ySnapshot();
+        const text = JSON.stringify(snapshot);
+        expect(text).to.include('Announced text');
+      });
+
+      describe('then calling hide()', function() {
+        beforeEach(async function() {
+          await element.hide();
+          await element.updateComplete;
+        });
+
+        it('should clear the live region', async function() {
+          const snapshot = await a11ySnapshot();
+          const text = JSON.stringify(snapshot);
+          expect(text).to.not.include('Announced text');
+        });
+      });
+    });
+  });
+
+  describe('tooltip content inert state', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Inert test">
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+    });
+
+    it('should exclude tooltip content from ax tree when hidden', async function() {
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.not.axContainName('Inert test');
+    });
+
+    describe('after calling show()', function() {
+      beforeEach(async function() {
+        await element.show();
+        await element.updateComplete;
+      });
+
+      it('should include tooltip content in ax tree when visible', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.axContainName('Inert test');
+      });
+    });
+  });
+
   describe('with silent attribute', function() {
     beforeEach(async function() {
       element = await fixture<PfV6Tooltip>(html`

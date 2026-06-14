@@ -36,6 +36,7 @@ External trigger:
 | `appendTo`              | Web component renders in its own shadow DOM; no portal needed                                                                                    |
 | `aria`                  | Always uses `aria-describedby` via `ariaDescribedByElements`. No `labelledby` or `none` option                                                   |
 | `aria-live`             | Not implemented                                                                                                                                  |
+| `minWidth`              | No CSS custom property exposed                                                                                                                   |
 
 ### Changed API
 
@@ -52,8 +53,7 @@ External trigger:
 | `animationDuration`        | CSS transitions                       | Override via stylesheet instead of prop                                                 |
 | `distance`                 | Hardcoded 15px                        | Not configurable; React default also 15                                                 |
 | `isVisible`                | `visible`                             | Boolean attribute; also controllable via `.show()` / `.hide()` methods                  |
-| `minWidth`                 | Not supported                         | No CSS custom property exposed                                                          |
-| `zIndex`                   | Not supported                         | Hardcoded to 10000 in shadow DOM                                                        |
+| `zIndex`                   | `--pf-v6-c-tooltip--ZIndex`           | CSS custom property instead of prop; defaults to 10000                                  |
 | `className`                | CSS custom properties / `::part()`    | Standard web component styling mechanisms                                               |
 
 ### Added
@@ -64,5 +64,4 @@ External trigger:
 | `hide` event                  | Cancelable event before tooltip hides, with trigger `reason`        |
 | `.show()` / `.hide()` methods | Programmatic visibility control                                     |
 | `content` slot                | Rich HTML content, not available in React (which takes `ReactNode`) |
-| CSS custom properties         | 13 custom properties for fine-grained style control without JS      |
 

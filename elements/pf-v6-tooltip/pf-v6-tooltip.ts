@@ -76,6 +76,7 @@ const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
  * @cssprop {<length>} [--pf-v6-c-tooltip__arrow--Height=0.9375rem] - Arrow height.
  * @cssprop {<color>} [--pf-v6-c-tooltip__arrow--BackgroundColor] - Arrow background color. Defaults to `--pf-t--global--background--color--inverse--default`.
  * @cssprop {<shadow>} [--pf-v6-c-tooltip__arrow--BoxShadow] - Arrow box shadow. Defaults to `--pf-t--global--box-shadow--md`.
+ * @cssprop {<integer>} [--pf-v6-c-tooltip--ZIndex=10000] - Z-index of the tooltip overlay.
  *
  * @fires {TooltipShowEvent} show - Cancelable event fired before the tooltip shows. The `reason` property on the event is a `TooltipTriggerReason` string indicating what triggered it (`'mouseenter'` or `'focusin'`). Call `preventDefault()` to cancel.
  * @fires {TooltipHideEvent} hide - Cancelable event fired before the tooltip hides. The `reason` property on the event is a `TooltipTriggerReason` string indicating what triggered it (`'mouseleave'` or `'focusout'`). Call `preventDefault()` to cancel.
@@ -84,27 +85,27 @@ const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
 export class PfV6Tooltip extends LitElement {
   static readonly styles: CSSStyleSheet[] = [styles];
 
-  static #instances = new Set<PfV6Tooltip>();
+  private static instances = new Set<PfV6Tooltip>();
 
-  static #announcer: HTMLElement;
+  private static announcer: HTMLElement;
 
   static {
     if (!isServer) {
       document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-          for (const instance of PfV6Tooltip.#instances) {
+          for (const instance of PfV6Tooltip.instances) {
             if (instance.#float.open) {
               instance.hide();
             }
           }
         }
       });
-      PfV6Tooltip.#initAnnouncer();
+      PfV6Tooltip.initAnnouncer();
     }
   }
 
-  static #initAnnouncer(): void {
-    document.body.append((this.#announcer = Object.assign(document.createElement('div'), {
+  private static initAnnouncer(): void {
+    document.body.append((this.announcer = Object.assign(document.createElement('div'), {
       role: 'status',
       style: /* css */`
         position: fixed;
@@ -117,8 +118,8 @@ export class PfV6Tooltip extends LitElement {
     })));
   }
 
-  static #announce(message: string): void {
-    this.#announcer.innerText = message;
+  private static announce(message: string): void {
+    this.announcer.innerText = message;
   }
 
   /**
@@ -223,14 +224,14 @@ export class PfV6Tooltip extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     if (!isServer) {
-      PfV6Tooltip.#instances.add(this);
+      PfV6Tooltip.instances.add(this);
       this.#updateTriggerListeners();
     }
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    PfV6Tooltip.#instances.delete(this);
+    PfV6Tooltip.instances.delete(this);
     this.#clearTimers();
     this.#removeTriggerListeners();
   }
@@ -279,7 +280,7 @@ export class PfV6Tooltip extends LitElement {
     await this.#float.show({ offset, placement, flip, fallbackPlacements });
     this.#setAriaDescribedBy(true);
     if (!this.silent) {
-      PfV6Tooltip.#announce(this.#accessibleContent);
+      PfV6Tooltip.announce(this.#accessibleContent);
     }
   }
 
@@ -290,7 +291,7 @@ export class PfV6Tooltip extends LitElement {
     this.#setAriaDescribedBy(false);
     await this.#float.hide();
     if (!this.silent) {
-      PfV6Tooltip.#announcer.innerText = '';
+      PfV6Tooltip.announcer.innerText = '';
     }
   }
 

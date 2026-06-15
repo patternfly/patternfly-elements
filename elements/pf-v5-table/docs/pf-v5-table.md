@@ -1,4 +1,5 @@
-<pf-v6-banner id="beta-table" status="warning" accessible-label="Warning:" sticky>
+<pf-v6-banner id="beta-table" status="warning" sticky>
+  <span class="pf-v6-screen-reader">Warning:</span>
   This is an initial release, with a subset of upstream
   PatternFly's features.
   APIs can be expected to change.

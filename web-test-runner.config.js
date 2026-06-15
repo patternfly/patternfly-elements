@@ -5,7 +5,7 @@ import { getPatternflyIconNodemodulesImports } from '@patternfly/pfe-tools/dev-s
 export default pfeTestRunnerConfig({
   // workaround for https://github.com/evanw/esbuild/issues/3019
   tsconfig: 'tsconfig.esbuild.json',
-  files: ['!tools/create-element/templates/**/*'],
+  files: ['!tools/create-element/templates/**/*', '!tools/pfe-tools/*.spec.ts'],
   reporter: process.env.CI ? 'summary' : 'default',
   importMapOptions: {
     providers: {

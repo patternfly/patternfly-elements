@@ -5,7 +5,7 @@ import { a11ySnapshot, querySnapshot } from '@patternfly/pfe-tools/test/a11y-sna
 
 // Import the element we're testing.
 import { PfV5Accordion, PfV5AccordionPanel, PfV5AccordionHeader } from '@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js';
-import { PfV5Switch } from '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+import { PfV6Switch } from '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
 
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -1349,7 +1349,7 @@ describe('<pf-v5-accordion>', function() {
     let element: PfV5Accordion;
     let panels: NodeListOf<PfV5AccordionPanel>;
     let checkbox: HTMLInputElement;
-    let pfswitch: PfV5Switch;
+    let pfswitch: PfV6Switch;
     let accordionPanelOne: PfV5AccordionPanel;
 
     beforeEach(async function() {
@@ -1357,14 +1357,14 @@ describe('<pf-v5-accordion>', function() {
           <pf-v5-accordion>
             <pf-v5-accordion-header expanded id="header-1-1" data-index="0"></pf-v5-accordion-header>
             <pf-v5-accordion-panel id="panel-1-1" data-index="0">
-              <pf-v5-switch></pf-v5-switch>
+              <pf-v6-switch></pf-v6-switch>
               <input type="checkbox">
             </pf-v5-accordion-panel>
           </pf-v5-accordion>
         `);
       panels = document.querySelectorAll('pf-v5-accordion-panel');
       checkbox = element.querySelector('input')!;
-      pfswitch = element.querySelector('pf-v5-switch')!;
+      pfswitch = element.querySelector('pf-v6-switch')!;
       expect(checkbox).to.be.ok;
       expect(pfswitch).to.be.ok;
       [accordionPanelOne] = panels;

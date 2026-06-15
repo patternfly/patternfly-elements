@@ -25,11 +25,12 @@ explicit, visible representation on a setting.
 
 ## Divergences from React `Switch`
 
-### Not implemented
+### Intentionally omitted
 
 | React prop | Notes |
 |---|---|
 | `defaultChecked` | React-only uncontrolled pattern; web components use the `checked` attribute directly |
+| `labelOff` | Omitted per WAI-ARIA APG guidance. Switch labels must remain stable regardless of checked state. Dynamically changing labels confuse assistive technology users because the semantic context shifts alongside the state change -- the `switch` role already conveys on/off state. Teams using `labelOff` should redesign to use a single stable label describing the setting (e.g., "Notifications" rather than "Enabled"/"Disabled"). |
 
 ### Changed API
 

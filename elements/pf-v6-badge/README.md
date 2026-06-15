@@ -25,15 +25,11 @@ A badge is used to annotate other information like a label or an object name.
 
 ## Divergences from React `Badge`
 
-### Not implemented
-
-| React prop | Notes |
-| --- | --- |
-| `screenReaderText` | Authors slot visually-hidden text alongside the badge content, e.g. `<pf-v6-badge>3 <span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge>`. |
-
 ### Changed API
 
 | React prop | Web component | Difference |
 | --- | --- | --- |
-| `isRead` | `state` attribute | Boolean replaced with `'read' \| 'unread'` enum. Omitting `state` gives neutral styling (no read/unread indication). |
+| `isRead` | `state` attribute | Boolean replaced with `'read' \| 'unread'` enum. Omitting `state` gives neutral styling. |
+| `isDisabled` | `disabled` | Dropped `is-` prefix per web component convention. |
+| `screenReaderText` | Slotted visually-hidden text | No dedicated attribute. Slot a visually-hidden `<span>` inside the badge for screen reader context: `<pf-v6-badge>3 <span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge>`. Same underlying technique as React -- `ariaLabel` cannot label a generic element. |
 

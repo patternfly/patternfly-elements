@@ -1,29 +1,34 @@
 ---
 name: Status
-description: When a banner conveys status, use the status attribute. Include an icon and accessible-label for accessibility.
+description: When a banner conveys status, use the status attribute. Include an icon and visually-hidden text for accessibility.
 ---
-<pf-v6-banner status="success" accessible-label="Success banner">
+<pf-v6-banner status="success">
   <pf-v5-icon icon="check-circle"></pf-v5-icon>
+  <span class="pf-v6-screen-reader">Success alert:</span>
   Success banner
 </pf-v6-banner>
 
-<pf-v6-banner status="warning" accessible-label="Warning banner">
+<pf-v6-banner status="warning">
   <pf-v5-icon icon="exclamation-triangle"></pf-v5-icon>
+  <span class="pf-v6-screen-reader">Warning alert:</span>
   Warning banner
 </pf-v6-banner>
 
-<pf-v6-banner status="danger" accessible-label="Danger banner">
+<pf-v6-banner status="danger">
   <pf-v5-icon icon="exclamation-circle"></pf-v5-icon>
+  <span class="pf-v6-screen-reader">Danger alert:</span>
   Danger banner
 </pf-v6-banner>
 
-<pf-v6-banner status="info" accessible-label="Info banner">
+<pf-v6-banner status="info">
   <pf-v5-icon icon="info-circle"></pf-v5-icon>
+  <span class="pf-v6-screen-reader">Info alert:</span>
   Info banner
 </pf-v6-banner>
 
-<pf-v6-banner status="custom" accessible-label="Custom banner">
+<pf-v6-banner status="custom">
   <pf-v5-icon icon="bell"></pf-v5-icon>
+  <span class="pf-v6-screen-reader">Custom alert:</span>
   Custom banner
 </pf-v6-banner>
 

@@ -10,10 +10,11 @@ A full-width banner for communicating short, non-dismissible messages.
 <pf-v6-banner>Default banner</pf-v6-banner>
 ```
 
-### Status banner with accessible label
+### Status banner with screen reader text
 
 ```html
-<pf-v6-banner status="danger" accessible-label="Danger banner:">
+<pf-v6-banner status="danger">
+  <span class="pf-v6-screen-reader">Danger alert:</span>
   An error has occurred. Contact support for help.
 </pf-v6-banner>
 ```
@@ -33,7 +34,7 @@ A full-width banner for communicating short, non-dismissible messages.
 | React prop | Web component | Difference |
 |---|---|---|
 | `isSticky` | `sticky` attribute | Renamed; dropped `is` prefix |
-| `screenReaderText` | `accessible-label` attribute | Renamed for consistency with other PFE elements |
+| `screenReaderText` | Slotted visually-hidden text | No dedicated attribute. Slot a `<span class="pf-v6-screen-reader">` inside the banner for screen reader context. Same underlying technique as React. |
 | `color` + `status` mutual exclusion | Both accepted | React enforces via TypeScript union types (`color` and `status` cannot both be set). The web component accepts both; `status` takes visual precedence via CSS cascade. |
 
 ## Migrating from `pf-v5-banner`

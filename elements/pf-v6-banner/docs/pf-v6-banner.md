@@ -13,10 +13,11 @@
 
   ### Status
   When a banner conveys status, use the `status` attribute. Include an icon
-  and `accessible-label` for accessibility.
+  and visually-hidden text for screen reader context.
 
   {% htmlexample %}
-  <pf-v6-banner status="danger" accessible-label="Danger banner">
+  <pf-v6-banner status="danger">
+    <span class="pf-v6-screen-reader">Danger alert:</span>
     Danger banner
   </pf-v6-banner>
   {% endhtmlexample %}

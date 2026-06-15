@@ -5,7 +5,8 @@
 `<pf-v6-banner>`: replaces `<pf-v5-banner>` with PatternFly v6 design specs.
 
 ```html
-<pf-v6-banner status="info" accessible-label="Info banner">
+<pf-v6-banner status="info">
+  <span class="pf-v6-screen-reader">Info alert:</span>
   Info banner content
 </pf-v6-banner>
 ```
@@ -22,4 +23,3 @@
 
 - `color` attribute for decorative colors (red, orangered, orange, yellow, green, teal, blue, purple)
 - `status` attribute for semantic statuses (success, warning, danger, info, custom)
-- `accessible-label` attribute for visually-hidden accessible text

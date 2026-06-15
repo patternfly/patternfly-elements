@@ -66,18 +66,19 @@ describe('<pf-v6-banner>', function() {
     });
   });
 
-  describe('with accessible-label', function() {
+  describe('with slotted screen reader text', function() {
     let element: PfV6Banner;
 
     beforeEach(async function() {
       element = await createFixture<PfV6Banner>(html`
-        <pf-v6-banner status="danger" accessible-label="Danger alert:">
+        <pf-v6-banner status="danger">
+          <span class="pf-v6-screen-reader">Danger alert:</span>
           An error has occurred.
         </pf-v6-banner>
       `);
     });
 
-    it('should include accessible label in the accessibility tree', async function() {
+    it('should include screen reader text in the accessibility tree', async function() {
       const snapshot = await a11ySnapshot();
       const node = snapshot.children?.find(
         (child: { name?: string }) => child.name?.includes('Danger alert:')
@@ -95,22 +96,6 @@ describe('<pf-v6-banner>', function() {
 
     it('should be accessible', async function() {
       await expect(element).to.be.accessible();
-    });
-  });
-
-  describe('without accessible-label', function() {
-    beforeEach(async function() {
-      await createFixture<PfV6Banner>(html`
-        <pf-v6-banner>No accessible label</pf-v6-banner>
-      `);
-    });
-
-    it('should not include accessible label in the accessibility tree', async function() {
-      const snapshot = await a11ySnapshot();
-      const hasScreenReaderNode = snapshot.children?.some(
-        (child: { name?: string }) => child.name === ''
-      );
-      expect(hasScreenReaderNode).to.not.be.true;
     });
   });
 

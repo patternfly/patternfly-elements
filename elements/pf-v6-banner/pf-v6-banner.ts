@@ -27,7 +27,7 @@ export type BannerStatus =
  * non-dismissible messages. Use a banner when you need to display a
  * brief announcement that allows users to continue without interruption.
  *
- * Status banners SHOULD include an icon and `accessible-label` so
+ * Status banners SHOULD include an icon and visually-hidden text so
  * screen readers can announce the status context (WCAG 1.3.1). Authors
  * SHOULD AVOID using color alone to convey meaning (WCAG 1.4.1).
  *
@@ -36,7 +36,9 @@ export type BannerStatus =
  *
  * @summary Provides a full-width banner for brief, non-dismissible messages.
  *
- * @slot - Banner message content (text, links, icons)
+ * @slot - Banner message content (text, links, icons). When `status` is set,
+ *         include a visually-hidden `<span>` for screen reader context, e.g.
+ *         `<span class="pf-v6-screen-reader">Danger alert:</span>`.
  *
  * @cssprop {<color>} --pf-v6-c-banner--BackgroundColor - Default banner background color
  * @cssprop {<color>} --pf-v6-c-banner--Color - Default banner text color
@@ -85,23 +87,19 @@ export class PfV6Banner extends LitElement {
    */
   @property({ reflect: true }) color?: BannerColor;
 
-  /** Status style for the banner. Conveys semantic meaning and overrides `color`. */
+  /**
+   * Status style for the banner. Conveys semantic meaning and overrides `color`.
+   * When set, authors SHOULD slot visually-hidden text for screen readers, e.g.
+   * `<span class="pf-v6-screen-reader">Danger alert:</span>`.
+   */
   @property({ reflect: true }) status?: BannerStatus;
 
   /** Whether the banner sticks to the top of its container. */
   @property({ type: Boolean, reflect: true }) sticky = false;
 
-  /**
-   * Accessible label announced by screen readers to convey the banner's status.
-   * Must be used when `status` is set. Should not be used otherwise.
-   */
-  @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
-
   override render(): TemplateResult {
-    const { accessibleLabel } = this;
     return html`
       <div id="container">
-        <span class="sr-only" ?hidden=${!accessibleLabel}>${accessibleLabel}</span>
         <slot></slot>
       </div>
     `;

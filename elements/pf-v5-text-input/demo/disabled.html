@@ -9,12 +9,12 @@
 </fieldset>
 
 <label>Disable the fieldset
-  <pf-v5-switch id="disabled-fieldset-switch" checked></pf-v5-switch>
+  <pf-v6-switch id="disabled-fieldset-switch" checked></pf-v6-switch>
 </label>
 
 <script type="module">
   import '@patternfly/elements/pf-v5-text-input/pf-v5-text-input.js';
-  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
   document.getElementById('disabled-fieldset-switch')
     .addEventListener('change', function() {
       document.getElementById('disablable-fieldset').disabled = this.checked;

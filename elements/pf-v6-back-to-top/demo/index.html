@@ -1,0 +1,28 @@
+---
+description: Scroll down to see the back to top button appear after 400px of scroll distance. Uses a link with href for progressive enhancement.
+---
+<style>
+  #wrapper {
+    position: relative;
+    height: 100vh;
+  }
+  #container {
+    height: 100%;
+    overflow-y: auto;
+  }
+</style>
+
+<div id="wrapper">
+  <div id="container">
+    <div id="top" style="padding: 1rem;">
+      <h2>Back to top</h2>
+      <p>Scroll down to see the back to top button appear after 400px.</p>
+    </div>
+    <div style="height: 1200px;"></div>
+  </div>
+  <pf-v6-back-to-top scrollable-selector="#container" href="#top">Back to top</pf-v6-back-to-top>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-back-to-top/pf-v6-back-to-top.js';
+</script>

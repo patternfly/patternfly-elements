@@ -1,0 +1,18 @@
+---
+name: Timezone
+description: >
+  Set the time-zone attribute to any IANA timezone identifier to display the
+  date/time in that timezone. Unlike React's boolean shouldDisplayUTC, this
+  supports any timezone. Add display-suffix to label the timezone when
+  time-format does not include timezone information.
+---
+<section>
+  <p><pf-v6-timestamp time-zone="UTC" display-suffix="UTC"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp time-zone="America/New_York" time-format="long"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp time-zone="Europe/London" time-format="long"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp time-zone="Asia/Tokyo" date-format="full" time-format="short" display-suffix="JST"></pf-v6-timestamp></p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+</script>

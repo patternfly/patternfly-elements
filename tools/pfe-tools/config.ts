@@ -30,8 +30,8 @@ export interface PfeConfig {
   sourceControlURLPrefix?: string ;
   /** absolute URL prefix for demos, with trailing slash. Default 'https://patternflyelements.org/' */
   demoURLPrefix?: string ;
-  /** custom elements namespace. Default 'pf' */
-  tagPrefix?: string;
+  /** custom elements namespace. Default 'pf'. Accepts an array for repos with multiple prefixes. */
+  tagPrefix?: string | string[];
   /** Dev Server site options */
   site?: SiteOptions;
 }
@@ -78,6 +78,27 @@ export function getPfeConfig(rootDir: string = process.cwd()): Required<PfeConfi
   };
 }
 
+/**
+ * Normalizes tagPrefix config to a non-empty array of prefixes (without trailing dash).
+ * Filters empty strings. Throws if result is empty.
+ */
+export function getPrefixes(config: Pick<PfeConfig, 'tagPrefix'>): string[] {
+  const prefixes = [config.tagPrefix].flat().filter((p): p is string => !!p);
+  if (!prefixes.length) {
+    throw new Error('tagPrefix must contain at least one non-empty prefix');
+  }
+  return prefixes;
+}
+
+/**
+ * Returns the prefix that matches the given tag name (with trailing dash),
+ * or falls back to the first configured prefix.
+ */
+export function matchPrefix(tagName: string, config: Pick<PfeConfig, 'tagPrefix'>): string {
+  const prefixes = getPrefixes(config).map(p => `${p.replace(/-$/, '')}-`);
+  return prefixes.find(p => tagName.startsWith(p)) ?? prefixes[0];
+}
+
 const slugsConfigMap = new Map<string, { config: PfeConfig; slugs: Map<string, string> }>();
 const reverseSlugifyObject = ([k, v]: [string, string]): [string, string] =>
   [slugify(v, { lower: true }), k];
@@ -102,6 +123,8 @@ export function deslugify(
   rootDir: string = process.cwd(),
 ): string {
   const { slugs, config } = getSlugsMap(rootDir);
-  const prefixedSlug = (slug.startsWith(`${config.tagPrefix}-`)) ? slug : `${config.tagPrefix}-${slug}`;
+  const prefixes = getPrefixes(config);
+  const hasPrefix = prefixes.some(p => slug.startsWith(`${p}-`));
+  const prefixedSlug = hasPrefix ? slug : `${prefixes[0]}-${slug}`;
   return slugs.get(slug) ?? prefixedSlug;
 }

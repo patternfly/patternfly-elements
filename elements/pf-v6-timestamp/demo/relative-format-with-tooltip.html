@@ -1,0 +1,29 @@
+---
+name: Relative format with tooltip
+description: >
+  Combine relative time with a tooltip showing the full date/time. Use an
+  anchor element around the trigger for keyboard accessibility.
+---
+<section>
+  <p>
+    <pf-v5-tooltip>
+      <a href="#">
+        <pf-v6-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-v6-timestamp>
+      </a>
+      <pf-v6-timestamp slot="content" date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-v6-timestamp>
+    </pf-v5-tooltip>
+  </p>
+  <p>
+    <pf-v5-tooltip>
+      <a href="#">
+        <pf-v6-timestamp date="Aug 09 2024 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-v6-timestamp>
+      </a>
+      <pf-v6-timestamp slot="content" date="Aug 09 2024 14:57:00 GMT-0400 (Eastern Daylight Time)"></pf-v6-timestamp>
+    </pf-v5-tooltip>
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+  import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+</script>

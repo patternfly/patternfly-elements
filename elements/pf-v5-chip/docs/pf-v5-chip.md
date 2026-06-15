@@ -1,6 +1,6 @@
 <script type="module">
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
-import '@patternfly/elements/pf-v5-badge/pf-v5-badge.js';
+import '@patternfly/elements/pf-v6-badge/pf-v6-badge.js';
 import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
 </script>
 
@@ -14,7 +14,7 @@ import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
 
 {% htmlexample %}
   <pf-v5-chip>Chip 1</pf-v5-chip>
-  <pf-v5-chip>Chip <pf-v5-badge number="7">7</pf-v5-badge></pf-v5-chip>
+  <pf-v5-chip>Chip <pf-v6-badge>7</pf-v6-badge></pf-v5-chip>
 {% endhtmlexample %}
 
 ### Chip variants

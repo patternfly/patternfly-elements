@@ -1,0 +1,16 @@
+---
+name: Labelled by external heading
+description: Use native aria-labelledby on the host to reference an external heading. The host has role="progressbar", so standard ARIA attributes work directly.
+---
+<section>
+  <h3 id="scan-title">Compliance scanning in progress</h3>
+  <pf-v6-progress aria-labelledby="scan-title"
+                  value="60"
+                  max="100"
+                  measure-location="outside"
+                  value-text="3 of 5 runs"></pf-v6-progress>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-progress/pf-v6-progress.js';
+</script>

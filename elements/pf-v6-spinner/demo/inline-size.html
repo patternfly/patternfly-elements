@@ -1,0 +1,35 @@
+---
+name: Inline size
+description: An inline spinner inherits its font size, so its size will match the content around it.
+---
+<section>
+  <h1>
+    Heading
+    <pf-v6-spinner inline accessible-label="Spinner in a heading">Loading...</pf-v6-spinner>
+  </h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit nisi in cursus maximus.</p>
+  <h2>
+    Second level
+    <pf-v6-spinner inline accessible-label="Spinner in a subheading">Loading...</pf-v6-spinner>
+  </h2>
+  <p>
+    Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi,
+    <pf-v6-spinner inline accessible-label="Spinner in a paragraph">Loading...</pf-v6-spinner>
+    sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
+    Suspendisse potenti.
+  </p>
+  <small>
+    Sometimes you need small text
+    <pf-v6-spinner inline accessible-label="Spinner in small text">Loading...</pf-v6-spinner>
+  </small>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

@@ -1,0 +1,310 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto auto;
+  /** Gap between the description, bar, and helper-text rows. Defaults to `--pf-t--global--spacer--md`. */
+  gap: var(--pf-v6-c-progress--GridGap, var(--pf-t--global--spacer--md, 1rem));
+  align-items: end;
+
+  /* Size modifiers */
+
+  &.sm {
+    /** Height of the bar at small size. Defaults to `--pf-t--global--spacer--sm`. */
+    --_bar-height: var(--pf-v6-c-progress--m-sm__bar--Height,
+      var(--pf-t--global--spacer--sm, 0.5rem));
+
+    & #measure {
+      /** Font size of the measure text at small size. Defaults to `--pf-t--global--font--size--body--sm`. */
+      font-size: var(--pf-v6-c-progress--m-sm__measure--FontSize,
+        var(--pf-t--global--font--size--body--sm, 0.75rem));
+    }
+  }
+
+  &.lg {
+    /** Height of the bar at large size. Defaults to `--pf-t--global--spacer--lg`. */
+    --_bar-height: var(--pf-v6-c-progress--m-lg__bar--Height,
+      var(--pf-t--global--spacer--lg, 1.5rem));
+  }
+
+  /* Measure location modifiers */
+
+  &.outside,
+  &.singleline {
+    grid-template-columns: 1fr fit-content(50%);
+  }
+
+  &.outside {
+    & #description {
+      grid-column: 1 / 3;
+    }
+
+    & #status {
+      grid-row: 2 / 3;
+      grid-column: 2 / 3;
+      align-self: center;
+    }
+
+    & #measure {
+      display: inline-block;
+      /** Font size of the measure text in outside layout. Defaults to `--pf-t--global--font--size--sm`. */
+      font-size: var(--pf-v6-c-progress--m-outside__measure--FontSize,
+        var(--pf-t--global--font--size--sm, 0.875rem));
+    }
+
+    & #bar {
+      grid-column: 1 / 2;
+    }
+  }
+
+  &.singleline {
+    grid-template-rows: 1fr;
+
+    & #description {
+      display: none;
+    }
+
+    & #bar {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+    }
+
+    & #status {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+  }
+
+  &.inside {
+    & #indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /** Minimum width of the indicator when measure is inside. Defaults to `--pf-t--global--spacer--xl`. */
+      min-width: var(--pf-v6-c-progress--m-inside__indicator--MinWidth,
+        var(--pf-t--global--spacer--xl, 2rem));
+    }
+
+    & #measure {
+      /** Font size of the measure text inside the bar. Defaults to `--pf-t--global--font--size--sm`. */
+      font-size: var(--pf-v6-c-progress--m-inside__measure--FontSize,
+        var(--pf-t--global--font--size--sm, 0.875rem));
+      /** Color of the measure text inside the bar. Defaults to `--pf-t--global--text--color--on-brand--default`. */
+      color: var(--_inside-measure-color,
+        var(--pf-v6-c-progress--m-inside__measure--Color,
+          var(--pf-t--global--text--color--on-brand--default, #fff)));
+      text-align: center;
+    }
+  }
+
+  /* Variant modifiers */
+
+  &.success {
+    /** Indicator color for the success variant. Defaults to `--pf-t--global--color--status--success--default`. */
+    --_indicator-bg: var(--pf-v6-c-progress--m-success__indicator--BackgroundColor,
+      var(--pf-t--global--color--status--success--default, #3e8635));
+    /** Status icon color for the success variant. Defaults to `--pf-t--global--icon--color--status--success--default`. */
+    --_status-icon-color: var(--pf-v6-c-progress--m-success__status-icon--Color,
+      var(--pf-t--global--icon--color--status--success--default, #3e8635));
+    /** Inside measure text color for the success variant. Defaults to `--pf-t--global--text--color--status--on-success--default`. */
+    --_inside-measure-color: var(--pf-v6-c-progress--m-success--m-inside__measure--Color,
+      var(--pf-t--global--text--color--status--on-success--default, #fff));
+  }
+
+  &.warning {
+    /** Indicator color for the warning variant. Defaults to `--pf-t--global--color--status--warning--default`. */
+    --_indicator-bg: var(--pf-v6-c-progress--m-warning__indicator--BackgroundColor,
+      var(--pf-t--global--color--status--warning--default, #f0ab00));
+    /** Status icon color for the warning variant. Defaults to `--pf-t--global--icon--color--status--warning--default`. */
+    --_status-icon-color: var(--pf-v6-c-progress--m-warning__status-icon--Color,
+      var(--pf-t--global--icon--color--status--warning--default, #f0ab00));
+    /** Inside measure text color for the warning variant. Defaults to `--pf-t--global--text--color--status--on-warning--default`. */
+    --_inside-measure-color: var(--pf-v6-c-progress--m-warning--m-inside__measure--Color,
+      var(--pf-t--global--text--color--status--on-warning--default, #151515));
+  }
+
+  &.danger {
+    /** Indicator color for the danger variant. Defaults to `--pf-t--global--color--status--danger--default`. */
+    --_indicator-bg: var(--pf-v6-c-progress--m-danger__indicator--BackgroundColor,
+      var(--pf-t--global--color--status--danger--default, #c9190b));
+    /** Status icon color for the danger variant. Defaults to `--pf-t--global--icon--color--status--danger--default`. */
+    --_status-icon-color: var(--pf-v6-c-progress--m-danger__status-icon--Color,
+      var(--pf-t--global--icon--color--status--danger--default, #c9190b));
+    /** Inside measure text color for the danger variant. Defaults to `--pf-t--global--text--color--status--on-danger--default`. */
+    --_inside-measure-color: var(--pf-v6-c-progress--m-danger--m-inside__measure--Color,
+      var(--pf-t--global--text--color--status--on-danger--default, #fff));
+  }
+
+  /* Description truncation */
+
+  &.truncated #description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+}
+
+/* Danger animations */
+
+@media (prefers-reduced-motion: no-preference) {
+  .danger #bar {
+    animation: danger-jiggle
+      var(--pf-t--global--motion--duration--fade--default, 0.3s)
+      var(--pf-t--global--motion--timing-function--default, cubic-bezier(0.25, 0.1, 0.25, 1))
+      both;
+  }
+
+  .danger #status-icon {
+    animation: fade-in
+      var(--pf-t--global--motion--duration--fade--default, 0.3s)
+      var(--pf-t--global--motion--timing-function--default, cubic-bezier(0.25, 0.1, 0.25, 1));
+  }
+}
+
+/* Elements */
+
+#description {
+  grid-column: 1 / 2;
+  word-break: break-word;
+}
+
+#status {
+  display: flex;
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  /** Gap between the measure text and status icon. Defaults to `--pf-t--global--spacer--sm`. */
+  gap: var(--pf-v6-c-progress__status--Gap,
+    var(--pf-t--global--spacer--sm, 0.5rem));
+  align-items: start;
+  justify-content: end;
+  text-align: end;
+  word-break: break-word;
+}
+
+/** Color of the status icon. Overridden by variant. Defaults to `--pf-t--global--icon--color--regular`. */
+#status-icon {
+  color: var(--_status-icon-color,
+    var(--pf-v6-c-progress__status-icon--Color,
+      var(--pf-t--global--icon--color--regular, #151515)));
+}
+
+#bar {
+  position: relative;
+  grid-row: 2 / 3;
+  grid-column: 1 / 3;
+  align-self: center;
+  /** Height of the progress bar track. Defaults to `--pf-t--global--spacer--md`. */
+  height: var(--_bar-height,
+    var(--pf-v6-c-progress__bar--Height,
+      var(--pf-t--global--spacer--md, 1rem)));
+  overflow: hidden;
+  /** Background color of the bar track. Defaults to `--pf-t--global--color--nonstatus--gray--default`. */
+  background-color: var(--pf-v6-c-progress__bar--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--gray--default, #f0f0f0));
+  /** Border radius of the bar track. Defaults to `--pf-t--global--border--radius--medium`. */
+  border-radius: var(--pf-v6-c-progress__bar--BorderRadius,
+    var(--pf-t--global--border--radius--medium, 6px));
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+    /** Border width of the bar track for high-contrast mode. Defaults to `--pf-t--global--border--width--high-contrast--regular`. */
+    border: var(--pf-v6-c-progress__bar--BorderWidth,
+        var(--pf-t--global--border--width--high-contrast--regular, 0))
+      solid
+      /** Border color of the bar track for high-contrast mode. Defaults to `--pf-t--global--border--color--high-contrast`. */
+      var(--pf-v6-c-progress__bar--BorderColor,
+        var(--pf-t--global--border--color--high-contrast, transparent));
+    border-radius: inherit;
+  }
+}
+
+#indicator {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  /** Height of the filled indicator. Defaults to `--pf-v6-c-progress__bar--Height`. */
+  height: var(--_bar-height,
+    var(--pf-v6-c-progress__indicator--Height,
+      var(--pf-v6-c-progress__bar--Height,
+        var(--pf-t--global--spacer--md, 1rem))));
+  /** Background color of the filled indicator. Overridden by variant. Defaults to `--pf-t--global--color--brand--default`. */
+  background-color: var(--_indicator-bg,
+    var(--pf-v6-c-progress__indicator--BackgroundColor,
+      var(--pf-t--global--color--brand--default, #0066cc)));
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    /** Border width of the indicator for high-contrast mode. Defaults to `--pf-t--global--border--width--high-contrast--extra-strong`. */
+    border: var(--pf-v6-c-progress__indicator--BorderWidth,
+        var(--pf-t--global--border--width--high-contrast--extra-strong, 0))
+      solid
+      /** Border color of the indicator for high-contrast mode. */
+      var(--pf-v6-c-progress__indicator--BorderColor, transparent);
+    border-radius: var(--pf-v6-c-progress__bar--BorderRadius,
+      var(--pf-t--global--border--radius--medium, 6px));
+  }
+}
+
+#helper-text {
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
+  /** Negative offset to bring helper text closer to the bar. */
+  margin-block-start: var(--pf-v6-c-progress__helper-text--MarginBlockStart,
+    calc(var(--pf-t--global--spacer--sm, 0.5rem) - var(--pf-v6-c-progress--GridGap,
+      var(--pf-t--global--spacer--md, 1rem))));
+}
+
+/** Minimum width of the measure display for visual alignment across stacked progress bars. Set via CSS custom property. */
+#measure {
+  min-width: var(--pf-v6-c-progress__measure--m-static-width--MinWidth, 0);
+  font-variant-numeric: tabular-nums;
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+@keyframes danger-jiggle {
+  33% {
+    translate: -2px;
+  }
+
+  66% {
+    translate: 3px;
+  }
+
+  100% {
+    translate: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

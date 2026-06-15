@@ -1,0 +1,198 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+:host([sticky]) {
+  position: sticky;
+  inset-block-start: 0;
+  z-index:
+    /** Overrides the z-index when sticky */
+    var(--pf-v6-c-banner--m-sticky--ZIndex,
+      var(--pf-t--global--z-index--md, 300));
+  box-shadow:
+    /** Overrides the box shadow when sticky */
+    var(--pf-v6-c-banner--m-sticky--BoxShadow,
+      var(--pf-t--global--box-shadow--md));
+}
+
+#container {
+  --_bg:
+    /** Overrides the banner background color */
+    var(--pf-v6-c-banner--BackgroundColor,
+      var(--pf-t--global--color--nonstatus--gray--default,
+        light-dark(var(--pf-t--color--gray--20, #e0e0e0), var(--pf-t--color--gray--60, #4d4d4d))));
+  --_color:
+    /** Overrides the banner text color */
+    var(--pf-v6-c-banner--Color,
+      var(--pf-t--global--text--color--nonstatus--on-gray--default,
+        light-dark(var(--pf-t--color--gray--100, #151515), var(--pf-t--color--white, #ffffff))));
+  --_padding-block:
+    /** Overrides the block padding */
+    var(--pf-v6-c-banner--PaddingBlockStart,
+      var(--pf-t--global--spacer--xs, 0.25rem));
+  --_padding-inline:
+    /** Overrides the inline padding */
+    var(--pf-v6-c-banner--PaddingInlineStart,
+      var(--pf-t--global--spacer--md, 1rem));
+  --_font-size:
+    /** Overrides the font size */
+    var(--pf-v6-c-banner--FontSize,
+      var(--pf-t--global--font--size--body--default, 0.875rem));
+  --_border-color:
+    /** Overrides the block border color, visible in high-contrast mode */
+    var(--pf-v6-c-banner--BorderColor,
+      var(--pf-t--global--border--color--high-contrast, transparent));
+  --_border-width:
+    /** Overrides the block border width, visible in high-contrast mode */
+    var(--pf-v6-c-banner--BorderWidth,
+      var(--pf-t--global--border--width--high-contrast--regular, 0));
+
+  flex-shrink: 0;
+  padding-block: var(--_padding-block);
+  padding-inline: var(--_padding-inline);
+  font-size: var(--_font-size);
+  color: var(--_color);
+  white-space: nowrap;
+  background-color: var(--_bg);
+  border-block: var(--_border-width) solid var(--_border-color);
+
+  @media (min-width: 768px) {
+    --_padding-inline:
+      /** Overrides the inline padding at the medium breakpoint */
+      var(--pf-v6-c-banner--md--PaddingInlineStart,
+        var(--pf-t--global--spacer--lg, 1.5rem));
+  }
+}
+
+/* Non-status color modifiers */
+
+:host([color="red"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-red--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--red--default,
+      light-dark(var(--pf-t--color--red--20, #fbc5c5), var(--pf-t--color--red--30, #f9a8a8))));
+  --_color: var(--pf-v6-c-banner--m-red--Color,
+    var(--pf-t--global--text--color--nonstatus--on-red--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="orangered"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-orangered--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--orangered--default,
+      light-dark(var(--pf-t--color--red-orange--20, #fbbea8), var(--pf-t--color--red-orange--30, #f89b78))));
+  --_color: var(--pf-v6-c-banner--m-orangered--Color,
+    var(--pf-t--global--text--color--nonstatus--on-orangered--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="orange"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-orange--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--orange--default,
+      light-dark(var(--pf-t--color--orange--20, #fccb8f), var(--pf-t--color--orange--30, #f8ae54))));
+  --_color: var(--pf-v6-c-banner--m-orange--Color,
+    var(--pf-t--global--text--color--nonstatus--on-orange--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="yellow"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-yellow--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--yellow--default,
+      light-dark(var(--pf-t--color--yellow--20, #ffe072), var(--pf-t--color--yellow--30, #ffcc17))));
+  --_color: var(--pf-v6-c-banner--m-yellow--Color,
+    var(--pf-t--global--text--color--nonstatus--on-yellow--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="green"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-green--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--green--default,
+      light-dark(var(--pf-t--color--green--20, #d1f1bb), var(--pf-t--color--green--30, #afdc8f))));
+  --_color: var(--pf-v6-c-banner--m-green--Color,
+    var(--pf-t--global--text--color--nonstatus--on-green--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="teal"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-teal--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--teal--default,
+      light-dark(var(--pf-t--color--teal--20, #b9e5e5), var(--pf-t--color--teal--30, #9ad8d8))));
+  --_color: var(--pf-v6-c-banner--m-teal--Color,
+    var(--pf-t--global--text--color--nonstatus--on-teal--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="blue"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-blue--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--blue--default,
+      light-dark(var(--pf-t--color--blue--20, #b9dafc), var(--pf-t--color--blue--30, #92c5f9))));
+  --_color: var(--pf-v6-c-banner--m-blue--Color,
+    var(--pf-t--global--text--color--nonstatus--on-blue--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="purple"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-purple--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--purple--default,
+      light-dark(var(--pf-t--color--purple--20, #d0c5f4), var(--pf-t--color--purple--30, #b6a6e9))));
+  --_color: var(--pf-v6-c-banner--m-purple--Color,
+    var(--pf-t--global--text--color--nonstatus--on-purple--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+/* Status modifiers (higher specificity via attribute selector ensures precedence over color) */
+
+:host([status="danger"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-danger--BackgroundColor,
+    var(--pf-t--global--color--status--danger--default,
+      light-dark(var(--pf-t--color--red-orange--60, #b1380b), var(--pf-t--color--red-orange--50, #f0561d))));
+  --_color: var(--pf-v6-c-banner--m-danger--Color,
+    var(--pf-t--global--text--color--status--on-danger--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #1f1f1f))));
+}
+
+:host([status="success"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-success--BackgroundColor,
+    var(--pf-t--global--color--status--success--default,
+      light-dark(var(--pf-t--color--green--60, #3d7317), var(--pf-t--color--green--40, #87bb62))));
+  --_color: var(--pf-v6-c-banner--m-success--Color,
+    var(--pf-t--global--text--color--status--on-success--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #1f1f1f))));
+}
+
+:host([status="warning"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-warning--BackgroundColor,
+    var(--pf-t--global--color--status--warning--default,
+      light-dark(var(--pf-t--color--yellow--30, #ffcc17), var(--pf-t--color--yellow--30, #ffcc17))));
+  --_color: var(--pf-v6-c-banner--m-warning--Color,
+    var(--pf-t--global--text--color--status--on-warning--default,
+      light-dark(var(--pf-t--color--gray--100, #151515), var(--pf-t--color--gray--100, #1f1f1f))));
+}
+
+:host([status="info"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-info--BackgroundColor,
+    var(--pf-t--global--color--status--info--default,
+      light-dark(var(--pf-t--color--purple--50, #5e40be), var(--pf-t--color--purple--30, #b6a6e9))));
+  --_color: var(--pf-v6-c-banner--m-info--Color,
+    var(--pf-t--global--text--color--status--on-info--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #1f1f1f))));
+}
+
+:host([status="custom"]) #container {
+  --_bg: var(--pf-v6-c-banner--m-custom--BackgroundColor,
+    var(--pf-t--global--color--status--custom--default,
+      light-dark(var(--pf-t--color--teal--60, #147878), var(--pf-t--color--teal--40, #63bdbd))));
+  --_color: var(--pf-v6-c-banner--m-custom--Color,
+    var(--pf-t--global--text--color--status--on-custom--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #1f1f1f))));
+}
+
+::slotted(a) {
+  color: inherit;
+  text-decoration-line: underline;
+}
+
+

@@ -1,0 +1,17 @@
+---
+name: Relative format
+description: >
+  To display relative time (e.g. "3 years ago"), set the relative attribute.
+---
+<section>
+  <p><pf-v6-timestamp date="Tue Aug 09 2006 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date="Tue Aug 09 2006 14:57:00 GMT-0400 (Eastern Daylight Time)" locale="es" relative></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date="Tue Aug 09 2022 14:57:00 GMT-0400 (Eastern Daylight Time)" locale="es" relative></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date="Tue Aug 09 2099 14:57:00 GMT-0400 (Eastern Daylight Time)" relative></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date="Tue Aug 09 2099 14:57:00 GMT-0400 (Eastern Daylight Time)" locale="es" relative></pf-v6-timestamp></p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+</script>

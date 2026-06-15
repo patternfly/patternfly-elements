@@ -122,7 +122,7 @@ button#outer span {
   inset-block-start: 0.125em;
 }
 
-::slotted(pf-v5-badge) {
+::slotted(pf-v6-badge) {
   font-size: var(--pf-global--FontSize--xs, 12px);
   margin: 0 0 0 var(--pf-global--spacer--xs, 0.25rem) !important;
   min-width: unset;

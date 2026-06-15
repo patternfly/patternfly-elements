@@ -216,7 +216,7 @@ export class PfV5Select extends LitElement {
               <span id="toggle-text"
                     class="${classMap({ 'visually-hidden': !!typeahead, badge })}">${this.#buttonLabel}</span>${!hasBadge ? '' : html`
               <span id="toggle-badge">
-                <pf-v5-badge number="${selectedOptions.length}">${selectedOptions.length}</pf-v5-badge>
+                <pf-v6-badge number="${selectedOptions.length}">${selectedOptions.length}</pf-v6-badge>
               </span>`}
             </span>
             <svg viewBox="0 0 320 512"
@@ -289,7 +289,7 @@ export class PfV5Select extends LitElement {
     this.#combobox.multi = this.variant === 'typeaheadmulti' || this.variant === 'checkbox';
     this.#combobox.hostConnected();
     if (this.variant === 'checkbox') {
-      import('@patternfly/elements/pf-v5-badge/pf-v5-badge.js');
+      import('@patternfly/elements/pf-v6-badge/pf-v6-badge.js');
     }
   }
 

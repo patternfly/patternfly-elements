@@ -105,6 +105,7 @@ core/pfe-core/demo/*
 
 # AI
 .claude/settings.local.json
+.claude/worktrees
 
 # Temp files
 *~

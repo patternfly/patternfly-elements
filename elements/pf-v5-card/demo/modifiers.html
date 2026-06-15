@@ -1,21 +1,21 @@
 <section>
   <form id="card-settings">
-    <pf-v5-switch id="flat" data-attribute="flat"></pf-v5-switch>
+    <pf-v6-switch id="flat" data-attribute="flat"></pf-v6-switch>
     <label for="flat">Flat</label>
 
-    <pf-v5-switch id="rounded" data-attribute="rounded"></pf-v5-switch>
+    <pf-v6-switch id="rounded" data-attribute="rounded"></pf-v6-switch>
     <label for="rounded">Rounded</label>
 
-    <pf-v5-switch id="plain" data-attribute="plain"></pf-v5-switch>
+    <pf-v6-switch id="plain" data-attribute="plain"></pf-v6-switch>
     <label for="plain">Plain</label>
 
-    <pf-v5-switch id="full-height" data-attribute="full-height"></pf-v5-switch>
+    <pf-v6-switch id="full-height" data-attribute="full-height"></pf-v6-switch>
     <label for="full-height">Full Height</label>
 
-    <pf-v5-switch id="size-compact" data-attribute="size" data-value="compact"></pf-v5-switch>
+    <pf-v6-switch id="size-compact" data-attribute="size" data-value="compact"></pf-v6-switch>
     <label for="size-compact">Compact</label>
 
-    <pf-v5-switch id="size-large" data-attribute="size" data-value="large"></pf-v5-switch>
+    <pf-v6-switch id="size-large" data-attribute="size" data-value="large"></pf-v6-switch>
     <label for="size-large">Large</label>
   </form>
 
@@ -32,13 +32,13 @@
 <script type="module">
   import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
   import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
-  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
 
   const form = document.getElementById('card-settings');
   const card = document.querySelector('pf-v5-card');
 
   form.addEventListener('change', async function(event) {
-    await Promise.all(Array.from(document.querySelectorAll('pf-v5-switch'), x => x.updateComplete));
+    await Promise.all(Array.from(document.querySelectorAll('pf-v6-switch'), x => x.updateComplete));
     const { checked } = event.target;
     const { attribute, value } = event.target.dataset;
     switch (attribute) {

@@ -9,9 +9,27 @@ import styles from './pf-v6-spinner.css';
 export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /**
- * A **spinner** is an animated visual that indicates when a quick action is
- * in progress. For actions that may take a long time, use a progress bar instead.
- * @summary Indicates that an action is in progress.
+ * A **spinner** provides an animated indicator for in-progress actions.
+ * Authors SHOULD set `accessible-label` when the default "Loading..." is
+ * insufficient. For long-running operations, use a progress bar instead.
+ * Respects `prefers-reduced-motion` by disabling animation.
+ *
+ * @summary Indicates that an action is in progress
+ *
+ * @cssprop {<length>} --pf-v6-c-spinner--diameter - Spinner diameter (overrides `size` attribute)
+ * @cssprop {<length>} --pf-v6-c-spinner--Width - Spinner width
+ * @cssprop {<length>} --pf-v6-c-spinner--Height - Spinner height
+ * @cssprop {<color>} --pf-v6-c-spinner--Color - Spinner stroke color
+ * @cssprop {<length>} --pf-v6-c-spinner--StrokeWidth - Spinner stroke width
+ * @cssprop {<time>} --pf-v6-c-spinner--AnimationDuration - Duration of one animation cycle
+ * @cssprop --pf-v6-c-spinner--AnimationTimingFunction - Animation timing function for rotation
+ * @cssprop --pf-v6-c-spinner__path--AnimationTimingFunction - Animation timing function for dash
+ * @cssprop {<length>} --pf-v6-c-spinner--m-xs--diameter - Diameter when size is xs
+ * @cssprop {<length>} --pf-v6-c-spinner--m-sm--diameter - Diameter when size is sm
+ * @cssprop {<length>} --pf-v6-c-spinner--m-md--diameter - Diameter when size is md
+ * @cssprop {<length>} --pf-v6-c-spinner--m-lg--diameter - Diameter when size is lg
+ * @cssprop {<length>} --pf-v6-c-spinner--m-xl--diameter - Diameter when size is xl
+ * @cssprop {<length>} --pf-v6-c-spinner--m-inline--diameter - Diameter when inline (defaults to 1em)
  */
 @customElement('pf-v6-spinner')
 export class PfV6Spinner extends LitElement {

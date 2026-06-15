@@ -1,0 +1,41 @@
+---
+name: Nested in label
+description: A switch can be nested inside a label element for form association.
+---
+<form>
+  <fieldset>
+    <legend>Settings</legend>
+    <label>
+      <span>Dark Mode</span>
+      <pf-v6-switch id="dark-mode" name="darkMode"></pf-v6-switch>
+    </label>
+  </fieldset>
+  <button type="submit">Submit</button>
+  <output></output>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+  document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    document.querySelector('output').textContent =
+      JSON.stringify(Object.fromEntries(data), null, 2);
+  });
+</script>
+
+<style>
+  fieldset {
+    display: grid;
+    gap: 1rem;
+    border: none;
+    padding: 0;
+  }
+
+  label {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

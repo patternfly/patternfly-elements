@@ -1,6 +1,6 @@
 <header>
   <h2>Toggle Container Width</h2>
-  <pf-v5-switch id="width-toggle"></pf-v5-switch>
+  <pf-v6-switch id="width-toggle"></pf-v6-switch>
   <label for="width-toggle" data-state="off">Full width</label>
   <label for="width-toggle" data-state="on">Narrow</label>
 </header>
@@ -20,7 +20,7 @@
 </section>
 
 <script type="module">
-  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
   import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
   document.getElementById('width-toggle').addEventListener('change', function(event) {
     document.querySelector('[data-demo]').classList.toggle('narrow', event.target.checked);

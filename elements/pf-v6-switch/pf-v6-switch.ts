@@ -15,9 +15,50 @@ import styles from './pf-v6-switch.css';
  *
  * @summary Toggle control for on/off settings
  *
+ * @slot - Label text displayed beside the switch toggle
+ *
  * @fires {Event} change - Fires when the switch is toggled. Uses the native
  *        `Event` interface with no custom detail payload.
  *        Cancelable: call `preventDefault()` to reject the state change.
+ *
+ * @cssprop {<length>} --pf-v6-c-switch--ColumnGap - Gap between toggle and label {@default 0.5rem}
+ * @cssprop {<length>} --pf-v6-c-switch--FontSize - Switch font size {@default 0.875rem}
+ * @cssprop {<number>} --pf-v6-c-switch--LineHeight - Switch line height {@default 1.5}
+ * @cssprop {<length>} --pf-v6-c-switch--Height - Switch container height {@default auto}
+ * @cssprop {<color>} --pf-v6-c-switch__toggle--BackgroundColor - Toggle track background color (unchecked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--checked__toggle--BackgroundColor - Toggle track background color (checked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--disabled__toggle--BackgroundColor - Toggle track background color (disabled)
+ * @cssprop {<color>} --pf-v6-c-switch__input--not-checked__toggle--before--BackgroundColor - Knob color (unchecked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--checked__toggle--before--BackgroundColor - Knob color (checked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--disabled__toggle--before--BackgroundColor - Knob color (disabled)
+ * @cssprop {<color>} --pf-v6-c-switch__toggle-icon--Color - Check icon color
+ * @cssprop {<color>} --pf-v6-c-switch__input--not-checked__label--Color - Label color (unchecked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--checked__label--Color - Label color (checked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--disabled__label--Color - Label color (disabled)
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--BorderRadius - Toggle track border radius
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--Width - Toggle track width
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--Height - Toggle track height
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--before--Width - Knob width
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--before--Height - Knob height
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--before--BorderRadius - Knob border radius
+ * @cssprop {<color>} --pf-v6-c-switch__input--focus__toggle--OutlineColor - Focus outline color
+ * @cssprop {<length>} --pf-v6-c-switch__input--focus__toggle--OutlineWidth - Focus outline width
+ * @cssprop {<length>} --pf-v6-c-switch__input--focus__toggle--OutlineOffset - Focus outline offset
+ * @cssprop {<length>} --pf-v6-c-switch__toggle-icon--Offset - Offset used in knob and track sizing calculations
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--before--BorderWidth - Knob border width (high-contrast mode)
+ * @cssprop --pf-v6-c-switch__toggle--before--Transition - Knob transition shorthand
+ * @cssprop --pf-v6-c-switch__toggle--before--TransitionTimingFunction - Knob transition timing function
+ * @cssprop {<time>} --pf-v6-c-switch__toggle--before--TransitionDuration - Knob transition duration
+ * @cssprop {<length>} --pf-v6-c-switch__input--checked__toggle--before--TranslateX - Knob translate distance when checked
+ * @cssprop {<color>} --pf-v6-c-switch__input--disabled__toggle--BorderColor - Toggle border color (disabled)
+ * @cssprop {<length>} --pf-v6-c-switch__input--checked__toggle--BorderWidth - Toggle border width (checked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--checked__toggle--BorderColor - Toggle border color (checked)
+ * @cssprop {<color>} --pf-v6-c-switch__input--disabled__toggle-icon--Color - Check icon color (disabled)
+ * @cssprop {<length>} --pf-v6-c-switch__toggle-icon--FontSize - Check icon font size
+ * @cssprop {<length>} --pf-v6-c-switch__toggle-icon--InsetInlineStart - Check icon horizontal position
+ * @cssprop {<color>} --pf-v6-c-switch__toggle--BorderColor - Toggle border color (unchecked)
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--BorderWidth - Toggle border width (unchecked)
+ * @cssprop {<length>} --pf-v6-c-switch__toggle--before--InsetInlineStart - Knob horizontal offset (unchecked)
  */
 @customElement('pf-v6-switch')
 export class PfV6Switch extends LitElement {
@@ -115,8 +156,7 @@ export class PfV6Switch extends LitElement {
       <span id="label"
             class="${this.#classes}"
             ?hidden=${this.#slots.isEmpty()}>
-        <!-- summary: Label text displayed beside the switch toggle -->
-        <slot></slot>
+<slot></slot>
       </span>
     `;
   }

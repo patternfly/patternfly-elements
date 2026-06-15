@@ -94,8 +94,7 @@ export class PfV6BackToTop extends LitElement {
            ?hidden="${!this.#visible}"
            tabindex="${this.#visible ? 0 : -1}"
            aria-label="${ifDefined(ariaLabel)}">
-          <!-- summary: Button or link text content -->
-          <slot @slotchange="${this.#onSlotchange}">Back to top</slot>
+            <slot @slotchange="${this.#onSlotchange}">Back to top</slot>
           ${caretUpIcon}
         </a>
       `;
@@ -106,7 +105,6 @@ export class PfV6BackToTop extends LitElement {
               tabindex="${this.#visible ? 0 : -1}"
               aria-label="${ifDefined(ariaLabel)}"
               @click="${this.#onClick}">
-        <!-- summary: Button or link text content -->
         <slot @slotchange="${this.#onSlotchange}">Back to top</slot>
         ${caretUpIcon}
       </button>

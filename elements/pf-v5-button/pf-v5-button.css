@@ -308,7 +308,7 @@ pf-v5-icon,
   }
   &.primary:not(.plain),
   &.danger {
-    --pf-v5-c-spinner--Color: white;
+    --pf-v6-c-spinner--Color: white;
   }
   &:not(.plain) {
     padding-left: calc(12px + var(--pf-v5-c-button--PaddingLeft, var(--pf-global--spacer--md, 1rem)));

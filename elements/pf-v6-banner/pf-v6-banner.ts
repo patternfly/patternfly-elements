@@ -36,6 +36,45 @@ export type BannerStatus =
  * remains focusable via Tab.
  *
  * @summary Provides a full-width banner for brief, non-dismissible messages.
+ *
+ * @slot - Banner message content (text, links, icons)
+ *
+ * @cssprop {<color>} --pf-v6-c-banner--BackgroundColor - Default banner background color
+ * @cssprop {<color>} --pf-v6-c-banner--Color - Default banner text color
+ * @cssprop {<length>} --pf-v6-c-banner--FontSize - Banner font size
+ * @cssprop {<length>} --pf-v6-c-banner--PaddingBlockStart - Block (vertical) padding
+ * @cssprop {<length>} --pf-v6-c-banner--PaddingInlineStart - Inline (horizontal) padding
+ * @cssprop {<length>} --pf-v6-c-banner--md--PaddingInlineStart - Inline padding at medium breakpoint
+ * @cssprop {<color>} --pf-v6-c-banner--BorderColor - Block border color (high-contrast mode)
+ * @cssprop {<length>} --pf-v6-c-banner--BorderWidth - Block border width (high-contrast mode)
+ * @cssprop {<integer>} --pf-v6-c-banner--m-sticky--ZIndex - Z-index when sticky
+ * @cssprop --pf-v6-c-banner--m-sticky--BoxShadow - Box shadow when sticky
+ * @cssprop {<color>} --pf-v6-c-banner--m-red--BackgroundColor - Red color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-red--Color - Red color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-orangered--BackgroundColor - Orangered color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-orangered--Color - Orangered color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-orange--BackgroundColor - Orange color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-orange--Color - Orange color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-yellow--BackgroundColor - Yellow color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-yellow--Color - Yellow color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-green--BackgroundColor - Green color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-green--Color - Green color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-teal--BackgroundColor - Teal color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-teal--Color - Teal color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-blue--BackgroundColor - Blue color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-blue--Color - Blue color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-purple--BackgroundColor - Purple color variant background
+ * @cssprop {<color>} --pf-v6-c-banner--m-purple--Color - Purple color variant text
+ * @cssprop {<color>} --pf-v6-c-banner--m-danger--BackgroundColor - Danger status background
+ * @cssprop {<color>} --pf-v6-c-banner--m-danger--Color - Danger status text
+ * @cssprop {<color>} --pf-v6-c-banner--m-success--BackgroundColor - Success status background
+ * @cssprop {<color>} --pf-v6-c-banner--m-success--Color - Success status text
+ * @cssprop {<color>} --pf-v6-c-banner--m-warning--BackgroundColor - Warning status background
+ * @cssprop {<color>} --pf-v6-c-banner--m-warning--Color - Warning status text
+ * @cssprop {<color>} --pf-v6-c-banner--m-info--BackgroundColor - Info status background
+ * @cssprop {<color>} --pf-v6-c-banner--m-info--Color - Info status text
+ * @cssprop {<color>} --pf-v6-c-banner--m-custom--BackgroundColor - Custom status background
+ * @cssprop {<color>} --pf-v6-c-banner--m-custom--Color - Custom status text
  */
 @customElement('pf-v6-banner')
 export class PfV6Banner extends LitElement {

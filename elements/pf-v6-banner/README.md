@@ -33,5 +33,14 @@ A full-width banner for communicating short, non-dismissible messages.
 | React prop | Web component | Difference |
 |---|---|---|
 | `isSticky` | `sticky` attribute | Renamed; dropped `is` prefix |
+| `screenReaderText` | `accessible-label` attribute | Renamed for consistency with other PFE elements |
 | `color` + `status` mutual exclusion | Both accepted | React enforces via TypeScript union types (`color` and `status` cannot both be set). The web component accepts both; `status` takes visual precedence via CSS cascade. |
+
+## Migrating from `pf-v5-banner`
+
+| v5 API | v6 API | Notes |
+|---|---|---|
+| `variant` attribute (`default`, `info`, `warning`, `danger`, `success`) | `status` attribute (`success`, `warning`, `danger`, `info`, `custom`) | `variant` removed. Use `status` for semantic meaning or `color` for decorative colors. `default` variant maps to no attribute (gray). |
+| `icon` attribute (shorthand) | Slot an icon in the default slot | `icon` attribute removed. Use `<pf-v5-icon>` (or `<pf-v6-icon>` when available) as slotted content. |
+| `icon` slot (named) | Default slot | Icons are now part of the default slot content, not a separate named slot. |
 

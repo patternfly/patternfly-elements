@@ -48,16 +48,12 @@ export class PfV6Avatar extends LitElement {
   @property({ type: Boolean, reflect: true }) bordered = false;
 
   override render(): TemplateResult {
-    return this.src != null ? html`
-      <img id="img"
-           alt="${this.alt ?? ''}"
-           src=${this.src}
-           @load="${this.#onLoad}">
-    ` : html`
-      <svg id="placeholder"
-           aria-hidden="true"
-           xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 36 36">
+    const { alt, src } = this;
+    return html`
+      <img alt="${alt ?? ''}" src="${src}" ?hidden="${src == null}">
+      <svg viewBox="0 0 36 36"
+           role="presentation"
+           ?hidden="${src != null}">
         <rect width="36" height="36" fill="var(--_placeholder-bg)"/>
         <path d="M30.5 36c-.4-3.9-1.3-9-2.9-11-1.1-1.4-2.3-2.2-3.5-2.6s-1.8-.6-6.3-.6-6.1.7-6.1.7c-1.2.4-2.4 1.2-3.4 2.6C6.7 27 5.8 32.2 5.4 36h25.1zM17.7 20.1c-3.5 0-6.4-2.9-6.4-6.4s2.9-6.4 6.4-6.4 6.4 2.9 6.4 6.4-2.8 6.4-6.4 6.4z"
               fill="var(--_placeholder-fg)"/>

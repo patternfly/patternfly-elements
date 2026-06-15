@@ -1,0 +1,21 @@
+---
+name: Helper text
+description: Helper text below the progress bar is automatically associated via aria-describedby. Use it for status messages or error details.
+---
+<pf-v6-progress value="33" description="Uploading">
+  <pf-v5-helper-text slot="helper-text">Uploading 3 of 9 files</pf-v5-helper-text>
+</pf-v6-progress>
+
+<br>
+
+<pf-v6-progress value="75"
+                description="Creating common projects"
+                accessible-label="Creating common projects"
+                variant="danger">
+  <pf-v5-helper-text slot="helper-text" variant="error">Failed to create common projects. 2 errors, 3 succeeded.</pf-v5-helper-text>
+</pf-v6-progress>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-progress/pf-v6-progress.js';
+  import '@patternfly/elements/pf-v5-helper-text/pf-v5-helper-text.js';
+</script>

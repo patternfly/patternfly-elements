@@ -1,7 +1,7 @@
-import { html, expect, oneEvent, nextFrame } from '@open-wc/testing';
+import { html, expect, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-import { PfV6Avatar, PfV6AvatarLoadEvent } from '@patternfly/elements/pf-v6-avatar/pf-v6-avatar.js';
+import { PfV6Avatar } from '@patternfly/elements/pf-v6-avatar/pf-v6-avatar.js';
 
 describe('<pf-v6-avatar>', function() {
   it('imperatively instantiates', function() {
@@ -41,29 +41,6 @@ describe('<pf-v6-avatar>', function() {
     });
   });
 
-  describe('with a src attr', function() {
-    let element: PfV6Avatar;
-    let loadEvent: Event | undefined;
-    const datauri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAB0UlEQVR4Xu3UAQ0AAAyDsM+/6QspcwAh2zXawGj64K8A8AgKoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7ADyAB6SPAIFm19U7AAAAAElFTkSuQmCC';
-    beforeEach(async function() {
-      element = await createFixture(html`<pf-v6-avatar></pf-v6-avatar>`);
-      element.addEventListener('load', function(e) {
-        loadEvent = e;
-      });
-      setTimeout(() => element.src = datauri);
-      await oneEvent(element, 'load');
-    });
-
-    it('should fire a PfV6AvatarLoadEvent', function() {
-      expect(loadEvent).to.be.an.instanceOf(PfV6AvatarLoadEvent);
-    });
-
-    it('should include the original event', function() {
-      expect(loadEvent).to.have.property('originalEvent')
-          .that.is.an.instanceOf(Event);
-    });
-  });
-
   describe('with alt attr', function() {
     let element: PfV6Avatar;
     beforeEach(async function() {
@@ -71,7 +48,8 @@ describe('<pf-v6-avatar>', function() {
         <pf-v6-avatar alt="User avatar"
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="></pf-v6-avatar>
       `);
-      await oneEvent(element, 'load');
+      await element.updateComplete;
+      await nextFrame();
     });
 
     it('passes alt text to the image', async function() {

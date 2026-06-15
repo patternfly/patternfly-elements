@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 :host {
   display: block;
   position: absolute;
@@ -12,6 +8,7 @@
 }
 
 #trigger {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: baseline;
   justify-content: center;

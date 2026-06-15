@@ -2,7 +2,7 @@ import '@rhds/elements/rh-footer/rh-footer-universal.js';
 import { PfV5Icon } from '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 import '@patternfly/elements/pf-v5-accordion/pf-v5-accordion.js';
 import '@patternfly/elements/pf-v5-alert/pf-v5-alert.js';
-import '@patternfly/elements/pf-v5-avatar/pf-v5-avatar.js';
+import '@patternfly/elements/pf-v6-avatar/pf-v6-avatar.js';
 import '@patternfly/elements/pf-v5-back-to-top/pf-v5-back-to-top.js';
 import '@patternfly/elements/pf-v6-background-image/pf-v6-background-image.js';
 import '@patternfly/elements/pf-v6-badge/pf-v6-badge.js';
@@ -26,13 +26,13 @@ import '@patternfly/elements/pf-v5-progress-stepper/pf-v5-progress-stepper.js';
 import '@patternfly/elements/pf-v5-search-input/pf-v5-search-input.js';
 import '@patternfly/elements/pf-v5-select/pf-v5-select.js';
 import '@patternfly/elements/pf-v5-spinner/pf-v5-spinner.js';
-import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
 import '@patternfly/elements/pf-v5-table/pf-v5-table.js';
 import '@patternfly/elements/pf-v5-tabs/pf-v5-tabs.js';
 import '@patternfly/elements/pf-v5-text-area/pf-v5-text-area.js';
 import '@patternfly/elements/pf-v5-text-input/pf-v5-text-input.js';
 import '@patternfly/elements/pf-v5-tile/pf-v5-tile.js';
-import '@patternfly/elements/pf-v5-timestamp/pf-v5-timestamp.js';
+import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
 import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
 
 // if `/v2/` path load icons from static directory

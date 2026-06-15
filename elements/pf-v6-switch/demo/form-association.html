@@ -1,0 +1,27 @@
+---
+name: Form association
+description: A switch can participate in forms. It submits "on" when checked and is omitted when unchecked. Use the reset button to restore the initial state.
+---
+<form id="settings-form">
+  <pf-v6-switch name="notifications" checked value="im-on">Notifications</pf-v6-switch>
+  <br><br>
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+  <pre id="output"></pre>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+
+  const form = document.getElementById('settings-form');
+  const output = document.getElementById('output');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const data = new FormData(form);
+    const entries = [...data.entries()];
+    output.textContent = entries.length
+        ? entries.map(([k, v]) => `${k}=${v}`).join('\n')
+        : '(no values submitted)';
+  });
+</script>

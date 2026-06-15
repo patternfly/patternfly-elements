@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  position: absolute;
+  /** Vertical offset from the block-end edge of the containing block. Maps to the design system's spacing scale for consistent component placement. */
+  inset-block-end: var(--pf-v6-c-back-to-top--InsetBlockEnd, 1.5rem);
+  /** Horizontal offset from the inline-end edge of the containing block. Uses the design system's spacing scale. */
+  inset-inline-end: var(--pf-v6-c-back-to-top--InsetInlineEnd, 3rem);
+}
+
+#trigger {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+  text-decoration: none;
+  /** Design system body font family. */
+  font-family: var(--pf-t--global--font--family--body, 'Red Hat Text', RedHatText, Helvetica, Arial, sans-serif);
+  /** Design system default body font weight. */
+  font-weight: var(--pf-t--global--font--weight--body--default, 400);
+  /** Font size of the trigger text. Uses a smaller size from the design system's type scale for unobtrusive labeling. */
+  font-size: var(--pf-v6-c-back-to-top--c-button--FontSize, 0.75rem);
+  /** Design system body line height. */
+  line-height: var(--pf-t--global--font--line-height--body, 1.5);
+  /** Design system pill border radius for fully rounded edges. */
+  border-radius: var(--pf-t--global--border--radius--pill, 999px);
+  /** Block-start padding of the trigger. Controls vertical spacing above text content. */
+  padding-block-start: var(--pf-v6-c-back-to-top--c-button--PaddingBlockStart, 0.25rem);
+  /** Inline-end padding of the trigger. Controls horizontal spacing after text content. */
+  padding-inline-end: var(--pf-v6-c-back-to-top--c-button--PaddingInlineEnd, 0.5rem);
+  /** Block-end padding of the trigger. Controls vertical spacing below text content. */
+  padding-block-end: var(--pf-v6-c-back-to-top--c-button--PaddingBlockEnd, 0.25rem);
+  /** Inline-start padding of the trigger. Controls horizontal spacing before text content. */
+  padding-inline-start: var(--pf-v6-c-back-to-top--c-button--PaddingInlineStart, 0.5rem);
+  /** Design system action-to-action gap spacing between text and icon. */
+  gap: var(--pf-t--global--spacer--gap--action-to-action--default, 0.5rem);
+  /** Box shadow of the trigger. Uses the design system's small elevation token to lift the button above page content. */
+  box-shadow: var(--pf-v6-c-back-to-top--c-button--BoxShadow,
+    /** Design system small box shadow for subtle elevation. */
+    var(--pf-t--global--box-shadow--sm, 0 1px 4px 0 rgba(41, 41, 41, 0.15)));
+  /** Design system text color for content on brand-colored surfaces. */
+  color: var(--pf-t--global--text--color--on-brand--default, #1f1f1f);
+  /** Design system brand color for the trigger background. */
+  background-color: var(--pf-t--global--color--brand--default, #92c5f9);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:hover {
+    /** Design system hover text color on brand surfaces. */
+    color: var(--pf-t--global--text--color--on-brand--hover, #1f1f1f);
+    /** Design system hover brand color. */
+    background-color: var(--pf-t--global--color--brand--hover, #b9dafc);
+  }
+
+  &:active {
+    /** Design system active/clicked text color on brand surfaces. */
+    color: var(--pf-t--global--text--color--on-brand--clicked, #1f1f1f);
+    /** Design system active/clicked brand color. */
+    background-color: var(--pf-t--global--color--brand--clicked, #e0f0ff);
+  }
+
+  &:focus-visible {
+    outline:
+      /** Design system focus ring border width for interactive elements. */
+      var(--pf-t--global--border--width--action--focus, 2px) solid
+      /** Design system focus ring color for WCAG-compliant keyboard focus indication. */
+      var(--pf-t--global--focus-ring--color--100, #0066cc);
+    /** Design system focus ring gap between the element and its outline. */
+    outline-offset: var(--pf-t--global--spacer--focus-ring--gap, 2px);
+  }
+}
+
+svg {
+  vertical-align: -0.125rem;
+}
+
+@media (min-width: 768px) {
+  :host {
+    /** Vertical offset at medium (768px+) breakpoint. Provides more spacing on larger viewports per the design system's responsive spacing scale. */
+    inset-block-end: var(--pf-v6-c-back-to-top--md--InsetBlockEnd, 3rem);
+  }
+}

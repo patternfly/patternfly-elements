@@ -1,0 +1,20 @@
+---
+name: Hour cycle
+description: >
+  Control hour display with the hour-cycle attribute. Values follow the
+  Intl.DateTimeFormat spec: h12 (12-hour, 1-12), h11 (12-hour, 0-11),
+  h23 (24-hour, 0-23), h24 (24-hour, 1-24). When absent, the locale
+  default is used. This replaces React's boolean is12Hour with a richer
+  set of options.
+---
+<section>
+  <p>Locale default: <pf-v6-timestamp time-format="medium"></pf-v6-timestamp></p>
+  <p>12-hour (h12): <pf-v6-timestamp time-format="medium" hour-cycle="h12"></pf-v6-timestamp></p>
+  <p>24-hour (h23): <pf-v6-timestamp time-format="medium" hour-cycle="h23"></pf-v6-timestamp></p>
+  <p>en-GB with h12: <pf-v6-timestamp time-format="medium" locale="en-GB" hour-cycle="h12"></pf-v6-timestamp></p>
+  <p>en-US with h23: <pf-v6-timestamp time-format="medium" locale="en-US" hour-cycle="h23"></pf-v6-timestamp></p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+</script>

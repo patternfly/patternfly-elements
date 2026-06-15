@@ -1,0 +1,58 @@
+---
+name: Interactive status icon and measure location
+description: Demonstrates how variant status icons and measure location interact. Use the controls to toggle options.
+---
+<form id="controls">
+  <fieldset>
+    <legend>Measure location</legend>
+    <label><input type="radio" name="measure" value="inside" checked> Inside</label>
+    <label><input type="radio" name="measure" value="outside"> Outside</label>
+    <label><input type="radio" name="measure" value="top"> Top</label>
+    <label><input type="radio" name="measure" value="none"> None</label>
+  </fieldset>
+  <label>
+    <input type="checkbox" id="hide-icon"> Hide status icon
+  </label>
+</form>
+
+<pf-v6-progress id="demo-progress"
+                value="33"
+                description="Title"
+                variant="danger"
+                measure-location="inside"
+                size="lg"></pf-v6-progress>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-progress/pf-v6-progress.js';
+
+  const progress = document.getElementById('demo-progress');
+
+  document.querySelectorAll('input[name="measure"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const value = this.value;
+      if (value === 'top') {
+        progress.removeAttribute('measure-location');
+      } else {
+        progress.measureLocation = value;
+      }
+    });
+  });
+
+  document.getElementById('hide-icon').addEventListener('change', function() {
+    progress.hideStatusIcon = this.checked;
+  });
+</script>
+
+<style>
+  #controls {
+    margin-block-end: 1rem;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    margin-block-end: 0.5rem;
+  }
+</style>

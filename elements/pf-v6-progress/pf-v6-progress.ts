@@ -1,5 +1,5 @@
 import type { TemplateResult } from 'lit';
-import { LitElement, html, nothing, isServer } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -92,13 +92,6 @@ export class PfV6Progress extends LitElement {
   /** Custom text for aria-valuetext, used for finite step and step instruction displays */
   @property({ attribute: 'value-text' }) valueText?: string;
 
-  /** Space-separated ID(s) of elements that label this progress bar. Resolves cross-root aria-labelledby via ElementInternals. */
-  @property({ attribute: 'accessible-labelledby' }) accessibleLabelledby?: string;
-
-  /** Space-separated ID(s) of elements that describe this progress bar. Resolves cross-root aria-describedby via ElementInternals. */
-  @property({ attribute: 'accessible-describedby' }) accessibleDescribedby?: string;
-
-
   #internals = InternalsController.of(this, { role: 'progressbar' });
 
   #slots = new SlotController(this, 'helper-text');
@@ -137,28 +130,19 @@ export class PfV6Progress extends LitElement {
     this.#internals.ariaValueText = this.valueText ?? null;
   }
 
-  @observes('accessibleLabelledby', { waitFor: 'connected' })
-  private _updateAriaLabelledBy() {
-    if (!isServer && this.accessibleLabelledby) {
-      const elements = this.accessibleLabelledby.trim().split(/\s+/)
-          .map(id => document.getElementById(id))
-          .filter((el): el is HTMLElement => el != null);
-      this.#internals.ariaLabelledByElements = elements.length ? elements : null;
-    } else {
-      this.#internals.ariaLabelledByElements = null;
-    }
+  #updateHelperTextDescribedBy(
+    slot = this.shadowRoot?.getElementById('helper-text-slot') as HTMLSlotElement,
+  ) {
+    const elements = slot?.assignedElements() ?? [];
+    this.#internals.ariaDescribedByElements = elements.length ? elements : null;
   }
 
-  @observes('accessibleDescribedby', { waitFor: 'connected' })
-  private _updateAriaDescribedBy() {
-    if (!isServer && this.accessibleDescribedby) {
-      const elements = this.accessibleDescribedby.trim().split(/\s+/)
-          .map(id => document.getElementById(id))
-          .filter((el): el is HTMLElement => el != null);
-      this.#internals.ariaDescribedByElements = elements.length ? elements : null;
-    } else {
-      this.#internals.ariaDescribedByElements = null;
-    }
+  #onHelperTextSlotchange(event: Event) {
+    this.#updateHelperTextDescribedBy(event.target as HTMLSlotElement);
+  }
+
+  override firstUpdated(): void {
+    this.#updateHelperTextDescribedBy();
   }
 
   @observes('accessibleLabel', { waitFor: 'connected' })
@@ -207,7 +191,7 @@ export class PfV6Progress extends LitElement {
 
         <div id="helper-text" ?hidden="${this.#slots.isEmpty('helper-text')}">
           <!-- summary: Supplementary text below the progress bar -->
-          <slot name="helper-text"></slot>
+          <slot id="helper-text-slot" name="helper-text" @slotchange="${this.#onHelperTextSlotchange}"></slot>
         </div>
       </div>
     `;

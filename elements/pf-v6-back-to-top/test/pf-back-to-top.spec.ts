@@ -4,44 +4,44 @@ import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 import { allUpdates } from '@patternfly/pfe-tools/test/utils.js';
 
-import { PfV5BackToTop } from '../pf-v5-back-to-top.js';
+import { PfV6BackToTop } from '../pf-v6-back-to-top.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
-describe('<pf-v5-back-to-top>', function() {
+describe('<pf-v6-back-to-top>', function() {
   it('imperatively instantiates', function() {
-    expect(document.createElement('pf-v5-back-to-top')).to.be.an.instanceof(PfV5BackToTop);
+    expect(document.createElement('pf-v6-back-to-top')).to.be.an.instanceof(PfV6BackToTop);
   });
 
   describe('simply instantiating', function() {
-    let element: PfV5BackToTop;
+    let element: PfV6BackToTop;
 
     beforeEach(async function() {
-      element = await createFixture<PfV5BackToTop>(html`<pf-v5-back-to-top></pf-v5-back-to-top>`);
+      element = await createFixture<PfV6BackToTop>(html`<pf-v6-back-to-top></pf-v6-back-to-top>`);
     });
 
     it('should upgrade', function() {
-      const klass = customElements.get('pf-v5-back-to-top');
+      const klass = customElements.get('pf-v6-back-to-top');
       expect(element)
           .to.be.an.instanceOf(klass)
           .and
-          .to.be.an.instanceOf(PfV5BackToTop);
+          .to.be.an.instanceOf(PfV6BackToTop);
     });
   });
 
-  describe('when rendered in a viewport with a height smaller then content length', function() {
-    let element: PfV5BackToTop;
+  describe('with href (link mode)', function() {
+    let element: PfV6BackToTop;
 
     beforeEach(async function() {
       await setViewport({ width: 320, height: 640 });
       window.scrollTo({ top: 0, behavior: 'instant' });
       await nextFrame();
-      const container = await createFixture<PfV5BackToTop>(html`
+      const container = await createFixture<PfV6BackToTop>(html`
         <div id="top">
           <div style="height: 2000px;"></div>
-          <pf-v5-back-to-top href="#top">Back to top</pf-v5-back-to-top>
+          <pf-v6-back-to-top href="#top">Back to top</pf-v6-back-to-top>
         </div>
       `);
-      element = container.querySelector('pf-v5-back-to-top')!;
+      element = container.querySelector('pf-v6-back-to-top')!;
       await allUpdates(element);
     });
 
@@ -50,7 +50,7 @@ describe('<pf-v5-back-to-top>', function() {
       expect(snapshot).to.not.axContainRole('link');
     });
 
-    it('should not be accessible', async function() {
+    it('should not be accessible when hidden', async function() {
       const snapshot = await a11ySnapshot();
       expect(snapshot).to.not.axContainName('Back to top');
     });
@@ -62,7 +62,7 @@ describe('<pf-v5-back-to-top>', function() {
         await allUpdates(element);
       });
 
-      it('should be visible', async function() {
+      it('should be visible as a link', async function() {
         expect(await a11ySnapshot())
             .to.axContainQuery({ role: 'link', name: 'Back to top' });
       });
@@ -84,7 +84,7 @@ describe('<pf-v5-back-to-top>', function() {
       });
     });
 
-    describe('when the always visible property is true', function() {
+    describe('when always-visible is true', function() {
       beforeEach(async function() {
         window.scrollTo({ top: 0, behavior: 'instant' });
         await nextFrame();
@@ -112,50 +112,66 @@ describe('<pf-v5-back-to-top>', function() {
         });
       });
     });
-
-    describe('when the scroll distance is set to 1000', function() {
-      beforeEach(async function() {
-        element.scrollDistance = 1000;
-        await allUpdates(element);
-      });
-
-      it('should be hidden', async function() {
-        expect(await a11ySnapshot()).to.not.axContainRole('link');
-      });
-
-      describe('when scrolled 1001px', function() {
-        beforeEach(async function() {
-          window.scrollTo({ top: 1001, behavior: 'instant' });
-          await nextFrame();
-          await allUpdates(element);
-        });
-
-        it('should be visible', async function() {
-          expect(await a11ySnapshot())
-              .to.axContainQuery({ role: 'link', name: 'Back to top' });
-        });
-      });
-    });
   });
 
-  describe('when rendered in an element with an overflowed height', function() {
-    let element: PfV5BackToTop;
+  describe('without href (button mode)', function() {
+    let element: PfV6BackToTop;
 
     beforeEach(async function() {
+      await setViewport({ width: 320, height: 640 });
       window.scrollTo({ top: 0, behavior: 'instant' });
       await nextFrame();
-      const container = await createFixture<PfV5BackToTop>(html`
-        <div id="top" style="height: 500px; overflow-y: scroll;">
+      const container = await createFixture<PfV6BackToTop>(html`
+        <div id="top">
           <div style="height: 2000px;"></div>
-          <pf-v5-back-to-top href="#top" scrollable-selector="#top">Back to top</pf-v5-back-to-top>
+          <pf-v6-back-to-top>Back to top</pf-v6-back-to-top>
         </div>
       `);
-      element = container.querySelector('pf-v5-back-to-top')!;
+      element = container.querySelector('pf-v6-back-to-top')!;
       await allUpdates(element);
     });
 
     it('should be hidden on init', async function() {
-      const snapshot = await a11ySnapshot({ selector: 'pf-v5-back-to-top' });
+      const snapshot = await a11ySnapshot();
+      expect(snapshot).to.not.axContainRole('button');
+    });
+
+    describe('when scrolled 401px', function() {
+      beforeEach(async function() {
+        window.scrollTo({ top: 401, behavior: 'instant' });
+        await nextFrame();
+        await allUpdates(element);
+      });
+
+      it('should be visible as a button', async function() {
+        expect(await a11ySnapshot())
+            .to.axContainQuery({ role: 'button', name: 'Back to top' });
+      });
+
+      it('should be accessible', async function() {
+        await expect(element).to.be.accessible();
+      });
+    });
+  });
+
+  describe('in an overflowed container with scrollable-selector', function() {
+    let element: PfV6BackToTop;
+
+    beforeEach(async function() {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      await nextFrame();
+      const container = await createFixture<PfV6BackToTop>(html`
+        <div id="top" style="height: 500px; overflow-y: scroll;">
+          <div style="height: 2000px;"></div>
+          <pf-v6-back-to-top href="#top" scrollable-selector="#top">Back to top</pf-v6-back-to-top>
+        </div>
+      `);
+      element = container.querySelector('pf-v6-back-to-top')!;
+      await allUpdates(element);
+    });
+
+    it('should be hidden on init', async function() {
+      const snapshot = await a11ySnapshot({ selector: 'pf-v6-back-to-top' });
       expect(snapshot?.children).to.not.be.ok;
     });
 
@@ -176,20 +192,20 @@ describe('<pf-v5-back-to-top>', function() {
   });
 
   describe('when no text is provided', function() {
-    let element: PfV5BackToTop;
-
     describe('as a link', function() {
+      let element: PfV6BackToTop;
+
       beforeEach(async function() {
         await setViewport({ width: 320, height: 640 });
         window.scrollTo({ top: 0, behavior: 'instant' });
         await nextFrame();
-        const container = await createFixture<PfV5BackToTop>(html`
+        const container = await createFixture<PfV6BackToTop>(html`
           <div id="top">
             <div style="height: 2000px;"></div>
-            <pf-v5-back-to-top href="#top"></pf-v5-back-to-top>
+            <pf-v6-back-to-top href="#top"></pf-v6-back-to-top>
           </div>
         `);
-        element = container.querySelector('pf-v5-back-to-top')!;
+        element = container.querySelector('pf-v6-back-to-top')!;
         await allUpdates(element);
       });
 
@@ -200,7 +216,7 @@ describe('<pf-v5-back-to-top>', function() {
           await allUpdates(element);
         });
 
-        it('should have a label of "Back to top"', async function() {
+        it('should have a default accessible label of "Back to top"', async function() {
           expect(await a11ySnapshot())
               .to.axContainQuery({ role: 'link', name: 'Back to top' });
         });
@@ -208,17 +224,19 @@ describe('<pf-v5-back-to-top>', function() {
     });
 
     describe('as a button', function() {
+      let element: PfV6BackToTop;
+
       beforeEach(async function() {
         await setViewport({ width: 320, height: 640 });
         window.scrollTo({ top: 0, behavior: 'instant' });
         await nextFrame();
-        const container = await createFixture<PfV5BackToTop>(html`
+        const container = await createFixture<PfV6BackToTop>(html`
           <div id="top">
             <div style="height: 2000px;"></div>
-            <pf-v5-back-to-top></pf-v5-back-to-top>
+            <pf-v6-back-to-top></pf-v6-back-to-top>
           </div>
         `);
-        element = container.querySelector('pf-v5-back-to-top')!;
+        element = container.querySelector('pf-v6-back-to-top')!;
         await allUpdates(element);
       });
 
@@ -229,7 +247,7 @@ describe('<pf-v5-back-to-top>', function() {
           await allUpdates(element);
         });
 
-        it('should have a label of "Back to top"', async function() {
+        it('should have a default accessible label of "Back to top"', async function() {
           expect(await a11ySnapshot())
               .to.axContainQuery({ role: 'button', name: 'Back to top' });
         });
@@ -237,21 +255,21 @@ describe('<pf-v5-back-to-top>', function() {
     });
   });
 
-  describe('when a label is provided', function() {
-    let element: PfV5BackToTop;
-
+  describe('when accessible-label is provided', function() {
     describe('as a link', function() {
+      let element: PfV6BackToTop;
+
       beforeEach(async function() {
         await setViewport({ width: 320, height: 640 });
         window.scrollTo({ top: 0, behavior: 'instant' });
         await nextFrame();
-        const container = await createFixture<PfV5BackToTop>(html`
+        const container = await createFixture<PfV6BackToTop>(html`
           <div id="top">
             <div style="height: 2000px;"></div>
-            <pf-v5-back-to-top href="#top" label="Return to top"></pf-v5-back-to-top>
+            <pf-v6-back-to-top href="#top" accessible-label="Return to top"></pf-v6-back-to-top>
           </div>
         `);
-        element = container.querySelector('pf-v5-back-to-top')!;
+        element = container.querySelector('pf-v6-back-to-top')!;
         await allUpdates(element);
       });
 
@@ -262,7 +280,7 @@ describe('<pf-v5-back-to-top>', function() {
           await allUpdates(element);
         });
 
-        it('should have a label of "Return to top"', async function() {
+        it('should have the custom label', async function() {
           expect(await a11ySnapshot())
               .to.axContainQuery({ role: 'link', name: 'Return to top' });
         });
@@ -270,17 +288,19 @@ describe('<pf-v5-back-to-top>', function() {
     });
 
     describe('as a button', function() {
+      let element: PfV6BackToTop;
+
       beforeEach(async function() {
         await setViewport({ width: 320, height: 640 });
         window.scrollTo({ top: 0, behavior: 'instant' });
         await nextFrame();
-        const container = await createFixture<PfV5BackToTop>(html`
+        const container = await createFixture<PfV6BackToTop>(html`
           <div id="top">
             <div style="height: 2000px;"></div>
-            <pf-v5-back-to-top label="Return to top"></pf-v5-back-to-top>
+            <pf-v6-back-to-top accessible-label="Return to top"></pf-v6-back-to-top>
           </div>
         `);
-        element = container.querySelector('pf-v5-back-to-top')!;
+        element = container.querySelector('pf-v6-back-to-top')!;
         await allUpdates(element);
       });
 
@@ -291,7 +311,7 @@ describe('<pf-v5-back-to-top>', function() {
           await allUpdates(element);
         });
 
-        it('should have a label of "Return to top"', async function() {
+        it('should have the custom label', async function() {
           expect(await a11ySnapshot())
               .to.axContainQuery({ role: 'button', name: 'Return to top' });
         });

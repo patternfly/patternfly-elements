@@ -5,7 +5,7 @@ import '@patternfly/elements/pf-v5-alert/pf-v5-alert.js';
 import '@patternfly/elements/pf-v6-avatar/pf-v6-avatar.js';
 import '@patternfly/elements/pf-v5-back-to-top/pf-v5-back-to-top.js';
 import '@patternfly/elements/pf-v6-background-image/pf-v6-background-image.js';
-import '@patternfly/elements/pf-v5-badge/pf-v5-badge.js';
+import '@patternfly/elements/pf-v6-badge/pf-v6-badge.js';
 import '@patternfly/elements/pf-v5-banner/pf-v5-banner.js';
 import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
 import '@patternfly/elements/pf-v5-card/pf-v5-card.js';

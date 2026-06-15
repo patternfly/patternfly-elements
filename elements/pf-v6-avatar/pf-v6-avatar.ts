@@ -7,12 +7,6 @@ import style from './pf-v6-avatar.css';
 /** Size variants for the avatar. */
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 
-export class PfV6AvatarLoadEvent extends Event {
-  constructor(public originalEvent: Event) {
-    super('load', { bubbles: true });
-  }
-}
-
 /**
  * An **avatar** provides a visual representation of a user for navigation
  * headers, user lists, or comment threads. When `src` is set, it renders
@@ -69,10 +63,6 @@ export class PfV6Avatar extends LitElement {
               fill="var(--_placeholder-fg)"/>
       </svg>
     `;
-  }
-
-  #onLoad(event: Event) {
-    this.dispatchEvent(new PfV6AvatarLoadEvent(event));
   }
 }
 

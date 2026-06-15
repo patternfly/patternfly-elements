@@ -14,10 +14,28 @@ export class PfV6AvatarLoadEvent extends Event {
 }
 
 /**
- * An **avatar** is a visual used to represent a user. It may contain an image
- * or a placeholder graphic.
- * @summary Displays a user's avatar image
- * @fires {PfV6AvatarLoadEvent} load - when the avatar image loads
+ * An **avatar** provides a visual representation of a user for navigation
+ * headers, user lists, or comment threads. When `src` is set, it renders
+ * the image; when omitted, it provides a placeholder silhouette. Authors
+ * SHOULD set `alt` when the avatar conveys identity.
+ *
+ * @summary Displays a user's avatar image with optional placeholder
+ *
+ * @cssprop {<length>} --pf-v6-c-avatar--Width - Avatar width {@default 2.25rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--Height - Avatar height {@default 2.25rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--BorderRadius - Avatar border radius {@default 30em}
+ * @cssprop {<color>} --pf-v6-c-avatar--BorderColor - Avatar border color {@default transparent}
+ * @cssprop {<length>} --pf-v6-c-avatar--BorderWidth - Avatar border width {@default 0}
+ * @cssprop {<color>} --pf-v6-c-avatar--m-bordered--BorderColor - Border color when bordered
+ * @cssprop {<length>} --pf-v6-c-avatar--m-bordered--BorderWidth - Border width when bordered
+ * @cssprop {<length>} --pf-v6-c-avatar--m-sm--Width - Width when size is sm {@default 1.5rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-sm--Height - Height when size is sm {@default 1.5rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-md--Width - Width when size is md {@default 2.25rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-md--Height - Height when size is md {@default 2.25rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-lg--Width - Width when size is lg {@default 4.5rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-lg--Height - Height when size is lg {@default 4.5rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-xl--Width - Width when size is xl {@default 8rem}
+ * @cssprop {<length>} --pf-v6-c-avatar--m-xl--Height - Height when size is xl {@default 8rem}
  */
 @customElement('pf-v6-avatar')
 export class PfV6Avatar extends LitElement {

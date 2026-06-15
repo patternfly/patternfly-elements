@@ -7,7 +7,9 @@
     var(--pf-v6-c-avatar--Height, 2.25rem);
   --_border-radius:
     /** Border radius of the avatar */
-    var(--pf-v6-c-avatar--BorderRadius, var(--pf-t--global--border--radius--pill, 30em));
+    var(--pf-v6-c-avatar--BorderRadius,
+      /** Rounds the avatar into a circle */
+      var(--pf-t--global--border--radius--pill, 30em));
   --_border-color:
     /** Border color of the avatar */
     var(--pf-v6-c-avatar--BorderColor, transparent);
@@ -15,9 +17,22 @@
     /** Border width of the avatar */
     var(--pf-v6-c-avatar--BorderWidth, 0);
 
-  /* SVG foreground and background colors */
-  --_placeholder-bg: var(--pf-t--global--background--color--200, light-dark(var(--pf-t--color--gray--10, #f2f2f2), var(--pf-t--color--gray--80, #292929)));
-  --_placeholder-fg: var(--pf-t--global--icon--color--subtle, light-dark(var(--pf-t--color--gray--50, #707070), var(--pf-t--color--gray--40, #a3a3a3)));
+  --_placeholder-bg:
+    /** Placeholder silhouette background fill */
+    var(--pf-t--global--background--color--200,
+      light-dark(
+        /** Light mode placeholder background */
+        var(--pf-t--color--gray--10, #f2f2f2),
+        /** Dark mode placeholder background */
+        var(--pf-t--color--gray--80, #292929)));
+  --_placeholder-fg:
+    /** Placeholder silhouette foreground fill */
+    var(--pf-t--global--icon--color--subtle,
+      light-dark(
+        /** Light mode placeholder silhouette color */
+        var(--pf-t--color--gray--50, #707070),
+        /** Dark mode placeholder silhouette color */
+        var(--pf-t--color--gray--40, #a3a3a3)));
 
   display: inline-block;
   width: var(--_width);
@@ -33,10 +48,14 @@
 :host([bordered]) {
   --_border-color:
     /** Border color when bordered */
-    var(--pf-v6-c-avatar--m-bordered--BorderColor, var(--pf-t--global--border--color--default, #d2d2d2));
+    var(--pf-v6-c-avatar--m-bordered--BorderColor,
+      /** Default border color for bordered avatars */
+      var(--pf-t--global--border--color--default, #d2d2d2));
   --_border-width:
     /** Border width when bordered */
-    var(--pf-v6-c-avatar--m-bordered--BorderWidth, var(--pf-t--global--border--width--box--default, 1px));
+    var(--pf-v6-c-avatar--m-bordered--BorderWidth,
+      /** Default border width for bordered avatars */
+      var(--pf-t--global--border--width--box--default, 1px));
 }
 
 :host([size="sm"]) {

@@ -43,18 +43,18 @@ With helper text:
 | React prop | Web component | Difference |
 |---|---|---|
 | `title` | `description` attribute | Visible title text above the bar. Renamed to avoid shadowing the native HTML `title` attribute. |
-| `isTitleTruncated` | `truncated` attribute | Boolean. Truncates `description` with CSS ellipsis and adds a native `title` tooltip. |
+| `isTitleTruncated` | `truncated` attribute | Boolean. Truncates `description` with CSS ellipsis. |
 | `measureLocation` `"top"` | Default (no attribute) | React's `"top"` is the default; omitting `measure-location` produces the same layout. |
-| `measureLocation` | `measure-location` attribute | Singleline layout is derived automatically when no `description` is set, matching React behavior. |
+| `measureLocation` | `measure-location` attribute | Singleline layout derived automatically when no `description` is set. |
 | `size` `"md"` | Default (no attribute) | React's `"md"` is the default size; omitting `size` produces the same result. |
-| `helperText` | `helper-text` slot | Slot instead of prop, accepts rich content. |
-| `aria-label` | `accessible-label` attribute | Screen reader name only, set via ElementInternals. Falls back to `description`, then `"Progress status"`. |
-| `hideStatusIcon` | `hide-status-icon` attribute | Boolean. Hides the variant status icon while keeping variant coloring on the bar. |
-| `aria-labelledby` | `accessible-labelledby` attribute | Accepts space-separated element ID(s). Resolves cross-root `aria-labelledby` via `ariaLabelledByElements` on ElementInternals. Takes precedence over `accessible-label` and `description`. |
-| `aria-describedby` | `accessible-describedby` attribute | Accepts space-separated element ID(s). Resolves cross-root `aria-describedby` via `ariaDescribedByElements` on ElementInternals. |
+| `helperText` | `helper-text` slot | Slot instead of prop. Slotted elements are automatically wired to `aria-describedby` via ElementInternals. |
+| `aria-label` | `accessible-label` attribute | Screen reader name set via ElementInternals. Falls back to `description`, then `"Progress status"`. |
+| `aria-labelledby` | Native `aria-labelledby` on host | Use the native attribute directly on the host element -- the host has `role="progressbar"` so standard ARIA attributes work. |
+| `aria-describedby` | `helper-text` slot | Slot content is automatically associated via `ariaDescribedByElements`. For external descriptions, use native `aria-describedby` on the host. |
+| `hideStatusIcon` | `hide-status-icon` attribute | Boolean. Hides the variant status icon while keeping variant coloring. |
 
 ### Added
 
 | Web component API | Notes |
 |---|---|
-| `helper-text` slot | Accepts rich content below the progress bar. React uses a `helperText` prop (ReactNode). |
+| `helper-text` slot | Rich content below the bar, auto-wired to `aria-describedby`. |

@@ -29,13 +29,15 @@ const VARIANT_ICONS = new Map<ProgressVariant, TemplateResult>([
 /**
  * A progress bar provides a visual representation of completion status for an
  * ongoing process or task. Authors SHOULD provide a `description` attribute for
- * visible title text above the bar. The accessible name is resolved in order:
- * `accessible-labelledby`, then `accessible-label`, then `description`, then
- * a fallback of `"Progress status"`. Authors SHOULD set the `variant` attribute
- * to `success`, `warning`, or `danger` when the progress reaches a terminal
- * state. Authors SHOULD AVOID using `measure-location="inside"` without
- * `size="lg"`, as the measure text will not fit inside the bar at the default
- * size.
+ * visible title text above the bar. The accessible name resolves in order:
+ * `accessible-label`, then `description`, then a fallback of `"Progress status"`.
+ * Authors can also use native `aria-labelledby` directly on the host element
+ * to reference an external label (the host has `role="progressbar"`).
+ *
+ * Authors SHOULD set the `variant` attribute to `success`, `warning`, or
+ * `danger` when the progress reaches a terminal state. Authors SHOULD AVOID
+ * using `measure-location="inside"` without `size="lg"`, as the measure
+ * text will not fit inside the bar at the default size.
  *
  * This element uses `role="progressbar"` via ElementInternals. `aria-valuenow`,
  * `aria-valuemin`, and `aria-valuemax` are managed internally based on the
@@ -43,7 +45,7 @@ const VARIANT_ICONS = new Map<ProgressVariant, TemplateResult>([
  * does not receive keyboard focus.
  *
  * @summary Displays completion status of an ongoing process or task.
- * @slot helper-text - Supplementary text below the progress bar, such as status messages or additional context. SHOULD use `pf-v6-helper-text` or plain text. Content is not associated to the progressbar via `aria-describedby`; authors SHOULD ensure helper text is perceivable to assistive technology users.
+ * @slot helper-text - Supplementary text below the progress bar, such as status messages or additional context. Slotted elements are automatically associated to the progressbar via `aria-describedby`.
  */
 @customElement('pf-v6-progress')
 export class PfV6Progress extends LitElement {

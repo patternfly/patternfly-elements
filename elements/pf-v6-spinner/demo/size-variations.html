@@ -1,0 +1,24 @@
+---
+name: Size variations
+description: Spinners can be sized using the `size` attribute with values `xs`, `sm`, `md`, `lg`, and `xl`.
+---
+<section>
+  <pf-v6-spinner size="xs" accessible-label="Extra small spinner">Loading...</pf-v6-spinner>
+  <pf-v6-spinner size="sm" accessible-label="Small spinner">Loading...</pf-v6-spinner>
+  <pf-v6-spinner size="md" accessible-label="Medium spinner">Loading...</pf-v6-spinner>
+  <pf-v6-spinner size="lg" accessible-label="Large spinner">Loading...</pf-v6-spinner>
+  <pf-v6-spinner size="xl" accessible-label="Extra large spinner">Loading...</pf-v6-spinner>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js';
+</script>
+
+<style>
+  section {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+  }
+</style>

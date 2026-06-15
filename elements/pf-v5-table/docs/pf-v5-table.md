@@ -1,8 +1,8 @@
-<pf-v5-banner id="beta-table" variant="warning" icon="exclamation-triangle" sticky>
+<pf-v6-banner id="beta-table" status="warning" accessible-label="Warning:" sticky>
   This is an initial release, with a subset of upstream
   PatternFly's features.
   APIs can be expected to change.
-</pf-v5-banner>
+</pf-v6-banner>
 
 <style>
 #beta-table {

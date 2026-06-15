@@ -1,6 +1,5 @@
-import { LitElement, html, nothing, type TemplateResult } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 
-import { classMap } from 'lit/directives/class-map.js';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -80,7 +79,10 @@ export type BannerStatus =
 export class PfV6Banner extends LitElement {
   static readonly styles: CSSStyleSheet[] = [style];
 
-  /** Non-status color for the banner background. Overridden by `status` if both are set. */
+  /**
+   * Non-status (decorative) color for the banner background.
+   * Overridden by `status` if both are set.
+   */
   @property({ reflect: true }) color?: BannerColor;
 
   /** Status style for the banner. Conveys semantic meaning and overrides `color`. */
@@ -89,15 +91,17 @@ export class PfV6Banner extends LitElement {
   /** Whether the banner sticks to the top of its container. */
   @property({ type: Boolean, reflect: true }) sticky = false;
 
-  /** Accessible label announced by screen readers to convey the banner's status context. */
+  /**
+   * Accessible label announced by screen readers to convey the banner's status.
+   * Must be used when `status` is set. Should not be used otherwise.
+   */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
 
   override render(): TemplateResult {
-    const { color = '', status = '' } = this;
+    const { accessibleLabel } = this;
     return html`
-      <div id="container" class="${classMap({ [color]: !!color, [status]: !!status })}">
-        ${!this.accessibleLabel ? nothing
-          : html`<span class="sr-only">${this.accessibleLabel}</span>`}
+      <div id="container">
+        <span class="sr-only" ?hidden=${!accessibleLabel}>${accessibleLabel}</span>
         <slot></slot>
       </div>
     `;

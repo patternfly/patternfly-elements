@@ -13,11 +13,11 @@ dark color schemes via `light-dark()` CSS fallbacks.
 <!-- Non-default variants auto-show their default icon -->
 <pf-v6-helper-text variant="error">Password is too short</pf-v6-helper-text>
 
-<!-- Multiple items in a group with live region -->
-<div aria-live="polite">
-  <pf-v6-helper-text variant="success" dynamic>At least 14 characters</pf-v6-helper-text>
-  <pf-v6-helper-text variant="error" dynamic>Must not contain "redhat"</pf-v6-helper-text>
-</div>
+<!-- Multiple items in a list with live region -->
+<ul aria-live="polite" style="list-style: none; padding: 0; display: grid; gap: var(--pf-t--global--spacer--xs, 0.25rem);">
+  <li><pf-v6-helper-text variant="success" dynamic>At least 14 characters</pf-v6-helper-text></li>
+  <li><pf-v6-helper-text variant="error" dynamic>Must not contain "redhat"</pf-v6-helper-text></li>
+</ul>
 
 <!-- Custom icon via slot overrides the default variant icon -->
 <pf-v6-helper-text variant="warning">
@@ -37,8 +37,8 @@ appropriate ARIA attributes.
 
 | React prop | Notes |
 | --- | --- |
-| `HelperText` `component` (`'div'` \| `'ul'`) | Use a standard HTML `<div>` or `<ul>` wrapper instead. |
-| `HelperText` `isLiveRegion` | Apply `role="status"` directly on a wrapper element. |
+| `HelperText` `component` (`'div'` \| `'ul'`) | Use a standard HTML `<ul>` wrapper if necessary. |
+| `HelperText` `isLiveRegion` | Apply `role="status"` directly on the element, or a `<ul>` wrapper, if in use. |
 | `HelperText` `aria-label` | Apply `aria-label` directly on the wrapper element. |
 | `HelperTextItem` `component` (`'div'` \| `'li'`) | The custom element renders as its own tag; use `role="listitem"` if needed. |
 

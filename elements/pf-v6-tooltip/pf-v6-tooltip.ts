@@ -309,6 +309,13 @@ export class PfV6Tooltip extends LitElement {
 
   @observes('visible')
   protected _visibleChanged(): void {
+    // skip if state already matches to prevent double invocation
+    if (this.visible && this.#float.open) {
+      return;
+    }
+    if (!this.visible && !this.#float.open) {
+      return;
+    }
     if (this.visible) {
       this.show();
     } else {

@@ -271,6 +271,10 @@ export class PfV6Tooltip extends LitElement {
   async show(): Promise<void> {
     this.visible = true;
     await this.updateComplete;
+    // bail if hide() was called while awaiting
+    if (!this.visible) {
+      return;
+    }
     const placement = this.position;
     const offset =
           !placement?.match(/top|bottom/) ? 15
@@ -278,6 +282,10 @@ export class PfV6Tooltip extends LitElement {
     const flip = !this.noFlip;
     const fallbackPlacements = this.flipBehavior;
     await this.#float.show({ offset, placement, flip, fallbackPlacements });
+    // bail if hide() was called while awaiting
+    if (!this.visible) {
+      return;
+    }
     this.#setAriaDescribedBy(true);
     if (!this.silent) {
       PfV6Tooltip.announce(this.#accessibleContent);
@@ -290,6 +298,10 @@ export class PfV6Tooltip extends LitElement {
     this.#clearTimers();
     this.#setAriaDescribedBy(false);
     await this.#float.hide();
+    // bail if show() was called while awaiting
+    if (this.visible) {
+      return;
+    }
     if (!this.silent) {
       PfV6Tooltip.announcer.innerText = '';
     }

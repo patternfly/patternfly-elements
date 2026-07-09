@@ -167,7 +167,7 @@ export class PfV6Tooltip extends LitElement {
 
   #entryTimeout?: ReturnType<typeof setTimeout>;
   #exitTimeout?: ReturnType<typeof setTimeout>;
-  #triggerElement?: HTMLElement | null;
+  #triggerElement?: Element | null;
 
   get #accessibleContent(): string {
     if (!this.#float.open || isServer) {
@@ -186,7 +186,7 @@ export class PfV6Tooltip extends LitElement {
     return this.shadowRoot?.querySelector('#invoker') ?? null;
   }
 
-  get #invokerElement(): HTMLElement | null {
+  get #invokerElement(): Element | null {
     if (this.#triggerElement) {
       return this.#triggerElement;
     }
@@ -209,7 +209,7 @@ export class PfV6Tooltip extends LitElement {
     content: (): HTMLElement | null | undefined => this.#tooltipEl,
     invoker: (): HTMLElement | null | undefined => {
       if (this.#triggerElement) {
-        return this.#triggerElement;
+        return this.#triggerElement as HTMLElement;
       }
       const slot = this.#invoker;
       if (slot instanceof HTMLSlotElement
@@ -344,12 +344,12 @@ export class PfV6Tooltip extends LitElement {
     this.requestUpdate();
   }
 
-  #getTriggerElement(): HTMLElement | null {
+  #getTriggerElement(): Element | null {
     if (!this.trigger) {
       return null;
     }
     if (typeof this.trigger !== 'string') {
-      return this.trigger instanceof HTMLElement ? this.trigger : null;
+      return this.trigger instanceof Element ? this.trigger : null;
     }
     return (this.getRootNode() as Document | ShadowRoot)
         .getElementById(this.trigger);

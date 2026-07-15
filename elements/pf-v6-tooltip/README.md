@@ -34,7 +34,7 @@ External trigger:
 | React prop              | Notes                                                                                                                                            |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `appendTo`              | Web component renders in its own shadow DOM; no portal needed                                                                                    |
-| `aria`                  | Always uses `aria-describedby` via `ariaDescribedByElements`. No `labelledby` or `none` option                                                   |
+| `aria`                  | No `labelledby` or `none` mode. A11y is provided via a `role="status"` live region; `ariaDescribedByElements` is set as progressive enhancement but doesn't work cross-root today. For icon-only buttons where the tooltip provides the accessible *name*, set `silent` and add `aria-label` to the trigger manually. |
 | `aria-live`             | Not implemented                                                                                                                                  |
 | `minWidth`              | No CSS custom property exposed                                                                                                                   |
 

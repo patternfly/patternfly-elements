@@ -54,6 +54,18 @@ describe('<pf-v6-tooltip>', function() {
         expect(snapshot).to.axContainName('Trigger');
         expect(snapshot).to.axContainName('Tooltip text');
       });
+
+      // Documents the cross-root ARIA gap: ariaDescribedByElements doesn't
+      // work light→shadow today (WICG/aom#192). This test will intentionally
+      // fail once Reference Target ships, signaling it's time to gate/remove
+      // the live-region announcer to avoid double-announcement.
+      it('trigger has no computed description (cross-root ARIA gap)', async function() {
+        const snapshot = await a11ySnapshot();
+        const trigger = snapshot.children?.find(
+          (n: { role: string }) => n.role === 'button',
+        );
+        expect(trigger?.description).to.be.undefined;
+      });
     });
 
     describe('after calling hide()', function() {
@@ -572,7 +584,6 @@ describe('<pf-v6-tooltip>', function() {
 
     it('should not announce when shown', async function() {
       const announcer = document.querySelector('[role="status"]')!;
-      // Clear any stale content from prior tests
       announcer.textContent = '';
       await element.show();
       await element.updateComplete;

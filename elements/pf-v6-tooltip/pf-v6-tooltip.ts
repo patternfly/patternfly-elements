@@ -95,6 +95,9 @@ export class PfV6Tooltip extends LitElement {
 
   private static announcer: HTMLElement;
 
+  /** Tracks which instance last wrote to the shared announcer */
+  private static lastAnnouncer: PfV6Tooltip | null = null;
+
   static {
     if (!isServer) {
       document.addEventListener('keydown', function(event) {
@@ -124,7 +127,8 @@ export class PfV6Tooltip extends LitElement {
     })));
   }
 
-  private static announce(message: string): void {
+  private static announce(instance: PfV6Tooltip, message: string): void {
+    this.lastAnnouncer = instance;
     this.announcer.innerText = message;
   }
 
@@ -294,7 +298,7 @@ export class PfV6Tooltip extends LitElement {
     }
     this.#setAriaDescribedBy(true);
     if (!this.silent) {
-      PfV6Tooltip.announce(this.#accessibleContent);
+      PfV6Tooltip.announce(this, this.#accessibleContent);
     }
   }
 
@@ -308,8 +312,9 @@ export class PfV6Tooltip extends LitElement {
     if (this.visible) {
       return;
     }
-    if (!this.silent) {
+    if (!this.silent && PfV6Tooltip.lastAnnouncer === this) {
       PfV6Tooltip.announcer.innerText = '';
+      PfV6Tooltip.lastAnnouncer = null;
     }
   }
 

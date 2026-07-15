@@ -569,5 +569,14 @@ describe('<pf-v6-tooltip>', function() {
     it('should accept silent attribute', function() {
       expect(element.silent).to.be.true;
     });
+
+    it('should not announce when shown', async function() {
+      const announcer = document.querySelector('[role="status"]')!;
+      // Clear any stale content from prior tests
+      announcer.textContent = '';
+      await element.show();
+      await element.updateComplete;
+      expect(announcer.textContent).to.equal('');
+    });
   });
 });

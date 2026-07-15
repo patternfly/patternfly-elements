@@ -48,10 +48,16 @@ const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
  * information that SHOULD NOT contain interactive content. The trigger element
  * MUST be focusable so keyboard and screen reader users can access the tooltip.
  *
- * The tooltip automatically sets `aria-describedby` on the trigger via the
- * cross-root `ariaDescribedByElements` IDL property. Pressing Escape
- * dismisses an open tooltip. Focus remains on the trigger while the tooltip
- * is visible.
+ * Accessibility is provided via a shared `role="status"` live region that
+ * announces tooltip content to screen readers when shown. The tooltip also
+ * attempts to set `aria-describedby` on the trigger via the cross-root
+ * `ariaDescribedByElements` IDL property, but this is a progressive
+ * enhancement — browsers currently reject light-to-shadow element references
+ * (see WICG/aom#192, whatwg/html#5401). Until Reference Target ships,
+ * the live-region announcer is the working a11y path.
+ *
+ * Pressing Escape dismisses an open tooltip. Focus remains on the trigger
+ * while the tooltip is visible.
  *
  * Colors invert automatically via `light-dark()` using PatternFly inverse
  * background and text tokens (`--pf-t--global--background--color--inverse--default`,

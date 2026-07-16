@@ -334,6 +334,13 @@ export class PfV6Tooltip extends LitElement {
     }
   }
 
+  @observes('content')
+  protected _contentChanged(): void {
+    if (this.#float.open && !this.silent) {
+      PfV6Tooltip.announce(this, this.#accessibleContent);
+    }
+  }
+
   // ariaDescribedByElements is the correct cross-root ARIA API, but browsers
   // currently reject light-to-shadow element refs (see WICG/aom#192,
   // whatwg/html#5401). Kept as progressive enhancement: will start working

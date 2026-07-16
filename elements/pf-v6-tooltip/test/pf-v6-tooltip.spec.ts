@@ -109,6 +109,13 @@ describe('<pf-v6-tooltip>', function() {
       `);
     });
 
+    it('should hide slotted content from assistive technology when closed', async function() {
+      const snapshot = await a11ySnapshot();
+      const text = JSON.stringify(snapshot);
+      expect(text).to.not.include('Rich');
+      expect(text).to.not.include('tooltip content');
+    });
+
     describe('after calling show()', function() {
       beforeEach(async function() {
         await element.show();

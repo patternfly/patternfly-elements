@@ -30,6 +30,11 @@
   }
 }
 
+/* Fix for Firefox: FF doesn't propagate `inert` through to slotted light DOM content */
+#content[inert] ::slotted(*) {
+  visibility: hidden;
+}
+
 #content {
   position: relative;
   text-align: center;

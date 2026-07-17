@@ -187,6 +187,7 @@ export class PfV6Tooltip extends LitElement {
   #entryTimeout?: ReturnType<typeof setTimeout>;
   #exitTimeout?: ReturnType<typeof setTimeout>;
   #triggerElement?: Element | null;
+  #listenersAttached = false;
 
   get #accessibleContent(): string {
     if (!this.#float.open || isServer) {
@@ -244,7 +245,9 @@ export class PfV6Tooltip extends LitElement {
     super.connectedCallback();
     if (!isServer) {
       PfV6Tooltip.instances.add(this);
-      this.#updateTriggerListeners();
+      if (this.hasUpdated) {
+        this.requestUpdate();
+      }
     }
   }
 
@@ -253,11 +256,16 @@ export class PfV6Tooltip extends LitElement {
     PfV6Tooltip.instances.delete(this);
     this.#clearTimers();
     this.#removeTriggerListeners();
+    this.#listenersAttached = false;
   }
 
-  override willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('trigger')) {
+  override updated(changed: PropertyValues<this>): void {
+    if (isServer) {
+      return;
+    }
+    if (!this.#listenersAttached || changed.has('trigger')) {
       this.#updateTriggerListeners();
+      this.#listenersAttached = true;
     }
   }
 

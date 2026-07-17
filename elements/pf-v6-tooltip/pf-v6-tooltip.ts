@@ -158,8 +158,9 @@ export class PfV6Tooltip extends LitElement {
   }) flipBehavior?: Placement[];
 
   /**
-   * External trigger element. As an attribute, accepts the ID of an element
-   * in the same root. As a property, also accepts an Element reference directly.
+   * External trigger element (element ID or Element reference). As an attribute,
+   * accepts the ID of an element in the same root. As a property, also
+   * accepts an Element directly.
    */
   @property() trigger?: string | Element;
 

@@ -20,12 +20,17 @@ Rich content via slot:
 </pf-v6-tooltip>
 ```
 
-External trigger:
+External trigger (element id — not an event type like React's `trigger` prop):
 
 ```html
 <button id="my-btn">Hover me</button>
 <pf-v6-tooltip trigger="my-btn" content="Hello"></pf-v6-tooltip>
 ```
+
+> **Note:** `trigger` is an idref (or Element via the property). Values like
+> `"click"` or `"manual"` are treated as element IDs, not open modes. The
+> tooltip always opens on mouseenter + focusin; cancel `show`/`hide` to
+> emulate other modes (see the click-trigger and manual-trigger demos).
 
 ## Divergences from React `Tooltip`
 
@@ -42,13 +47,13 @@ External trigger:
 
 | React prop                 | Web component                         | Difference                                                                                                                                        |
 | -------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `trigger` (event types)    | Cancelable `show`/`hide` events       | React accepts `'mouseenter focus'`, `'click'`, `'manual'`. Web component always triggers on mouseenter + focusin; cancel events to emulate others |
+| `trigger` (event types)    | Cancelable `show`/`hide` events       | React's `trigger` prop sets open modes (`'mouseenter focus'`, `'click'`, `'manual'`). That prop has **no** string equivalent here — the WC always opens on mouseenter + focusin; cancel `show`/`hide` to emulate other modes. Do not pass `"click"` / `"manual"` to the WC `trigger` attribute. |
 | `content` (required prop)  | `content` attribute or `content` slot | Attribute is optional when slot is used                                                 |
 | `enableFlip`               | `no-flip`                             | Inverted boolean; flip enabled by default                                               |
 | `flipBehavior`             | `flip-behavior`                       | Attribute accepts comma-separated list instead of array                                 |
 | `isContentLeftAligned`     | `alignment`                           | Accepts `'start'` or `'end'` instead of boolean; uses logical properties for RTL support |
 | `maxWidth`                 | `--pf-v6-c-tooltip--MaxWidth`         | CSS custom property instead of prop                                                     |
-| `children` / `triggerRef`  | default slot or `trigger` attribute   | Trigger is slotted child or ID string/Element reference                                 |
+| `children` / `triggerRef`  | default slot or `trigger` attribute   | WC `trigger` means *which* element (ID string or Element ref), same role as React `triggerRef` — **not** React's event-type `trigger` prop |
 | `onTooltipHidden`          | `hide` event                          | Cancelable DOM event with `reason` field. Also fires `show` event (no React equivalent) |
 | `animationDuration`        | CSS transitions                       | Override via stylesheet instead of prop                                                 |
 | `distance`                 | Hardcoded 15px                        | Not configurable; React default also 15                                                 |

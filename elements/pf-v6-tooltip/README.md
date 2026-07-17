@@ -20,7 +20,7 @@ Rich content via slot:
 </pf-v6-tooltip>
 ```
 
-External trigger (element id — not an event type like React's `trigger` prop):
+External trigger (element id — not an event type):
 
 ```html
 <button id="my-btn">Hover me</button>
@@ -54,7 +54,7 @@ External trigger (element id — not an event type like React's `trigger` prop):
 | `isContentLeftAligned`     | `alignment`                           | Accepts `'start'` or `'end'` instead of boolean; uses logical properties for RTL support |
 | `maxWidth`                 | `--pf-v6-c-tooltip--MaxWidth`         | CSS custom property instead of prop                                                     |
 | `children` / `triggerRef`  | default slot or `trigger` attribute   | WC `trigger` means *which* element (ID string or Element ref), same role as React `triggerRef` — **not** React's event-type `trigger` prop |
-| `onTooltipHidden`          | `hide` event                          | Cancelable DOM event with `reason` field. Also fires `show` event (no React equivalent) |
+| `onTooltipHidden`          | `hide` event                          | DOM event with `reason` (`mouseleave` / `focusout` / `escape`). Cancelable except Escape, which always dismisses. Also fires `show` (no React equivalent) |
 | `animationDuration`        | CSS transitions                       | Override via stylesheet instead of prop                                                 |
 | `distance`                 | Hardcoded 15px                        | Not configurable; React default also 15                                                 |
 | `isVisible`                | `visible`                             | Boolean attribute; also controllable via `.show()` / `.hide()` methods                  |
@@ -66,7 +66,7 @@ External trigger (element id — not an event type like React's `trigger` prop):
 | Web component API             | Notes                                                               |
 | ----------------------------- | ------------------------------------------------------------------- |
 | `show` event                  | Cancelable event before tooltip shows, with trigger `reason`        |
-| `hide` event                  | Cancelable event before tooltip hides, with trigger `reason`        |
+| `hide` event                  | Event before tooltip hides, with `reason`. Cancelable for mouseleave/focusout; Escape (`reason: 'escape'`) is never cancelable |
 | `.show()` / `.hide()` methods | Programmatic visibility control                                     |
 | `content` slot                | Rich HTML content, not available in React (which takes `ReactNode`) |
 

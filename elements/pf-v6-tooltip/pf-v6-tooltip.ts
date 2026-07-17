@@ -189,6 +189,22 @@ export class PfV6Tooltip extends LitElement {
   #triggerElement?: Element | null;
   #listenersAttached = false;
 
+  #float = new FloatingDOMController(this, {
+    content: (): HTMLElement | null | undefined => this.#tooltipEl,
+    invoker: (): HTMLElement | null | undefined => {
+      if (this.#triggerElement) {
+        return this.#triggerElement as HTMLElement;
+      }
+      const slot = this.#invoker;
+      if (slot instanceof HTMLSlotElement
+          && slot.assignedElements().length > 0) {
+        return slot.assignedElements()[0] as HTMLElement;
+      }
+      return slot;
+    },
+    arrow: (): HTMLElement | null | undefined => this.#arrowEl,
+  });
+
   get #accessibleContent(): string {
     if (!this.#float.open || isServer) {
       return '';
@@ -224,22 +240,6 @@ export class PfV6Tooltip extends LitElement {
   get #arrowEl(): HTMLElement | null {
     return this.shadowRoot?.querySelector('#arrow') ?? null;
   }
-
-  #float = new FloatingDOMController(this, {
-    content: (): HTMLElement | null | undefined => this.#tooltipEl,
-    invoker: (): HTMLElement | null | undefined => {
-      if (this.#triggerElement) {
-        return this.#triggerElement as HTMLElement;
-      }
-      const slot = this.#invoker;
-      if (slot instanceof HTMLSlotElement
-          && slot.assignedElements().length > 0) {
-        return slot.assignedElements()[0] as HTMLElement;
-      }
-      return slot;
-    },
-    arrow: (): HTMLElement | null | undefined => this.#arrowEl,
-  });
 
   override connectedCallback(): void {
     super.connectedCallback();

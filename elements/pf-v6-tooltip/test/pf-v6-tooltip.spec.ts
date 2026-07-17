@@ -1,7 +1,7 @@
 import { expect, html, fixture } from '@open-wc/testing';
 
 import { PfV6Tooltip, TooltipShowEvent, TooltipHideEvent } from '../pf-v6-tooltip.js';
-import { setViewport, sendMouse, sendKeys } from '@web/test-runner-commands';
+import { setViewport, sendMouse } from '@web/test-runner-commands';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 describe('<pf-v6-tooltip>', function() {

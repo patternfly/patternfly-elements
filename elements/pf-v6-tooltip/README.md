@@ -54,7 +54,7 @@ External trigger:
 | `distance`                 | Hardcoded 15px                        | Not configurable; React default also 15                                                 |
 | `isVisible`                | `visible`                             | Boolean attribute; also controllable via `.show()` / `.hide()` methods                  |
 | `zIndex`                   | `--pf-v6-c-tooltip--ZIndex`           | CSS custom property instead of prop; defaults to 10000                                  |
-| `className`                | CSS custom properties / `::part()`    | Standard web component styling mechanisms                                               |
+| `className`                | CSS custom properties                 | Standard web component styling mechanisms                                               |
 
 ### Added
 

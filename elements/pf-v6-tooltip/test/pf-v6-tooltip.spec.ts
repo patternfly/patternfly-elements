@@ -458,12 +458,18 @@ describe('<pf-v6-tooltip>', function() {
   });
 
   describe('Escape key', function() {
+    let hideEvent: TooltipHideEvent | null;
+
     beforeEach(async function() {
+      hideEvent = null;
       element = await fixture<PfV6Tooltip>(html`
         <pf-v6-tooltip content="Escapable">
           <button>Trigger</button>
         </pf-v6-tooltip>
       `);
+      element.addEventListener('hide', function(e) {
+        hideEvent = e as TooltipHideEvent;
+      });
       await element.show();
       await element.updateComplete;
     });
@@ -475,7 +481,29 @@ describe('<pf-v6-tooltip>', function() {
         await new Promise(r => setTimeout(r, 50));
       });
 
+      it('should fire non-cancelable hide with reason escape', function() {
+        expect(hideEvent).to.be.an.instanceOf(TooltipHideEvent);
+        expect(hideEvent!.reason).to.equal('escape');
+        expect(hideEvent!.cancelable).to.be.false;
+      });
+
       it('should hide tooltip', async function() {
+        const snapshot = await a11ySnapshot();
+        expect(snapshot).to.not.axContainName('Escapable');
+      });
+    });
+
+    describe('pressing Escape with preventDefault on hide', function() {
+      beforeEach(async function() {
+        element.addEventListener('hide', function(e) {
+          e.preventDefault();
+        });
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        await element.updateComplete;
+        await new Promise(r => setTimeout(r, 50));
+      });
+
+      it('should still hide tooltip', async function() {
         const snapshot = await a11ySnapshot();
         expect(snapshot).to.not.axContainName('Escapable');
       });

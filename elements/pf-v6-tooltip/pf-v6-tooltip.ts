@@ -25,7 +25,8 @@ export type TooltipTriggerReason =
   | 'mouseenter'
   | 'focusin'
   | 'mouseleave'
-  | 'focusout';
+  | 'focusout'
+  | 'escape';
 
 export class TooltipShowEvent extends Event {
   constructor(public reason: TooltipTriggerReason) {
@@ -34,8 +35,12 @@ export class TooltipShowEvent extends Event {
 }
 
 export class TooltipHideEvent extends Event {
-  constructor(public reason: TooltipTriggerReason) {
-    super('hide', { bubbles: true, cancelable: true });
+  /**
+   * @param reason - What caused the hide
+   * @param cancelable - False for Escape so a11y dismiss cannot be blocked
+   */
+  constructor(public reason: TooltipTriggerReason, cancelable = true) {
+    super('hide', { bubbles: true, cancelable });
   }
 }
 
@@ -56,8 +61,9 @@ const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
  * (see WICG/aom#192, whatwg/html#5401). Until Reference Target ships,
  * the live-region announcer is the working a11y path.
  *
- * Pressing Escape dismisses an open tooltip. Focus remains on the trigger
- * while the tooltip is visible.
+ * Pressing Escape dismisses an open tooltip (fires a non-cancelable `hide`
+ * event with `reason: 'escape'`). Focus remains on the trigger while the
+ * tooltip is visible.
  *
  * Colors invert automatically via `light-dark()` using PatternFly inverse
  * background and text tokens (`--pf-t--global--background--color--inverse--default`,
@@ -85,7 +91,7 @@ const EXIT_EVENTS: readonly string[] = ['focusout', 'mouseleave'];
  * @cssprop {<integer>} [--pf-v6-c-tooltip--ZIndex=10000] - Z-index of the tooltip overlay.
  *
  * @fires {TooltipShowEvent} show - Cancelable event fired before the tooltip shows. The `reason` property on the event is a `TooltipTriggerReason` string indicating what triggered it (`'mouseenter'` or `'focusin'`). Call `preventDefault()` to cancel.
- * @fires {TooltipHideEvent} hide - Cancelable event fired before the tooltip hides. The `reason` property on the event is a `TooltipTriggerReason` string indicating what triggered it (`'mouseleave'` or `'focusout'`). Call `preventDefault()` to cancel.
+ * @fires {TooltipHideEvent} hide - Event fired before the tooltip hides. The `reason` property is a `TooltipTriggerReason` (`'mouseleave'`, `'focusout'`, or `'escape'`). Cancelable for mouseleave/focusout; Escape dismiss is never cancelable.
  */
 @customElement('pf-v6-tooltip')
 export class PfV6Tooltip extends LitElement {
@@ -104,6 +110,8 @@ export class PfV6Tooltip extends LitElement {
         if (event.key === 'Escape') {
           for (const instance of PfV6Tooltip.instances) {
             if (instance.#float.open) {
+              // Notify listeners; non-cancelable so Escape always dismisses
+              instance.dispatchEvent(new TooltipHideEvent('escape', false));
               instance.hide();
             }
           }

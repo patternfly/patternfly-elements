@@ -41,6 +41,8 @@ External trigger (element id — not an event type):
 | `appendTo`              | Web component renders in its own shadow DOM; no portal needed                                                                                    |
 | `aria`                  | No `labelledby` or `none` mode. A11y is provided via a `role="status"` live region; `ariaDescribedByElements` is set as progressive enhancement but doesn't work cross-root today. For icon-only buttons where the tooltip provides the accessible *name*, set `silent` and add `aria-label` to the trigger manually. |
 | `aria-live`             | Not implemented                                                                                                                                  |
+| `position="auto"`       | Not supported by `FloatingDOMController` / `Placement`. Prefer an explicit `position` and leave flip enabled (default).                          |
+| `flipBehavior="flip"`   | The special `"flip"` string (opposite-side flip) is not supported. Pass an explicit fallback list via `flip-behavior` instead (e.g. `top,right,left`). |
 | `minWidth`              | No CSS custom property exposed                                                                                                                   |
 
 ### Changed API

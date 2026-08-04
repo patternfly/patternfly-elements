@@ -1,0 +1,38 @@
+---
+name: Call to action
+description: Primary, secondary, tertiary, and link buttons can use size="lg" for call-to-action styling.
+---
+
+<section>
+  <pf-v6-button size="lg">Call to action</pf-v6-button>
+  <pf-v6-button size="lg" variant="secondary">Call to action</pf-v6-button>
+  <pf-v6-button size="lg" variant="tertiary">Call to action</pf-v6-button>
+  <pf-v6-button size="lg" variant="link" icon-position="end">
+    Call to action
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 448 512"
+      aria-hidden="true"
+    >
+      <path
+        d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 303c9.4 9.4 9.4 24.6 0 33.9L246.6 531.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 352H32C14.3 352 0 337.7 0 320v-32c0-17.7 14.3-32 32-32h279.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+      ></path>
+    </svg>
+  </pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

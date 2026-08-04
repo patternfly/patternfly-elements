@@ -1,0 +1,30 @@
+---
+name: Settings
+description: Settings buttons use the settings attribute on plain or control variants and animate the gear icon on hover and focus.
+---
+
+<section>
+  <pf-v6-button
+    variant="plain"
+    settings
+    accessible-label="Settings"
+  ></pf-v6-button>
+  <pf-v6-button
+    variant="control"
+    settings
+    accessible-label="Settings"
+  ></pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

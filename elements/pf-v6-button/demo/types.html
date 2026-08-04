@@ -1,0 +1,38 @@
+---
+name: Button types
+description: Use type to control form behavior. Omit type or use submit to submit, reset to reset, and button for a non-submitting control.
+---
+
+<form id="demo-form">
+  <label>
+    Name
+    <input name="name" value="PatternFly" />
+  </label>
+  <div class="actions">
+    <pf-v6-button type="submit">Submit</pf-v6-button>
+    <pf-v6-button type="reset" variant="secondary">Reset</pf-v6-button>
+    <pf-v6-button type="button" variant="link">Button</pf-v6-button>
+  </div>
+  <pre id="output"></pre>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+
+  const form = document.getElementById("demo-form");
+  const output = document.getElementById("output");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    output.textContent = new URLSearchParams(new FormData(form)).toString();
+  });
+</script>
+
+<style>
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block: 1rem;
+  }
+</style>

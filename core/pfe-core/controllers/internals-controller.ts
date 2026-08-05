@@ -74,13 +74,19 @@ type InternalsHost = ReactiveControllerHost & HTMLElement;
 export class InternalsController implements ReactiveController, ARIAMixin {
   private static instances = new WeakMap<HTMLElement, InternalsController>();
 
-  declare readonly form: ElementInternals['form'];
-  declare readonly shadowRoot: ElementInternals['shadowRoot'];
-
   // https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/states
   declare readonly states: unknown;
   declare readonly willValidate: ElementInternals['willValidate'];
   declare readonly validationMessage: ElementInternals['validationMessage'];
+
+  /** Form associated with the host via ElementInternals (FACE). */
+  get form(): ElementInternals['form'] {
+    return this.attachOrRetrieveInternals().form;
+  }
+
+  get shadowRoot(): ElementInternals['shadowRoot'] {
+    return this.attachOrRetrieveInternals().shadowRoot;
+  }
 
   public static getLabels(host: InternalsHost): Element[] {
     return Array.from(this.instances.get(host)?.internals.labels ?? []) as Element[];
@@ -321,8 +327,25 @@ export class InternalsController implements ReactiveController, ARIAMixin {
     return this.internals.reportValidity(...args);
   }
 
-  submit(): void {
-    this.internals.form?.requestSubmit();
+  /**
+   * Submit the associated form.
+   * @param submitter - optional submitter; ignored when the UA rejects non-button submitters
+   *                    (common for form-associated custom elements today)
+   */
+  submit(submitter?: HTMLElement): void {
+    const { form } = this.internals;
+    if (!form) {
+      return;
+    }
+    if (submitter) {
+      try {
+        form.requestSubmit(submitter);
+        return;
+      } catch {
+        // FACE hosts are not yet accepted as submitters in all engines.
+      }
+    }
+    form.requestSubmit();
   }
 
   reset(): void {

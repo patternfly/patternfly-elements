@@ -1,6 +1,6 @@
 ---
 name: Button types
-description: Use type to control form behavior. Omit type or use submit to submit, reset to reset, and button for a non-submitting control.
+description: Use type to control form behavior. Default is button (no form action). Use submit or reset for form actions.
 ---
 
 <form id="demo-form">
@@ -9,7 +9,7 @@ description: Use type to control form behavior. Omit type or use submit to submi
     <input name="name" value="PatternFly" />
   </label>
   <div class="actions">
-    <pf-v6-button type="submit">Submit</pf-v6-button>
+    <pf-v6-button type="submit" name="intent" value="save">Submit</pf-v6-button>
     <pf-v6-button type="reset" variant="secondary">Reset</pf-v6-button>
     <pf-v6-button type="button" variant="link">Button</pf-v6-button>
   </div>
@@ -19,10 +19,10 @@ description: Use type to control form behavior. Omit type or use submit to submi
 <script type="module">
   import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
-  const form = document.getElementById("demo-form");
-  const output = document.getElementById("output");
+  const form = document.getElementById('demo-form');
+  const output = document.getElementById('output');
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener('submit', event => {
     event.preventDefault();
     output.textContent = new URLSearchParams(new FormData(form)).toString();
   });

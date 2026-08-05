@@ -2,6 +2,7 @@ import {
   LitElement,
   html,
   isServer,
+  type ComplexAttributeConverter,
   type PropertyValues,
   type TemplateResult,
 } from 'lit';
@@ -35,14 +36,46 @@ export type ButtonState = 'read' | 'unread' | 'attention';
 
 export type ButtonType = 'button' | 'submit' | 'reset';
 
-export type ButtonIconPosition = 'start' | 'end';
+/** `left` / `right` are deprecated aliases for `start` / `end` (React parity). */
+export type ButtonIconPosition = 'start' | 'end' | 'left' | 'right';
 
 export type ButtonHamburgerVariant = 'expand' | 'collapse';
+
+/**
+ * Tri-state loading converter matching React `isLoading`:
+ * - attribute absent → `null` (no progress layout)
+ * - `loading` / `loading=""` / `loading="true"` → `true` (spinner + in-progress)
+ * - `loading="false"` → `false` (reserved progress padding, no spinner)
+ */
+const loadingConverter: ComplexAttributeConverter<boolean | null> = {
+  fromAttribute(value) {
+    if (value === null) {
+      return null;
+    }
+    if (value === 'false') {
+      return false;
+    }
+    return true;
+  },
+  toAttribute(value) {
+    if (value === null) {
+      return null;
+    }
+    if (value === false) {
+      return 'false';
+    }
+    return '';
+  },
+};
 
 /**
  * A **button** communicates and triggers user actions when clicked or selected.
  * Use buttons for actions such as submitting a form, canceling a process, or
  * navigating to another page. Icon-only buttons MUST provide an `accessible-label`.
+ *
+ * This is a Form-Associated Custom Element (FACE). Form participation and ARIA
+ * (`role`, `aria-label`, `aria-disabled`, `aria-expanded`) are managed through
+ * `ElementInternals` via `InternalsController` — not a slotted native `<button>`.
  *
  * @summary Triggers an action when activated
  *
@@ -52,11 +85,19 @@ export type ButtonHamburgerVariant = 'expand' | 'collapse';
  *
  * @cssprop {<color>} --pf-v6-c-button--BackgroundColor - Button background color
  * @cssprop {<color>} --pf-v6-c-button--Color - Button text color
+ * @cssprop {<color>} --pf-v6-c-button--BorderColor - Button border color
+ * @cssprop {<length>} --pf-v6-c-button--BorderWidth - Button border width
+ * @cssprop {<length>} --pf-v6-c-button--BorderRadius - Button border radius
+ * @cssprop {<length>} --pf-v6-c-button--FontSize - Button font size
+ * @cssprop {<length>} --pf-v6-c-button--PaddingBlockStart - Block-start padding
+ * @cssprop {<length>} --pf-v6-c-button--PaddingBlockEnd - Block-end padding
  * @cssprop {<length>} --pf-v6-c-button--PaddingInlineStart - Inline-start padding
  * @cssprop {<length>} --pf-v6-c-button--PaddingInlineEnd - Inline-end padding
- * @cssprop {<length>} --pf-v6-c-button--FontSize - Button font size
- * @cssprop {<length>} --pf-v6-c-button--BorderRadius - Button border radius
+ * @cssprop {<color>} --pf-v6-c-button__icon--Color - Icon color
+ * @cssprop {<color>} --pf-v6-c-button--hover--BackgroundColor - Hover background
+ * @cssprop {<color>} --pf-v6-c-button--m-clicked--BackgroundColor - Clicked background
  *
+ * @csspart button - Main button surface (inner control chrome)
  * @csspart icon - Container for the icon slot and built-in icons
  * @csspart text - Container for the default slot label
  * @csspart count - Container for the count slot
@@ -85,7 +126,10 @@ export class PfV6Button extends LitElement {
   /** Size of the button. Omit for default size. */
   @property({ reflect: true }) size?: ButtonSize;
 
-  /** Native form button type */
+  /**
+   * Native form button type. Defaults to `button` (does not submit), matching
+   * React `Button`. Set `type="submit"` or `type="reset"` for form actions.
+   */
   @property({ reflect: true }) type?: ButtonType;
 
   /** State for the stateful variant. Defaults to unread when variant is stateful. */
@@ -110,8 +154,14 @@ export class PfV6Button extends LitElement {
   @property({ reflect: true, type: Boolean, attribute: 'disabled-focusable' })
   disabledFocusable = false;
 
-  /** Shows a progress spinner and progress styling */
-  @property({ reflect: true, type: Boolean }) loading = false;
+  /**
+   * Progress state (React `isLoading` tri-state):
+   * - omit / `null` — no progress layout
+   * - `true` / `loading` — show spinner and in-progress styling
+   * - `false` / `loading="false"` — reserve progress padding without a spinner
+   */
+  @property({ reflect: true, converter: loadingConverter })
+  loading: boolean | null = null;
 
   /** Accessible label for the loading spinner */
   @property({ attribute: 'loading-label' }) loadingLabel = 'Loading';
@@ -151,7 +201,10 @@ export class PfV6Button extends LitElement {
   @property({ reflect: true, type: Boolean, attribute: 'no-padding' })
   noPadding = false;
 
-  /** Icon position relative to the label. Defaults to start. */
+  /**
+   * Icon position relative to the label. Defaults to start.
+   * `left` / `right` are accepted as deprecated aliases for `start` / `end`.
+   */
   @property({ reflect: true, attribute: 'icon-position' })
   iconPosition?: ButtonIconPosition;
 
@@ -170,6 +223,11 @@ export class PfV6Button extends LitElement {
   #internals = InternalsController.of(this);
 
   #slots = new SlotController(this, 'icon', 'count', null);
+
+  /** Owning form via ElementInternals when `formAssociated` is true. */
+  get form(): HTMLFormElement | null {
+    return this.#internals.form;
+  }
 
   get #disabled() {
     return this.disabled || this.#internals.formDisabled;
@@ -253,7 +311,10 @@ export class PfV6Button extends LitElement {
     const hasIcon = this.#hasIcon();
     const hasCount = this.#slots.hasSlotted('count');
     const hasText = this.#hasTextContent();
-    const iconAtEnd = this.iconPosition === 'end';
+    const iconAtEnd =
+      this.iconPosition === 'end' || this.iconPosition === 'right';
+    const isLoading = this.loading === true;
+    const showProgress = this.loading !== null && this.variant !== 'plain';
     const showDanger =
       this.variant === 'danger'
       || (this.danger
@@ -273,8 +334,8 @@ export class PfV6Button extends LitElement {
       'favorite': this.favorite,
       'favorited': this.favorite && this.favorited,
       'danger': showDanger,
-      'progress': this.loading && this.variant !== 'plain',
-      'in-progress': this.loading,
+      'progress': showProgress,
+      'in-progress': isLoading,
       'no-padding': this.noPadding && this.variant === 'plain',
       'small': this.size === 'sm',
       'display-lg': this.size === 'lg',
@@ -282,7 +343,7 @@ export class PfV6Button extends LitElement {
         { [this.state ?? 'unread']: true }
         : {}),
       hasIcon,
-      'loading': this.loading,
+      'loading': isLoading,
       'anchor': !!(this.variant === 'link' && this.href),
     };
 
@@ -295,7 +356,7 @@ export class PfV6Button extends LitElement {
       : html`<!-- summary: Button label text --><slot></slot>`;
 
     const content = html`
-      ${this.loading ?
+      ${isLoading ?
         html`
             <!-- summary: Loading spinner -->
             <span id="progress" part="progress" class="progress">
@@ -319,6 +380,7 @@ export class PfV6Button extends LitElement {
       return html`
         <a
           id="button"
+          part="button"
           class="${classMap(classes)}"
           href="${this.href}"
           target="${ifDefined(this.target)}"
@@ -332,7 +394,7 @@ export class PfV6Button extends LitElement {
     }
 
     return html`
-      <div id="button" class="${classMap(classes)}">${content}</div>
+      <div id="button" part="button" class="${classMap(classes)}">${content}</div>
     `;
   }
 
@@ -346,7 +408,7 @@ export class PfV6Button extends LitElement {
       this.settings
       || this.hamburger
       || this.favorite
-      || this.loading
+      || this.loading === true
       || !!this.icon
       || this.#slots.hasSlotted('icon')
     );
@@ -387,7 +449,7 @@ export class PfV6Button extends LitElement {
             role="presentation"
             icon="${ifDefined(this.icon)}"
             set="${ifDefined(this.iconSet)}"
-            ?hidden="${!this.icon || this.loading}"
+            ?hidden="${!this.icon || this.loading === true}"
           ></pf-v5-icon>
         </slot>
       `;
@@ -474,13 +536,18 @@ export class PfV6Button extends LitElement {
       return;
     }
     switch (this.type) {
+      case 'submit':
+        // Prefer this as submitter when the UA allows FACE submitters; otherwise
+        // falls back to requestSubmit(). name/value still come from setFormValue.
+        this.#internals.submit(this);
+        break;
       case 'reset':
         this.#internals.reset();
         break;
       case 'button':
-        break;
       default:
-        this.#internals.submit();
+        // Default matches React Button (`type="button"`): no form action.
+        break;
     }
   };
 

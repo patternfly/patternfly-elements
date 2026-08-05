@@ -145,20 +145,61 @@ describe('<pf-v6-button>', function() {
   });
 
   describe('loading', function() {
-    let element: PfV6Button;
+    describe('when loading is set', function() {
+      let element: PfV6Button;
 
-    beforeEach(async function() {
-      element = await createFixture<PfV6Button>(html`
-        <pf-v6-button loading loading-label="Saving">Loading</pf-v6-button>
+      beforeEach(async function() {
+        element = await createFixture<PfV6Button>(html`
+          <pf-v6-button loading loading-label="Saving">Loading</pf-v6-button>
+        `);
+      });
+
+      it('reflects the loading attribute as true', function() {
+        expect(element.loading).to.be.true;
+        expect(element.hasAttribute('loading')).to.be.true;
+      });
+
+      it('exposes loading-label', function() {
+        expect(element.loadingLabel).to.equal('Saving');
+      });
+    });
+
+    describe('when loading is omitted', function() {
+      let element: PfV6Button;
+
+      beforeEach(async function() {
+        element = await createFixture<PfV6Button>(html`
+          <pf-v6-button>Idle</pf-v6-button>
+        `);
+      });
+
+      it('defaults to null (no progress layout)', function() {
+        expect(element.loading).to.be.null;
+      });
+    });
+
+    describe('when loading="false"', function() {
+      let element: PfV6Button;
+
+      beforeEach(async function() {
+        element = await createFixture<PfV6Button>(html`
+          <pf-v6-button loading="false">Reserved</pf-v6-button>
+        `);
+      });
+
+      it('parses as false for reserved progress padding', function() {
+        expect(element.loading).to.be.false;
+        expect(element.getAttribute('loading')).to.equal('false');
+      });
+    });
+  });
+
+  describe('icon-position', function() {
+    it('accepts deprecated right as an end alias', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button icon-position="right" icon="arrow-right">Next</pf-v6-button>
       `);
-    });
-
-    it('reflects the loading attribute', function() {
-      expect(element.hasAttribute('loading')).to.be.true;
-    });
-
-    it('exposes loading-label', function() {
-      expect(element.loadingLabel).to.equal('Saving');
+      expect(element.iconPosition).to.equal('right');
     });
   });
 
@@ -178,29 +219,115 @@ describe('<pf-v6-button>', function() {
   });
 
   describe('form association', function() {
-    let form: HTMLFormElement;
-    let element: PfV6Button;
-    let submitData: FormData | null;
-
-    beforeEach(async function() {
-      submitData = null;
-      form = await createFixture(html`
-        <form>
-          <pf-v6-button type="submit" name="save" value="yes">Save</pf-v6-button>
-        </form>
-      `);
-      element = form.querySelector('pf-v6-button')!;
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        submitData = new FormData(form);
-      });
-      await element.updateComplete;
+    it('is a form-associated custom element', function() {
+      expect(PfV6Button.formAssociated).to.be.true;
     });
 
-    it('submits name and value', async function() {
-      await clickElementAtCenter(element);
-      expect(submitData).to.be.ok;
-      expect(submitData!.get('save')).to.equal('yes');
+    describe('submit', function() {
+      let form: HTMLFormElement;
+      let element: PfV6Button;
+      let submitData: FormData | null;
+
+      beforeEach(async function() {
+        submitData = null;
+        form = await createFixture(html`
+          <form>
+            <pf-v6-button type="submit" name="save" value="yes">Save</pf-v6-button>
+          </form>
+        `);
+        element = form.querySelector('pf-v6-button')!;
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          submitData = new FormData(form);
+        });
+        await element.updateComplete;
+      });
+
+      it('associates with the owning form', function() {
+        expect(element.form).to.equal(form);
+      });
+
+      it('submits name and value via ElementInternals', async function() {
+        await clickElementAtCenter(element);
+        expect(submitData).to.be.ok;
+        expect(submitData!.get('save')).to.equal('yes');
+      });
+    });
+
+    describe('reset', function() {
+      let form: HTMLFormElement;
+      let element: PfV6Button;
+      let input: HTMLInputElement;
+
+      beforeEach(async function() {
+        form = await createFixture(html`
+          <form>
+            <input name="name" value="initial">
+            <pf-v6-button type="reset">Reset</pf-v6-button>
+          </form>
+        `);
+        element = form.querySelector('pf-v6-button')!;
+        input = form.querySelector('input')!;
+        input.value = 'changed';
+        await element.updateComplete;
+      });
+
+      it('resets the owning form via ElementInternals', async function() {
+        await clickElementAtCenter(element);
+        expect(input.value).to.equal('initial');
+      });
+    });
+
+    describe('type=button', function() {
+      let form: HTMLFormElement;
+      let element: PfV6Button;
+      let submitted: boolean;
+
+      beforeEach(async function() {
+        submitted = false;
+        form = await createFixture(html`
+          <form>
+            <pf-v6-button type="button">No submit</pf-v6-button>
+          </form>
+        `);
+        element = form.querySelector('pf-v6-button')!;
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          submitted = true;
+        });
+        await element.updateComplete;
+      });
+
+      it('does not submit the form', async function() {
+        await clickElementAtCenter(element);
+        expect(submitted).to.be.false;
+      });
+    });
+
+    describe('default type', function() {
+      let form: HTMLFormElement;
+      let element: PfV6Button;
+      let submitted: boolean;
+
+      beforeEach(async function() {
+        submitted = false;
+        form = await createFixture(html`
+          <form>
+            <pf-v6-button>Default</pf-v6-button>
+          </form>
+        `);
+        element = form.querySelector('pf-v6-button')!;
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          submitted = true;
+        });
+        await element.updateComplete;
+      });
+
+      it('does not submit the form (React type=button default)', async function() {
+        await clickElementAtCenter(element);
+        expect(submitted).to.be.false;
+      });
     });
   });
 
@@ -215,7 +342,7 @@ describe('<pf-v6-button>', function() {
         <form>
           <input id="pre">
           <fieldset>
-            <pf-v6-button>OK</pf-v6-button>
+            <pf-v6-button type="submit">OK</pf-v6-button>
           </fieldset>
           <input id="post">
         </form>

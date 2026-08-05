@@ -1,12 +1,12 @@
 ---
 name: Progress indicators
-description: Set loading to show a progress spinner after the user starts an action.
+description: Set loading to show a progress spinner after the user starts an action. Use loading="false" to reserve progress padding without a spinner.
 ---
 
 <section>
-  <pf-v6-button id="primary">Click to start loading</pf-v6-button>
-  <pf-v6-button id="secondary" variant="secondary"
-    >Click to start loading</pf-v6-button
+  <pf-v6-button id="primary" loading>Click to stop loading</pf-v6-button>
+  <pf-v6-button id="secondary" variant="secondary" loading
+    >Click to stop loading</pf-v6-button
   >
   <pf-v6-button id="plain" variant="plain" accessible-label="Upload">
     <svg
@@ -22,19 +22,31 @@ description: Set loading to show a progress spinner after the user starts an act
       ></path>
     </svg>
   </pf-v6-button>
+  <pf-v6-button id="inline" variant="link" inline loading
+    >Pause loading logs</pf-v6-button
+  >
 </section>
 
 <script type="module">
   import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
-  for (const button of document.querySelectorAll("pf-v6-button")) {
-    button.addEventListener("click", () => {
-      button.loading = !button.loading;
-      if (button.id !== "plain") {
-        button.textContent = button.loading
-          ? "Click to stop loading"
-          : "Click to start loading";
+  for (const button of document.querySelectorAll('pf-v6-button')) {
+    button.addEventListener('click', () => {
+      // Toggle between true and false so progress padding stays reserved
+      // (React isLoading tri-state; avoid returning to null).
+      button.loading = button.loading !== true;
+      if (button.id === 'plain') {
+        return;
       }
+      if (button.id === 'inline') {
+        button.textContent =
+          button.loading === true ? 'Pause loading logs' : 'Resume loading logs';
+        return;
+      }
+      button.textContent =
+        button.loading === true ?
+          'Click to stop loading'
+        : 'Click to start loading';
     });
   }
 </script>

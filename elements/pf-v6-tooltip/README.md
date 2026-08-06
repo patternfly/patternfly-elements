@@ -29,8 +29,11 @@ External trigger (element id — not an event type):
 
 > **Note:** `trigger` is an idref (or Element via the property). Values like
 > `"click"` or `"manual"` are treated as element IDs, not open modes. The
-> tooltip always opens on mouseenter + focusin; cancel `show`/`hide` to
-> emulate other modes (see the click-trigger and manual-trigger demos).
+> tooltip always opens on mouseenter + focusin. React-style `trigger="click"`
+> is not supported and should not be emulated with this component — for
+> click-triggered overlays, use the native Popover API (`popover` +
+> `popovertarget`). To suppress default hover/focus and control visibility
+> programmatically, cancel `show`/`hide` (see the manual-trigger demo).
 
 ## Divergences from React `Tooltip`
 
@@ -49,7 +52,7 @@ External trigger (element id — not an event type):
 
 | React prop                 | Web component                         | Difference                                                                                                                                        |
 | -------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `trigger` (event types)    | Cancelable `show`/`hide` events       | React's `trigger` prop sets open modes (`'mouseenter focus'`, `'click'`, `'manual'`). That prop has **no** string equivalent here — the WC always opens on mouseenter + focusin; cancel `show`/`hide` to emulate other modes. Do not pass `"click"` / `"manual"` to the WC `trigger` attribute. |
+| `trigger` (event types)    | Cancelable `show`/`hide` events       | React's `trigger` prop sets open modes (`'mouseenter focus'`, `'click'`, `'manual'`). That prop has **no** string equivalent here — the WC always opens on mouseenter + focusin. Do not pass `"click"` / `"manual"` to the WC `trigger` attribute. For React `'click'`, use the native Popover API instead of emulating with this tooltip. For React `'manual'`, cancel `show`/`hide` and call `.show()` / `.hide()` (see the manual-trigger demo). |
 | `content` (required prop)  | `content` attribute or `content` slot | Attribute is optional when slot is used                                                 |
 | `enableFlip`               | `no-flip`                             | Inverted boolean; flip enabled by default                                               |
 | `flipBehavior`             | `flip-behavior`                       | Attribute accepts comma-separated list instead of array                                 |

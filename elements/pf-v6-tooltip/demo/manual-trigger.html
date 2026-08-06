@@ -1,6 +1,19 @@
 ---
-description: Manually controlled tooltip using show() and hide() methods.
+description: >
+  Manually controlled tooltip using show() and hide() methods. Visibility is
+  controlled only by those methods (the checkbox below). Hover and focus do
+  not open or close the tooltip — default triggers are canceled. Screen
+  readers announce when show() runs, not when the target is focused.
 ---
+<section>
+  <p>
+    Visibility is controlled only by the checkbox (<code>show()</code> /
+    <code>hide()</code>). Hover and focus do not open or close the tooltip.
+    Screen readers announce when the tooltip is shown, not when the target
+    is focused.
+  </p>
+</section>
+
 <section>
   <label>
     <input id="toggle" type="checkbox"> Show tooltip

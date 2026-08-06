@@ -1,4 +1,5 @@
 import { installWindowOnGlobal } from '@lit-labs/ssr/lib/dom-shim.js';
+import { LitElementRenderer } from '@lit-labs/ssr/lib/lit-element-renderer.js';
 
 class ObserverShim {
   observe(): void {
@@ -30,8 +31,13 @@ function getComputedStyle() {
   };
 };
 
-// @ts-expect-error: opt in to event support in ssr
-globalThis.litSsrCallConnectedCallback = true;
+export function ssrCallConnectedCallback(
+  predicate: (element: { localName: string }) => boolean = () => true,
+): void {
+  LitElementRenderer.renderOptions.push(
+    element => predicate(element) ? { connectedCallback: true } : undefined,
+  );
+}
 
 installWindowOnGlobal({
   ErrorEvent: Event,

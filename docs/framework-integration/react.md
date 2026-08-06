@@ -128,7 +128,7 @@ tags:
   ```js
   import { useState } from "react";
 
-  import { Button } from "@patternfly/elements/react/pf-v5-button/pf-v5-button.js";
+  import { Button } from "@patternfly/elements/react/pf-v6-button/pf-v6-button.js";
   import { Card } from "@patternfly/elements/react/pf-v5-card/pf-v5-card.js";
   import { Switch } from "@patternfly/elements/react/pf-v6-switch/pf-v6-switch.js";
   import { Popover } from "@patternfly/elements/react/pf-v5-popover/pf-v5-popover.js";
@@ -137,7 +137,7 @@ tags:
   import "./App.css";
   ```
 
-  Let’s use [`pf-v5-button`][pf-v5-button] and [`pf-v5-card`][pf-v5-card] component in the 
+  Let’s use [`pf-v6-button`][pf-v6-button] and [`pf-v5-card`][pf-v5-card] component in the 
   `App` function in the `App.tsx` file to see that our Card and Button are 
   working. We are updating the local state and showing it in the UI after 
   clicking the button.
@@ -353,7 +353,7 @@ tags:
 [ce-lifecycle]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements#custom_element_lifecycle_callbacks
 [react-lifecycle]: https://legacy.reactjs.org/docs/state-and-lifecycle.html
 [vite]: https://vitejs.dev/guide/#scaffolding-your-first-vite-project
-[pf-v5-button]: https://patternflyelements.org/components/button/
+[pf-v6-button]: https://patternflyelements.org/components/button/
 [pf-v5-card]: https://patternflyelements.org/components/card/
 [pf-v6-switch]: https://patternflyelements.org/components/switch/
 [pf-v5-tooltip]: https://patternflyelements.org/components/tooltip/

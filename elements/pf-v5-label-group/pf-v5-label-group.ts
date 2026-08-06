@@ -162,14 +162,14 @@ export class PfV5LabelGroup extends LitElement {
         >${this.#remaining < 1 ? ''
          : this.open ? this.expandedText
          : this.collapsedText.replace(REMAINING_RE, this.#remaining.toString())}</pf-v5-label>
-        <pf-v5-button id="close-button"
-                   plain
+        <pf-v6-button id="close-button"
+                   variant="plain"
                    icon="times-circle"
                    icon-set="fas"
-                   label="${this.accessibleCloseLabel}"
+                   accessible-label="${this.accessibleCloseLabel}"
                    aria-describedby="category"
                    ?hidden="${!this.closeable}"
-                   @click="${this.#onCloseClick}"></pf-v5-button>
+                   @click="${this.#onCloseClick}"></pf-v6-button>
       </div>
     `;
   }

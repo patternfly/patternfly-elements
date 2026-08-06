@@ -34,7 +34,7 @@ import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
 <pf-v5-popover heading="Popover heading"
             body="Popovers are triggered by click rather than hover."
             footer="Popover footer">
-  <pf-v5-button>Toggle popover</pf-v5-button>
+  <pf-v6-button>Toggle popover</pf-v6-button>
 </pf-v5-popover>
 ```
 
@@ -43,6 +43,6 @@ import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
   <h3 slot="heading">Popover heading</h3>
   <div slot="body">Popovers are triggered by click rather than hover.</div>
   <span slot="footer">Popover footer</span>
-  <pf-v5-button>Toggle popover</pf-v5-button>
+  <pf-v6-button>Toggle popover</pf-v6-button>
 </pf-v5-popover>
 ```

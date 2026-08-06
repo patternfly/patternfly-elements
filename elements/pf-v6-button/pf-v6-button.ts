@@ -78,6 +78,7 @@ const loadingConverter: ComplexAttributeConverter<boolean | null> = {
  * `ElementInternals` via `InternalsController` — not a slotted native `<button>`.
  *
  * @summary Triggers an action when activated
+ * @alias Button
  *
  * @slot - Button label text
  * @slot icon - Icon displayed at the start or end of the button

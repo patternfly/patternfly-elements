@@ -3,7 +3,7 @@ import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { sendKeys, resetMouse } from '@web/test-runner-commands';
 import { PfV5Popover } from '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
-import { PfV5Button } from '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import { PfV6Button } from '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
 function press(key: string) {
   return async function() {
@@ -72,7 +72,7 @@ describe('<pf-v5-popover>', function() {
         <pf-v5-popover heading="Popover heading"
                     body="Popovers are triggered by click rather than hover."
                     footer="Popover footer">
-          <pf-v5-button>Toggle popover</pf-v5-button>
+          <pf-v6-button>Toggle popover</pf-v6-button>
         </pf-v5-popover>
       `);
     });
@@ -90,7 +90,7 @@ describe('<pf-v5-popover>', function() {
           <pf-v5-popover heading="Popover heading"
                       body="Popovers are triggered by click rather than hover."
                       footer="Popover footer">
-            <pf-v5-button>Toggle popover</pf-v5-button>
+            <pf-v6-button>Toggle popover</pf-v6-button>
           </pf-v5-popover>
         `);
       });
@@ -100,7 +100,7 @@ describe('<pf-v5-popover>', function() {
       beforeEach(updateComplete);
 
       it('doesn\'t steal tab order', function() {
-        expect(document.activeElement).to.be.an.instanceof(PfV5Button);
+        expect(document.activeElement).to.be.an.instanceof(PfV6Button);
       });
 
       describe('and pressing Enter', function() {

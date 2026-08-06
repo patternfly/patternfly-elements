@@ -5,7 +5,7 @@ import { property } from 'lit/decorators/property.js';
 import styles from './pf-v5-tr.css';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 
 export class RequestExpandEvent extends Event {
@@ -107,17 +107,17 @@ export class PfV5Tr extends LitElement {
     return [
       this.expandable && this.expandable !== 'compound' && html`
         <pf-v5-td id="toggle-cell">
-          <pf-v5-button id="toggle-button"
+          <pf-v6-button id="toggle-button"
                      aria-expanded=${String(this.expanded) as 'true' | 'false'}
                      aria-controls=${ifDefined(this.expanded ? 'expansion' : undefined)}
-                     plain
-                     label="Details"
+                     variant="plain"
+                     accessible-label="Details"
                      @click=${this.#onClick}>
             <pf-v5-icon id="toggle-icon"
                      icon="angle-right"
                      size="md"
             ></pf-v5-icon>
-          </pf-v5-button>
+          </pf-v6-button>
         </pf-v5-td>
       `,
 

@@ -6,7 +6,7 @@
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <a href="#bar">Learn more</a>
   </pf-v5-modal>
-  <pf-v5-button id="overview-trigger"> Open modal </pf-v5-button>
+  <pf-v6-button id="overview-trigger"> Open modal </pf-v6-button>
 {% endrenderOverview %}
 
 {% band header="Usage" %}
@@ -16,7 +16,7 @@
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <a href="#bar">Learn more</a>
   </pf-v5-modal>
-  <pf-v5-button id="usage-trigger">Open modal</pf-v5-button>
+  <pf-v6-button id="usage-trigger">Open modal</pf-v6-button>
   {% endhtmlexample %}
 {% endband %}
 
@@ -29,7 +29,7 @@
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <a href="#bar">Learn more</a>
   </pf-v5-modal>
-  <pf-v5-button id="rendered-slot-small"> Open a small modal </pf-v5-button>
+  <pf-v6-button id="rendered-slot-small"> Open a small modal </pf-v6-button>
   {% endhtmlexample %}
 
   {% htmlexample %}
@@ -38,7 +38,7 @@
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <a href="#bar">Learn more</a>
   </pf-v5-modal>
-  <pf-v5-button id="rendered-slot-medium"> Open a medium modal </pf-v5-button>
+  <pf-v6-button id="rendered-slot-medium"> Open a medium modal </pf-v6-button>
   {% endhtmlexample %}
 
   {% htmlexample %}
@@ -47,7 +47,7 @@
     <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <a href="#bar">Learn more</a>
   </pf-v5-modal>
-  <pf-v5-button id="rendered-slot-large"> Open a large modal </pf-v5-button>
+  <pf-v6-button id="rendered-slot-large"> Open a large modal </pf-v6-button>
   {% endhtmlexample %}
 {% endrenderAttributes %}
 

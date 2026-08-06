@@ -2,15 +2,15 @@
   <h2>Performance</h2>
   <p>This demo measures the time needed to render 10000 tooltip elements then toggle the first tooltip.</p>
   <form>
-    <pf-v5-button type="submit">Render</pf-v5-button>
-    <pf-v5-button type="reset" danger>Reset</pf-v5-button>
+    <pf-v6-button type="submit">Render</pf-v6-button>
+    <pf-v6-button type="reset" danger>Reset</pf-v6-button>
     <output name="output"></output>
     <div id="target"></div>
   </form>
 </section>
 
 <script type="module">
-  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
   import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
 
   const $ = x => document.querySelector(x);
@@ -18,7 +18,7 @@
 
   import { html, render } from 'lit';
 
-  const submit = $('form pf-v5-button');
+  const submit = $('form pf-v6-button');
   const target = $('#target');
 
   const getTooltip = (_, i) =>

@@ -28,9 +28,40 @@ const testRunnerHtml: TestRunnerConfig['testRunnerHtml'] = testFramework => /* h
         }
       }
       </script>
+      <style>
+        [data-pfe-focus-sentinel] {
+          position: fixed;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          padding: 0;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+          border: 0;
+        }
+      </style>
     </head>
     <body>
+      <!--
+        Trailing focus sentinel: gives Tab a destination outside the fixture.
+        Without it, Chromium wraps focus onto the sole tabbable control, so Tab
+        appears to be a no-op after the first successful blur-to-body.
+        Do not add a leading sentinel — that steals initial Tab into the page.
+      -->
       <script type="module" src="${testFramework}"></script>
+      <span data-pfe-focus-sentinel="end" tabindex="0"></span>
+      <script>
+        (() => {
+          const end = document.querySelector('[data-pfe-focus-sentinel="end"]');
+          if (!end) return;
+          new MutationObserver(() => {
+            if (document.body.lastElementChild !== end) {
+              document.body.append(end);
+            }
+          }).observe(document.body, { childList: true });
+        })();
+      </script>
     </body>
   </html>
 `;

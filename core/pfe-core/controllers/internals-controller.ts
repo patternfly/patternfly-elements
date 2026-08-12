@@ -74,13 +74,10 @@ type InternalsHost = ReactiveControllerHost & HTMLElement;
 export class InternalsController implements ReactiveController, ARIAMixin {
   private static instances = new WeakMap<HTMLElement, InternalsController>();
 
-  declare readonly form: ElementInternals['form'];
   declare readonly shadowRoot: ElementInternals['shadowRoot'];
 
   // https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/states
   declare readonly states: unknown;
-  declare readonly willValidate: ElementInternals['willValidate'];
-  declare readonly validationMessage: ElementInternals['validationMessage'];
 
   public static getLabels(host: InternalsHost): Element[] {
     return Array.from(this.instances.get(host)?.internals.labels ?? []) as Element[];
@@ -230,6 +227,18 @@ export class InternalsController implements ReactiveController, ARIAMixin {
 
   get validity(): ValidityState {
     return this.internals.validity;
+  }
+
+  get form(): HTMLFormElement | null {
+    return this.internals.form;
+  }
+
+  get validationMessage(): string {
+    return this.internals.validationMessage;
+  }
+
+  get willValidate(): boolean {
+    return this.internals.willValidate;
   }
 
   /** A best-attempt based on observed behaviour in FireFox 115 on fedora 38 */

@@ -117,8 +117,6 @@ export class PfV6TextInput extends LitElement {
 
   #touched = false;
 
-  #validationMessage = '';
-
   get #disabled() {
     return (!isServer && this.matches(':disabled')) || this.disabled;
   }
@@ -199,7 +197,7 @@ export class PfV6TextInput extends LitElement {
 
   #getStatusMessage(): string {
     if (this.#isInvalid) {
-      return this.#validationMessage;
+      return this.#internals.validationMessage;
     }
     return '';
   }
@@ -239,16 +237,17 @@ export class PfV6TextInput extends LitElement {
     switch (event.key) {
       case 'Enter':
         if (this.reportValidity()) {
-          this.#internals.form?.requestSubmit(null);
+          this.#internals.form?.requestSubmit();
         }
     }
   }
 
 
   #setValidityFromInput() {
-    const message = this.#input?.validationMessage ?? '';
-    this.#validationMessage = message;
-    this.#internals.setValidity(this.#input?.validity, message);
+    this.#internals.setValidity(
+      this.#input?.validity,
+      this.#input?.validationMessage,
+    );
     this.requestUpdate();
   }
 
@@ -272,7 +271,6 @@ export class PfV6TextInput extends LitElement {
   }
 
   setCustomValidity(message: string): void {
-    this.#validationMessage = message;
     this.#internals.setValidity(message ? { customError: true } : {}, message);
     this.requestUpdate();
   }

@@ -2,5 +2,5 @@ fieldset {
   max-width: 832px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--pf-global--spacer--md, 1rem);
+  gap: var(--pf-t--global--spacer--md, 1rem);
 }

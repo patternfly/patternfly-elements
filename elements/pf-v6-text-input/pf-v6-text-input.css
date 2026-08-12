@@ -1,0 +1,255 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:host {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  color-scheme: light dark;
+  /** Input container inline size */
+  inline-size: var(--pf-v6-c-form-control--Width, 100%);
+  /** Input font size */
+  font-size: var(--pf-v6-c-form-control--FontSize,
+    var(--pf-t--global--font--size--body--default, 1rem));
+  /** Input line height */
+  line-height: var(--pf-v6-c-form-control--LineHeight,
+    var(--pf-t--global--font--line-height--body, 1.5));
+  /** Input background color */
+  background-color: var(--pf-v6-c-form-control--BackgroundColor,
+    var(--pf-t--global--background--color--control--default, light-dark(#ffffff, #383838)));
+  /** Border radius */
+  border-radius: var(--pf-v6-c-form-control--BorderRadius,
+    var(--pf-t--global--border--radius--control--form-element, 6px));
+}
+
+:host([disabled]),
+:host(:disabled) {
+  pointer-events: none;
+}
+
+#container {
+  display: contents;
+
+  &::before,
+  &::after {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: "";
+    border-radius: var(--pf-v6-c-form-control--BorderRadius,
+      var(--pf-t--global--border--radius--control--form-element, 6px));
+  }
+
+  /** Base border */
+  &::before {
+    border: var(--pf-v6-c-form-control--before--BorderWidth,
+        var(--pf-t--global--border--width--control--default, 1px))
+      solid var(--pf-v6-c-form-control--before--BorderColor,
+        var(--pf-t--global--border--color--control--default, light-dark(#c7c7c7, #a3a3a3)));
+  }
+
+  /** State/hover border */
+  &::after {
+    border: var(--pf-v6-c-form-control--after--BorderWidth,
+        var(--pf-t--global--border--width--control--default, 1px))
+      solid var(--pf-v6-c-form-control--after--BorderColor, transparent);
+  }
+
+  &:hover::after {
+    border-color: var(--pf-v6-c-form-control--hover--after--BorderColor,
+      var(--pf-t--global--border--color--hover, light-dark(#151515, #ffffff)));
+    border-width: var(--pf-v6-c-form-control--hover--after--BorderWidth,
+      var(--pf-t--global--border--width--control--hover, 1px));
+  }
+
+  &.disabled {
+    --pf-v6-c-form-control--BackgroundColor: var(--pf-v6-c-form-control--m-disabled--BackgroundColor,
+      var(--pf-t--global--background--color--disabled--default, light-dark(#c7c7c7, #a3a3a3)));
+    --pf-v6-c-form-control--Color: var(--pf-v6-c-form-control--m-disabled--Color,
+      var(--pf-t--global--text--color--on-disabled, light-dark(#4d4d4d, #383838)));
+    cursor: not-allowed;
+
+    &::before,
+    &::after {
+      border-style: none;
+    }
+
+    &:hover::after {
+      border-style: none;
+    }
+  }
+
+  &.readonly {
+    --pf-v6-c-form-control--BackgroundColor: var(--pf-v6-c-form-control--m-readonly--BackgroundColor,
+      var(--pf-t--global--background--color--control--read-only, light-dark(#f0f0f0, #292929)));
+    --pf-v6-c-form-control--before--BorderColor: var(--pf-v6-c-form-control--m-readonly--BorderColor,
+      var(--pf-t--global--border--color--control--read-only, light-dark(#c7c7c7, #707070)));
+  }
+
+  &.readonly.plain {
+    --pf-v6-c-form-control--m-readonly--BackgroundColor: transparent;
+    --pf-v6-c-form-control--m-readonly--BorderColor: transparent;
+    --pf-v6-c-form-control--PaddingInlineStart: 0;
+    --pf-v6-c-form-control--PaddingInlineEnd: 0;
+    --_outline-offset: 0;
+
+    &::before,
+    &::after {
+      border-style: none;
+    }
+  }
+
+  &.success {
+    --pf-v6-c-form-control--after--BorderColor: var(--pf-v6-c-form-control--m-success--after--BorderColor,
+      var(--pf-t--global--border--color--status--success--default, light-dark(#3e8635, #63ba59)));
+    --pf-v6-c-form-control--after--BorderWidth: var(--pf-v6-c-form-control--m-success--after--BorderWidth,
+      var(--pf-t--global--border--width--control--default, 1px));
+
+    &:hover::after {
+      border-color: var(--pf-v6-c-form-control--m-success--hover--after--BorderColor,
+        var(--pf-t--global--border--color--status--success--hover, light-dark(#1e4f18, #7ccc6f)));
+    }
+
+    #status-icon {
+      /** Status icon color (success) */
+      color: var(--pf-v6-c-form-control--m-success__icon--m-status--Color,
+        var(--pf-t--global--icon--color--status--success--default, light-dark(#3e8635, #63ba59)));
+    }
+  }
+
+  &.warning {
+    --pf-v6-c-form-control--after--BorderColor: var(--pf-v6-c-form-control--m-warning--after--BorderColor,
+      var(--pf-t--global--border--color--status--warning--default, light-dark(#f0ab00, #f4c145)));
+    --pf-v6-c-form-control--after--BorderWidth: var(--pf-v6-c-form-control--m-warning--after--BorderWidth,
+      var(--pf-t--global--border--width--control--default, 1px));
+
+    &:hover::after {
+      border-color: var(--pf-v6-c-form-control--m-warning--hover--after--BorderColor,
+        var(--pf-t--global--border--color--status--warning--hover, light-dark(#c58c00, #f9d67a)));
+    }
+
+    #status-icon {
+      /** Status icon color (warning) */
+      color: var(--pf-v6-c-form-control--m-warning__icon--m-status--Color,
+        var(--pf-t--global--icon--color--status--warning--default, light-dark(#f0ab00, #f4c145)));
+    }
+  }
+
+  &.error {
+    --pf-v6-c-form-control--after--BorderColor: var(--pf-v6-c-form-control--m-error--after--BorderColor,
+      var(--pf-t--global--border--color--status--danger--default, light-dark(#c9190b, #fe5142)));
+    --pf-v6-c-form-control--after--BorderWidth: var(--pf-v6-c-form-control--m-error--after--BorderWidth,
+      var(--pf-t--global--border--width--control--default, 1px));
+
+    &:hover::after {
+      border-color: var(--pf-v6-c-form-control--m-error--hover--after--BorderColor,
+        var(--pf-t--global--border--color--status--danger--hover, light-dark(#a30000, #ff7468)));
+    }
+
+    #status-icon {
+      /** Status icon color (error) */
+      color: var(--pf-v6-c-form-control--m-error__icon--m-status--Color,
+        var(--pf-t--global--icon--color--status--danger--default, light-dark(#c9190b, #fe5142)));
+    }
+  }
+
+}
+
+/* direction: rtl is a visual hack for start-truncation; screen readers may
+   announce content as RTL when unfocused. On focus, direction reverts to
+   normal so editing and AT interaction are unaffected. */
+.start-truncated input:not(:focus) {
+  direction: rtl;
+  text-overflow: ellipsis;
+}
+
+input {
+  grid-row: 1 / 2;
+  grid-column: 1 / -1;
+  /** Block-start padding */
+  padding-block-start: var(--pf-v6-c-form-control--PaddingBlockStart,
+    var(--pf-t--global--spacer--control--vertical--default, 0.375rem));
+  /** Block-end padding */
+  padding-block-end: var(--pf-v6-c-form-control--PaddingBlockEnd,
+    var(--pf-t--global--spacer--control--vertical--default, 0.375rem));
+  /** Inline-start padding */
+  padding-inline-start: var(--pf-v6-c-form-control--PaddingInlineStart,
+    var(--pf-t--global--spacer--control--horizontal--default, 0.5rem));
+  /** Inline-end padding */
+  padding-inline-end: var(--pf-v6-c-form-control--PaddingInlineEnd,
+    var(--pf-t--global--spacer--control--horizontal--default, 0.5rem));
+  /** Input text color */
+  color: var(--pf-v6-c-form-control--Color,
+    var(--pf-t--global--text--color--regular, light-dark(#151515, #ffffff)));
+  font: inherit;
+  text-overflow: ellipsis;
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-radius: var(--pf-v6-c-form-control--BorderRadius,
+    var(--pf-t--global--border--radius--control--form-element, 6px));
+  outline-offset: var(--_outline-offset, -6px);
+
+  &::placeholder {
+    color: var(--pf-v6-c-form-control--m-placeholder--Color,
+      var(--pf-t--global--text--color--placeholder, light-dark(#707070, #a3a3a3)));
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+#utilities {
+  display: flex;
+  flex-wrap: nowrap;
+  grid-row: 1 / 2;
+  grid-column: 2;
+  align-self: center;
+  gap: var(--pf-v6-c-form-control__utilities--Gap,
+    var(--pf-t--global--spacer--gap--group--horizontal, 0.5rem));
+  align-items: center;
+  padding-inline-end: var(--pf-v6-c-form-control--PaddingInlineEnd,
+    var(--pf-t--global--spacer--control--horizontal--default, 0.5rem));
+  pointer-events: none;
+  font-size: var(--pf-v6-c-form-control__icon--FontSize,
+    var(--pf-t--global--icon--size--font--body--default, 1em));
+  color: var(--pf-v6-c-form-control__icon--Color,
+    var(--pf-t--global--icon--color--regular, light-dark(#4d4d4d, #c7c7c7)));
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+#status-icon {
+  display: flex;
+  align-items: center;
+  color: var(--pf-v6-c-form-control__icon--m-status--Color,
+    var(--pf-t--global--icon--color--regular, light-dark(#4d4d4d, #c7c7c7)));
+}
+
+::slotted([slot="icon"]) {
+  display: flex;
+  align-items: center;
+}
+
+#status-message {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+#status-message[hidden] {
+  display: none;
+}

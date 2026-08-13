@@ -141,7 +141,7 @@ a#content {
 
 a#content:hover,
 a#content:focus {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 button#content {
@@ -462,11 +462,98 @@ button#content {
   --_cursor: pointer;
 }
 
-:host(:is([href], [clickable])) #container:has(#content:is(:hover, :focus)) {
+:host(:not([variant="outline"]):is([href], [clickable]):hover) #container,
+:host(:not([variant="outline"]):is([href], [clickable]):focus-within) #container {
   --_border-width: var(--pf-v6-c-label--m-clickable--hover--BorderWidth,
     var(--pf-t--global--border--width--action--hover, 2px));
   --_border-color: var(--pf-v6-c-label--m-clickable--hover--BorderColor,
     var(--pf-t--global--border--color--high-contrast, #151515));
+}
+
+:host([variant="outline"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"]:is([href], [clickable]):focus-within) #container {
+  --_border-width: var(--pf-v6-c-label--m-outline--m-clickable--hover--BorderWidth,
+    var(--pf-t--global--border--width--action--hover, 2px));
+  --_border-color: var(--pf-v6-c-label--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--gray--hover, #6a6e73));
+}
+
+:host([variant="outline"][color="blue"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="blue"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-blue--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--blue--hover, #4394e5));
+}
+
+:host([variant="outline"][color="green"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="green"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-green--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--green--hover, #6dab48));
+}
+
+:host([variant="outline"][color="orange"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="orange"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-orange--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--orange--hover, #c48522));
+}
+
+:host([variant="outline"][color="red"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="red"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-red--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--red--hover, #c95959));
+}
+
+:host([variant="outline"][color="orangered"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="orangered"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-orangered--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--orangered--hover, #c06740));
+}
+
+:host([variant="outline"][color="purple"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="purple"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-purple--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--purple--hover, #7e64b5));
+}
+
+:host([variant="outline"][color="teal"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="teal"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-teal--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--teal--hover, #519e9e));
+}
+
+:host([variant="outline"][color="yellow"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][color="yellow"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-yellow--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--yellow--hover, #b08e00));
+}
+
+:host([variant="outline"][status="success"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][status="success"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-success--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--status--success--hover, #2e5a10));
+}
+
+:host([variant="outline"][status="warning"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][status="warning"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-warning--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--status--warning--hover, #a67a18));
+}
+
+:host([variant="outline"][status="danger"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][status="danger"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-danger--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--status--danger--hover, #8a2a07));
+}
+
+:host([variant="outline"][status="info"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][status="info"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-info--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--status--info--hover, #462f93));
+}
+
+:host([variant="outline"][status="custom"]:is([href], [clickable]):hover) #container,
+:host([variant="outline"][status="custom"]:is([href], [clickable]):focus-within) #container {
+  --_border-color: var(--pf-v6-c-label--m-custom--m-outline--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--status--custom--hover, #0e5a5a));
 }
 
 /* ==============================

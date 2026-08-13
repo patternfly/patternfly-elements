@@ -7,6 +7,7 @@ import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
 import { PfV6Label } from '../pf-v6-label/pf-v6-label.js';
+import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
 
 import styles from './pf-v5-label-group.css';
 

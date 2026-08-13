@@ -144,8 +144,8 @@ export class PfV6Label extends LitElement {
         </span>
         ${!this.href ? html`` : html`
         <a id="content"
-           href="${ifDefined(this.href)}"
-           ?aria-disabled="${this.disabled || undefined}"
+           href="${ifDefined(this.disabled ? undefined : this.href)}"
+           aria-disabled="${ifDefined(this.disabled ? 'true' : undefined)}"
            tabindex="${this.disabled ? -1 : 0}">
           <span id="text" style="${ifDefined(textStyle)}"><slot></slot></span>
         </a>`}

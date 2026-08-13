@@ -1,0 +1,546 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  position: relative;
+  white-space: nowrap;
+  border: 0;
+  isolation: isolate;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+#container {
+  --_bg:
+    /** Default label background color */
+    var(--pf-v6-c-label--BackgroundColor,
+      var(--pf-t--global--color--nonstatus--gray--default,
+        light-dark(var(--pf-t--color--gray--20, #e0e0e0), var(--pf-t--color--gray--60, #4d4d4d))));
+  --_color:
+    /** Default label text color */
+    var(--pf-v6-c-label--Color,
+      var(--pf-t--global--text--color--nonstatus--on-gray--default,
+        var(--pf-t--color--gray--100, #151515)));
+  --_icon-color:
+    /** Label icon color */
+    var(--pf-v6-c-label__icon--Color,
+      var(--pf-t--global--icon--color--nonstatus--on-gray--default,
+        var(--pf-t--color--gray--100, #151515)));
+  --_border-width:
+    /** Label border width */
+    var(--pf-v6-c-label--BorderWidth,
+      var(--pf-t--global--border--width--regular, 0));
+  --_border-color:
+    /** Label border color, visible in outline variant or high-contrast mode */
+    var(--pf-v6-c-label--BorderColor,
+      var(--pf-t--global--border--color--high-contrast, transparent));
+  --_border-radius:
+    /** Label border radius */
+    var(--pf-v6-c-label--BorderRadius,
+      var(--pf-t--global--border--radius--pill, 30em));
+  --_font-size:
+    /** Label text font size */
+    var(--pf-v6-c-label--FontSize,
+      var(--pf-t--global--font--size--body--sm, 0.75rem));
+  --_gap:
+    /** Gap between icon, text, and close button */
+    var(--pf-v6-c-label--Gap,
+      var(--pf-t--global--spacer--gap--text-to-element--compact, 0.25rem));
+  --_padding-block-start:
+    /** Block-start padding */
+    var(--pf-v6-c-label--PaddingBlockStart,
+      var(--pf-t--global--spacer--xs, 0.25rem));
+  --_padding-block-end:
+    /** Block-end padding */
+    var(--pf-v6-c-label--PaddingBlockEnd,
+      var(--pf-t--global--spacer--xs, 0.25rem));
+  --_padding-inline-start:
+    /** Inline-start padding */
+    var(--pf-v6-c-label--PaddingInlineStart,
+      var(--pf-t--global--spacer--sm, 0.5rem));
+  --_padding-inline-end:
+    /** Inline-end padding */
+    var(--pf-v6-c-label--PaddingInlineEnd,
+      var(--pf-t--global--spacer--sm, 0.5rem));
+  --_max-width:
+    /** Maximum label width */
+    var(--pf-v6-c-label--MaxWidth, 100%);
+  --_text-max-width:
+    /** Maximum text width before truncation */
+    var(--pf-v6-c-label__text--MaxWidth, 100%);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  max-width: var(--_max-width);
+  padding-block: var(--_padding-block-start) var(--_padding-block-end);
+  padding-inline: var(--_padding-inline-start) var(--_padding-inline-end);
+  font-size: var(--_font-size);
+  color: var(--_color);
+  border-radius: var(--_border-radius);
+}
+
+#container::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background-color: var(--_bg);
+  border: var(--_border-width) solid var(--_border-color);
+  border-radius: var(--_border-radius);
+}
+
+/* Icon */
+
+#icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--_icon-color);
+  font-size: var(--pf-v6-c-label__icon--FontSize,
+    var(--pf-t--global--icon--size--font--body--sm, 0.75rem));
+}
+
+#icon[hidden] {
+  display: none;
+}
+
+#icon svg {
+  fill: currentColor;
+  block-size: 1em;
+  inline-size: 1em;
+}
+
+/* Content (a | button | span) */
+
+#content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0;
+  color: inherit;
+  cursor: var(--_cursor, revert);
+  background: transparent;
+  border: 0;
+  font: inherit;
+  text-decoration: none;
+}
+
+a#content {
+  color: inherit;
+  cursor: pointer;
+}
+
+a#content:hover,
+a#content:focus {
+  text-decoration: underline;
+}
+
+button#content {
+  cursor: pointer;
+}
+
+/* Text */
+
+#text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: var(--_text-max-width);
+}
+
+/* Close button */
+
+#close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--_icon-color);
+  cursor: pointer;
+  font-size: var(--pf-v6-c-label__actions--c-button--FontSize,
+    var(--pf-t--global--icon--size--font--body--sm, 0.75rem));
+  outline-offset: -3px;
+  border-radius: var(--_border-radius);
+}
+
+#close:hover {
+  color: var(--_color);
+}
+
+#close:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+#close svg {
+  fill: currentColor;
+  block-size: 1em;
+  inline-size: 1em;
+}
+
+/* ==============================
+   Non-status color modifiers
+   ============================== */
+
+:host([color="blue"]) #container {
+  --_bg: var(--pf-v6-c-label--m-blue--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--blue--default,
+      light-dark(var(--pf-t--color--blue--20, #b9dafc), var(--pf-t--color--blue--30, #92c5f9))));
+  --_color: var(--pf-v6-c-label--m-blue--Color,
+    var(--pf-t--global--text--color--nonstatus--on-blue--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-blue__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-blue--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="green"]) #container {
+  --_bg: var(--pf-v6-c-label--m-green--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--green--default,
+      light-dark(var(--pf-t--color--green--20, #d1f1bb), var(--pf-t--color--green--30, #afdc8f))));
+  --_color: var(--pf-v6-c-label--m-green--Color,
+    var(--pf-t--global--text--color--nonstatus--on-green--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-green__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-green--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="orange"]) #container {
+  --_bg: var(--pf-v6-c-label--m-orange--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--orange--default,
+      light-dark(var(--pf-t--color--orange--20, #fccb8f), var(--pf-t--color--orange--30, #f8ae54))));
+  --_color: var(--pf-v6-c-label--m-orange--Color,
+    var(--pf-t--global--text--color--nonstatus--on-orange--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-orange__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-orange--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="red"]) #container {
+  --_bg: var(--pf-v6-c-label--m-red--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--red--default,
+      light-dark(var(--pf-t--color--red--20, #fbc5c5), var(--pf-t--color--red--30, #f9a8a8))));
+  --_color: var(--pf-v6-c-label--m-red--Color,
+    var(--pf-t--global--text--color--nonstatus--on-red--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-red__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-red--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="orangered"]) #container {
+  --_bg: var(--pf-v6-c-label--m-orangered--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--orangered--default,
+      light-dark(var(--pf-t--color--red-orange--20, #fbbea8), var(--pf-t--color--red-orange--30, #f89b78))));
+  --_color: var(--pf-v6-c-label--m-orangered--Color,
+    var(--pf-t--global--text--color--nonstatus--on-orangered--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-orangered__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-orangered--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="purple"]) #container {
+  --_bg: var(--pf-v6-c-label--m-purple--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--purple--default,
+      light-dark(var(--pf-t--color--purple--20, #d0c5f4), var(--pf-t--color--purple--30, #b6a6e9))));
+  --_color: var(--pf-v6-c-label--m-purple--Color,
+    var(--pf-t--global--text--color--nonstatus--on-purple--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-purple__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-purple--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="teal"]) #container {
+  --_bg: var(--pf-v6-c-label--m-teal--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--teal--default,
+      light-dark(var(--pf-t--color--teal--20, #b9e5e5), var(--pf-t--color--teal--30, #9ad8d8))));
+  --_color: var(--pf-v6-c-label--m-teal--Color,
+    var(--pf-t--global--text--color--nonstatus--on-teal--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-teal__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-teal--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([color="yellow"]) #container {
+  --_bg: var(--pf-v6-c-label--m-yellow--BackgroundColor,
+    var(--pf-t--global--color--nonstatus--yellow--default,
+      light-dark(var(--pf-t--color--yellow--20, #ffe072), var(--pf-t--color--yellow--30, #ffcc17))));
+  --_color: var(--pf-v6-c-label--m-yellow--Color,
+    var(--pf-t--global--text--color--nonstatus--on-yellow--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-yellow__icon--Color,
+    var(--pf-t--global--icon--color--nonstatus--on-yellow--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+/* ==============================
+   Status modifiers
+   ============================== */
+
+:host([status="success"]) #container {
+  --_bg: var(--pf-v6-c-label--m-success--BackgroundColor,
+    var(--pf-t--global--color--status--success--default,
+      light-dark(var(--pf-t--color--green--60, #3d7317), var(--pf-t--color--green--40, #87bb62))));
+  --_color: var(--pf-v6-c-label--m-success--Color,
+    var(--pf-t--global--text--color--status--on-success--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+  --_icon-color: var(--pf-v6-c-label--m-success__icon--Color,
+    var(--pf-t--global--icon--color--status--on-success--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+}
+
+:host([status="warning"]) #container {
+  --_bg: var(--pf-v6-c-label--m-warning--BackgroundColor,
+    var(--pf-t--global--color--status--warning--default,
+      light-dark(var(--pf-t--color--yellow--30, #ffcc17), var(--pf-t--color--yellow--30, #ffcc17))));
+  --_color: var(--pf-v6-c-label--m-warning--Color,
+    var(--pf-t--global--text--color--status--on-warning--default,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-warning__icon--Color,
+    var(--pf-t--global--icon--color--status--on-warning--default,
+      var(--pf-t--color--gray--100, #151515)));
+}
+
+:host([status="danger"]) #container {
+  --_bg: var(--pf-v6-c-label--m-danger--BackgroundColor,
+    var(--pf-t--global--color--status--danger--default,
+      light-dark(var(--pf-t--color--red-orange--60, #b1380b), var(--pf-t--color--red-orange--50, #f0561d))));
+  --_color: var(--pf-v6-c-label--m-danger--Color,
+    var(--pf-t--global--text--color--status--on-danger--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+  --_icon-color: var(--pf-v6-c-label--m-danger__icon--Color,
+    var(--pf-t--global--icon--color--status--on-danger--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+}
+
+:host([status="info"]) #container {
+  --_bg: var(--pf-v6-c-label--m-info--BackgroundColor,
+    var(--pf-t--global--color--status--info--default,
+      light-dark(var(--pf-t--color--purple--50, #5e40be), var(--pf-t--color--purple--30, #b6a6e9))));
+  --_color: var(--pf-v6-c-label--m-info--Color,
+    var(--pf-t--global--text--color--status--on-info--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+  --_icon-color: var(--pf-v6-c-label--m-info__icon--Color,
+    var(--pf-t--global--icon--color--status--on-info--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+}
+
+:host([status="custom"]) #container {
+  --_bg: var(--pf-v6-c-label--m-custom--BackgroundColor,
+    var(--pf-t--global--color--status--custom--default,
+      light-dark(var(--pf-t--color--teal--60, #147878), var(--pf-t--color--teal--40, #63bdbd))));
+  --_color: var(--pf-v6-c-label--m-custom--Color,
+    var(--pf-t--global--text--color--status--on-custom--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+  --_icon-color: var(--pf-v6-c-label--m-custom__icon--Color,
+    var(--pf-t--global--icon--color--status--on-custom--default,
+      light-dark(var(--pf-t--color--white, #ffffff), var(--pf-t--color--gray--100, #151515))));
+}
+
+/* ==============================
+   Outline variant
+   ============================== */
+
+:host([variant="outline"]) #container {
+  /** Outline variant background */
+  --_bg: var(--pf-v6-c-label--m-outline--BackgroundColor, transparent);
+  /** Outline variant text color */
+  --_color: var(--pf-v6-c-label--m-outline--Color,
+    var(--pf-t--global--text--color--regular,
+      var(--pf-t--color--gray--100, #151515)));
+  --_icon-color: var(--pf-v6-c-label--m-outline__icon--Color,
+    var(--pf-t--global--icon--color--regular,
+      var(--pf-t--color--gray--60, #4d4d4d)));
+  /** Outline variant border width */
+  --_border-width: var(--pf-v6-c-label--m-outline--BorderWidth,
+    var(--pf-t--global--border--width--action--default, 1px));
+  /** Outline variant border color */
+  --_border-color: var(--pf-v6-c-label--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--gray--default, #8a8d90));
+}
+
+/* Outline + color: override border color to match the label color */
+
+:host([variant="outline"][color="blue"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-blue--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--blue--default, #73a7d9));
+}
+
+:host([variant="outline"][color="green"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-green--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--green--default, #93c572));
+}
+
+:host([variant="outline"][color="orange"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-orange--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--orange--default, #dba148));
+}
+
+:host([variant="outline"][color="red"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-red--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--red--default, #d98888));
+}
+
+:host([variant="outline"][color="orangered"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-orangered--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--orangered--default, #d48a6a));
+}
+
+:host([variant="outline"][color="purple"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-purple--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--purple--default, #a08bc7));
+}
+
+:host([variant="outline"][color="teal"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-teal--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--teal--default, #7abcbc));
+}
+
+:host([variant="outline"][color="yellow"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-yellow--m-outline--BorderColor,
+    var(--pf-t--global--border--color--nonstatus--yellow--default, #d4ab14));
+}
+
+/* Outline + status */
+
+:host([variant="outline"][status="success"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-success--m-outline--BorderColor,
+    var(--pf-t--global--border--color--status--success--default, #3d7317));
+  --_icon-color: var(--pf-v6-c-label--m-success--m-outline__icon--Color,
+    var(--pf-t--global--icon--color--status--success--default, #3d7317));
+}
+
+:host([variant="outline"][status="warning"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-warning--m-outline--BorderColor,
+    var(--pf-t--global--border--color--status--warning--default, #dba148));
+  --_icon-color: var(--pf-v6-c-label--m-warning--m-outline__icon--Color,
+    var(--pf-t--global--icon--color--status--warning--default, #dba148));
+}
+
+:host([variant="outline"][status="danger"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-danger--m-outline--BorderColor,
+    var(--pf-t--global--border--color--status--danger--default, #b1380b));
+  --_icon-color: var(--pf-v6-c-label--m-danger--m-outline__icon--Color,
+    var(--pf-t--global--icon--color--status--danger--default, #b1380b));
+}
+
+:host([variant="outline"][status="info"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-info--m-outline--BorderColor,
+    var(--pf-t--global--border--color--status--info--default, #5e40be));
+  --_icon-color: var(--pf-v6-c-label--m-info--m-outline__icon--Color,
+    var(--pf-t--global--icon--color--status--info--default, #5e40be));
+}
+
+:host([variant="outline"][status="custom"]) #container {
+  --_border-color: var(--pf-v6-c-label--m-custom--m-outline--BorderColor,
+    var(--pf-t--global--border--color--status--custom--default, #147878));
+  --_icon-color: var(--pf-v6-c-label--m-custom--m-outline__icon--Color,
+    var(--pf-t--global--icon--color--status--custom--default, #147878));
+}
+
+/* ==============================
+   Clickable / Link hover
+   ============================== */
+
+:host(:is([href], [clickable])) #container {
+  --_cursor: pointer;
+}
+
+:host(:is([href], [clickable])) #container:has(#content:is(:hover, :focus)) {
+  --_border-width: var(--pf-v6-c-label--m-clickable--hover--BorderWidth,
+    var(--pf-t--global--border--width--action--hover, 2px));
+  --_border-color: var(--pf-v6-c-label--m-clickable--hover--BorderColor,
+    var(--pf-t--global--border--color--high-contrast, #151515));
+}
+
+/* ==============================
+   Compact modifier
+   ============================== */
+
+:host([compact]) #container {
+  --_padding-block-start: var(--pf-v6-c-label--m-compact--PaddingBlockStart, 0);
+  --_padding-block-end: var(--pf-v6-c-label--m-compact--PaddingBlockEnd, 0);
+  --_padding-inline-start: var(--pf-v6-c-label--m-compact--PaddingInlineStart,
+    var(--pf-t--global--spacer--sm, 0.5rem));
+  --_padding-inline-end: var(--pf-v6-c-label--m-compact--PaddingInlineEnd,
+    var(--pf-t--global--spacer--sm, 0.5rem));
+  --_font-size: var(--pf-v6-c-label--m-compact--FontSize,
+    var(--pf-t--global--font--size--body--sm, 0.75rem));
+}
+
+/* ==============================
+   Overflow modifier
+   ============================== */
+
+:host([overflow]) #container {
+  /** Overflow label text color */
+  --_color: var(--pf-v6-c-label--m-overflow--Color,
+    var(--pf-t--global--text--color--brand--default, #0066cc));
+  /** Overflow label background */
+  --_bg: var(--pf-v6-c-label--m-overflow--BackgroundColor,
+    var(--pf-t--global--background--color--action--plain--default, transparent));
+  --_border-width: var(--pf-v6-c-label--m-overflow--BorderWidth,
+    var(--pf-t--global--border--width--action--default, 1px));
+  --_border-color: var(--pf-t--global--border--color--default, #d2d2d2);
+  --_cursor: pointer;
+}
+
+:host([overflow]:is(:hover, :focus-within)) #container {
+  --_color: var(--pf-v6-c-label--m-overflow--hover--Color,
+    var(--pf-t--global--text--color--brand--hover, #004080));
+  --_bg: var(--pf-v6-c-label--m-overflow--hover--BackgroundColor,
+    var(--pf-t--global--background--color--action--plain--hover, #f0f0f0));
+  --_border-width: var(--pf-v6-c-label--m-overflow--hover--BorderWidth,
+    var(--pf-t--global--border--width--action--hover, 2px));
+}
+
+/* ==============================
+   Disabled modifier
+   ============================== */
+
+:host([disabled]) #container {
+  /** Disabled background */
+  --_bg: var(--pf-v6-c-label--m-disabled--BackgroundColor,
+    var(--pf-t--global--background--color--disabled--default, #d2d2d2));
+  /** Disabled text color */
+  --_color: var(--pf-v6-c-label--m-disabled--Color,
+    var(--pf-t--global--text--color--on-disabled, #6a6e73));
+  --_icon-color: var(--pf-v6-c-label--m-disabled__icon--Color,
+    var(--pf-t--global--icon--color--on-disabled, #6a6e73));
+  --_border-width: 0;
+}
+
+/* ==============================
+   Truncated modifier
+   ============================== */
+
+:host([truncated]) #text {
+  max-width: var(--_text-max-width);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==============================
+   Slotted icon content
+   ============================== */
+
+::slotted([slot="icon"]) {
+  color: var(--_icon-color);
+}

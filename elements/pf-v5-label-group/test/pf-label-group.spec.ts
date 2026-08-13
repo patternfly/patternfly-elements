@@ -32,10 +32,10 @@ describe('<pf-v5-label-group>', function() {
     beforeEach(async function() {
       element = await createFixture<PfV5LabelGroup>(html`
         <pf-v5-label-group>
-          <pf-v5-label>Label 1</pf-v5-label>
-          <pf-v5-label>Label 2</pf-v5-label>
-          <pf-v5-label>Label 3</pf-v5-label>
-          <pf-v5-label>Label 4</pf-v5-label>
+          <pf-v6-label>Label 1</pf-v6-label>
+          <pf-v6-label>Label 2</pf-v6-label>
+          <pf-v6-label>Label 3</pf-v6-label>
+          <pf-v6-label>Label 4</pf-v6-label>
         </pf-v5-label-group>
       `);
     });
@@ -68,10 +68,10 @@ describe('<pf-v5-label-group>', function() {
     beforeEach(async function() {
       element = await createFixture<PfV5LabelGroup>(html`
         <pf-v5-label-group closeable>
-          <pf-v5-label>Label 1</pf-v5-label>
-          <pf-v5-label>Label 2</pf-v5-label>
-          <pf-v5-label>Label 3</pf-v5-label>
-          <pf-v5-label>Label 4</pf-v5-label>
+          <pf-v6-label>Label 1</pf-v6-label>
+          <pf-v6-label>Label 2</pf-v6-label>
+          <pf-v6-label>Label 3</pf-v6-label>
+          <pf-v6-label>Label 4</pf-v6-label>
         </pf-v5-label-group>
       `);
     });
@@ -103,10 +103,10 @@ describe('<pf-v5-label-group>', function() {
         <pf-v5-label-group collapsed-text="show $\{remaining} more"
                         expanded-text="show fewer"
                         accessible-label="My Label Group">
-          <pf-v5-label>Label 1</pf-v5-label>
-          <pf-v5-label>Label 2</pf-v5-label>
-          <pf-v5-label>Label 3</pf-v5-label>
-          <pf-v5-label>Label 4</pf-v5-label>
+          <pf-v6-label>Label 1</pf-v6-label>
+          <pf-v6-label>Label 2</pf-v6-label>
+          <pf-v6-label>Label 3</pf-v6-label>
+          <pf-v6-label>Label 4</pf-v6-label>
         </pf-v5-label-group>
       `);
     });
@@ -120,10 +120,10 @@ describe('<pf-v5-label-group>', function() {
     beforeEach(async function() {
       element = await createFixture<PfV5LabelGroup>(html`
         <pf-v5-label-group num-labels="2">
-          <pf-v5-label>Label 1</pf-v5-label>
-          <pf-v5-label>Label 2</pf-v5-label>
-          <pf-v5-label>Label 3</pf-v5-label>
-          <pf-v5-label>Label 4</pf-v5-label>
+          <pf-v6-label>Label 1</pf-v6-label>
+          <pf-v6-label>Label 2</pf-v6-label>
+          <pf-v6-label>Label 3</pf-v6-label>
+          <pf-v6-label>Label 4</pf-v6-label>
         </pf-v5-label-group>
       `);
     });
@@ -138,10 +138,10 @@ describe('<pf-v5-label-group>', function() {
     beforeEach(async function() {
       element = await createFixture<PfV5LabelGroup>(html`
         <pf-v5-label-group num-labels="4">
-          <pf-v5-label>Label 1</pf-v5-label>
-          <pf-v5-label>Label 2</pf-v5-label>
-          <pf-v5-label>Label 3</pf-v5-label>
-          <pf-v5-label>Label 4</pf-v5-label>
+          <pf-v6-label>Label 1</pf-v6-label>
+          <pf-v6-label>Label 2</pf-v6-label>
+          <pf-v6-label>Label 3</pf-v6-label>
+          <pf-v6-label>Label 4</pf-v6-label>
         </pf-v5-label-group>
       `);
     });
@@ -157,8 +157,8 @@ describe('<pf-v5-label-group>', function() {
       element = await createFixture<PfV5LabelGroup>(html`
         <pf-v5-label-group>
           <span slot="category">Group</span>
-          <pf-v5-label>Label 1</pf-v5-label>
-          <pf-v5-label>Label 2</pf-v5-label>
+          <pf-v6-label>Label 1</pf-v6-label>
+          <pf-v6-label>Label 2</pf-v6-label>
         </pf-v5-label-group>
       `);
     });

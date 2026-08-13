@@ -30,9 +30,9 @@ import '@patternfly/elements/pf-v5-label-group/pf-v5-label-group.js';
 
 ```html
 <pf-v5-label-group>
-  <pf-v5-label color="blue">Security</pf-v5-label>
-  <pf-v5-label color="green">Performance</pf-v5-label>
-  <pf-v5-label color="red">Networking</pf-v5-label>
+  <pf-v6-label color="blue">Security</pf-v6-label>
+  <pf-v6-label color="green">Performance</pf-v6-label>
+  <pf-v6-label color="red">Networking</pf-v6-label>
 </pf-v5-label-group>
 ```
 
@@ -40,7 +40,7 @@ With a category:
 ```html
 <pf-v5-label-group>
   <span slot="category">Filters</span>
-  <pf-v5-label removable>Security</pf-v5-label>
-  <pf-v5-label removable>Performance</pf-v5-label>
+  <pf-v6-label removable>Security</pf-v6-label>
+  <pf-v6-label removable>Performance</pf-v6-label>
 </pf-v5-label-group>
 ```

@@ -58,7 +58,7 @@
   line-height: 1.6;
 }
 
-#labels ::slotted(pf-v5-label) {
+#labels ::slotted(pf-v6-label) {
   display: inline-flex;
   min-width: 0;
   margin-inline-end: var(--pf-v5-c-label-group__list-item--MarginRight);

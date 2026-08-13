@@ -1,0 +1,38 @@
+---
+name: Clickable labels
+description: Clickable labels can be used as links or buttons to trigger actions.
+---
+<h3>Link labels</h3>
+<section>
+  <pf-v6-label href="https://www.patternfly.org">PatternFly</pf-v6-label>
+  <pf-v6-label color="blue" href="#blue">Blue link</pf-v6-label>
+  <pf-v6-label color="green" href="#green" removable>Green link removable</pf-v6-label>
+  <pf-v6-label variant="outline" href="#outline">Outline link</pf-v6-label>
+</section>
+
+<h3>Clickable labels</h3>
+<section>
+  <pf-v6-label clickable id="click-demo">Click me</pf-v6-label>
+  <pf-v6-label color="blue" clickable>Blue clickable</pf-v6-label>
+  <pf-v6-label color="green" clickable removable>Green clickable removable</pf-v6-label>
+  <pf-v6-label variant="outline" clickable>Outline clickable</pf-v6-label>
+</section>
+
+<output id="output"></output>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-label/pf-v6-label.js';
+  document.getElementById('click-demo')
+    .addEventListener('click', () => {
+      document.getElementById('output').textContent = 'Label clicked!';
+    });
+</script>
+
+<style>
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+</style>

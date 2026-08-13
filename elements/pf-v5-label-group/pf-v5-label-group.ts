@@ -6,7 +6,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { observes } from '@patternfly/pfe-core/decorators/observes.js';
 import { RovingTabindexController } from '@patternfly/pfe-core/controllers/roving-tabindex-controller.js';
 
-import { PfV5Label } from '../pf-v5-label/pf-v5-label.js';
+import { PfV6Label } from '../pf-v6-label/pf-v6-label.js';
 
 import styles from './pf-v5-label-group.css';
 
@@ -46,7 +46,7 @@ const REMAINING_RE = /\$\{\s*remaining\s*\}/g;
  * @slot category
  *       Category name text for label group category.
  *       If this slot is populated, the label group will have category styling applied.
- * @slot - `<pf-v5-label>` elements.
+ * @slot - `<pf-v6-label>` elements.
  */
 @customElement('pf-v5-label-group')
 export class PfV5LabelGroup extends LitElement {
@@ -87,8 +87,8 @@ export class PfV5LabelGroup extends LitElement {
   /** Label count tracked during SSR via child events. */
   _ssrLabelCount = 0;
 
-  get #overflowLabel(): PfV5Label | null {
-    return this.renderRoot?.querySelector?.<PfV5Label>('#overflow') ?? null;
+  get #overflowLabel(): PfV6Label | null {
+    return this.renderRoot?.querySelector?.<PfV6Label>('#overflow') ?? null;
   }
 
   get #closeButton(): HTMLButtonElement | null {
@@ -101,11 +101,11 @@ export class PfV5LabelGroup extends LitElement {
     return slot?.assignedNodes({ flatten: true }) ?? [];
   }
 
-  get #labels(): NodeListOf<PfV5Label> | PfV5Label[] {
+  get #labels(): NodeListOf<PfV6Label> | PfV6Label[] {
     if (isServer) {
-      return [] as PfV5Label[];
+      return [] as PfV6Label[];
     }
-    return this.querySelectorAll<PfV5Label>('pf-v5-label:not([slot]):not([overflow-label])');
+    return this.querySelectorAll<PfV6Label>('pf-v6-label:not([slot]):not([overflow])');
   }
 
   get #labelCount(): number {
@@ -154,14 +154,14 @@ export class PfV5LabelGroup extends LitElement {
                 ?hidden="${!this.accessibleLabel}">${this.accessibleLabel ?? ''}</span>
         </slot>
         <slot id="labels" @slotchange="${this.#onSlotchange}"></slot>
-        <pf-v5-label id="overflow"
+        <pf-v6-label id="overflow"
                   aria-controls="labels"
-                  overflow-label
+                  overflow
                   ?hidden="${this.#remaining < 1}"
                   @click="${this.#onMoreClick}"
         >${this.#remaining < 1 ? ''
          : this.open ? this.expandedText
-         : this.collapsedText.replace(REMAINING_RE, this.#remaining.toString())}</pf-v5-label>
+         : this.collapsedText.replace(REMAINING_RE, this.#remaining.toString())}</pf-v6-label>
         <pf-v5-button id="close-button"
                    plain
                    icon="times-circle"

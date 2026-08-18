@@ -60,6 +60,8 @@ External trigger (element id — not an event type):
 | `maxWidth`                 | `--pf-v6-c-tooltip--MaxWidth`         | CSS custom property instead of prop                                                     |
 | `children` / `triggerRef`  | default slot or `trigger` attribute   | WC `trigger` means *which* element (ID string or Element ref), same role as React `triggerRef` — **not** React's event-type `trigger` prop |
 | `onTooltipHidden`          | `hide` event                          | DOM event with `reason` (`mouseleave` / `focusout` / `escape`). Cancelable except Escape, which always dismisses. Also fires `show` (no React equivalent) |
+| `entryDelay`               | `entry-delay`                         | Dash-case attribute; same 300ms default                                                 |
+| `exitDelay`                | `exit-delay`                          | Dash-case attribute; same 300ms default                                                 |
 | `animationDuration`        | CSS transitions                       | Override via stylesheet instead of prop                                                 |
 | `distance`                 | Hardcoded 15px                        | Not configurable; React default also 15                                                 |
 | `isVisible`                | `visible`                             | Boolean attribute; also controllable via `.show()` / `.hide()` methods                  |

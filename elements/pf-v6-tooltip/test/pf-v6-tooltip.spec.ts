@@ -184,6 +184,58 @@ describe('<pf-v6-tooltip>', function() {
     });
   });
 
+  describe('no-flip behavior at top edge', function() {
+    let wrapper: HTMLElement;
+
+    beforeEach(async function() {
+      await setViewport({ width: 400, height: 100 });
+      wrapper = await fixture(html`
+        <div style="padding-top: 0; margin: 0;">
+          <pf-v6-tooltip content="Stays on top" position="top" no-flip>
+            <button>Trigger</button>
+          </pf-v6-tooltip>
+        </div>
+      `);
+      element = wrapper.querySelector('pf-v6-tooltip')!;
+      await element.show();
+      await element.updateComplete;
+      await new Promise(r => setTimeout(r, 50));
+    });
+
+    it('should keep tooltip above trigger even at viewport edge', async function() {
+      const tooltip = element.shadowRoot!.querySelector('#tooltip')!;
+      const tooltipRect = tooltip.getBoundingClientRect();
+      expect(tooltipRect.top).to.be.lessThan(0);
+    });
+  });
+
+  describe('no-flip behavior at bottom edge', function() {
+    let wrapper: HTMLElement;
+
+    beforeEach(async function() {
+      await setViewport({ width: 400, height: 100 });
+      wrapper = await fixture(html`
+        <div style="display: flex; align-items: flex-end; height: 100vh; margin: 0;">
+          <pf-v6-tooltip content="Stays on bottom" position="bottom" no-flip>
+            <button>Trigger</button>
+          </pf-v6-tooltip>
+        </div>
+      `);
+      element = wrapper.querySelector('pf-v6-tooltip')!;
+      await element.show();
+      await element.updateComplete;
+      await new Promise(r => setTimeout(r, 50));
+    });
+
+    it('should keep tooltip below trigger even at viewport edge', async function() {
+      const trigger = element.querySelector('button')!;
+      const tooltip = element.shadowRoot!.querySelector('#tooltip')!;
+      const triggerRect = trigger.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      expect(tooltipRect.top).to.be.greaterThanOrEqual(triggerRect.bottom - 1);
+    });
+  });
+
   describe('with flip-behavior attribute', function() {
     beforeEach(async function() {
       element = await fixture<PfV6Tooltip>(html`
@@ -195,6 +247,60 @@ describe('<pf-v6-tooltip>', function() {
 
     it('should parse comma-separated placements', function() {
       expect(element.flipBehavior).to.deep.equal(['top', 'bottom']);
+    });
+  });
+
+  describe('flip behavior at top edge', function() {
+    let wrapper: HTMLElement;
+
+    beforeEach(async function() {
+      await setViewport({ width: 400, height: 100 });
+      wrapper = await fixture(html`
+        <div style="padding-top: 0; margin: 0;">
+          <pf-v6-tooltip content="Should flip down" position="top">
+            <button>Trigger</button>
+          </pf-v6-tooltip>
+        </div>
+      `);
+      element = wrapper.querySelector('pf-v6-tooltip')!;
+      await element.show();
+      await element.updateComplete;
+      await new Promise(r => setTimeout(r, 50));
+    });
+
+    it('should flip tooltip below trigger when no room above', async function() {
+      const trigger = element.querySelector('button')!;
+      const tooltip = element.shadowRoot!.querySelector('#tooltip')!;
+      const triggerRect = trigger.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      expect(tooltipRect.top).to.be.greaterThanOrEqual(triggerRect.bottom - 1);
+    });
+  });
+
+  describe('flip behavior at bottom edge', function() {
+    let wrapper: HTMLElement;
+
+    beforeEach(async function() {
+      await setViewport({ width: 400, height: 100 });
+      wrapper = await fixture(html`
+        <div style="display: flex; align-items: flex-end; height: 100vh; margin: 0;">
+          <pf-v6-tooltip content="Should flip up" position="bottom">
+            <button>Trigger</button>
+          </pf-v6-tooltip>
+        </div>
+      `);
+      element = wrapper.querySelector('pf-v6-tooltip')!;
+      await element.show();
+      await element.updateComplete;
+      await new Promise(r => setTimeout(r, 50));
+    });
+
+    it('should flip tooltip above trigger when no room below', async function() {
+      const trigger = element.querySelector('button')!;
+      const tooltip = element.shadowRoot!.querySelector('#tooltip')!;
+      const triggerRect = trigger.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      expect(tooltipRect.bottom).to.be.lessThanOrEqual(triggerRect.top + 1);
     });
   });
 
@@ -623,6 +729,25 @@ describe('<pf-v6-tooltip>', function() {
       await element.show();
       await element.updateComplete;
       expect(announcer.textContent).to.equal('');
+    });
+  });
+
+  describe('changing content while visible', function() {
+    beforeEach(async function() {
+      element = await fixture<PfV6Tooltip>(html`
+        <pf-v6-tooltip content="Before">
+          <button>Trigger</button>
+        </pf-v6-tooltip>
+      `);
+      await element.show();
+      await element.updateComplete;
+    });
+
+    it('should re-announce updated content', async function() {
+      element.content = 'After';
+      await element.updateComplete;
+      const announcer = document.querySelector('[role="status"]')!;
+      expect(announcer.textContent).to.equal('After');
     });
   });
 });

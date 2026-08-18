@@ -74,4 +74,5 @@ External trigger (element id — not an event type):
 | `hide` event                  | Event before tooltip hides, with `reason`. Cancelable for mouseleave/focusout; Escape (`reason: 'escape'`) is never cancelable |
 | `.show()` / `.hide()` methods | Programmatic visibility control                                     |
 | `content` slot                | Rich HTML content, not available in React (which takes `ReactNode`) |
+| `silent` attribute            | Suppresses screen reader announcements. Use when the trigger already has an accessible label (e.g. `aria-label`) |
 

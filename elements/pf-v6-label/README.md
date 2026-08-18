@@ -56,4 +56,3 @@ Labels provide a visual way to describe or tag items using keywords.
 | Web component API | Notes |
 |---|---|
 | `close` event | `LabelCloseEvent` — cancelable, bubbles. Prevents DOM removal when `preventDefault()` is called. |
-| Status icons | Built-in SVG status icons for `success`, `warning`, `danger`, `info`, and `custom` |

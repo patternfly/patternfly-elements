@@ -40,11 +40,11 @@ Labels provide a visual way to describe or tag items using keywords.
 
 | React prop | Web component | Difference |
 |---|---|---|
-| `isCompact` | `compact` attribute | Boolean attribute; no `is-` prefix per web component conventions |
-| `isDisabled` | `disabled` attribute | Boolean attribute; no `is-` prefix |
-| `isClickable` | `clickable` attribute | Boolean attribute; no `is-` prefix |
-| `isTruncated` | `truncated` attribute | Boolean attribute; no `is-` prefix |
-| `onClose` | `close` event | DOM event (`LabelCloseEvent`) instead of callback prop. `preventDefault()` stops removal. |
+| `isCompact` | `compact` attribute | Dropped `is-` prefix per web component convention |
+| `isDisabled` | `disabled` attribute | Dropped `is-` prefix per web component convention |
+| `isClickable` | `clickable` attribute | Dropped `is-` prefix per web component convention |
+| `isTruncated` | `truncated` attribute | Dropped `is-` prefix per web component convention |
+| `onClose` | `removable` attribute + `close` event | In React, providing `onClose` shows the close button and handles the event. Set `removable` to show the button; listen for the `close` event (`LabelCloseEvent`) to handle it. `preventDefault()` stops removal. |
 | `onClick` | native `click` event | Use standard `click` event listener on the element |
 | `icon` (ReactNode) | `icon` slot | Slot a `<svg>` or icon element instead of passing a React node |
 | `closeBtnAriaLabel` | `close-button-label` attribute | Renamed to match web component dash-case conventions |

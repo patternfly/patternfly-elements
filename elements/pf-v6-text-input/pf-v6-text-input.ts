@@ -49,7 +49,7 @@ export class PfV6TextInput extends LitElement {
 
   override createRenderRoot(): ShadowRoot {
     const root = super.createRenderRoot() as ShadowRoot;
-    // Progressive enhancement: when referenceTarget is supported (Chrome 151+),
+    // Progressive enhancement: when referenceTarget is supported,
     // external <label for="host-id"> and aria-describedby references transparently
     // resolve to the internal <input>. Browsers without support fall back to
     // aria-label string copy via computedLabelText in willUpdate().
@@ -88,7 +88,7 @@ export class PfV6TextInput extends LitElement {
   /** Controls text truncation direction for overflowing content. */
   @property({ reflect: true }) truncated?: 'start';
 
-  /** Validation pattern, like `<input>`. */
+  /** Regular expression the value must match for constraint validation. */
   @property() pattern?: string;
 
   /** Input placeholder. */
@@ -130,7 +130,7 @@ export class PfV6TextInput extends LitElement {
   }
 
   override willUpdate(): void {
-    // Tier 2 fallback: copies external label text to aria-label on the inner input.
+    // Fallback: copies external label text to aria-label on the inner input.
     // Skipped when referenceTarget is active (browser resolves natively).
     if (this.#hasReferenceTarget) {
       this.#derivedLabel = this.accessibleLabel || '';

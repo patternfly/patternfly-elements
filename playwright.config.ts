@@ -1,5 +1,10 @@
 import { defineConfig } from '@playwright/test';
 
+// Skip font-ready wait during screenshots to avoid hangs on CI
+// with pages that have many declarative shadow roots (e.g. tooltip placement demo).
+// See microsoft/playwright#33330.
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = '1';
+
 export default defineConfig({
   testMatch: 'elements/**/*.e2e.ts',
   timeout: 120 * 1000,

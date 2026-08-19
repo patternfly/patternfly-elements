@@ -1,15 +1,14 @@
 import { defineConfig } from '@playwright/test';
 
-// Skip font-ready wait during screenshots to avoid hangs on CI
-// with pages that have many declarative shadow roots (e.g. tooltip placement demo).
-// See microsoft/playwright#33330.
-process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = '1';
-
 export default defineConfig({
   testMatch: 'elements/**/*.e2e.ts',
   timeout: 120 * 1000,
 
-  workers: process.env.CI ? 2 : 8,
+  // Parallel workers deadlock on page.screenshot() in headless Chromium
+  // when multiple pages capture concurrently (compositor stops producing
+  // frames). Reproduced in the mcr.microsoft.com/playwright container
+  // used by CI. See microsoft/playwright#33330.
+  workers: process.env.CI ? 1 : 8,
 
   webServer: process.env.CI ? undefined : {
     command: 'npx cem serve --port 8080 --rendering=chromeless',
@@ -37,3 +36,4 @@ export default defineConfig({
     process.env.CI ? ['github'] : ['dot'],
   ],
 });
+

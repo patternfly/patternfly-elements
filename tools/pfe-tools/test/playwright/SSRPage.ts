@@ -1,3 +1,5 @@
+
+
 import { expect } from '@playwright/test';
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath, resolve } from 'node:url';
@@ -115,7 +117,9 @@ export class SSRPage {
     }
     expect(response?.status(), await response?.text())
         .toEqual(200);
-    const snapshot = await this.page.screenshot({ fullPage: true });
+    // fullPage: true triggers a viewport resize that can deadlock
+    // Chromium's compositor on complex SSR pages (Chromium bug 41347676).
+    const snapshot = await this.page.screenshot();
     expect(snapshot, new URL(url).pathname)
         .toMatchSnapshot(`${this.config.tagName}-${basename(url)}.png`);
   }

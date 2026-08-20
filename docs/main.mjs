@@ -9,7 +9,7 @@ import '@patternfly/elements/pf-v5-chip/pf-v5-chip.js';
 import '@patternfly/elements/pf-v5-clipboard-copy/pf-v5-clipboard-copy.js';
 import '@patternfly/elements/pf-v5-code-block/pf-v5-code-block.js';
 import '@patternfly/elements/pf-v5-dropdown/pf-v5-dropdown.js';
-import '@patternfly/elements/pf-v5-helper-text/pf-v5-helper-text.js';
+import '@patternfly/elements/pf-v6-helper-text/pf-v6-helper-text.js';
 import '@patternfly/elements/pf-v5-hint/pf-v5-hint.js';
 import '@patternfly/elements/pf-v5-jump-links/pf-v5-jump-links.js';
 import '@patternfly/elements/pf-v5-label-group/pf-v5-label-group.js';

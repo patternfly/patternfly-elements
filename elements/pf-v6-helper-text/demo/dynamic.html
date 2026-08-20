@@ -1,0 +1,25 @@
+---
+description: Dynamic helper text that updates with form validation state, using aria-live for announcements.
+---
+<div class="helper-text-group" aria-live="polite" aria-atomic="false">
+  <pf-v6-helper-text variant="success" dynamic>
+    Must be at least 14 characters
+  </pf-v6-helper-text>
+  <pf-v6-helper-text variant="error" dynamic>
+    Cannot contain any variation of the word "redhat"
+  </pf-v6-helper-text>
+  <pf-v6-helper-text variant="success" dynamic>
+    Must include at least 3 of the following: lowercase letter, uppercase letters, numbers, symbols
+  </pf-v6-helper-text>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-helper-text/pf-v6-helper-text.js';
+</script>
+
+<style>
+  .helper-text-group {
+    display: grid;
+    gap: 0.25rem;
+  }
+</style>

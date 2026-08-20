@@ -1,0 +1,142 @@
+---
+description: Input field linked to helper text via aria-describedby for accessible form guidance.
+---
+<form id="demo-form" novalidate>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input id="username"
+           type="text"
+           required
+           minlength="4"
+           maxlength="20"
+           aria-describedby="username-help"
+           placeholder="Enter a username">
+    <pf-v6-helper-text id="username-help">
+      Must be between 4 and 20 characters
+    </pf-v6-helper-text>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password"
+           type="password"
+           required
+           minlength="8"
+           aria-describedby="password-help"
+           placeholder="Enter a password">
+    <div class="helper-text-group" id="password-help" aria-live="polite">
+      <pf-v6-helper-text id="length-check" variant="error" dynamic>
+        Must be at least 8 characters
+      </pf-v6-helper-text>
+      <pf-v6-helper-text id="number-check" variant="error" dynamic>
+        Must include a number
+      </pf-v6-helper-text>
+      <pf-v6-helper-text id="special-check" variant="error" dynamic>
+        Must include a special character
+      </pf-v6-helper-text>
+    </div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-helper-text/pf-v6-helper-text.js';
+
+  const form = document.getElementById('demo-form');
+  const username = document.getElementById('username');
+  const usernameHelp = document.getElementById('username-help');
+  const password = document.getElementById('password');
+  const lengthCheck = document.getElementById('length-check');
+  const numberCheck = document.getElementById('number-check');
+  const specialCheck = document.getElementById('special-check');
+
+  /** Maps a boolean pass/fail to the appropriate helper text variant. */
+  function check(el, passing) {
+    el.variant = passing ? 'success' : 'error';
+  }
+
+  /** Validates the password field against all three rules and sets
+   *  a custom validity message when any rule fails. */
+  function validatePassword() {
+    const { value } = password;
+    const hasLength = value.length >= 8;
+    const hasNumber = /\d/.test(value);
+    const hasSpecial = /[^a-zA-Z0-9]/.test(value);
+
+    check(lengthCheck, hasLength);
+    check(numberCheck, hasNumber);
+    check(specialCheck, hasSpecial);
+
+    const errors = [];
+    if (!hasLength) errors.push('at least 8 characters');
+    if (!hasNumber) errors.push('a number');
+    if (!hasSpecial) errors.push('a special character');
+
+    password.setCustomValidity(
+      errors.length ? `Password must include ${errors.join(', ')}` : ''
+    );
+  }
+
+  /** Validates the username field using its native minlength/maxlength
+   *  constraints and reflects validity in the helper text variant. */
+  function validateUsername() {
+    usernameHelp.variant = username.validity.valid ? 'default' : 'error';
+  }
+
+  password.addEventListener('input', validatePassword);
+  username.addEventListener('input', validateUsername);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    validatePassword();
+    validateUsername();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    // eslint-disable-next-line no-console
+    console.log('Form submitted');
+  });
+</script>
+
+<style>
+  .form-group {
+    display: grid;
+    gap: 0.25rem;
+    margin-block-end: 1.5rem;
+    max-inline-size: 20rem;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: light-dark(#151515, #e0e0e0);
+  }
+
+  input {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.875rem;
+    border: 1px solid light-dark(#d2d2d2, #4d4d4d);
+    border-radius: 0.25rem;
+    background: light-dark(#fff, #1a1a1a);
+    color: light-dark(#151515, #e0e0e0);
+  }
+
+  .helper-text-group {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  button {
+    padding: 0.375rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.25rem;
+    background: light-dark(#0066cc, #1fa7f8);
+    color: #fff;
+    cursor: pointer;
+  }
+</style>

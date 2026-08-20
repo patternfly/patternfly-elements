@@ -1,0 +1,38 @@
+---
+description: Helper text items with custom icons using pf-v5-icon slotted into the icon slot.
+---
+<pf-v6-helper-text>
+  <pf-v5-icon slot="icon" set="fas" icon="info-circle" loading="eager"></pf-v5-icon>
+  This is default helper text
+</pf-v6-helper-text>
+
+<pf-v6-helper-text variant="indeterminate">
+  <pf-v5-icon slot="icon" set="fas" icon="question-circle" loading="eager"></pf-v5-icon>
+  This is indeterminate helper text
+</pf-v6-helper-text>
+
+<pf-v6-helper-text variant="warning">
+  <pf-v5-icon slot="icon" set="fas" icon="exclamation-circle" loading="eager"></pf-v5-icon>
+  This is warning helper text
+</pf-v6-helper-text>
+
+<pf-v6-helper-text variant="success">
+  <pf-v5-icon slot="icon" set="fas" icon="check" loading="eager"></pf-v5-icon>
+  This is success helper text
+</pf-v6-helper-text>
+
+<pf-v6-helper-text variant="error">
+  <pf-v5-icon slot="icon" set="fas" icon="times" loading="eager"></pf-v5-icon>
+  This is error helper text
+</pf-v6-helper-text>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-helper-text/pf-v6-helper-text.js';
+  import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
+</script>
+
+<style>
+  pf-v6-helper-text {
+    margin-block-end: 0.25rem;
+  }
+</style>

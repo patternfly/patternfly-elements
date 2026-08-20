@@ -1,0 +1,23 @@
+---
+name: Multiple items
+description: Multiple helper text items grouped in a list with PatternFly spacing tokens.
+---
+<ul class="helper-text-group">
+  <li><pf-v6-helper-text>This is default helper text</pf-v6-helper-text></li>
+  <li><pf-v6-helper-text>This is another default helper text in the same block</pf-v6-helper-text></li>
+  <li><pf-v6-helper-text>And this is more default text in the same block</pf-v6-helper-text></li>
+</ul>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-helper-text/pf-v6-helper-text.js';
+</script>
+
+<style>
+  .helper-text-group {
+    display: grid;
+    gap: var(--pf-t--global--spacer--xs, 0.25rem);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

@@ -1,4 +1,5 @@
 import { installWindowOnGlobal } from '@lit-labs/ssr/lib/dom-shim.js';
+import { LitElementRenderer } from '@lit-labs/ssr/lib/lit-element-renderer.js';
 
 class ObserverShim {
   observe(): void {
@@ -30,8 +31,41 @@ function getComputedStyle() {
   };
 };
 
-// @ts-expect-error: opt in to event support in ssr
-globalThis.litSsrCallConnectedCallback = true;
+type RenderOption = (typeof LitElementRenderer.renderOptions)[number];
+
+/** Callback this module last registered on `LitElementRenderer.renderOptions`. */
+let registered: RenderOption | undefined;
+
+/**
+ * Opt elements into `connectedCallback` during SSR.
+ * Importing this module registers a default that matches all elements, so a
+ * bare `import '@patternfly/pfe-core/ssr-shims.js'` keeps the previous behavior.
+ * A later call with a predicate replaces that default.
+ * Lit evaluates `renderOptions` first-match, so a second push would never
+ * restrict the set.
+ * @param predicate return true for elements that should receive `connectedCallback`
+ */
+export function ssrCallConnectedCallback(
+  predicate?: (element: { localName: string }) => boolean,
+): void {
+  const filter = predicate ?? (() => true);
+  const option: RenderOption = element =>
+    filter(element) ? { connectedCallback: true } : undefined;
+
+  if (registered) {
+    const i = LitElementRenderer.renderOptions.indexOf(registered);
+    if (i !== -1) {
+      LitElementRenderer.renderOptions[i] = option;
+      registered = option;
+      return;
+    }
+  }
+
+  registered = option;
+  LitElementRenderer.renderOptions.push(option);
+}
+
+ssrCallConnectedCallback();
 
 installWindowOnGlobal({
   ErrorEvent: Event,

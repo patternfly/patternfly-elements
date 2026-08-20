@@ -46,10 +46,11 @@ let registered: RenderOption | undefined;
  * @param predicate return true for elements that should receive `connectedCallback`
  */
 export function ssrCallConnectedCallback(
-  predicate: (element: { localName: string }) => boolean = () => true,
+  predicate?: (element: { localName: string }) => boolean,
 ): void {
+  const filter = predicate ?? (() => true);
   const option: RenderOption = element =>
-    predicate(element) ? { connectedCallback: true } : undefined;
+    filter(element) ? { connectedCallback: true } : undefined;
 
   if (registered) {
     const i = LitElementRenderer.renderOptions.indexOf(registered);

@@ -21,7 +21,7 @@ import { readFileSync } from 'node:fs';
 
 import { getAllPackages } from './get-all-packages.js';
 import slugify from 'slugify';
-import { deslugify } from '@patternfly/pfe-tools/config.js';
+import { deslugify, matchPrefix } from '@patternfly/pfe-tools/config.js';
 
 type PredicateFn = (x: unknown) => boolean;
 
@@ -214,10 +214,10 @@ export class Manifest {
   /**
    */
   getTagNames(): string[] {
-    return this.manifest?.modules
+    return [...new Set(this.manifest?.modules
         ?.flatMap?.(m => m.exports
             ?.filter?.(x => x.kind === 'custom-element-definition')
-            ?.map?.(x => x.name)) as string[] ?? [];
+            ?.map?.(x => x.name)) as string[] ?? [])];
   }
 
   /**
@@ -324,7 +324,7 @@ export class Manifest {
       const [last = ''] = filePath.split(path.sep).reverse();
       const filename = last.replace('.html', '');
       const isMainElementDemo = filename === 'index';
-      const prefix = `${options.tagPrefix.replace(/-$/, '')}-`;
+      const prefix = matchPrefix(tagName, options);
       const title = isMainElementDemo ? prettyTag(tagName, options.aliases, prefix)
         : last
             .replace(/(?:^|[-/\s])\w/g, x => x.toUpperCase())

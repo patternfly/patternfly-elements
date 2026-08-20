@@ -1,0 +1,23 @@
+---
+name: Basic
+description: Banners can be styled with one of 9 different colors. A basic banner should only be used when the banner color does not represent status or severity.
+---
+<pf-v6-banner>Default banner</pf-v6-banner>
+<pf-v6-banner color="red">Red banner</pf-v6-banner>
+<pf-v6-banner color="orangered">Orangered banner</pf-v6-banner>
+<pf-v6-banner color="orange">Orange banner</pf-v6-banner>
+<pf-v6-banner color="yellow">Yellow banner</pf-v6-banner>
+<pf-v6-banner color="green">Green banner</pf-v6-banner>
+<pf-v6-banner color="teal">Teal banner</pf-v6-banner>
+<pf-v6-banner color="blue">Blue banner</pf-v6-banner>
+<pf-v6-banner color="purple">Purple banner</pf-v6-banner>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-banner/pf-v6-banner.js';
+</script>
+
+<style>
+pf-v6-banner + pf-v6-banner {
+  margin-block-start: 0.5rem;
+}
+</style>

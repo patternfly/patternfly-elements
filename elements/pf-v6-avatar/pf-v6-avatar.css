@@ -1,0 +1,105 @@
+:host {
+  --_width:
+    /** Width of the avatar */
+    var(--pf-v6-c-avatar--Width, 2.25rem);
+  --_height:
+    /** Height of the avatar */
+    var(--pf-v6-c-avatar--Height, 2.25rem);
+  --_border-radius:
+    /** Border radius of the avatar */
+    var(--pf-v6-c-avatar--BorderRadius,
+      /** Rounds the avatar into a circle */
+      var(--pf-t--global--border--radius--pill, 30em));
+  --_border-color:
+    /** Border color of the avatar */
+    var(--pf-v6-c-avatar--BorderColor, transparent);
+  --_border-width:
+    /** Border width of the avatar */
+    var(--pf-v6-c-avatar--BorderWidth, 0);
+
+  --_placeholder-bg:
+    /** Placeholder silhouette background fill */
+    var(--pf-t--global--background--color--200,
+      light-dark(
+        /** Light mode placeholder background */
+        var(--pf-t--color--gray--10, #f2f2f2),
+        /** Dark mode placeholder background */
+        var(--pf-t--color--gray--80, #292929)));
+  --_placeholder-fg:
+    /** Placeholder silhouette foreground fill */
+    var(--pf-t--global--icon--color--subtle,
+      light-dark(
+        /** Light mode placeholder silhouette color */
+        var(--pf-t--color--gray--50, #707070),
+        /** Dark mode placeholder silhouette color */
+        var(--pf-t--color--gray--40, #a3a3a3)));
+
+  display: inline-block;
+  width: var(--_width);
+  height: var(--_height);
+  border-radius: var(--_border-radius);
+}
+
+:host([hidden]),
+[hidden] {
+  display: none !important;
+}
+
+:host([bordered]) {
+  --_border-color:
+    /** Border color when bordered */
+    var(--pf-v6-c-avatar--m-bordered--BorderColor,
+      /** Default border color for bordered avatars */
+      var(--pf-t--global--border--color--default, #d2d2d2));
+  --_border-width:
+    /** Border width when bordered */
+    var(--pf-v6-c-avatar--m-bordered--BorderWidth,
+      /** Default border width for bordered avatars */
+      var(--pf-t--global--border--width--box--default, 1px));
+}
+
+:host([size="sm"]) {
+  --_width:
+    /** Width when size is sm */
+    var(--pf-v6-c-avatar--m-sm--Width, 1.5rem);
+  --_height:
+    /** Height when size is sm */
+    var(--pf-v6-c-avatar--m-sm--Height, 1.5rem);
+}
+
+:host([size="md"]) {
+  --_width:
+    /** Width when size is md */
+    var(--pf-v6-c-avatar--m-md--Width, 2.25rem);
+  --_height:
+    /** Height when size is md */
+    var(--pf-v6-c-avatar--m-md--Height, 2.25rem);
+}
+
+:host([size="lg"]) {
+  --_width:
+    /** Width when size is lg */
+    var(--pf-v6-c-avatar--m-lg--Width, 4.5rem);
+  --_height:
+    /** Height when size is lg */
+    var(--pf-v6-c-avatar--m-lg--Height, 4.5rem);
+}
+
+:host([size="xl"]) {
+  --_width:
+    /** Width when size is xl */
+    var(--pf-v6-c-avatar--m-xl--Width, 8rem);
+  --_height:
+    /** Height when size is xl */
+    var(--pf-v6-c-avatar--m-xl--Height, 8rem);
+}
+
+svg,
+img {
+  display: block;
+  object-fit: cover;
+  width: var(--_width);
+  height: var(--_height);
+  border-radius: var(--_border-radius);
+  border: var(--_border-width) solid var(--_border-color);
+}

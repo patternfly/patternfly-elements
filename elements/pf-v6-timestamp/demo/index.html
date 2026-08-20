@@ -1,0 +1,15 @@
+---
+name: Default
+description: >
+  By default, a timestamp will display the current date and time based on the
+  current locale if the date attribute is not set. Setting time-zone displays
+  the date and time in the specified IANA timezone.
+---
+<section>
+  <p><pf-v6-timestamp></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp time-zone="UTC" display-suffix="UTC"></pf-v6-timestamp></p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+</script>

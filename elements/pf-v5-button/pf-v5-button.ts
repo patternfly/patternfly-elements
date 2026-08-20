@@ -8,7 +8,7 @@ import { InternalsController } from '@patternfly/pfe-core/controllers/internals-
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
-import '@patternfly/elements/pf-v5-spinner/pf-v5-spinner.js';
+import '@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js';
 
 import tokensStyles from './pf-v5-button-tokens.css';
 import iconStyles from './pf-v5-button-icon.css';
@@ -152,9 +152,9 @@ export class PfV5Button extends LitElement {
                  icon="${ifDefined(this.icon)}"
                  set="${ifDefined(this.iconSet)}"
                  ?hidden="${!this.icon || this.loading}"></pf-v5-icon>
-        <pf-v5-spinner size="md"
+        <pf-v6-spinner size="md"
                     ?hidden="${!this.loading}"
-                    aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-v5-spinner>
+                    aria-label="${this.getAttribute('loading-label') ?? 'loading'}"></pf-v6-spinner>
       </slot>
       <slot id="text"></slot>
     `;

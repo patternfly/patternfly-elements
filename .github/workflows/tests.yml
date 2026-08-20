@@ -97,8 +97,13 @@ jobs:
   ssr:
     name: SSR Tests (Playwright)
     runs-on: ubuntu-latest
+    # --ipc=host gives Chromium the host's shared memory namespace.
+    # Without it, fullPage screenshots can hang when the compositor
+    # exhausts Docker's default 64 MB /dev/shm.
+    # https://playwright.dev/docs/docker#shared-memory-size
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-noble
+      options: --ipc=host
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

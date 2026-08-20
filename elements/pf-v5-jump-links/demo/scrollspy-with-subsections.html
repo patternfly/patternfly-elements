@@ -2,7 +2,7 @@
   <header>
     <h2>Main title</h2>
 
-    <pf-v5-switch id="is-vertical" checked></pf-v5-switch>
+    <pf-v6-switch id="is-vertical" checked></pf-v6-switch>
     <label for="is-vertical" data-state="on">Vertical</label>
     <label for="is-vertical" data-state="off">Horizontal</label>
   </header>
@@ -142,12 +142,12 @@
 </div>
 
 <script type="module">
-import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
 import '@patternfly/elements/pf-v5-jump-links/pf-v5-jump-links.js';
 
 const main = document.getElementById('demo');
 const links = document.querySelector('pf-v5-jump-links');
-const swtch = document.querySelector('pf-v5-switch');
+const swtch = document.querySelector('pf-v6-switch');
 const media = matchMedia('(max-width: 600px)');
 
 function sumHeights(...elements) {
@@ -230,8 +230,8 @@ pf-v5-jump-links {
 }
 
 
-pf-v5-switch + label,
-pf-v5-switch + label + label {
+pf-v6-switch + label,
+pf-v6-switch + label + label {
   margin-inline-start: 12px;
 }
 </style>

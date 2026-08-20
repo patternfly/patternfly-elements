@@ -88,19 +88,11 @@ async function cacheBusterMiddleware(ctx: Context, next: () => Promise<any>) {
 function liveReloadTsChangesMiddleware(
   config: ReturnType<typeof normalizeOptions>,
 ): Middleware {
-  /**
-   * capture group 1:
-   *   Either config.elementsDir or `pfe-core`
-   * `/`
-   * **ANY** (_>= 0x_)
-   * `.js`
-   */
-  const TYPESCRIPT_SOURCES_RE = new RegExp(`(${config.elementsDir}|pfe-core)/.*\\.js`);
-
+  const TYPESCRIPT_SOURCES_RE = new RegExp(`(${config.elementsDir}|pfe-core)/.*\\.js$`);
   return function(ctx, next) {
-    if (!ctx.path.includes('node_modules') && ctx.path
-        .match(TYPESCRIPT_SOURCES_RE)) {
-      ctx.redirect(ctx.path.replace('.js', '.ts'));
+    if (!ctx.path.includes('node_modules')
+        && TYPESCRIPT_SOURCES_RE.test(ctx.path)) {
+      ctx.redirect(ctx.path.replace(/\.js$/, '.ts'));
     } else {
       return next();
     }

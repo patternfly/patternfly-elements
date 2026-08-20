@@ -1,0 +1,17 @@
+---
+description: Back to top inside a scrollable container using scrollable-selector to monitor a specific element.
+---
+<div style="position: relative; height: 400px;">
+  <div id="scroll-container" style="height: 400px; overflow-y: auto; border: 1px solid #d2d2d2; border-radius: 4px;">
+    <div style="padding: 1rem;" id="top">
+      <h2>Scroll down</h2>
+      <p>The back to top button will appear after scrolling 400px in this container.</p>
+    </div>
+    <div style="height: 1200px;"></div>
+  </div>
+  <pf-v6-back-to-top scrollable-selector="#scroll-container" href="#top">Back to top</pf-v6-back-to-top>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-back-to-top/pf-v6-back-to-top.js';
+</script>

@@ -2,49 +2,49 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 export type DateTimeFormat = 'full' | 'long' | 'medium' | 'short';
 
+export type HourCycle = 'h11' | 'h12' | 'h23' | 'h24';
+
 export interface TimestampOptions {
   dateFormat?: DateTimeFormat;
   timeFormat?: DateTimeFormat;
   customFormat?: Intl.DateTimeFormatOptions;
-  displaySuffix: string;
-  locale: Intl.LocalesArgument;
-  relative: boolean;
-  utc: boolean;
-  hour12: boolean;
+  displaySuffix?: string;
+  locale?: Intl.LocalesArgument;
+  relative?: boolean;
+  timeZone?: string;
+  hourCycle?: HourCycle;
 }
 
-const defaults = {
-  dateFormat: undefined,
-  timeFormat: undefined,
-  customFormat: undefined,
-  displaySuffix: '',
-  locale: undefined,
-  relative: false,
-  utc: false,
-  hour12: false,
-} as const;
+const optionKeys: Record<keyof TimestampOptions, true> = {
+  dateFormat: true,
+  timeFormat: true,
+  customFormat: true,
+  displaySuffix: true,
+  locale: true,
+  relative: true,
+  timeZone: true,
+  hourCycle: true,
+};
 
 export class TimestampController implements ReactiveController {
   static #isTimestampOptionKey(prop: PropertyKey): prop is keyof TimestampOptions {
-    return prop in defaults;
+    return prop in optionKeys;
   }
 
+  // When Temporal reaches baseline, replace with Temporal.Instant;
+  // timeZone and hourCycle options already align with Temporal's API
   #date = new Date();
 
-  #options: TimestampOptions = {} as TimestampOptions;
+  #options: Partial<TimestampOptions> = {};
 
   #host: ReactiveControllerHost;
-
-  get localeString(): string {
-    return this.#date.toLocaleString(this.#options.locale);
-  }
 
   get date(): Date {
     return this.#date;
   }
 
-  set date(string) {
-    this.#date = new Date(string);
+  set date(value: string | Date) {
+    this.#date = new Date(value);
   }
 
   get isoString(): string {
@@ -54,38 +54,29 @@ export class TimestampController implements ReactiveController {
   get time(): string {
     if (this.#options.relative) {
       return this.#getTimeRelative();
-    } else {
-      let { displaySuffix } = this.#options;
-      const { locale } = this.#options;
-      if (this.#options.utc) {
-        displaySuffix ||= 'UTC';
-      }
-      const localeString = this.#date.toLocaleString(locale, this.#options.customFormat ?? {
-        hour12: this.#options.hour12,
-        timeStyle: this.#options.timeFormat,
-        dateStyle: this.#options.dateFormat,
-        ...this.#options.utc && { timeZone: 'UTC' },
-      });
-
-      return `${localeString} ${displaySuffix ?? ''}`.trim();
     }
+    const { displaySuffix, locale, timeZone, hourCycle } = this.#options;
+    const localeString = this.#date.toLocaleString(locale, this.#options.customFormat ?? {
+      hourCycle,
+      timeStyle: this.#options.timeFormat,
+      dateStyle: this.#options.dateFormat,
+      timeZone,
+    });
+    return `${localeString}${displaySuffix ? ` ${displaySuffix}` : ''}`;
   }
 
   constructor(host: ReactiveControllerHost, options?: Partial<TimestampOptions>) {
     this.#host = host;
     host.addController(this);
-    for (const [name, value] of Object.entries(this.#options)) {
-      // @ts-expect-error: seems typescript compiler isn't up to the task here
-      this.#options[name] = options?.[name] ?? value;
+    if (options) {
+      Object.assign(this.#options, options);
     }
   }
 
   hostConnected?(): void;
 
-  /**
-   * Based off of Github Relative Time
-   * https://github.com/github/time-elements/blob/master/src/relative-time.js
-   */
+  // When Temporal reaches baseline, replace Intl.RelativeTimeFormat usage
+  // with Temporal.Duration and Temporal.Now.instant() for precise unit selection
   #getTimeRelative() {
     const date = this.#date;
     const { locale } = this.#options;
@@ -129,7 +120,7 @@ export class TimestampController implements ReactiveController {
 
   set(prop: PropertyKey, value: unknown): void {
     if (TimestampController.#isTimestampOptionKey(prop)) {
-      // @ts-expect-error: seems typescript compiler isn't up to the task here
+      // @ts-expect-error: dynamic property assignment from element willUpdate
       this.#options[prop] = value;
       this.#host.requestUpdate();
     }

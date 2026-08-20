@@ -103,6 +103,10 @@ core/pfe-core/demo/*
 .sonarlint
 .history
 
+# AI
+.claude/settings.local.json
+.claude/worktrees
+
 # Temp files
 *~
 *.swp
@@ -133,3 +137,5 @@ browserstack.err
 
 # Local Netlify folder
 .netlify
+!.claude/skills
+!.claude/settings.json

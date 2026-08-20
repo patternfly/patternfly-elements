@@ -1,4 +1,4 @@
 {
   "renderTitleInOverview": false,
-  "tagPrefix": "pf-v5"
+  "tagPrefix": ["pf-v5", "pf-v6"]
 }

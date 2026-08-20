@@ -26,7 +26,7 @@
                  readonly
                  value="read only text input example"></pf-v5-text-input>
   <label>
-    <pf-v5-switch onchange="this.closest('fieldset').querySelector('pf-v5-text-input').plain=this.checked;"></pf-v5-switch>
+    <pf-v6-switch onchange="this.closest('fieldset').querySelector('pf-v5-text-input').plain=this.checked;"></pf-v6-switch>
     Plain read only variant
   </label>
 </fieldset>
@@ -70,7 +70,7 @@
 
 <script type="module">
   import '@patternfly/elements/pf-v5-text-input/pf-v5-text-input.js';
-  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
   await customElements.whenDefined('pf-v5-text-input');
   for (const input of document.querySelectorAll('pf-v5-text-input[required]')) {
     await input.updateComplete;

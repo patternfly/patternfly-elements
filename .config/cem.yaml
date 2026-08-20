@@ -1,0 +1,22 @@
+sourceControlRootUrl: https://github.com/patternfly/patternfly-elements/tree/main/
+generate:
+  exclude:
+    - './**/*.test.ts'
+    - './**/*.spec.ts'
+    - './**/*.e2e.ts'
+  noDefaultExcludes: false
+  demoDiscovery:
+    fileGlob: 'elements/*/demo/*.html'
+    urlPattern: ':tag/demo/:demo.html'
+    urlTemplate: https://patternflyelements.org/components/{{.tag | alias | slug}}/demo/{{.demo | slug}}/
+serve:
+  port: 8000
+  transforms:
+    css:
+      include:
+        - 'elements/*/*.css'
+      exclude:
+        - 'elements/*/*-lightdom*.css'
+  watchIgnore:
+    - '_site/**'
+    - 'node_modules/**'

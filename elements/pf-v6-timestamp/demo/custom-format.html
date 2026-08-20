@@ -1,0 +1,24 @@
+---
+name: Custom format
+description: >
+  The format can be further customized by setting the customFormat property to
+  an Intl.DateTimeFormatOptions object. This overrides date-format and
+  time-format.
+---
+<section>
+  <p><pf-v6-timestamp id="timestamp-custom-format" date="Sat Jan 01 2022 00:00:00 GMT-0500"></pf-v6-timestamp></p>
+
+  <script>
+  document.getElementById('timestamp-custom-format').customFormat = {
+    year: '2-digit',
+    month: 'short',
+    weekday: 'short',
+    day: 'numeric',
+    hour: 'numeric'
+  };
+  </script>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+</script>

@@ -1,0 +1,19 @@
+---
+name: Basic formats
+description: >
+  The format of the displayed content can be customized by setting the
+  date-format and/or time-format attributes. Setting only one displays only
+  the date or time. Options are "full", "long", "medium", and "short".
+  Use display-suffix to add a custom suffix such as a timezone name.
+---
+<section>
+  <p><pf-v6-timestamp date-format="full" time-format="full"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date-format="full"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp time-format="full"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date-format="medium" time-format="short" display-suffix="US Eastern"></pf-v6-timestamp></p>
+  <p><pf-v6-timestamp date-format="full" locale="es"></pf-v6-timestamp></p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-timestamp/pf-v6-timestamp.js';
+</script>

@@ -130,9 +130,9 @@ tags:
 
   import { Button } from "@patternfly/elements/react/pf-v5-button/pf-v5-button.js";
   import { Card } from "@patternfly/elements/react/pf-v5-card/pf-v5-card.js";
-  import { Switch } from "@patternfly/elements/react/pf-v5-switch/pf-v5-switch.js";
+  import { Switch } from "@patternfly/elements/react/pf-v6-switch/pf-v6-switch.js";
   import { Popover } from "@patternfly/elements/react/pf-v5-popover/pf-v5-popover.js";
-  import { Tooltip } from "@patternfly/elements/react/pf-v5-tooltip/pf-v5-tooltip.js";
+  import { Tooltip } from "@patternfly/elements/react/pf-v6-tooltip/pf-v6-tooltip.js";
 
   import "./App.css";
   ```
@@ -160,7 +160,7 @@ tags:
 
   ### Switch
 
-  Now we have a card and a button component, let's add [`pf-v5-switch`][pf-v5-switch] 
+  Now we have a card and a button component, let's add [`pf-v6-switch`][pf-v6-switch] 
   web component in our app. We will enable/disable the decrement button by 
   clicking on the Switch button.
 
@@ -208,7 +208,7 @@ tags:
   ### Tooltip
 
   Now we have a card, button, and switch component, let's add 
-  [`pf-v5-tooltip`][pf-v5-tooltip] web component in our app. We will show the tooltip 
+  [`pf-v6-tooltip`][pf-v6-tooltip] web component in our app. We will show the tooltip 
   text on mouseover.
 
   ```js
@@ -355,8 +355,8 @@ tags:
 [vite]: https://vitejs.dev/guide/#scaffolding-your-first-vite-project
 [pf-v5-button]: https://patternflyelements.org/components/button/
 [pf-v5-card]: https://patternflyelements.org/components/card/
-[pf-v5-switch]: https://patternflyelements.org/components/switch/
-[pf-v5-tooltip]: https://patternflyelements.org/components/tooltip/
+[pf-v6-switch]: https://patternflyelements.org/components/switch/
+[pf-v6-tooltip]: https://patternflyelements.org/components/tooltip/
 [pf-v5-popover]: https://patternflyelements.org/components/popover/
 [inng]: https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-angular-app-4b18b1c9c363
 [invue]: https://patternflyelements.org/framework-integration/vue/

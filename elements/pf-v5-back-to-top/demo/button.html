@@ -1,7 +1,8 @@
-<pf-v5-banner variant="info" id="top">
-  <pf-v5-icon icon="info-circle" slot="icon"></pf-v5-icon>
+<pf-v6-banner status="info" id="top">
+  <pf-v5-icon icon="info-circle"></pf-v5-icon>
+  <span class="pf-v6-screen-reader">Accessibility warning:</span>
   <strong>Accessibility Warning</strong> Using the Button/JS variant, implementation must apply click event and focus to the element that is scrolled to.
-</pf-v5-banner>
+</pf-v6-banner>
 <div class="outer-container">
   <div class="scroll-indicator padded">
     <h2>Button</h2>
@@ -15,7 +16,7 @@
 
 <script type="module">
   import '@patternfly/elements/pf-v5-back-to-top/pf-v5-back-to-top.js';
-  import '@patternfly/elements/pf-v5-banner/pf-v5-banner.js';
+  import '@patternfly/elements/pf-v6-banner/pf-v6-banner.js';
   document.querySelector('pf-v5-back-to-top').addEventListener('click', function() {
     // scroll to some element
     const target = document.querySelector('#top');

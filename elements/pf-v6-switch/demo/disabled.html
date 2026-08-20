@@ -1,0 +1,26 @@
+---
+name: Disabled
+description: A disabled switch cannot be toggled.
+---
+<section>
+  <pf-v6-switch disabled checked>Togglable option for disabled checked example</pf-v6-switch>
+</section>
+<section>
+  <pf-v6-switch disabled>Togglable option for disabled unchecked example</pf-v6-switch>
+</section>
+<section>
+  <pf-v6-switch disabled checked accessible-label="Togglable option for checked with no visible label example" show-check-icon></pf-v6-switch>
+</section>
+<section>
+  <pf-v6-switch disabled accessible-label="Togglable option for unchecked with no visible label example" show-check-icon></pf-v6-switch>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+</script>
+
+<style>
+  section {
+    margin-block-end: 1rem;
+  }
+</style>

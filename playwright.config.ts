@@ -7,7 +7,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 8,
 
   webServer: process.env.CI ? undefined : {
-    command: 'npx @web/dev-server --config ./docs/demo/web-dev-server.demo.config.js',
+    command: 'npx cem serve --port 8080 --rendering=chromeless',
     port: 8080,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
@@ -32,3 +32,4 @@ export default defineConfig({
     process.env.CI ? ['github'] : ['dot'],
   ],
 });
+

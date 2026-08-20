@@ -1,0 +1,22 @@
+---
+name: Cancelable change
+description: The change event is cancelable. Calling preventDefault() rejects the toggle and reverts the switch to its previous state.
+---
+<pf-v6-switch id="locked-switch" checked>Locked setting</pf-v6-switch>
+<p id="message">This switch cannot be toggled off.</p>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+
+  const sw = document.getElementById('locked-switch');
+  const message = document.getElementById('message');
+
+  sw.addEventListener('change', function(event) {
+    if (!sw.checked) {
+      event.preventDefault();
+      message.textContent = 'Toggle rejected — this setting is locked on.';
+    } else {
+      message.textContent = 'This switch cannot be toggled off.';
+    }
+  });
+</script>

@@ -1,0 +1,101 @@
+---
+description: Interactive playground for tooltip options.
+---
+<section>
+  <fieldset>
+    <legend>Position</legend>
+    <select id="position">
+      <option value="top" selected>top</option>
+      <option value="top-start">top-start</option>
+      <option value="top-end">top-end</option>
+      <option value="bottom">bottom</option>
+      <option value="bottom-start">bottom-start</option>
+      <option value="bottom-end">bottom-end</option>
+      <option value="left">left</option>
+      <option value="left-start">left-start</option>
+      <option value="left-end">left-end</option>
+      <option value="right">right</option>
+      <option value="right-start">right-start</option>
+      <option value="right-end">right-end</option>
+    </select>
+  </fieldset>
+
+  <fieldset>
+    <legend>Alignment</legend>
+    <select id="alignment">
+      <option value="" selected>(default: center)</option>
+      <option value="start">start</option>
+      <option value="end">end</option>
+    </select>
+  </fieldset>
+
+  <fieldset>
+    <legend>Delays</legend>
+    <label>Entry delay (ms): <input id="entry-delay" type="number" value="300" min="0" step="50"></label>
+    <label>Exit delay (ms): <input id="exit-delay" type="number" value="300" min="0" step="50"></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Flip</legend>
+    <label><input id="no-flip" type="checkbox"> Disable flip</label>
+  </fieldset>
+</section>
+
+<section class="demo-area">
+  <pf-v6-tooltip id="demo-tooltip"
+                 content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.">
+    <pf-v5-button>Tooltip</pf-v5-button>
+  </pf-v6-tooltip>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+
+  const tooltip = document.getElementById('demo-tooltip');
+
+  document.getElementById('position').addEventListener('change', function(e) {
+    tooltip.position = e.target.value;
+  });
+
+  document.getElementById('alignment').addEventListener('change', function(e) {
+    tooltip.alignment = e.target.value || undefined;
+  });
+
+  document.getElementById('entry-delay').addEventListener('input', function(e) {
+    tooltip.entryDelay = Number(e.target.value);
+  });
+
+  document.getElementById('exit-delay').addEventListener('input', function(e) {
+    tooltip.exitDelay = Number(e.target.value);
+  });
+
+  document.getElementById('no-flip').addEventListener('change', function(e) {
+    tooltip.noFlip = e.target.checked;
+  });
+</script>
+
+<style>
+  section {
+    padding: 1em 2em;
+  }
+
+  .demo-area {
+    padding: 8em 2em;
+    text-align: center;
+  }
+
+  fieldset {
+    margin-block-end: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  label {
+    margin-inline-end: 1em;
+  }
+
+  input[type="number"] {
+    width: 5em;
+  }
+</style>

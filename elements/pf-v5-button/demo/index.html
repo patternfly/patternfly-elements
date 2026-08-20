@@ -1,14 +1,16 @@
 <pf-v5-button id="button">
   Primary
-  <pf-v5-badge number="0" hidden></pf-v5-badge>
+  <pf-v6-badge hidden>0</pf-v6-badge>
 </pf-v5-button>
 
 <script type="module">
   import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  let number;
   document.getElementById('button').addEventListener('click', async function() {
-    await import('@patternfly/elements/pf-v5-badge/pf-v5-badge.js');
-    this.querySelector('pf-v5-badge').hidden = false
-    this.querySelector('pf-v5-badge').number += 1
+    await import('@patternfly/elements/pf-v6-badge/pf-v6-badge.js');
+    this.querySelector('pf-v6-badge').hidden = false;
+    number = parseInt(this.querySelector('pf-v6-badge').textContent) + 1;
+    this.querySelector('pf-v6-badge').textContent = number;
   })
 </script>
 

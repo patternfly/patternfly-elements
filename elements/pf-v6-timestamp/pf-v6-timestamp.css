@@ -1,0 +1,9 @@
+:host {
+  display: inline-block;
+  /** Maps to `--pf-t--global--font--size--body--sm` */
+  font-size: var(--pf-v6-c-timestamp--FontSize, 0.75rem);
+  /** Maps to `--pf-t--global--text--color--regular` */
+  color: var(--pf-v6-c-timestamp--Color, inherit);
+  /** Focus ring offset per PatternFly v6 spacing tokens */
+  outline-offset: var(--pf-v6-c-timestamp--OutlineOffset, 0.1875rem);
+}

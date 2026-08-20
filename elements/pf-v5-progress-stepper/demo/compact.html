@@ -1,7 +1,7 @@
 <form id="compact">
   <h2>Compact</h2>
-  <label><pf-v5-switch name="vertical"></pf-v5-switch> Vertical alignment</label>
-  <label><pf-v5-switch name="center"></pf-v5-switch> Center alignment</label>
+  <label><pf-v6-switch name="vertical"></pf-v6-switch> Vertical alignment</label>
+  <label><pf-v6-switch name="center"></pf-v6-switch> Center alignment</label>
   <pf-v5-progress-stepper name="progress" compact>
     <pf-v5-progress-step variant="success">First Step</pf-v5-progress-step>
     <pf-v5-progress-step variant="info" current>Second Step</pf-v5-progress-step>
@@ -10,7 +10,7 @@
 </form>
 
 <script type="module">
-  import '@patternfly/elements/pf-v5-switch/pf-v5-switch.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
   import '@patternfly/elements/pf-v5-progress-stepper/pf-v5-progress-stepper.js';
 
   document.querySelector('form').addEventListener('change', /** @this{HTMLFormElement}*/ function onChange() {
@@ -21,7 +21,7 @@
 
 <style>
   form,
-  label pf-v5-switch {
+  label pf-v6-switch {
     padding-inline: .5rem;
   }
 

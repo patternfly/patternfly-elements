@@ -1,0 +1,128 @@
+:host {
+  display: inline-block;
+  width: min-content;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+svg {
+  overflow: hidden;
+  width: var(--pf-v6-c-spinner--Width,
+    /** Custom diameter of the spinner */
+    var(--pf-v6-c-spinner--diameter,
+      /** Default spinner size */
+      var(--pf-t--global--icon--size--2xl, 3.5rem)));
+  height: var(--pf-v6-c-spinner--Height,
+    var(--pf-v6-c-spinner--diameter,
+      var(--pf-t--global--icon--size--2xl, 3.5rem)));
+  animation:
+    rotate
+    calc(
+      /** Duration of one animation cycle */
+      var(--pf-v6-c-spinner--AnimationDuration, 1.4s) * 2)
+    var(--pf-v6-c-spinner--AnimationTimingFunction, linear) infinite;
+}
+
+circle {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 280;
+  stroke:
+    /** Color of the spinner stroke */
+    var(--pf-v6-c-spinner--Color,
+      /** Brand color for spinner stroke */
+      var(--pf-t--global--icon--color--brand--default, #0066cc));
+  stroke-width:
+    /** Width of the spinner stroke */
+    var(--pf-v6-c-spinner--StrokeWidth, 10);
+  animation:
+    dash
+    var(--pf-v6-c-spinner--AnimationDuration, 1.4s)
+    var(--pf-v6-c-spinner__path--AnimationTimingFunction, ease-in-out) infinite;
+}
+
+:host([size="xs"]) svg {
+  --pf-v6-c-spinner--diameter: var(--pf-v6-c-spinner--m-xs--diameter,
+    /** Extra-small icon size for compact spinners */
+    var(--pf-t--global--icon--size--sm, 0.75rem));
+
+  & circle {
+    stroke-width: var(--pf-v6-c-spinner--StrokeWidth, 15);
+  }
+}
+
+:host([size="sm"]) svg {
+  --pf-v6-c-spinner--diameter: var(--pf-v6-c-spinner--m-sm--diameter,
+    /** Small icon size */
+    var(--pf-t--global--icon--size--md, 0.875rem));
+}
+
+:host([size="md"]) svg {
+  --pf-v6-c-spinner--diameter: var(--pf-v6-c-spinner--m-md--diameter,
+    /** Medium icon size */
+    var(--pf-t--global--icon--size--lg, 1rem));
+}
+
+:host([size="lg"]) svg {
+  --pf-v6-c-spinner--diameter: var(--pf-v6-c-spinner--m-lg--diameter,
+    /** Large icon size */
+    var(--pf-t--global--icon--size--xl, 1.5rem));
+}
+
+:host([size="xl"]) svg {
+  --pf-v6-c-spinner--diameter: var(--pf-v6-c-spinner--m-xl--diameter,
+    /** Extra-large icon size, default spinner diameter */
+    var(--pf-t--global--icon--size--2xl, 3.5rem));
+}
+
+:host([inline]) svg {
+  --pf-v6-c-spinner--diameter: var(--pf-v6-c-spinner--m-inline--diameter, 1em);
+}
+
+@keyframes rotate {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 280;
+    rotate: 0deg;
+  }
+
+  15% {
+    stroke-width: calc(
+      /** Stroke width during mid-animation thin phase */
+      var(--pf-v6-c-spinner__path--StrokeWidth,
+        var(--pf-v6-c-spinner--StrokeWidth, 10)) - 4);
+  }
+
+  40% {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 150;
+  }
+
+  100% {
+    stroke-dashoffset: 280;
+    rotate: 720deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg,
+  circle {
+    animation-duration: 0s;
+  }
+}

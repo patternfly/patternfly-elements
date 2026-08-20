@@ -1,0 +1,36 @@
+---
+description: Tooltip content can include formatted HTML via the content slot.
+---
+<section>
+  <p>A tooltip may contain
+    <pf-v6-tooltip>
+      <button class="inline-trigger">HTML content</button>
+      <span slot="content">
+        Slotted content can be <mark>formatted</mark>, using HTML
+        tags like <em>em</em>, <strong>strong</strong>, or <code>code</code>.
+      </span>
+    </pf-v6-tooltip> by using the <code>content</code> slot.
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 6em;
+  }
+
+  .inline-trigger {
+    font-weight: bold;
+    font-family: monospace;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    color: inherit;
+  }
+</style>

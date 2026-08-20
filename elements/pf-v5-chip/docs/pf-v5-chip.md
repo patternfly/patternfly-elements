@@ -1,7 +1,7 @@
 <script type="module">
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 import '@patternfly/elements/pf-v6-badge/pf-v6-badge.js';
-import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
 </script>
 
 {% renderOverview %}
@@ -36,12 +36,12 @@ Chips can be removable or read-only. The Overflow chip is a special chip that is
 #### Max-width
 
 {% htmlexample %}
-  <pf-v5-tooltip id="max"
+  <pf-v6-tooltip id="max"
               position="top">
     <pf-v5-chip onclick="this.parentElement.remove()"
              style="max-width:10em;">Really long chip that goes on and on</pf-v5-chip>
     <span slot="content">Really long chip that goes on and on</span>
-  </pf-v5-tooltip>
+  </pf-v6-tooltip>
 {% endhtmlexample %}
 
 ### Chip group

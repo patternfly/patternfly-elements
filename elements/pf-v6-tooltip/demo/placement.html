@@ -1,0 +1,61 @@
+---
+description: Tooltips can be positioned on any side of the trigger element.
+---
+<section>
+  <div class="grid">
+    <pf-v6-tooltip position="top" content="Top">
+      <pf-v5-button>Top</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="top-start" content="Top Start">
+      <pf-v5-button>Top Start</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="top-end" content="Top End">
+      <pf-v5-button>Top End</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="bottom" content="Bottom">
+      <pf-v5-button>Bottom</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="bottom-start" content="Bottom Start">
+      <pf-v5-button>Bottom Start</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="bottom-end" content="Bottom End">
+      <pf-v5-button>Bottom End</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="left" content="Left">
+      <pf-v5-button>Left</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="left-start" content="Left Start">
+      <pf-v5-button>Left Start</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="left-end" content="Left End">
+      <pf-v5-button>Left End</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="right" content="Right">
+      <pf-v5-button>Right</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="right-start" content="Right Start">
+      <pf-v5-button>Right Start</pf-v5-button>
+    </pf-v6-tooltip>
+    <pf-v6-tooltip position="right-end" content="Right End">
+      <pf-v5-button>Right End</pf-v5-button>
+    </pf-v6-tooltip>
+  </div>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 6em;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 1em;
+    justify-content: center;
+  }
+</style>

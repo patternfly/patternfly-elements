@@ -2,7 +2,7 @@
 "@patternfly/pfe-core": minor
 ---
 
-`ssrCallConnectedCallback`: exported from `ssr-shims.js`, replacing the deprecated `globalThis.litSsrCallConnectedCallback` global. Pass a predicate to limit which elements receive `connectedCallback` during SSR, or omit it to opt in all elements.
+`ssrCallConnectedCallback`: filter which elements receive `connectedCallback` during SSR. Importing `ssr-shims.js` opts in all elements, matching the previous `globalThis.litSsrCallConnectedCallback` behavior. Pass a predicate to replace that default.
 
 ```typescript
 import { ssrCallConnectedCallback } from '@patternfly/pfe-core/ssr-shims.js';

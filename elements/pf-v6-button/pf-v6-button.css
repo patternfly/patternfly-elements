@@ -38,6 +38,7 @@
   --pf-v6-c-button--TextDecorationLine: none;
   --pf-v6-c-button--TextDecorationStyle: none;
   --pf-v6-c-button--TextDecorationColor: currentcolor;
+  --pf-v6-c-button--TextUnderlineOffset: auto;
   --pf-v6-c-button--TransitionDelay: 0s;
   --pf-v6-c-button--TransitionDuration: var(--pf-t--global--motion--duration--fade--default, 200ms);
   --pf-v6-c-button--TransitionTimingFunction: var(--pf-t--global--motion--timing-function--accelerate, cubic-bezier(0.4, 0, 0.7, 0.2));
@@ -53,6 +54,7 @@
   --pf-v6-c-button--hover--TextDecorationLine: none;
   --pf-v6-c-button--hover--TextDecorationStyle: none;
   --pf-v6-c-button--hover--TextDecorationColor: currentcolor;
+  --pf-v6-c-button--hover--TextUnderlineOffset: auto;
   --pf-v6-c-button--hover--ScaleX: 1;
   --pf-v6-c-button--hover--ScaleY: 1;
 
@@ -161,10 +163,12 @@
   --pf-v6-c-button--span--m-link--m-inline__icon--m-end--MarginInlineStart: var(--pf-t--global--spacer--gap--text-to-element--default, 0.5rem);
   --pf-v6-c-button--m-link--m-inline--Color: var(--pf-t--global--text--color--brand--default, #0066cc);
   --pf-v6-c-button--m-link--m-inline__icon--Color: var(--pf-t--global--icon--color--brand--default, #0066cc);
-  --pf-v6-c-button--m-link--m-inline--TextDecorationColor: currentcolor;
+  --pf-v6-c-button--m-link--m-inline--TextDecorationColor: var(--pf-t--global--text-decoration--color--default, #e0e0e0);
+  --pf-v6-c-button--m-link--m-inline--TextUnderlineOffset: var(--pf-t--global--text-decoration--offset--default, 0.25rem);
   --pf-v6-c-button--m-link--m-inline--hover--Color: var(--pf-t--global--text--color--brand--hover, #004d99);
   --pf-v6-c-button--m-link--m-inline--hover__icon--Color: var(--pf-t--global--icon--color--brand--hover, #004d99);
-  --pf-v6-c-button--m-link--m-inline--hover--TextDecorationColor: currentcolor;
+  --pf-v6-c-button--m-link--m-inline--hover--TextDecorationColor: var(--pf-t--global--text-decoration--color--hover, currentcolor);
+  --pf-v6-c-button--m-link--m-inline--hover--TextUnderlineOffset: var(--pf-t--global--text-decoration--offset--hover, calc(0.25rem + 1px));
 
   /* Plain */
   --pf-v6-c-button--m-plain--BorderRadius: var(--pf-t--global--border--radius--small, 6px);
@@ -420,6 +424,7 @@
   text-decoration-line: var(--pf-v6-c-button--TextDecorationLine);
   text-decoration-style: var(--pf-v6-c-button--TextDecorationStyle);
   text-decoration-color: var(--pf-v6-c-button--TextDecorationColor);
+  text-underline-offset: var(--pf-v6-c-button--TextUnderlineOffset, auto);
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
@@ -557,6 +562,8 @@
       --pf-v6-c-button--m-link__icon--Color: var(--pf-v6-c-button--m-link--m-inline__icon--Color);
       --pf-v6-c-button--TextDecorationColor: var(--pf-v6-c-button--m-link--m-inline--TextDecorationColor);
       --pf-v6-c-button--hover--TextDecorationColor: var(--pf-v6-c-button--m-link--m-inline--hover--TextDecorationColor);
+      --pf-v6-c-button--TextUnderlineOffset: var(--pf-v6-c-button--m-link--m-inline--TextUnderlineOffset);
+      --pf-v6-c-button--hover--TextUnderlineOffset: var(--pf-v6-c-button--m-link--m-inline--hover--TextUnderlineOffset);
       --pf-v6-c-button--m-link--hover--Color: var(--pf-v6-c-button--m-link--m-inline--hover--Color);
       --pf-v6-c-button--m-link--hover__icon--Color: var(--pf-v6-c-button--m-link--m-inline--hover__icon--Color);
       --pf-v6-c-button--BorderWidth: 0;
@@ -829,6 +836,7 @@
     text-decoration-line: var(--pf-v6-c-button--hover--TextDecorationLine);
     text-decoration-style: var(--pf-v6-c-button--hover--TextDecorationStyle);
     text-decoration-color: var(--pf-v6-c-button--hover--TextDecorationColor);
+    text-underline-offset: var(--pf-v6-c-button--hover--TextUnderlineOffset, auto);
     outline-offset: var(--pf-t--global--focus-ring--position--offset, 0.125rem);
   }
 
@@ -1011,6 +1019,7 @@
   text-decoration-line: var(--pf-v6-c-button--hover--TextDecorationLine);
   text-decoration-style: var(--pf-v6-c-button--hover--TextDecorationStyle);
   text-decoration-color: var(--pf-v6-c-button--hover--TextDecorationColor);
+  text-underline-offset: var(--pf-v6-c-button--hover--TextUnderlineOffset, auto);
   outline-offset: var(--pf-t--global--focus-ring--position--offset, 0.125rem);
 }
 

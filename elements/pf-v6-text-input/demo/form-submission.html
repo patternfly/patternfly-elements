@@ -1,0 +1,28 @@
+---
+name: Form submission
+description: Demonstrates form participation as a Form-Associated Custom Element (FACE).
+---
+<form id="text-input-form">
+  <label for="input">Name</label>
+  <pf-v6-text-input id="input" name="username" required></pf-v6-text-input>
+  <button type="submit">Submit</button>
+  <p>Form status: <output name="status">unsubmitted</output></p>
+</form>
+
+<style>
+  label { display: block; }
+</style>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-text-input/pf-v6-text-input.js';
+
+  document
+    .querySelector('#text-input-form')
+    .addEventListener('submit', function(event) {
+      event.preventDefault();
+      const data = new FormData(this);
+      this.elements.status.textContent = `Submitted: ${data.get('username')}`;
+    });
+</script>
+
+<link rel="stylesheet" href="demo.css">

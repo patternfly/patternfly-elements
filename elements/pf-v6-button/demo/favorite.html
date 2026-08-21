@@ -8,14 +8,14 @@ description: Favorite buttons use the favorite attribute with variant="plain". T
     id="fav"
     variant="plain"
     favorite
-    accessible-label="Favorite"
+    accessible-label="not starred"
   ></pf-v6-button>
   <pf-v6-button
     id="fav-on"
     variant="plain"
     favorite
     favorited
-    accessible-label="Favorited"
+    accessible-label="starred"
   ></pf-v6-button>
 </section>
 
@@ -25,7 +25,7 @@ description: Favorite buttons use the favorite attribute with variant="plain". T
   for (const button of document.querySelectorAll("pf-v6-button")) {
     button.addEventListener("click", () => {
       button.favorited = !button.favorited;
-      button.accessibleLabel = button.favorited ? "Favorited" : "Favorite";
+      button.accessibleLabel = button.favorited ? "starred" : "not starred";
     });
   }
 </script>

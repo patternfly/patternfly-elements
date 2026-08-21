@@ -1,18 +1,19 @@
 ---
-name: Variant examples
+name: Variations
 description: PatternFly supports several button styling variants for different scenarios. Assign a variant with the variant attribute.
 ---
 
 <section>
   <pf-v6-button>Primary</pf-v6-button>
   <pf-v6-button variant="secondary">Secondary</pf-v6-button>
-  <pf-v6-button variant="secondary" danger>Danger secondary</pf-v6-button>
+  <pf-v6-button variant="secondary" danger>Secondary danger</pf-v6-button>
   <pf-v6-button variant="tertiary">Tertiary</pf-v6-button>
   <pf-v6-button variant="danger">Danger</pf-v6-button>
   <pf-v6-button variant="warning">Warning</pf-v6-button>
 </section>
 
 <section>
+  <pf-v6-button variant="link">Link</pf-v6-button>
   <pf-v6-button variant="link">
     <svg
       slot="icon"
@@ -43,9 +44,9 @@ description: PatternFly supports several button styling variants for different s
       ></path>
     </svg>
   </pf-v6-button>
+  <pf-v6-button variant="link" danger>Link danger</pf-v6-button>
   <pf-v6-button variant="link" inline>Inline link</pf-v6-button>
-  <pf-v6-button variant="link" danger>Danger link</pf-v6-button>
-  <pf-v6-button variant="plain" accessible-label="Close">
+  <pf-v6-button variant="plain" accessible-label="Remove">
     <svg
       slot="icon"
       fill="currentColor"
@@ -63,7 +64,7 @@ description: PatternFly supports several button styling variants for different s
 
 <section>
   <pf-v6-button variant="control">Control</pf-v6-button>
-  <pf-v6-button variant="control" accessible-label="Copy">
+  <pf-v6-button variant="control" accessible-label="Copy input">
     <svg
       slot="icon"
       fill="currentColor"

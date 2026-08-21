@@ -97,6 +97,7 @@ const loadingConverter: ComplexAttributeConverter<boolean | null> = {
  * @cssprop {<color>} --pf-v6-c-button__icon--Color - Icon color
  * @cssprop {<color>} --pf-v6-c-button--hover--BackgroundColor - Hover background
  * @cssprop {<color>} --pf-v6-c-button--m-clicked--BackgroundColor - Clicked background
+ * @cssprop {<length>} --pf-v6-c-button--m-circle--BorderRadius - Circle variant border radius
  *
  * @csspart button - Main button surface (inner control chrome)
  * @csspart icon - Container for the icon slot and built-in icons
@@ -179,6 +180,9 @@ export class PfV6Button extends LitElement {
   /** Applies clicked styling */
   @property({ reflect: true, type: Boolean }) clicked = false;
 
+  /** Renders a circular shape instead of a pill; intended for icon-only buttons */
+  @property({ reflect: true, type: Boolean }) circle = false;
+
   /** Renders as a favorite toggle; overrides the icon slot */
   @property({ reflect: true, type: Boolean }) favorite = false;
 
@@ -209,7 +213,7 @@ export class PfV6Button extends LitElement {
   @property({ reflect: true, attribute: 'icon-position' })
   iconPosition?: ButtonIconPosition;
 
-  /** When set with `variant="link"`, renders as an anchor */
+  /** Renders the button as an anchor, regardless of variant */
   @property({ reflect: true }) href?: string;
 
   /** Target for the link when `href` is set */
@@ -253,7 +257,7 @@ export class PfV6Button extends LitElement {
   }
 
   protected override willUpdate(): void {
-    const isLink = this.variant === 'link' && !!this.href;
+    const isLink = !!this.href;
     this.#internals.ariaLabel = this.accessibleLabel || null;
     this.#internals.ariaDisabled =
       this.#disabled || this.disabledFocusable ? 'true' : null;
@@ -328,6 +332,7 @@ export class PfV6Button extends LitElement {
       'expand': this.hamburger && this.hamburgerVariant === 'expand',
       'collapse': this.hamburger && this.hamburgerVariant === 'collapse',
       'block': this.block,
+      'circle': this.circle,
       disabled,
       'aria-disabled': this.disabledFocusable,
       'clicked': this.clicked,
@@ -345,7 +350,7 @@ export class PfV6Button extends LitElement {
         : {}),
       hasIcon,
       'loading': isLoading,
-      'anchor': !!(this.variant === 'link' && this.href),
+      'anchor': !!this.href,
     };
 
     const icon = this.#renderIcon(hasText);
@@ -377,7 +382,7 @@ export class PfV6Button extends LitElement {
       </span>
     `;
 
-    if (this.variant === 'link' && this.href) {
+    if (this.href) {
       return html`
         <a
           id="button"
@@ -386,6 +391,7 @@ export class PfV6Button extends LitElement {
           href="${this.href}"
           target="${ifDefined(this.target)}"
           tabindex="${ifDefined(disabled ? -1 : undefined)}"
+          aria-label="${ifDefined(this.accessibleLabel)}"
           aria-disabled="${ifDefined(
             disabled || this.disabledFocusable ? 'true' : undefined
           )}"
@@ -533,7 +539,7 @@ export class PfV6Button extends LitElement {
       event.stopImmediatePropagation();
       return;
     }
-    if (this.variant === 'link' && this.href) {
+    if (this.href) {
       return;
     }
     switch (this.type) {
@@ -553,7 +559,7 @@ export class PfV6Button extends LitElement {
   };
 
   #onKeydown = (event: KeyboardEvent): void => {
-    if (this.variant === 'link' && this.href) {
+    if (this.href) {
       return;
     }
     switch (event.key) {

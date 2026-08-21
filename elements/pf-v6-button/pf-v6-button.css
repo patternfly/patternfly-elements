@@ -308,11 +308,11 @@
   --pf-v6-c-button--m-small--PaddingInlineStart: var(--pf-t--global--spacer--action--horizontal--compact, 1rem);
 
   /* Disabled */
-  --pf-v6-c-button--disabled--Color: var(--pf-t--global--text--color--on-disabled, #6a6e73);
-  --pf-v6-c-button--disabled--BackgroundColor: var(--pf-t--global--background--color--disabled--default, #d2d2d2);
+  --pf-v6-c-button--disabled--Color: var(--pf-t--global--text--color--on-disabled, #707070);
+  --pf-v6-c-button--disabled--BackgroundColor: var(--pf-t--global--background--color--disabled--default, #c7c7c7);
   --pf-v6-c-button--disabled--TextDecorationColor: currentcolor;
   --pf-v6-c-button--disabled--BorderColor: transparent;
-  --pf-v6-c-button--disabled__icon--Color: var(--pf-t--global--icon--color--on-disabled, #6a6e73);
+  --pf-v6-c-button--disabled__icon--Color: var(--pf-t--global--icon--color--on-disabled, #707070);
 
   /* Icon */
   --pf-v6-c-button__icon--Color: var(--pf-t--global--icon--color--regular, #1f1f1f);
@@ -1014,6 +1014,33 @@
 /* Slotted badge styles - apply CSS variables to light DOM badges */
 #button.primary ::slotted(pf-v6-badge:not([state="read"])) {
   --pf-v6-c-badge--BorderColor: var(--pf-v6-c-button--m-primary__c-badge--BorderColor);
+}
+
+/* Count badge sizing and colors, corrected to match computed PatternFly values */
+#count ::slotted(pf-v6-badge) {
+  box-sizing: border-box;
+  --pf-v6-c-badge--FontWeight: var(--pf-t--global--font--weight--body--bold, 600);
+}
+
+#count ::slotted(pf-v6-badge:not([state="unread"])) {
+  --pf-v6-c-badge--BackgroundColor: var(--pf-t--global--color--nonstatus--gray--default, #e0e0e0);
+}
+
+#count ::slotted(pf-v6-badge[state="read"]) {
+  --pf-v6-c-badge--BorderColor: var(--pf-t--global--border--color--high-contrast, transparent);
+}
+
+#count ::slotted(pf-v6-badge[disabled]) {
+  --pf-v6-c-badge--Color: var(--pf-t--global--text--color--on-disabled, #707070);
+  --pf-v6-c-badge--BackgroundColor: var(--pf-t--global--background--color--disabled--default, #c7c7c7);
+}
+
+/*
+ * Two ID selectors outweigh the `#button.primary` unread-border rule above,
+ * so the disabled border always wins regardless of button variant or state.
+ */
+#button #count ::slotted(pf-v6-badge[disabled]) {
+  --pf-v6-c-badge--BorderColor: var(--pf-t--global--border--color--disabled, #a3a3a3);
 }
 
 :host(:focus) #button,

@@ -1,49 +1,9 @@
 ---
 name: Inline link as span
-description: pf-v6-button is inline by default, so plain and inline link buttons can sit directly inside a sentence without href, wrapping like a span.
+description: Inline links should use variant="link" and the inline attribute to wrap inline with surrounding text.
 ---
 
 <p>
-  <strong>Plain</strong>
-  <br />
-  <pf-v6-button variant="plain" accessible-label="Remove">
-    <svg
-      slot="icon"
-      fill="currentColor"
-      height="1em"
-      width="1em"
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-    >
-      <path
-        d="M17.8 16.2 11.59 10l6.21-6.21c.42-.46.39-1.17-.07-1.59-.43-.4-1.09-.4-1.52 0l-6.2 6.2-6.22-6.19c-.44-.44-1.15-.44-1.59 0-.44.44-.44 1.15 0 1.59l6.2 6.21-6.2 6.2c-.42.46-.39 1.17.07 1.59.43.4 1.09.4 1.52 0L10 11.59l6.2 6.2c.44.44 1.15.44 1.59 0 .44-.45.44-1.16 0-1.6Z"
-      ></path>
-    </svg>
-  </pf-v6-button>
-</p>
-
-<p>
-  <strong>Plain no padding</strong>
-  <br />
-  <pf-v6-button variant="plain" no-padding accessible-label="Remove">
-    <svg
-      slot="icon"
-      fill="currentColor"
-      height="1em"
-      width="1em"
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-    >
-      <path
-        d="M17.8 16.2 11.59 10l6.21-6.21c.42-.46.39-1.17-.07-1.59-.43-.4-1.09-.4-1.52 0l-6.2 6.2-6.22-6.19c-.44-.44-1.15-.44-1.59 0-.44.44-.44 1.15 0 1.59l6.2 6.21-6.2 6.2c-.42.46-.39 1.17.07 1.59.43.4 1.09.4 1.52 0L10 11.59l6.2 6.2c.44.44 1.15.44 1.59 0 .44-.45.44-1.16 0-1.6Z"
-      ></path>
-    </svg>
-  </pf-v6-button>
-</p>
-
-<p>
-  <strong>Inline link</strong>
-  <br />
   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   <pf-v6-button variant="link" inline
     >This is long button text that needs to be a span so that it will wrap
@@ -53,6 +13,23 @@ description: pf-v6-button is inline by default, so plain and inline link buttons
   condimentum velit elementum non.
 </p>
 
+<br />
+
+<p>
+  Note that, unlike a plain <b>span</b>, <code>pf-v6-button</code> already
+  listens for <b>keydown</b> internally and dispatches a <b>click</b> event
+  for you, so no manual <b>keydown</b> listener is needed to make an inline
+  link keyboard-accessible.
+  <pf-v6-button id="inline-link-demo" variant="link" inline
+    >Pressing the Enter or Space keys, or clicking, this inline link
+    demonstrates this by triggering an alert.</pf-v6-button
+  >
+</p>
+
 <script type="module">
   import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+
+  document.getElementById('inline-link-demo').addEventListener('click', () => {
+    alert('pf-v6-button handled this activation - by click, Enter, or Space - with no extra keydown wiring.');
+  });
 </script>

@@ -1,0 +1,21 @@
+---
+description: A tooltip referencing an external element as its trigger.
+---
+<section>
+  <pf-v6-button id="my-button">Tooltip attached via trigger ref</pf-v6-button>
+  <pf-v6-tooltip trigger="my-button"
+                 content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.">
+  </pf-v6-tooltip>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+  import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
+</script>
+
+<style>
+  section {
+    padding: 6em;
+    text-align: center;
+  }
+</style>

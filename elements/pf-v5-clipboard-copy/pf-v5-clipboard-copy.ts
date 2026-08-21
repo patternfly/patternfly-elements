@@ -8,7 +8,7 @@ import formControlStyles from '../form-control.css';
 
 import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
-import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
 
 const sleep = (ms?: number) => new Promise(r => setTimeout(r, ms));
 
@@ -111,7 +111,7 @@ export class PfV5ClipboardCopy extends LitElement {
                  ?disabled="${expanded || readonly}"
                  .value="${this.value}"
                  @input="${this.#onChange}">
-          <pf-v5-tooltip>
+          <pf-v6-tooltip>
             <pf-v6-button id="copy-button"
                        icon="copy"
                        variant="${inline || compact ? 'plain' : 'control'}"
@@ -119,7 +119,7 @@ export class PfV5ClipboardCopy extends LitElement {
                        @click="${this.copy}">
             </pf-v6-button>
             <span slot="content">${this.#copied ? this.clickTip : this.hoverTip}</span>
-          </pf-v5-tooltip>
+          </pf-v6-tooltip>
           <!-- Place additional action buttons here -->
           <slot name="actions"></slot>
         </div>

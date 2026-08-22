@@ -352,7 +352,7 @@
   --pf-v6-c-button__icon--favorite--TransitionDuration: var(--pf-t--global--motion--duration--icon--default, 100ms);
 
   /* Progress */
-  --pf-v6-c-button__progress--width: calc(var(--pf-t--global--icon--size--lg) + var(--pf-t--global--spacer--sm, 0.5rem));
+  --pf-v6-c-button__progress--width: calc(var(--pf-t--global--icon--size--lg, 1rem) + var(--pf-t--global--spacer--sm, 0.5rem));
   --pf-v6-c-button__progress--Opacity: 0;
   --pf-v6-c-button__progress--TranslateY: -50%;
   --pf-v6-c-button__progress--TranslateX: 0;
@@ -932,7 +932,10 @@
   rotate: var(--pf-v6-c-button__icon--Rotate);
   scale: var(--pf-v6-c-button__icon--ScaleX) var(--pf-v6-c-button__icon--ScaleY);
 
-  /* Match PatternFly's .pf-v6-svg baseline offset so icons sit centered with text */
+  /* Match PatternFly's .pf-v6-svg baseline offset so icons sit centered with text.
+     Applies to both slotted icons and internally-rendered icons (settings,
+     hamburger, favorite) so that rotation/scale transforms pivot correctly. */
+  svg,
   ::slotted(svg) {
     vertical-align: -0.125em;
   }
@@ -968,6 +971,9 @@
   line-height: 1;
   color: var(--pf-v6-c-button__progress--Color);
   transform: translate(var(--pf-v6-c-button__progress--TranslateX), var(--pf-v6-c-button__progress--TranslateY));
+
+  /* pf-v6-spinner's stroke defaults to brand blue; inherit the button's own color instead */
+  --pf-v6-c-spinner--Color: currentcolor;
 }
 
 .text {

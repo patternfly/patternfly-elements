@@ -263,6 +263,7 @@ export class PfV6Button extends LitElement {
       this.#disabled || this.disabledFocusable ? 'true' : null;
     this.#internals.ariaExpanded =
       this.expanded === undefined ? null : String(this.expanded);
+    this.#internals.ariaPressed = this.favorite ? String(this.favorited) : null;
     this.#internals.setFormValue(
       this.name == null ? null : (this.value ?? ''),
     );
@@ -291,19 +292,20 @@ export class PfV6Button extends LitElement {
       }
     }
 
+    // Checked on every update (not gated to specific properties) since a
+    // slotted icon can change without any reactive property changing.
+    // Uses `textContent` directly rather than `#hasTextContent()`: SlotController
+    // populates its slot records asynchronously, so `hasSlotted()` under-reports
+    // on the very first render even when light-DOM text is already present.
     if (
-      changed.has('settings')
-      || changed.has('hamburger')
-      || changed.has('favorite')
+      this.#hasIcon()
+      && !this.textContent?.trim()
+      && !this.accessibleLabel
     ) {
-      const iconOnly = this.settings || this.hamburger || this.favorite;
-      if (iconOnly && !this.accessibleLabel && !this.#hasTextContent()) {
-        // eslint-disable-next-line no-console
-        console.error(
-          'pf-v6-button: provide visible text or accessible-label for settings, '
-            + 'hamburger, and favorite buttons.'
-        );
-      }
+      // eslint-disable-next-line no-console
+      console.error(
+        'pf-v6-button: icon-only buttons must provide an `accessible-label`.'
+      );
     }
 
     if (changed.has('disabled')) {
@@ -313,7 +315,6 @@ export class PfV6Button extends LitElement {
 
   override render(): TemplateResult<1> {
     const disabled = this.#disabled;
-    const hasIcon = this.#hasIcon();
     const hasCount = this.#slots.hasSlotted('count');
     const hasText = this.#hasTextContent();
     const iconAtEnd =
@@ -348,7 +349,6 @@ export class PfV6Button extends LitElement {
       ...(this.variant === 'stateful' ?
         { [this.state ?? 'unread']: true }
         : {}),
-      hasIcon,
       'loading': isLoading,
       'anchor': !!this.href,
     };
@@ -370,6 +370,7 @@ export class PfV6Button extends LitElement {
                 size="md"
                 ?inline="${this.inline}"
                 accessible-label="${this.loadingLabel}"
+                value-text="${this.loadingLabel}"
               ></pf-v6-spinner>
             </span>
           `

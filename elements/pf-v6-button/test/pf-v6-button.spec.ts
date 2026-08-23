@@ -123,6 +123,39 @@ describe('<pf-v6-button>', function() {
     });
   });
 
+  describe('favorite toggle', function() {
+    let element: PfV6Button;
+    let snapshot: A11yTreeSnapshot;
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Button>(html`
+        <pf-v6-button
+          variant="plain"
+          favorite
+          accessible-label="not starred"
+        ></pf-v6-button>
+      `);
+      snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+    });
+
+    it('exposes aria-pressed as false when not favorited', function() {
+      expect(snapshot.pressed).to.equal(false);
+    });
+
+    describe('when favorited', function() {
+      beforeEach(async function() {
+        element.favorited = true;
+        element.accessibleLabel = 'starred';
+        await element.updateComplete;
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+      });
+
+      it('exposes aria-pressed as true', function() {
+        expect(snapshot.pressed).to.equal(true);
+      });
+    });
+  });
+
   describe('variants', function() {
     for (const variant of [
       'primary',
@@ -190,6 +223,32 @@ describe('<pf-v6-button>', function() {
       it('parses as false for reserved progress padding', function() {
         expect(element.loading).to.be.false;
         expect(element.getAttribute('loading')).to.equal('false');
+      });
+    });
+
+    describe('icon-only button loading with a custom loading-label', function() {
+      let element: PfV6Button;
+      let snapshot: A11yTreeSnapshot;
+
+      beforeEach(async function() {
+        element = await createFixture<PfV6Button>(html`
+          <pf-v6-button
+            variant="plain"
+            loading
+            loading-label="Uploading data"
+          ></pf-v6-button>
+        `);
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+      });
+
+      it('exposes loading-label as the accessible name, not a generic default', function() {
+        // Regression test: the nested `pf-v6-spinner` is an ARIA "range"
+        // role. When a button's name is computed from content, browsers
+        // substitute the embedded range widget's *value* (aria-valuetext)
+        // rather than its name. Without `value-text` wired to match
+        // `loading-label`, the button's name collapsed to a generic
+        // "Loading..." regardless of the author-provided label.
+        expect(snapshot.name).to.equal('Uploading data');
       });
     });
   });

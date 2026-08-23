@@ -262,6 +262,232 @@ describe('<pf-v6-button>', function() {
     });
   });
 
+  describe('icon slot', function() {
+    let withIcon: PfV6Button;
+    let withoutIcon: PfV6Button;
+
+    beforeEach(async function() {
+      withIcon = await createFixture<PfV6Button>(html`
+        <pf-v6-button>
+          Download
+          <svg slot="icon" width="16" height="16" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z"></path>
+          </svg>
+        </pf-v6-button>
+      `);
+      withoutIcon = await createFixture<PfV6Button>(html`
+        <pf-v6-button>Download</pf-v6-button>
+      `);
+    });
+
+    it('renders wider than an equivalent button with no slotted icon', function() {
+      expect(withIcon.offsetWidth).to.be.greaterThan(withoutIcon.offsetWidth);
+    });
+  });
+
+  describe('count slot', function() {
+    let withCount: PfV6Button;
+    let withoutCount: PfV6Button;
+
+    beforeEach(async function() {
+      withCount = await createFixture<PfV6Button>(html`
+        <pf-v6-button>
+          Issues
+          <span slot="count">7</span>
+        </pf-v6-button>
+      `);
+      withoutCount = await createFixture<PfV6Button>(html`
+        <pf-v6-button>Issues</pf-v6-button>
+      `);
+    });
+
+    it('renders wider than an equivalent button with no slotted count', function() {
+      expect(withCount.offsetWidth).to.be.greaterThan(withoutCount.offsetWidth);
+    });
+  });
+
+  describe('size', function() {
+    let small: PfV6Button;
+    let regular: PfV6Button;
+    let large: PfV6Button;
+
+    beforeEach(async function() {
+      small = await createFixture<PfV6Button>(html`<pf-v6-button size="sm">Button</pf-v6-button>`);
+      regular = await createFixture<PfV6Button>(html`<pf-v6-button>Button</pf-v6-button>`);
+      large = await createFixture<PfV6Button>(html`<pf-v6-button size="lg">Button</pf-v6-button>`);
+    });
+
+    it('reflects sm and lg as attributes', function() {
+      expect(small.getAttribute('size')).to.equal('sm');
+      expect(large.getAttribute('size')).to.equal('lg');
+      expect(regular.hasAttribute('size')).to.be.false;
+    });
+
+    it('renders sm shorter than the default size', function() {
+      expect(small.offsetHeight).to.be.lessThan(regular.offsetHeight);
+    });
+
+    it('renders lg taller than the default size', function() {
+      expect(large.offsetHeight).to.be.greaterThan(regular.offsetHeight);
+    });
+  });
+
+  describe('block', function() {
+    let wrapper: HTMLDivElement;
+    let element: PfV6Button;
+
+    beforeEach(async function() {
+      wrapper = await createFixture<HTMLDivElement>(html`
+        <div style="width: 320px;">
+          <pf-v6-button block>Full width</pf-v6-button>
+        </div>
+      `);
+      element = wrapper.querySelector('pf-v6-button')!;
+    });
+
+    it('spans the full width of its parent', function() {
+      expect(element.offsetWidth).to.equal(wrapper.offsetWidth);
+    });
+  });
+
+  describe('circle', function() {
+    let nonCircle: PfV6Button;
+    let circle: PfV6Button;
+
+    beforeEach(async function() {
+      nonCircle = await createFixture<PfV6Button>(html`
+        <pf-v6-button variant="plain" accessible-label="Add">
+          <svg slot="icon" width="16" height="16" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z"></path>
+          </svg>
+        </pf-v6-button>
+      `);
+      circle = await createFixture<PfV6Button>(html`
+        <pf-v6-button variant="plain" circle accessible-label="Add">
+          <svg slot="icon" width="16" height="16" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z"></path>
+          </svg>
+        </pf-v6-button>
+      `);
+    });
+
+    it('reflects the circle attribute', function() {
+      expect(circle.hasAttribute('circle')).to.be.true;
+      expect(nonCircle.hasAttribute('circle')).to.be.false;
+    });
+
+    it('renders a roughly square footprint for an icon-only button', function() {
+      expect(circle.offsetWidth).to.be.closeTo(circle.offsetHeight, 8);
+    });
+  });
+
+  describe('state', function() {
+    for (const state of ['read', 'unread', 'attention'] as const) {
+      it(`accepts the ${state} state`, async function() {
+        const element = await createFixture<PfV6Button>(html`
+          <pf-v6-button variant="stateful" state="${state}">Messages</pf-v6-button>
+        `);
+        expect(element.state).to.equal(state);
+      });
+    }
+
+    describe('when variant is stateful and state is unset', function() {
+      let read: PfV6Button;
+      let unread: PfV6Button;
+      let defaulted: PfV6Button;
+      let attention: PfV6Button;
+
+      beforeEach(async function() {
+        read = await createFixture<PfV6Button>(html`
+          <pf-v6-button variant="stateful" state="read">Messages</pf-v6-button>
+        `);
+        unread = await createFixture<PfV6Button>(html`
+          <pf-v6-button variant="stateful" state="unread">Messages</pf-v6-button>
+        `);
+        defaulted = await createFixture<PfV6Button>(html`
+          <pf-v6-button variant="stateful">Messages</pf-v6-button>
+        `);
+        attention = await createFixture<PfV6Button>(html`
+          <pf-v6-button variant="stateful" state="attention">Messages</pf-v6-button>
+        `);
+      });
+
+      function background(element: PfV6Button): string {
+        const part = element.shadowRoot!.querySelector('[part="button"]')!;
+        return getComputedStyle(part).backgroundColor;
+      }
+
+      it('defaults to the same styling as the explicit unread state', function() {
+        expect(background(defaulted)).to.equal(background(unread));
+      });
+
+      it('renders each state with a visually distinct background', function() {
+        expect(background(read)).to.not.equal(background(unread));
+        expect(background(read)).to.not.equal(background(attention));
+        expect(background(unread)).to.not.equal(background(attention));
+      });
+    });
+  });
+
+  describe('hamburger', function() {
+    let element: PfV6Button;
+    let snapshot: A11yTreeSnapshot;
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Button>(html`
+        <pf-v6-button
+          variant="plain"
+          hamburger
+          expanded
+          accessible-label="Toggle navigation"
+        ></pf-v6-button>
+      `);
+      snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+    });
+
+    it('reflects expanded in the accessibility tree', function() {
+      expect(snapshot.expanded).to.be.true;
+    });
+
+    it('accepts a hamburger-variant', async function() {
+      element.hamburgerVariant = 'collapse';
+      await element.updateComplete;
+      expect(element.getAttribute('hamburger-variant')).to.equal('collapse');
+    });
+
+    describe('when collapsed', function() {
+      beforeEach(async function() {
+        element.expanded = false;
+        await element.updateComplete;
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+      });
+
+      it('reflects expanded as false', function() {
+        expect(snapshot.expanded).to.be.false;
+      });
+    });
+  });
+
+  describe('settings', function() {
+    let element: PfV6Button;
+    let snapshot: A11yTreeSnapshot;
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6Button>(html`
+        <pf-v6-button variant="plain" settings accessible-label="Settings"></pf-v6-button>
+      `);
+      snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+    });
+
+    it('reflects the settings attribute', function() {
+      expect(element.hasAttribute('settings')).to.be.true;
+    });
+
+    it('exposes an accessible name', function() {
+      expect(snapshot.name).to.equal('Settings');
+    });
+  });
+
   describe('link with href', function() {
     let element: PfV6Button;
 

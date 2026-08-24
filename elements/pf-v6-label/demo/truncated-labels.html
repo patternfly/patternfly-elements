@@ -1,0 +1,28 @@
+---
+name: Truncated labels
+description: Truncated labels limit the visible text to a maximum width, showing an ellipsis for overflow.
+---
+<section>
+  <pf-v6-label truncated text-max-width="16ch">This is a long label that will be truncated</pf-v6-label>
+  <pf-v6-label truncated text-max-width="10ch">Short truncation width</pf-v6-label>
+  <pf-v6-label truncated text-max-width="100px">Fixed pixel max width label text</pf-v6-label>
+</section>
+
+<section>
+  <pf-v6-label color="blue" truncated text-max-width="16ch">Blue label with a long text that overflows</pf-v6-label>
+  <pf-v6-label variant="outline" truncated text-max-width="16ch">Outlined label with a long text that overflows</pf-v6-label>
+  <pf-v6-label status="success" truncated text-max-width="16ch">Success label with a long text that overflows</pf-v6-label>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-label/pf-v6-label.js';
+</script>
+
+<style>
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+</style>

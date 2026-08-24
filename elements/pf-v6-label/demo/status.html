@@ -1,0 +1,32 @@
+---
+name: Status
+description: Status labels include an icon and color to indicate success, warning, danger, info, or custom states.
+---
+<section>
+  <pf-v6-label status="success">Success</pf-v6-label>
+  <pf-v6-label status="warning">Warning</pf-v6-label>
+  <pf-v6-label status="danger">Danger</pf-v6-label>
+  <pf-v6-label status="info">Info</pf-v6-label>
+  <pf-v6-label status="custom">Custom</pf-v6-label>
+</section>
+
+<section>
+  <pf-v6-label variant="outline" status="success">Success</pf-v6-label>
+  <pf-v6-label variant="outline" status="warning">Warning</pf-v6-label>
+  <pf-v6-label variant="outline" status="danger">Danger</pf-v6-label>
+  <pf-v6-label variant="outline" status="info">Info</pf-v6-label>
+  <pf-v6-label variant="outline" status="custom">Custom</pf-v6-label>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-label/pf-v6-label.js';
+</script>
+
+<style>
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+</style>

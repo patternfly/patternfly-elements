@@ -1,0 +1,31 @@
+---
+name: Disabled
+description: Disabled labels appear muted and cannot be interacted with. Only applies to link and clickable labels.
+---
+<section>
+  <pf-v6-label href="#grey" disabled removable>Grey link removable (disabled)</pf-v6-label>
+  <pf-v6-label clickable disabled removable>Grey clickable removable (disabled)</pf-v6-label>
+</section>
+
+<section>
+  <pf-v6-label color="blue" href="#blue" disabled removable>Blue link removable (disabled)</pf-v6-label>
+  <pf-v6-label color="blue" clickable disabled removable>Blue clickable removable (disabled)</pf-v6-label>
+</section>
+
+<section>
+  <pf-v6-label variant="outline" href="#grey" disabled removable>Outline link removable (disabled)</pf-v6-label>
+  <pf-v6-label variant="outline" clickable disabled removable>Outline clickable removable (disabled)</pf-v6-label>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-label/pf-v6-label.js';
+</script>
+
+<style>
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+</style>

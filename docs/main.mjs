@@ -13,7 +13,7 @@ import '@patternfly/elements/pf-v5-helper-text/pf-v5-helper-text.js';
 import '@patternfly/elements/pf-v5-hint/pf-v5-hint.js';
 import '@patternfly/elements/pf-v5-jump-links/pf-v5-jump-links.js';
 import '@patternfly/elements/pf-v5-label-group/pf-v5-label-group.js';
-import '@patternfly/elements/pf-v5-label/pf-v5-label.js';
+import '@patternfly/elements/pf-v6-label/pf-v6-label.js';
 import '@patternfly/elements/pf-v5-modal/pf-v5-modal.js';
 import '@patternfly/elements/pf-v5-panel/pf-v5-panel.js';
 import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';

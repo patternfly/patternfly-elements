@@ -1,0 +1,33 @@
+---
+name: Compact labels
+description: Compact labels use less vertical padding, suitable for dense layouts or tables.
+---
+<section>
+  <pf-v6-label compact>Compact</pf-v6-label>
+  <pf-v6-label compact removable>Compact removable</pf-v6-label>
+  <pf-v6-label compact href="#compact">Compact link</pf-v6-label>
+  <pf-v6-label compact href="#compact" removable>Compact link removable</pf-v6-label>
+  <pf-v6-label compact clickable>Compact clickable</pf-v6-label>
+  <pf-v6-label compact clickable removable>Compact clickable removable</pf-v6-label>
+  <pf-v6-label compact truncated text-max-width="16ch">Compact label with icon that overflows</pf-v6-label>
+</section>
+
+<section>
+  <pf-v6-label compact variant="outline">Compact outline</pf-v6-label>
+  <pf-v6-label compact variant="outline" removable>Compact outline removable</pf-v6-label>
+  <pf-v6-label compact variant="outline" href="#compact">Compact outline link</pf-v6-label>
+  <pf-v6-label compact variant="outline" clickable>Compact outline clickable</pf-v6-label>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-label/pf-v6-label.js';
+</script>
+
+<style>
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+</style>

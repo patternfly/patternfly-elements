@@ -1,0 +1,148 @@
+---
+name: Counts
+description: Slot a pf-v6-badge into count to display a numeric value or status indicator beside the button label.
+---
+
+<strong>Unread:</strong>
+<section>
+  <pf-v6-button>
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button variant="secondary">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button variant="tertiary">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button variant="control">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button variant="link">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+</section>
+
+<strong>Unread disabled:</strong>
+<section>
+  <pf-v6-button disabled>
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button disabled variant="secondary">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button disabled variant="tertiary">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button disabled variant="control">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+  <pf-v6-button disabled variant="link">
+    Issues
+    <pf-v6-badge slot="count" state="unread"
+      >7<span class="pf-v6-screen-reader">unread messages</span></pf-v6-badge
+    >
+  </pf-v6-button>
+</section>
+
+<strong>Read:</strong>
+<section>
+  <pf-v6-button>
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button variant="secondary">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button variant="tertiary">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button variant="control">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button variant="link">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+</section>
+
+<strong>Read disabled:</strong>
+<section>
+  <pf-v6-button disabled>
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button disabled variant="secondary">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button disabled variant="tertiary">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button disabled variant="control">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+  <pf-v6-button disabled variant="link">
+    Issues
+    <pf-v6-badge slot="count" state="read">10</pf-v6-badge>
+  </pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+  import '@patternfly/elements/pf-v6-badge/pf-v6-badge.js';
+</script>
+
+<style>
+strong {
+    font-family: var(--pf-t--global--font--family--body, "Red Hat Text", RedHatText, Helvetica, Arial, sans-serif);
+  }
+
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-block-end: 1rem;
+  }
+
+  .pf-v6-screen-reader {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+</style>

@@ -93,7 +93,7 @@ tags:
           Organically grow the holistic world view of disruptive
           innovation via workplace diversity and empowerment.
         </p>
-        <pf-v5-button slot="footer" variant="link" href="#">Learn more</pf-v5-button>
+        <pf-v6-button slot="footer" variant="link" href="#">Learn more</pf-v6-button>
       </pf-v5-card>
     </div>
   </template>

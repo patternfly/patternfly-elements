@@ -150,16 +150,16 @@ export class PfV5SearchInput extends LitElement {
                  @keyup="${this.#onSubmit}"
                  @keydown="${this.#onKeyDown}">
           <div class="close-button-container">
-            <pf-v5-button id="toggle-button"
+            <pf-v6-button id="toggle-button"
                        class="close-button"
-                       plain
-                       label="Close"
+                       variant="plain"
+                       accessible-label="Close"
                        ?hidden="${this.#hideCloseButton()}"
                        @click="${this.#onClickCloseButton}">
               <pf-v5-icon size="md"
                        icon="close"
                        set="patternfly">close</pf-v5-icon>
-            </pf-v5-button>
+            </pf-v6-button>
           </div>
         </div>
         <div id="listbox-container"

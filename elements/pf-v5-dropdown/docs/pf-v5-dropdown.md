@@ -46,10 +46,10 @@ A custom toggle can be added using the `toggle` slot.
 
 {% htmlexample %}
   <pf-v5-dropdown>
-    <pf-v5-button slot="toggle" variant="control">
+    <pf-v6-button slot="toggle" variant="control">
       My Custom Dropdown 
       <svg viewBox="0 0 320 512" fill="currentColor" aria-hidden="true"  width="1em" height="1em"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-    </pf-v5-button>
+    </pf-v6-button>
     <pf-v5-dropdown-item>Action</pf-v5-dropdown-item>
     <pf-v5-dropdown-item href="#">Link</pf-v5-dropdown-item>
     <pf-v5-dropdown-item disabled>Disabled Action</pf-v5-dropdown-item>
@@ -66,9 +66,9 @@ When there isn't enough space for a labeled button, a slotted toggle button with
 
 {% htmlexample %}
 <pf-v5-dropdown>
-  <pf-v5-button slot="toggle" aria-label="Toggle" plain>
+  <pf-v6-button slot="toggle" accessible-label="Toggle" variant="plain">
     <svg viewBox="0 0 192 512" fill="currentColor" aria-hidden="true" role="img" width="1em" height="1em"><path d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg>
-  </pf-v5-button>
+  </pf-v6-button>
   <pf-v5-dropdown-item>Action</pf-v5-dropdown-item>
   <pf-v5-dropdown-item href="#">Link</pf-v5-dropdown-item>
   <pf-v5-dropdown-item disabled>Disabled Action</pf-v5-dropdown-item>

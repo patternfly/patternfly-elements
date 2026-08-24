@@ -1,0 +1,25 @@
+---
+name: Small buttons
+description: To fit into tight spaces, primary, secondary, tertiary, danger, and warning button variations can be made smaller using the sm value for the size attribute.
+---
+
+<section>
+  <pf-v6-button size="sm">Primary</pf-v6-button>
+  <pf-v6-button size="sm" variant="secondary">Secondary</pf-v6-button>
+  <pf-v6-button size="sm" variant="tertiary">Tertiary</pf-v6-button>
+  <pf-v6-button size="sm" variant="danger">Danger</pf-v6-button>
+  <pf-v6-button size="sm" variant="warning">Warning</pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

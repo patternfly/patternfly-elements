@@ -283,7 +283,7 @@ pf-v5-icon, ::slotted(pf-v5-icon) {
   color: var(--_label-icon-color);
 }
 
-pf-v5-button {
+pf-v6-button {
   --pf-v5-c-button--FontSize: var(--pf-v5-c-label__c-button--FontSize,
     var(--pf-global--FontSize--xs, 0.75rem));
   --pf-v5-c-button--PaddingTop: var(--pf-v5-c-label__c-button--PaddingTop,

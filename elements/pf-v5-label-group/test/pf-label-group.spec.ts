@@ -91,8 +91,8 @@ describe('<pf-v5-label-group>', function() {
       beforeEach(press('Enter'));
       beforeEach(updateComplete);
       it('should remove element', async function() {
-        const snapshot = await a11ySnapshot();
-        expect(snapshot.children).to.not.be.ok;
+        expect(document.querySelector('pf-v5-label-group')).to.be.null;
+        expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', name: 'Close' });
       });
     });
   });

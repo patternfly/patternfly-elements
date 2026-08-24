@@ -29,8 +29,8 @@ Inline alert example:
     A new system update is available.
     
     <div slot="actionLinks">
-        <pf-v5-button plain>Update Now</pf-v5-button>
-        <pf-v5-button plain>Later</pf-v5-button>
+        <pf-v6-button variant="plain">Update Now</pf-v6-button>
+        <pf-v6-button variant="plain">Later</pf-v6-button>
     </div>
 </pf-v5-alert>
 ```

@@ -2,12 +2,11 @@ import { LitElement, html, isServer, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import styles from './pf-v5-clipboard-copy.css';
 import formControlStyles from '../form-control.css';
 
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 import '@patternfly/elements/pf-v6-tooltip/pf-v6-tooltip.js';
 
@@ -98,13 +97,13 @@ export class PfV5ClipboardCopy extends LitElement {
       <div id="container" class="${classMap({ code, expanded, inline, compact, block })}">
         <div id="input-group">
           <div id="wrapper">
-            <pf-v5-button id="expand-button"
+            <pf-v6-button id="expand-button"
                        variant="control"
-                       label="EXPAND"
+                       accessible-label="EXPAND"
                        ?inert="${!expandable}"
                        @click="${this.#onClick}">
               <pf-v5-icon icon="chevron-right"></pf-v5-icon>
-            </pf-v5-button>
+            </pf-v6-button>
           </div>
           <span ?hidden="${!(inline || compact)}">${this.value}</span>
           <input aria-label="${this.accessibleTextLabel}"
@@ -113,13 +112,12 @@ export class PfV5ClipboardCopy extends LitElement {
                  .value="${this.value}"
                  @input="${this.#onChange}">
           <pf-v6-tooltip>
-            <pf-v5-button id="copy-button"
+            <pf-v6-button id="copy-button"
                        icon="copy"
-                       ?plain="${inline || compact}"
-                       variant="${ifDefined(!(inline || compact) ? 'control' : undefined)}"
-                       label="${this.hoverTip}"
+                       variant="${inline || compact ? 'plain' : 'control'}"
+                       accessible-label="${this.hoverTip}"
                        @click="${this.copy}">
-            </pf-v5-button>
+            </pf-v6-button>
             <span slot="content">${this.#copied ? this.clickTip : this.hoverTip}</span>
           </pf-v6-tooltip>
           <!-- Place additional action buttons here -->

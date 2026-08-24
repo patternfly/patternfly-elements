@@ -42,10 +42,18 @@ export class RovingTabindexController<
     for (const i of this.items) {
       i.tabIndex = item === i ? 0 : -1;
     }
-    if (this.#gainedInitialFocus) {
+    // Only move DOM focus when focus is still inside the container.
+    // Otherwise Tab/Shift+Tab out of the widget gets stolen back by
+    // subsequent index updates (e.g. during Lit updateComplete).
+    if (this.#gainedInitialFocus && this.#isFocusWithin) {
       item?.focus();
     }
     this.host.requestUpdate();
+  }
+
+  get #isFocusWithin(): boolean {
+    const container = this.itemsContainerElement;
+    return !!container?.matches(':focus-within');
   }
 
   get items() {

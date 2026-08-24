@@ -35,7 +35,7 @@
   {% endfor %}
   <script type="module">
     import 'construct-style-sheets-polyfill';
-    import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+    import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
     import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
     import '@patternfly/pfe-tools/dev-server/demo.js';
   </script>
@@ -44,12 +44,12 @@
 <body class="menu-open">
   <header id="main-header">
     <div class="logo-bar">
-      <pf-v5-button id="hamburger"
-                 plain
+      <pf-v6-button id="hamburger"
+                 variant="plain"
                  aria-controls="sidebar"
-                 label="Expand Main Navigation">
+                 accessible-label="Expand Main Navigation">
         <pf-v5-icon icon="bars" size="lg"></pf-v5-icon>
-      </pf-v5-button>
+      </pf-v6-button>
       <a href="/" aria-label="{{ title }} Home">
         <img src="{{ options.site.logoUrl }}" alt="{{ title }}">
       </a>

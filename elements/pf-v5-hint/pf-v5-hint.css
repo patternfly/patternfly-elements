@@ -115,6 +115,6 @@
 }
 
 /* Button styling in footer */
-::slotted(pf-v5-button) {
+::slotted(pf-v6-button) {
   --pf-v5-c-button--m-link--Color: var(--pf-global--link--Color, #06c);
 }

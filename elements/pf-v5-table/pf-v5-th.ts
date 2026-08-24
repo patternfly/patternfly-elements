@@ -7,7 +7,7 @@ import { consume } from '@lit/context';
 
 import { thRoleContext } from './context.js';
 
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
 import styles from './pf-v5-th.css';
 

@@ -1,0 +1,26 @@
+---
+name: Settings
+description: For a settings button with animations on hover and focus, use the settings attribute with either variant="plain" or variant="control".
+---
+
+<section>
+  <pf-v6-button
+    variant="plain"
+    settings
+    accessible-label="Settings"
+  ></pf-v6-button>
+  <pf-v6-button variant="control" settings>Settings</pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

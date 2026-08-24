@@ -442,7 +442,7 @@ describe('<pf-v5-select>', function() {
       describe('Tab', function() {
         beforeEach(press('Tab'));
         it('does not focus the combobox button', async function() {
-          expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
+          expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'combobox', focused: true });
         });
       });
     });
@@ -683,7 +683,7 @@ describe('<pf-v5-select>', function() {
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });
           it('does not focus on the combobox button', async function() {
-            expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
+            expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'combobox', focused: true });
           });
         });
 

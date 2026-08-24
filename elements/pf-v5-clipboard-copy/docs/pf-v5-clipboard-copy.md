@@ -64,9 +64,9 @@
   ### Inline compact with additional action
   {% htmlexample %}
   <pf-v5-clipboard-copy inline compact>2.3.4-2-redhat
-    <pf-v5-button slot="actions" label="Action" plain variant="primary">
+    <pf-v6-button slot="actions" accessible-label="Action" variant="primary">
       <pf-v5-icon icon="play"></pf-v5-icon>
-    </pf-v5-button>
+    </pf-v6-button>
   </pf-v5-clipboard-copy>
   {% endhtmlexample %}
 

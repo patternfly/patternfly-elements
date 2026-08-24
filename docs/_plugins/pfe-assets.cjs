@@ -4,7 +4,7 @@ const path = require('path');
 /**
  * Generate a map of files per package which should be copied to the site dir
  * @param {object} [options]
- * @param {string} [options.prefix='pf-v5'] element prefix e.g. 'pf-v5' for 'pf-v5-button'
+ * @param {string} [options.prefix='pf-v5'] element prefix e.g. 'pf-v5' for 'pf-v6-button'
  */
 function getFilesToCopy(options) {
   const cwd = process.cwd();

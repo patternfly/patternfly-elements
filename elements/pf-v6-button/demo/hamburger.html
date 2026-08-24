@@ -1,0 +1,45 @@
+---
+name: Hamburger
+description: Hamburger buttons use the hamburger attribute. Set hamburger-variant to expand or collapse to animate between expand and collapse.
+---
+
+<section>
+  <pf-v6-button
+    id="default"
+    variant="plain"
+    hamburger
+    accessible-label="Hamburger"
+  ></pf-v6-button>
+  <pf-v6-button
+    id="expand"
+    variant="plain"
+    hamburger
+    hamburger-variant="expand"
+    accessible-label="Hamburger"
+  ></pf-v6-button>
+  <pf-v6-button
+    variant="plain"
+    hamburger
+    hamburger-variant="collapse"
+    expanded
+    accessible-label="Hamburger"
+  ></pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+
+  // `expanded` is required whenever `hamburger` is set; boolean attributes
+  // can only express "true", so these two are set to `false` via JS.
+  document.getElementById('default').expanded = false;
+  document.getElementById('expand').expanded = false;
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

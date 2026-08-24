@@ -6,7 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { observes } from '@patternfly/pfe-core/decorators.js';
 
 import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
 import styles from './pf-v5-alert.css';
 
@@ -133,16 +133,16 @@ export class PfV5Alert extends LitElement {
     const { expandable, expanded, variant } = this;
     const icon = this.icon ?? VariantIconMap.get(variant);
     return html`
-      <pf-v5-button id="toggle"
-                 plain
+      <pf-v6-button id="toggle"
+                 variant="plain"
                  ?hidden="${!expandable}"
                  icon="${expandable ? 'angle-down' : 'angle-right'}"
                  icon-set="fas"
                  @click="${this.#onToggleClick}"
                  aria-controls="${ifDefined(expandable ? 'description' : undefined)}"
                  aria-expanded="${ifDefined(expandable ? String(expanded) : undefined)}"
-                 aria-label="${expanded ? 'Collapse Alert' : 'Expand Alert'}">
-      </pf-v5-button>
+                 accessible-label="${expanded ? 'Collapse Alert' : 'Expand Alert'}">
+      </pf-v6-button>
 
       <div id="icon">
         <slot name="icon">
@@ -163,13 +163,13 @@ export class PfV5Alert extends LitElement {
         <slot name="actions"></slot>
       </div>
 
-      <pf-v5-button id="close"
-                 plain
+      <pf-v6-button id="close"
+                 variant="plain"
                  icon="close"
                  icon-set="patternfly"
                  ?hidden="${!this.dismissable}"
                  @click="${this.#onCloseClick}">
-      </pf-v5-button>
+      </pf-v6-button>
     `;
   }
 

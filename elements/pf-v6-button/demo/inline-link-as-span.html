@@ -1,0 +1,35 @@
+---
+name: Inline link as span
+description: Inline links should use variant="link" and the inline attribute to wrap inline with surrounding text.
+---
+
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  <pf-v6-button variant="link" inline
+    >This is long button text that needs to be a span so that it will wrap
+    inline with the text around it.</pf-v6-button
+  >
+  Sed hendrerit nisi in cursus maximus. Ut malesuada nisi turpis, in
+  condimentum velit elementum non.
+</p>
+
+<br />
+
+<p>
+  Note that, unlike a plain <b>span</b>, <code>pf-v6-button</code> already
+  listens for <b>keydown</b> internally and dispatches a <b>click</b> event
+  for you, so no manual <b>keydown</b> listener is needed to make an inline
+  link keyboard-accessible.
+  <pf-v6-button id="inline-link-demo" variant="link" inline
+    >Pressing the Enter or Space keys, or clicking, this inline link
+    demonstrates this by triggering an alert.</pf-v6-button
+  >
+</p>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+
+  document.getElementById('inline-link-demo').addEventListener('click', () => {
+    alert('pf-v6-button handled this activation - by click, Enter, or Space - with no extra keydown wiring.');
+  });
+</script>

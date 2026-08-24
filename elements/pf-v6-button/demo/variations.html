@@ -1,0 +1,143 @@
+---
+name: Variations
+description: PatternFly supports several button styling variants for different scenarios. Assign a variant with the variant attribute.
+---
+
+<section>
+  <pf-v6-button>Primary</pf-v6-button>
+  <pf-v6-button variant="secondary">Secondary</pf-v6-button>
+  <pf-v6-button variant="secondary" danger>Secondary danger</pf-v6-button>
+  <pf-v6-button variant="tertiary">Tertiary</pf-v6-button>
+  <pf-v6-button variant="danger">Danger</pf-v6-button>
+  <pf-v6-button variant="warning">Warning</pf-v6-button>
+</section>
+
+<section>
+  <pf-v6-button variant="link">Link</pf-v6-button>
+  <pf-v6-button variant="link">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M16 1C7.729 1 1 7.729 1 16s6.729 15 15 15 15-6.729 15-15S24.271 1 16 1Zm7 16.125h-5.875V23a1.125 1.125 0 0 1-2.25 0v-5.875H9a1.125 1.125 0 0 1 0-2.25h5.875V9a1.125 1.125 0 0 1 2.25 0v5.875H23a1.125 1.125 0 0 1 0 2.25Z"
+      ></path>
+    </svg>
+    Link
+  </pf-v6-button>
+  <pf-v6-button variant="link" icon-position="end">
+    Link
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M28.5 2h-25C2.673 2 2 2.673 2 3.5v25c0 .827.673 1.5 1.5 1.5h25c.827 0 1.5-.673 1.5-1.5v-25c0-.827-.673-1.5-1.5-1.5Zm-3.375 17a1.125 1.125 0 0 1-2.25 0v-8.284L11.796 21.795a1.122 1.122 0 0 1-1.592 0 1.127 1.127 0 0 1 0-1.591l11.08-11.08H13a1.125 1.125 0 0 1 0-2.25h10.5c.896 0 1.625.729 1.625 1.625v10.5Z"
+      ></path>
+    </svg>
+  </pf-v6-button>
+  <pf-v6-button variant="link" danger>Link danger</pf-v6-button>
+  <pf-v6-button variant="link" inline>Inline link</pf-v6-button>
+  <pf-v6-button variant="plain" accessible-label="Remove">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+    >
+      <path
+        d="M17.8 16.2 11.59 10l6.21-6.21c.42-.46.39-1.17-.07-1.59-.43-.4-1.09-.4-1.52 0l-6.2 6.2-6.22-6.19c-.44-.44-1.15-.44-1.59 0-.44.44-.44 1.15 0 1.59l6.2 6.21-6.2 6.2c-.42.46-.39 1.17.07 1.59.43.4 1.09.4 1.52 0L10 11.59l6.2 6.2c.44.44 1.15.44 1.59 0 .44-.45.44-1.16 0-1.6Z"
+      ></path>
+    </svg>
+  </pf-v6-button>
+</section>
+
+<section>
+  <pf-v6-button variant="control">Control</pf-v6-button>
+  <pf-v6-button variant="control" accessible-label="Copy input">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M28 7v22.607c0 .768-.622 1.393-1.387 1.393H10a1 1 0 1 1 0-2h16V7a1 1 0 1 1 2 0Zm-5.25 17.5v-22c0-.689-.561-1.25-1.25-1.25h-8.375v7.364c0 .833-.678 1.511-1.512 1.511H4.25V24.5c0 .689.561 1.25 1.25 1.25h16c.689 0 1.25-.561 1.25-1.25ZM10.875 1.275a.738.738 0 0 0-.405.195l-6 6a.738.738 0 0 0-.195.405h6.6v-6.6Z"
+      ></path>
+    </svg>
+  </pf-v6-button>
+</section>
+
+<section>
+  <pf-v6-button variant="stateful" state="read">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M28.75 22v3.5c0 .689-.561 1.25-1.25 1.25h-7.521c.005.084.021.166.021.25 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.084.016-.166.021-.25H4.5c-.689 0-1.25-.561-1.25-1.25V22a.75.75 0 0 1 .75-.75c1.24 0 2.25-1.009 2.25-2.25v-4c0-4.826 3.528-8.833 8.138-9.605A2.482 2.482 0 0 1 13.5 3.5C13.5 2.122 14.621 1 16 1s2.5 1.122 2.5 2.5c0 .761-.349 1.436-.888 1.895 4.61.772 8.138 4.779 8.138 9.605v4c0 1.241 1.01 2.25 2.25 2.25a.75.75 0 0 1 .75.75Z"
+      ></path>
+    </svg>
+    Stateful read
+  </pf-v6-button>
+  <pf-v6-button variant="stateful" state="unread">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M28.75 22v3.5c0 .689-.561 1.25-1.25 1.25h-7.521c.005.084.021.166.021.25 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.084.016-.166.021-.25H4.5c-.689 0-1.25-.561-1.25-1.25V22a.75.75 0 0 1 .75-.75c1.24 0 2.25-1.009 2.25-2.25v-4c0-4.826 3.528-8.833 8.138-9.605A2.482 2.482 0 0 1 13.5 3.5C13.5 2.122 14.621 1 16 1s2.5 1.122 2.5 2.5c0 .761-.349 1.436-.888 1.895 4.61.772 8.138 4.779 8.138 9.605v4c0 1.241 1.01 2.25 2.25 2.25a.75.75 0 0 1 .75.75Z"
+      ></path>
+    </svg>
+    Stateful unread
+  </pf-v6-button>
+  <pf-v6-button variant="stateful" state="attention">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M28.75 22v3.5c0 .689-.561 1.25-1.25 1.25h-7.521c.005.084.021.166.021.25 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.084.016-.166.021-.25H4.5c-.689 0-1.25-.561-1.25-1.25V22a.75.75 0 0 1 .75-.75c1.24 0 2.25-1.009 2.25-2.25v-4c0-4.826 3.528-8.833 8.138-9.605A2.482 2.482 0 0 1 13.5 3.5C13.5 2.122 14.621 1 16 1s2.5 1.122 2.5 2.5c0 .761-.349 1.436-.888 1.895 4.61.772 8.138 4.779 8.138 9.605v4c0 1.241 1.01 2.25 2.25 2.25a.75.75 0 0 1 .75.75Z"
+      ></path>
+    </svg>
+    Stateful attention
+  </pf-v6-button>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-block-end: 1rem;
+  }
+</style>

@@ -186,7 +186,7 @@ slot[name="toggle"] {
   cursor: pointer;
 }
 
-pf-v5-button#default-toggle,
+pf-v6-button#default-toggle,
 ::slotted([slot="toggle"]) {
   position: relative;
   display: flex;
@@ -248,7 +248,7 @@ pf-v5-dropdown-menu,
   margin: 0 !important;
 }
 
-pf-v5-button svg {
+pf-v6-button svg {
   width: 1em;
   height: 1em;
   flex: 0 0 auto;
@@ -277,7 +277,7 @@ pf-v5-button svg {
     background-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important;
     cursor: not-allowed !important;
   }
-  & pf-v5-button#default-toggle,
+  & pf-v6-button#default-toggle,
   & ::slotted([slot="toggle"]) {
     --pf-v5-c-button--Color: var(--pf-v5-c-button--disabled--Color);
     --pf-v5-c-button--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
@@ -335,14 +335,14 @@ pf-v5-button svg {
     --pf-v5-c-button--m-plain--focus--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
   }
 
-  & pf-v5-button:focus,
+  & pf-v6-button:focus,
   & ::slotted([slot="toggle"]:focus) {
     outline: 3px solid var(--pf-global--link--Color, #0066cc);
   }
 }
 
-pf-v5-button#default-toggle,
-::slotted(pf-v5-button[variant="control"]) {
+pf-v6-button#default-toggle,
+::slotted(pf-v6-button[variant="control"]) {
   --_button-icon-vertical-align: -0.25em;
   --_button-icon-padding-inline-start: var(--pf-v5-c-dropdown__toggle--PaddingLeft,
     var(--pf-global--spacer--md, 1rem));

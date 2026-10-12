@@ -48,19 +48,6 @@ export class PfV6TextInput extends LitElement {
     delegatesFocus: true,
   };
 
-  override createRenderRoot(): ShadowRoot {
-    const root = super.createRenderRoot() as ShadowRoot;
-    // Progressive enhancement: when referenceTarget is supported,
-    // external <label for="host-id"> and aria-describedby references transparently
-    // resolve to the internal <input>. Browsers without support fall back to
-    // aria-label string copy via computedLabelText in willUpdate().
-    if (!isServer && 'referenceTarget' in root) {
-      (root as ShadowRoot & { referenceTarget: string }).referenceTarget = 'input';
-      this.#hasReferenceTarget = true;
-    }
-    return root;
-  }
-
   /** Type that the input accepts. */
   @property({ reflect: true }) type?: TextInputType;
 
@@ -112,8 +99,6 @@ export class PfV6TextInput extends LitElement {
 
   #slots = new SlotController(this, 'icon');
 
-  #hasReferenceTarget = false;
-
   #derivedLabel = '';
 
   #initialValue: string | null = null;
@@ -149,13 +134,9 @@ export class PfV6TextInput extends LitElement {
   }
 
   override willUpdate(): void {
-    // Fallback: copies external label text to aria-label on the inner input.
-    // Skipped when referenceTarget is active (browser resolves natively).
-    if (this.#hasReferenceTarget) {
-      this.#derivedLabel = this.accessibleLabel || '';
-    } else {
-      this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
-    }
+    // Copies external label text to aria-label on the inner input, since
+    // <label for> cannot reach across the shadow boundary.
+    this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
     this.#internals.ariaInvalid = this.validated === 'error' ? 'true' : null;
     this.#internals.setFormValue(this.value || null);
   }

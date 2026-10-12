@@ -30,13 +30,11 @@ entries like names, emails, or search queries.
 
 ### Label association
 
-The element uses a three-tier fallback ladder for accessible label association:
+The element uses a two-tier fallback for accessible label association:
 
-1. **`referenceTarget`** (progressive enhancement, not yet baseline): External `<label for="host-id">` transparently resolves to the internal `<input>` through the shadow boundary. Full native behavior including `aria-labelledby` and `aria-describedby` references.
+1. **FACE + `delegatesFocus`** (all browsers): The `<label for>` associates with the host element. Clicking the label focuses the input via `delegatesFocus`. The label text is copied to `aria-label` on the internal input.
 
-2. **FACE + `delegatesFocus`** (all browsers): The `<label for>` associates with the host element. Clicking the label focuses the input via `delegatesFocus`. The label text is copied to `aria-label` on the internal input.
-
-3. **`accessible-label` attribute** (escape hatch): When no `<label>` element exists, set `accessible-label` to provide an accessible name directly.
+2. **`accessible-label` attribute** (escape hatch): When no `<label>` element exists, set `accessible-label` to provide an accessible name directly.
 
 Consumers always write standard HTML -- the element picks the best mechanism:
 

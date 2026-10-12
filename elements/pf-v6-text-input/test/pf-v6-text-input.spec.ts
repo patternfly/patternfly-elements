@@ -423,6 +423,91 @@ describe('<pf-v6-text-input>', function() {
     });
   });
 
+  describe('constraint validation on form submission', function() {
+    let form: HTMLFormElement;
+    let element: PfV6TextInput;
+    let wasSubmitted: boolean;
+
+    beforeEach(async function() {
+      wasSubmitted = false;
+      const container = await createFixture(html`
+        <form>
+          <pf-v6-text-input name="username"
+                            accessible-label="username"
+                            required></pf-v6-text-input>
+          <button type="submit">Submit</button>
+        </form>
+      `);
+      form = container as unknown as HTMLFormElement;
+      element = form.querySelector('pf-v6-text-input')!;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        wasSubmitted = true;
+      });
+      await element.updateComplete;
+    });
+
+    describe('with an empty required input', function() {
+      beforeEach(async function() {
+        form.requestSubmit();
+        await element.updateComplete;
+        await nextFrame();
+      });
+
+      it('does not submit the form', function() {
+        expect(wasSubmitted).to.be.false;
+      });
+
+      it('announces the invalid state', async function() {
+        const snapshot = await a11ySnapshot();
+        const input = snapshot.children?.find(node => node.role === 'textbox');
+        expect(input?.invalid).to.equal('true');
+      });
+
+      it('shows the validation message', async function() {
+        const snapshot = await a11ySnapshot();
+        const alert = snapshot.children?.find(node => node.role === 'alert');
+        expect(alert?.children?.[0]?.name).to.not.be.empty;
+      });
+    });
+
+    describe('resetting after a failed submission', function() {
+      beforeEach(async function() {
+        form.requestSubmit();
+        await element.updateComplete;
+        form.reset();
+        await element.updateComplete;
+        await nextFrame();
+      });
+
+      it('clears the invalid state', async function() {
+        const snapshot = await a11ySnapshot();
+        const input = snapshot.children?.find(node => node.role === 'textbox');
+        expect(input?.invalid).to.not.equal('true');
+      });
+
+      it('hides the validation message', async function() {
+        const snapshot = await a11ySnapshot();
+        const alert = snapshot.children?.find(node => node.role === 'alert');
+        expect(alert).to.not.exist;
+      });
+    });
+
+    describe('before any interaction', function() {
+      it('does not announce an invalid state', async function() {
+        const snapshot = await a11ySnapshot();
+        const input = snapshot.children?.find(node => node.role === 'textbox');
+        expect(input?.invalid).to.not.equal('true');
+      });
+
+      it('does not show a validation message', async function() {
+        const snapshot = await a11ySnapshot();
+        const alert = snapshot.children?.find(node => node.role === 'alert');
+        expect(alert).to.not.exist;
+      });
+    });
+  });
+
   describe('constraint validation', function() {
     let element: PfV6TextInput;
     let snapshot: A11yTreeSnapshot;

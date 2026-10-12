@@ -1,4 +1,4 @@
-import { LitElement, html, isServer, type TemplateResult } from 'lit';
+import { LitElement, html, isServer, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -120,6 +120,15 @@ export class PfV6TextInput extends LitElement {
 
   #touched = false;
 
+  /** Set once the browser reports a failed validation attempt, e.g. on form
+   * submission or `checkValidity()`; gates the invalid visuals. */
+  #invalidated = false;
+
+  constructor() {
+    super();
+    this.addEventListener('invalid', this.#onInvalid);
+  }
+
   get #disabled() {
     return (!isServer && this.matches(':disabled')) || this.disabled;
   }
@@ -151,9 +160,30 @@ export class PfV6TextInput extends LitElement {
     this.#internals.setFormValue(this.value || null);
   }
 
+  override updated(changed: PropertyValues<this>): void {
+    // The browser validates FACE elements against `ElementInternals` state
+    // directly, without calling `checkValidity()`, so keep the internals in
+    // sync whenever a constraint input changes. Runs after render, when the
+    // inner input's attributes and value are current.
+    if (changed.has('value')
+      || changed.has('required')
+      || changed.has('pattern')
+      || changed.has('minLength')
+      || changed.has('maxLength')
+      || changed.has('type')) {
+      const wasInvalid = this.#isInvalid;
+      this.#setValidityFromInput();
+      if (this.#isInvalid !== wasInvalid) {
+        this.requestUpdate();
+      }
+    }
+  }
+
   get #isInvalid(): boolean {
     return this.validated === 'error'
-      || (!isServer && !this.#internals.validity.valid);
+      || ((this.#touched || this.#invalidated)
+        && !isServer
+        && !this.#internals.validity.valid);
   }
 
   override render(): TemplateResult<1> {
@@ -230,10 +260,12 @@ export class PfV6TextInput extends LitElement {
 
   #onInput(event: Event & { target: HTMLInputElement }) {
     this.value = event.target.value;
-    if (this.#touched && !this.#internals.validity.valid) {
-      this.#setValidityFromInput();
-    }
     this.#touched = true;
+  }
+
+  #onInvalid(): void {
+    this.#invalidated = true;
+    this.requestUpdate();
   }
 
   #onChange() {
@@ -257,7 +289,6 @@ export class PfV6TextInput extends LitElement {
       this.#input?.validity,
       this.#input?.validationMessage,
     );
-    this.requestUpdate();
   }
 
   async formStateRestoreCallback(state: string, mode: string): Promise<void> {
@@ -277,11 +308,15 @@ export class PfV6TextInput extends LitElement {
   formResetCallback(): void {
     this.value = this.#initialValue ?? '';
     this.#touched = false;
+    this.#invalidated = false;
     this.requestUpdate();
   }
 
   setCustomValidity(message: string): void {
     this.#internals.setValidity(message ? { customError: true } : {}, message);
+    if (message) {
+      this.#invalidated = true;
+    }
     this.requestUpdate();
   }
 

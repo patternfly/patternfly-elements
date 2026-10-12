@@ -413,8 +413,12 @@ describe('<pf-v6-text-input>', function() {
         await element.updateComplete;
       });
 
-      it('reverts value to empty', function() {
-        expect(element.value).to.equal('');
+      it('reverts value to the initial value', function() {
+        expect(element.value).to.equal('testuser');
+      });
+
+      it('restores the initial value in form data after reset', function() {
+        expect(new FormData(form).get('username')).to.equal('testuser');
       });
     });
   });

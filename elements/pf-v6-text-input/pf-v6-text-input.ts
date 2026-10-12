@@ -116,6 +116,8 @@ export class PfV6TextInput extends LitElement {
 
   #derivedLabel = '';
 
+  #initialValue: string | null = null;
+
   #touched = false;
 
   get #disabled() {
@@ -128,6 +130,13 @@ export class PfV6TextInput extends LitElement {
 
   get labels(): NodeListOf<HTMLLabelElement> {
     return this.#internals.labels as NodeListOf<HTMLLabelElement>;
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    // Like native <input>, form reset restores the value the element was
+    // declared with (the `value` attribute), captured once on first connect.
+    this.#initialValue ??= this.getAttribute('value') ?? '';
   }
 
   override willUpdate(): void {
@@ -266,7 +275,8 @@ export class PfV6TextInput extends LitElement {
   }
 
   formResetCallback(): void {
-    this.value = '';
+    this.value = this.#initialValue ?? '';
+    this.#touched = false;
     this.requestUpdate();
   }
 

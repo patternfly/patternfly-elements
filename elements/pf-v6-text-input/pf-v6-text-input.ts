@@ -34,7 +34,8 @@ export type TextInputValidated = 'success' | 'warning' | 'error';
  * @summary Single-line text input with validation states and icon support
  *
  * @fires {Event} change - Fires when the input value changes (on blur or Enter).
- *        Cancelable: call `preventDefault()` to reject the value change.
+ *        Re-dispatched from the host because the native `change` event
+ *        does not cross the shadow boundary.
  */
 @customElement('pf-v6-text-input')
 export class PfV6TextInput extends LitElement {
@@ -227,10 +228,9 @@ export class PfV6TextInput extends LitElement {
   }
 
   #onChange() {
-    const previous = this.value;
-    if (!this.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }))) {
-      this.value = previous;
-    }
+    // Native `change` is not composed: it does not cross the shadow boundary,
+    // so re-dispatch from the host for light-DOM consumers.
+    this.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   #onKeydown(event: KeyboardEvent) {

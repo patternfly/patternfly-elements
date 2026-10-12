@@ -69,7 +69,7 @@ When `validated="error"` or constraint validation fails, the element renders a v
 | `isRequired` | `required` | Dropped `is-` prefix per web component convention. |
 | `readOnlyVariant` | `readonly` + `plain` | Separate readonly state from plain styling; `readonly` is native HTML, `plain` is a boolean modifier. |
 | `customIcon` (React node) | `icon` slot | Slotted content for composability. |
-| `onChange` callback | `change` event | Standard DOM event; cancelable via `preventDefault()` to reject value change. |
+| `onChange` callback | `change` event | Standard DOM event, fired on blur or Enter; not cancelable, like native `<input>` `change`. |
 | `validated="default"` | absence of `validated` | No-op state is represented by attribute absence. |
 | `innerRef` + `.select()` | `select()` method | Exposed directly on the element instead of requiring a ref. |
 

@@ -306,6 +306,26 @@ describe('<pf-v6-text-input>', function() {
     it('fires change event on blur after editing', function() {
       expect(changeFired).to.be.true;
     });
+
+    it('fires change event exactly once per change', async function() {
+      let count = 0;
+      element.addEventListener('change', () => count++);
+      element.focus();
+      await sendKeys({ type: 'def' });
+      element.blur();
+      await nextFrame();
+      expect(count).to.equal(1);
+    });
+
+    it('does not fire a cancelable change event', async function() {
+      const cancelables: boolean[] = [];
+      element.addEventListener('change', e => cancelables.push(e.cancelable));
+      element.focus();
+      await sendKeys({ type: 'ghi' });
+      element.blur();
+      await nextFrame();
+      expect(cancelables).to.deep.equal([false]);
+    });
   });
 
   describe('keyboard interaction', function() {

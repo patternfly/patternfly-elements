@@ -210,7 +210,6 @@ export class PfV6TextInput extends LitElement {
         </span>
         <span id="status-message"
               role="${ifDefined(this.#isInvalid ? 'alert' : undefined)}"
-              aria-live="${ifDefined(this.#isInvalid ? 'assertive' : undefined)}"
               ?hidden="${!statusMessage}">${statusMessage}</span>
       </div>
     `;

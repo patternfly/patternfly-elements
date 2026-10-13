@@ -1,0 +1,35 @@
+---
+name: Custom icon sets
+description: Register your own icon sets with a resolver function, so that any icon name in the set resolves to a module whose default export is a lit-renderable node.
+---
+<section>
+  <h3>Custom Icon Sets</h3>
+  <p>Call <code>PfV6Icon.addIconSet</code> with a string (icon set name) and a function taking the
+     icon set name and the icon name, and returning a URL (object) to a javascript module whose
+     default export is a lit renderable.</p>
+
+  <pf-v6-icon set="rh" icon="boba-tea" size="xl" loading="lazy"></pf-v6-icon>
+  <pf-v6-icon set="rh" icon="lifecycle" size="xl" loading="lazy"></pf-v6-icon>
+
+  <pre><code>&lt;pf-v6-icon set="rh" icon="boba-tea" size="lg" loading="lazy"&gt;&lt;/pf-v6-icon&gt;
+&lt;pf-v6-icon set="rh" icon="lifecycle" size="lg" loading="lazy"&gt;&lt;/pf-v6-icon&gt;</code></pre>
+  <pre><code>import { PfV6Icon } from '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+PfV6Icon.addIconSet('rh', async (set, icon) =&gt;
+  import(`./icons/${set}/${icon}.js`)
+    .then(mod =&gt; mod.default));</code></pre>
+</section>
+
+<script type="module">
+  import { PfV6Icon } from '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+  // The demo icons live in this element's demo directory; resolve them by
+  // absolute path so that the set works from any route the demo is served at.
+  PfV6Icon.addIconSet('rh', async (set, icon) =>
+    import(`/elements/pf-v6-icon/demo/icons/${set}/${icon}.js`)
+      .then(mod => mod.default));
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

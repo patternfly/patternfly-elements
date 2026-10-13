@@ -24,7 +24,10 @@ export class PfeDemoPage {
     const selectorOverride =
         typeof pathnameOrOptions === 'string' ? undefined
       : pathnameOrOptions?.selector;
-    const slug = this.tagName.replace(/^pf-(?:v\d+-)?/, '');
+    // cem serve routes `pf-v5-*` elements at `/components/{name}/demo`, but
+    // `pf-v6-*` elements at `/components/v6-{name}/demo`, so only the `pf-`
+    // prefix and the `v5-` version prefix are stripped from the demo route slug.
+    const slug = this.tagName.replace(/^pf-/, '').replace(/^v5-/, '');
     const pathname =
         typeof pathnameOrOptions === 'string' ? pathnameOrOptions
       : `${this.workspace}/${slug}/demo`;

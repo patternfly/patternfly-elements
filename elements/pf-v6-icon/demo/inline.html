@@ -1,0 +1,36 @@
+---
+name: Inline
+description: Inline icons inherit the text font size and color of their surrounding text.
+---
+<section>
+  <h1>Heading <pf-v6-icon icon="plus-circle" inline></pf-v6-icon></h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit nisi in cursus maximus.</p>
+  <h2>Second level <pf-v6-icon icon="plus-circle" inline></pf-v6-icon></h2>
+  <p>
+    <pf-v6-icon icon="plus-circle" inline></pf-v6-icon>
+    Curabitur accumsan turpis pharetra
+    <strong>augue tincidunt <pf-v6-icon icon="plus-circle" inline></pf-v6-icon></strong>
+    blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna
+    vel cursus venenatis. Suspendisse potenti.
+  </p>
+  <p>
+    <small>Sometimes you need small text <pf-v6-icon icon="plus-circle" inline></pf-v6-icon></small>
+  </p>
+  <p>
+    Inline with size specified:
+    <pf-v6-icon icon="plus-circle" inline size="sm"></pf-v6-icon> small,
+    <pf-v6-icon icon="plus-circle" inline size="md"></pf-v6-icon> medium,
+    <pf-v6-icon icon="plus-circle" inline size="lg"></pf-v6-icon> large,
+    <pf-v6-icon icon="plus-circle" inline size="xl"></pf-v6-icon> extra large
+  </p>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+</script>
+
+<style>
+  section {
+    padding: 1em;
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+name: Status colors
+description: The status attribute colors the icon. Keep in mind that these icons are displayed out of a typical context, and that you should not rely on color alone to convey status to users.
+---
+<section>
+  <pf-v6-icon icon="exclamation-circle" status="danger"></pf-v6-icon>
+  <pf-v6-icon icon="exclamation-triangle" status="warning"></pf-v6-icon>
+  <pf-v6-icon icon="check-circle" status="success"></pf-v6-icon>
+  <pf-v6-icon icon="info-circle" status="info"></pf-v6-icon>
+  <pf-v6-icon icon="bell" status="custom"></pf-v6-icon>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+</script>
+
+<style>
+  section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1em;
+  }
+</style>

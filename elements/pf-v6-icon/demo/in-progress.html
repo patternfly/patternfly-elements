@@ -1,0 +1,29 @@
+---
+name: In progress
+description: Setting the in-progress attribute swaps the icon for a progress indicator. By default the progress indicator is a spinner, sized to the icon.
+---
+<section>
+  <label>
+    <input id="toggle" type="checkbox"> Toggle in progress state
+  </label>
+  <pf-v6-icon id="icon" icon="check-circle"></pf-v6-icon>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+
+  document.getElementById('toggle')
+    .addEventListener('change', function() {
+      document.getElementById('icon').toggleAttribute('in-progress', this.checked);
+    });
+</script>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1em;
+  }
+</style>

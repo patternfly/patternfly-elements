@@ -1,0 +1,36 @@
+---
+name: Custom in progress icon
+description: Slot an element into the progress slot to replace the default spinner while in progress is set.
+---
+<section>
+  <label>
+    <input id="toggle" type="checkbox"> Toggle in progress state
+  </label>
+  <pf-v6-icon id="icon" icon="check-circle">
+    <pf-v6-spinner slot="progress" accessible-label="Loading results"></pf-v6-spinner>
+  </pf-v6-icon>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+  import '@patternfly/elements/pf-v6-spinner/pf-v6-spinner.js';
+
+  document.getElementById('toggle')
+    .addEventListener('change', function() {
+      document.getElementById('icon').toggleAttribute('in-progress', this.checked);
+    });
+</script>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1em;
+  }
+
+  pf-v6-spinner {
+    --pf-v6-c-spinner--diameter: 2em;
+  }
+</style>

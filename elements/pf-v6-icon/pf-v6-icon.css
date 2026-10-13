@@ -1,0 +1,354 @@
+[hidden] {
+  display: none !important;
+}
+
+/* Component-level token defaults, mirroring the React component's pf-root block.
+   Light DOM rules targeting the host override these; setting
+   `--pf-v6-c-icon__content--Color` to `initial` makes the icon inherit the
+   surrounding text color. */
+:host {
+  /** Width of the icon container. Defaults to the body-default icon size. */
+  --pf-v6-c-icon--Width: var(--pf-t--global--icon--size--font--body--default, 0.875rem);
+  /** Height of the icon container. Defaults to the body-default icon size. */
+  --pf-v6-c-icon--Height: var(--pf-t--global--icon--size--font--body--default, 0.875rem);
+  /** Font size of the icon, which sizes the icon's SVG. Defaults to the body-default icon size. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-t--global--icon--size--font--body--default, 0.875rem);
+  --pf-v6-c-icon__content--Color:
+    /** Color of the icon */
+    var(--pf-t--global--icon--color--regular,
+      light-dark(var(--pf-t--color--gray--90, #1f1f1f), var(--pf-t--color--gray--10, #f2f2f2)));
+  /** Vertical alignment of the icon SVG within text. */
+  --pf-v6-c-icon__content--svg--VerticalAlign: -0.125em;
+  /** Opacity of the icon content; `0` while in progress. */
+  --pf-v6-c-icon__content--Opacity: 1;
+  /** Opacity of the progress indicator; `1` while in progress. */
+  --pf-v6-c-icon__progress--Opacity: 0;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size:
+    /** Width of the icon container */
+    var(--pf-v6-c-icon--Width);
+  block-size:
+    /** Height of the icon container */
+    var(--pf-v6-c-icon--Height);
+}
+
+/* Inline icons inherit the surrounding text's size and color. Written before
+   the size modifiers so that an explicit `size` wins, as in React. */
+:host([inline]) {
+  line-height: 1;
+
+  /** Width of the icon container when inline. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-inline--Width, 1em);
+  /** Height of the icon container when inline. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-inline--Height, 1em);
+  /** Font size of the icon when inline. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-inline__content--FontSize, 1em);
+  /** Color of the icon when inline: `initial` inherits the CSS `color` property. */
+  --pf-v6-c-icon__content--Color: initial;
+}
+
+#content,
+#progress {
+  font-size:
+    /** Font size of the icon, which sizes the icon's SVG */
+    var(--pf-v6-c-icon__content--FontSize);
+}
+
+#content {
+  color:
+    /** Color of the icon */
+    var(--pf-v6-c-icon__content--Color, inherit);
+  opacity:
+    /** Opacity of the icon content; `0` while in progress */
+    var(--pf-v6-c-icon__content--Opacity, 1);
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  fill: currentcolor;
+  vertical-align:
+    /** Vertical alignment of the icon SVG within text */
+    var(--pf-v6-c-icon__content--svg--VerticalAlign, -0.125em);
+}
+
+/* Status colors */
+:host([status="danger"]) {
+  /** Icon color when status is danger. Defaults to the `--pf-t--global--icon--color--status--danger--default` token. */
+  --pf-v6-c-icon__content--Color: var(--pf-v6-c-icon__content--m-danger--Color,
+    var(--pf-t--global--icon--color--status--danger--default,
+      light-dark(var(--pf-t--color--red-orange--60, #b1380b), var(--pf-t--color--red-orange--50, #f0561d))));
+}
+
+:host([status="warning"]) {
+  /** Icon color when status is warning. Defaults to the `--pf-t--global--icon--color--status--warning--default` token. */
+  --pf-v6-c-icon__content--Color: var(--pf-v6-c-icon__content--m-warning--Color,
+    var(--pf-t--global--icon--color--status--warning--default,
+      light-dark(var(--pf-t--color--yellow--40, #dca614), var(--pf-t--color--yellow--30, #ffcc17))));
+}
+
+:host([status="success"]) {
+  /** Icon color when status is success. Defaults to the `--pf-t--global--icon--color--status--success--default` token. */
+  --pf-v6-c-icon__content--Color: var(--pf-v6-c-icon__content--m-success--Color,
+    var(--pf-t--global--icon--color--status--success--default,
+      light-dark(var(--pf-t--color--green--60, #3d7317), var(--pf-t--color--green--40, #87bb62))));
+}
+
+:host([status="info"]) {
+  /** Icon color when status is info. Defaults to the `--pf-t--global--icon--color--status--info--default` token. */
+  --pf-v6-c-icon__content--Color: var(--pf-v6-c-icon__content--m-info--Color,
+    var(--pf-t--global--icon--color--status--info--default,
+      light-dark(var(--pf-t--color--purple--50, #5e40be), var(--pf-t--color--purple--30, #b6a6e9))));
+}
+
+:host([status="custom"]) {
+  /** Icon color when status is custom. Defaults to the `--pf-t--global--icon--color--status--custom--default` token. */
+  --pf-v6-c-icon__content--Color: var(--pf-v6-c-icon__content--m-custom--Color,
+    var(--pf-t--global--icon--color--status--custom--default,
+      light-dark(var(--pf-t--color--teal--60, #147878), var(--pf-t--color--teal--40, #63bdbd))));
+}
+
+/* Progress indicator. Absolutely positioned and centered over the container,
+   so that the container keeps its size while the icon is swapped out. */
+#progress {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity:
+    /** Opacity of the progress indicator; `1` while in progress */
+    var(--pf-v6-c-icon__progress--Opacity, 0);
+}
+
+:host([in-progress]) {
+  /** Opacity of the icon content while in progress */
+  --pf-v6-c-icon__content--Opacity: 0;
+  /** Opacity of the progress indicator while in progress */
+  --pf-v6-c-icon__progress--Opacity: 1;
+}
+
+/* Mirroring for right-to-left languages */
+:host([mirror-rtl]:dir(rtl)) svg {
+  scale: -1 1;
+}
+
+/* Standalone sizes: fixed lengths for both container and icon */
+:host([size="sm"]) {
+  /** Width of the icon container when size is sm. Defaults to the `--pf-t--global--icon--size--sm` token. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-sm--Width, var(--pf-t--global--icon--size--sm, 0.75rem));
+  /** Height of the icon container when size is sm. Defaults to the `--pf-t--global--icon--size--sm` token. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-sm--Height, var(--pf-t--global--icon--size--sm, 0.75rem));
+  /** Icon font size when size is sm. Defaults to the `--pf-t--global--icon--size--sm` token. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-sm__content--FontSize, var(--pf-t--global--icon--size--sm, 0.75rem));
+}
+
+:host([size="md"]) {
+  /** Width of the icon container when size is md. Defaults to the `--pf-t--global--icon--size--md` token. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-md--Width, var(--pf-t--global--icon--size--md, 0.875rem));
+  /** Height of the icon container when size is md. Defaults to the `--pf-t--global--icon--size--md` token. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-md--Height, var(--pf-t--global--icon--size--md, 0.875rem));
+  /** Icon font size when size is md. Defaults to the `--pf-t--global--icon--size--md` token. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-md__content--FontSize, var(--pf-t--global--icon--size--md, 0.875rem));
+}
+
+:host([size="lg"]) {
+  /** Width of the icon container when size is lg. Defaults to the `--pf-t--global--icon--size--lg` token. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-lg--Width, var(--pf-t--global--icon--size--lg, 1rem));
+  /** Height of the icon container when size is lg. Defaults to the `--pf-t--global--icon--size--lg` token. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-lg--Height, var(--pf-t--global--icon--size--lg, 1rem));
+  /** Icon font size when size is lg. Defaults to the `--pf-t--global--icon--size--lg` token. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-lg__content--FontSize, var(--pf-t--global--icon--size--lg, 1rem));
+}
+
+:host([size="xl"]) {
+  /** Width of the icon container when size is xl. Defaults to the `--pf-t--global--icon--size--xl` token. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-xl--Width, var(--pf-t--global--icon--size--xl, 1.5rem));
+  /** Height of the icon container when size is xl. Defaults to the `--pf-t--global--icon--size--xl` token. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-xl--Height, var(--pf-t--global--icon--size--xl, 1.5rem));
+  /** Icon font size when size is xl. Defaults to the `--pf-t--global--icon--size--xl` token. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-xl__content--FontSize, var(--pf-t--global--icon--size--xl, 1.5rem));
+}
+
+:host([size="2xl"]) {
+  /** Width of the icon container when size is 2xl. Defaults to the `--pf-t--global--icon--size--2xl` token. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-2xl--Width, var(--pf-t--global--icon--size--2xl, 3.5rem));
+  /** Height of the icon container when size is 2xl. Defaults to the `--pf-t--global--icon--size--2xl` token. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-2xl--Height, var(--pf-t--global--icon--size--2xl, 3.5rem));
+  /** Icon font size when size is 2xl. Defaults to the `--pf-t--global--icon--size--2xl` token. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-2xl__content--FontSize, var(--pf-t--global--icon--size--2xl, 3.5rem));
+}
+
+:host([size="3xl"]) {
+  /** Width of the icon container when size is 3xl. Defaults to the `--pf-t--global--icon--size--3xl` token. */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-3xl--Width, var(--pf-t--global--icon--size--3xl, 6rem));
+  /** Height of the icon container when size is 3xl. Defaults to the `--pf-t--global--icon--size--3xl` token. */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-3xl--Height, var(--pf-t--global--icon--size--3xl, 6rem));
+  /** Icon font size when size is 3xl. Defaults to the `--pf-t--global--icon--size--3xl` token. */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-3xl__content--FontSize, var(--pf-t--global--icon--size--3xl, 6rem));
+}
+
+/* Body sizes: track body text sizes */
+:host([size="body-sm"]) {
+  /** Container width when size is body-sm. Defaults to the `--pf-t--global--icon--size--font--body--sm` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-body-sm--Width, var(--pf-t--global--icon--size--font--body--sm, 0.75rem));
+  /** Container height when size is body-sm. Defaults to the `--pf-t--global--icon--size--font--body--sm` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-body-sm--Height, var(--pf-t--global--icon--size--font--body--sm, 0.75rem));
+  /** Icon font size when size is body-sm. Defaults to the `--pf-t--global--icon--size--font--body--sm` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-body-sm__content--FontSize, var(--pf-t--global--icon--size--font--body--sm, 0.75rem));
+}
+
+:host([size="body-default"]) {
+  /** Container width when size is body-default. Defaults to the `--pf-t--global--icon--size--font--body--default` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-body-default--Width, var(--pf-t--global--icon--size--font--body--default, 0.875rem));
+  /** Container height when size is body-default. Defaults to the `--pf-t--global--icon--size--font--body--default` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-body-default--Height, var(--pf-t--global--icon--size--font--body--default, 0.875rem));
+  /** Icon font size when size is body-default. Defaults to the `--pf-t--global--icon--size--font--body--default` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-body-default__content--FontSize, var(--pf-t--global--icon--size--font--body--default, 0.875rem));
+}
+
+:host([size="body-lg"]) {
+  /** Container width when size is body-lg. Defaults to the `--pf-t--global--icon--size--font--body--lg` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-body-lg--Width, var(--pf-t--global--icon--size--font--body--lg, 1rem));
+  /** Container height when size is body-lg. Defaults to the `--pf-t--global--icon--size--font--body--lg` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-body-lg--Height, var(--pf-t--global--icon--size--font--body--lg, 1rem));
+  /** Icon font size when size is body-lg. Defaults to the `--pf-t--global--icon--size--font--body--lg` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-body-lg__content--FontSize, var(--pf-t--global--icon--size--font--body--lg, 1rem));
+}
+
+/* Heading sizes: track heading text sizes */
+:host([size="heading-sm"]) {
+  /** Container width when size is heading-sm. Defaults to the `--pf-t--global--icon--size--font--heading--h6` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-heading-sm--Width, var(--pf-t--global--icon--size--font--heading--h6, 1rem));
+  /** Container height when size is heading-sm. Defaults to the `--pf-t--global--icon--size--font--heading--h6` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-heading-sm--Height, var(--pf-t--global--icon--size--font--heading--h6, 1rem));
+  /** Icon font size when size is heading-sm. Defaults to the `--pf-t--global--icon--size--font--heading--h6` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-sm__content--FontSize, var(--pf-t--global--icon--size--font--heading--h6, 1rem));
+}
+
+:host([size="heading-md"]) {
+  /** Container width when size is heading-md. Defaults to the `--pf-t--global--icon--size--font--heading--h5` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-heading-md--Width, var(--pf-t--global--icon--size--font--heading--h5, 1rem));
+  /** Container height when size is heading-md. Defaults to the `--pf-t--global--icon--size--font--heading--h5` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-heading-md--Height, var(--pf-t--global--icon--size--font--heading--h5, 1rem));
+  /** Icon font size when size is heading-md. Defaults to the `--pf-t--global--icon--size--font--heading--h5` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-md__content--FontSize, var(--pf-t--global--icon--size--font--heading--h5, 1rem));
+}
+
+:host([size="heading-lg"]) {
+  /** Container width when size is heading-lg. Defaults to the `--pf-t--global--icon--size--font--heading--h4` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-heading-lg--Width, var(--pf-t--global--icon--size--font--heading--h4, 1rem));
+  /** Container height when size is heading-lg. Defaults to the `--pf-t--global--icon--size--font--heading--h4` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-heading-lg--Height, var(--pf-t--global--icon--size--font--heading--h4, 1rem));
+  /** Icon font size when size is heading-lg. Defaults to the `--pf-t--global--icon--size--font--heading--h4` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-lg__content--FontSize, var(--pf-t--global--icon--size--font--heading--h4, 1rem));
+}
+
+:host([size="heading-xl"]) {
+  /** Container width when size is heading-xl. Defaults to the `--pf-t--global--icon--size--font--heading--h3` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-heading-xl--Width, var(--pf-t--global--icon--size--font--heading--h3, 1.125rem));
+  /** Container height when size is heading-xl. Defaults to the `--pf-t--global--icon--size--font--heading--h3` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-heading-xl--Height, var(--pf-t--global--icon--size--font--heading--h3, 1.125rem));
+  /** Icon font size when size is heading-xl. Defaults to the `--pf-t--global--icon--size--font--heading--h3` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-xl__content--FontSize, var(--pf-t--global--icon--size--font--heading--h3, 1.125rem));
+}
+
+:host([size="heading-2xl"]) {
+  /** Container width when size is heading-2xl. Defaults to the `--pf-t--global--icon--size--font--heading--h2` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-heading-2xl--Width, var(--pf-t--global--icon--size--font--heading--h2, 1.25rem));
+  /** Container height when size is heading-2xl. Defaults to the `--pf-t--global--icon--size--font--heading--h2` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-heading-2xl--Height, var(--pf-t--global--icon--size--font--heading--h2, 1.25rem));
+  /** Icon font size when size is heading-2xl. Defaults to the `--pf-t--global--icon--size--font--heading--h2` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-2xl__content--FontSize, var(--pf-t--global--icon--size--font--heading--h2, 1.25rem));
+}
+
+:host([size="heading-3xl"]) {
+  /** Container width when size is heading-3xl. Defaults to the `--pf-t--global--icon--size--font--heading--h1` token */
+  --pf-v6-c-icon--Width: var(--pf-v6-c-icon--m-heading-3xl--Width, var(--pf-t--global--icon--size--font--heading--h1, 1.5rem));
+  /** Container height when size is heading-3xl. Defaults to the `--pf-t--global--icon--size--font--heading--h1` token */
+  --pf-v6-c-icon--Height: var(--pf-v6-c-icon--m-heading-3xl--Height, var(--pf-t--global--icon--size--font--heading--h1, 1.5rem));
+  /** Icon font size when size is heading-3xl. Defaults to the `--pf-t--global--icon--size--font--heading--h1` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-3xl__content--FontSize, var(--pf-t--global--icon--size--font--heading--h1, 1.5rem));
+}
+
+/* Icon-only sizes: size the icon within the container without resizing the
+   container. Written after the `size` modifiers so that `icon-size` wins
+   when both are set. */
+:host([icon-size="sm"]) {
+  /** Icon font size when icon-size is sm. Defaults to the `--pf-t--global--icon--size--sm` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-sm__content--FontSize, var(--pf-t--global--icon--size--sm, 0.75rem));
+}
+
+:host([icon-size="md"]) {
+  /** Icon font size when icon-size is md. Defaults to the `--pf-t--global--icon--size--md` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-md__content--FontSize, var(--pf-t--global--icon--size--md, 0.875rem));
+}
+
+:host([icon-size="lg"]) {
+  /** Icon font size when icon-size is lg. Defaults to the `--pf-t--global--icon--size--lg` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-lg__content--FontSize, var(--pf-t--global--icon--size--lg, 1rem));
+}
+
+:host([icon-size="xl"]) {
+  /** Icon font size when icon-size is xl. Defaults to the `--pf-t--global--icon--size--xl` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-xl__content--FontSize, var(--pf-t--global--icon--size--xl, 1.5rem));
+}
+
+:host([icon-size="2xl"]) {
+  /** Icon font size when icon-size is 2xl. Defaults to the `--pf-t--global--icon--size--2xl` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-2xl__content--FontSize, var(--pf-t--global--icon--size--2xl, 3.5rem));
+}
+
+:host([icon-size="3xl"]) {
+  /** Icon font size when icon-size is 3xl. Defaults to the `--pf-t--global--icon--size--3xl` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-3xl__content--FontSize, var(--pf-t--global--icon--size--3xl, 6rem));
+}
+
+:host([icon-size="body-sm"]) {
+  /** Icon font size when icon-size is body-sm. Defaults to the `--pf-t--global--icon--size--font--body--sm` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-body-sm__content--FontSize, var(--pf-t--global--icon--size--font--body--sm, 0.75rem));
+}
+
+:host([icon-size="body-default"]) {
+  /** Icon font size when icon-size is body-default. Defaults to the `--pf-t--global--icon--size--font--body--default` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-body-default__content--FontSize, var(--pf-t--global--icon--size--font--body--default, 0.875rem));
+}
+
+:host([icon-size="body-lg"]) {
+  /** Icon font size when icon-size is body-lg. Defaults to the `--pf-t--global--icon--size--font--body--lg` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-body-lg__content--FontSize, var(--pf-t--global--icon--size--font--body--lg, 1rem));
+}
+
+:host([icon-size="heading-sm"]) {
+  /** Icon font size when icon-size is heading-sm. Defaults to the `--pf-t--global--icon--size--font--heading--h6` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-sm__content--FontSize, var(--pf-t--global--icon--size--font--heading--h6, 1rem));
+}
+
+:host([icon-size="heading-md"]) {
+  /** Icon font size when icon-size is heading-md. Defaults to the `--pf-t--global--icon--size--font--heading--h5` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-md__content--FontSize, var(--pf-t--global--icon--size--font--heading--h5, 1rem));
+}
+
+:host([icon-size="heading-lg"]) {
+  /** Icon font size when icon-size is heading-lg. Defaults to the `--pf-t--global--icon--size--font--heading--h4` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-lg__content--FontSize, var(--pf-t--global--icon--size--font--heading--h4, 1rem));
+}
+
+:host([icon-size="heading-xl"]) {
+  /** Icon font size when icon-size is heading-xl. Defaults to the `--pf-t--global--icon--size--font--heading--h3` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-xl__content--FontSize, var(--pf-t--global--icon--size--font--heading--h3, 1.125rem));
+}
+
+:host([icon-size="heading-2xl"]) {
+  /** Icon font size when icon-size is heading-2xl. Defaults to the `--pf-t--global--icon--size--font--heading--h2` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-2xl__content--FontSize, var(--pf-t--global--icon--size--font--heading--h2, 1.25rem));
+}
+
+:host([icon-size="heading-3xl"]) {
+  /** Icon font size when icon-size is heading-3xl. Defaults to the `--pf-t--global--icon--size--font--heading--h1` token */
+  --pf-v6-c-icon__content--FontSize: var(--pf-v6-c-icon--m-heading-3xl__content--FontSize, var(--pf-t--global--icon--size--font--heading--h1, 1.5rem));
+}

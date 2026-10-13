@@ -1,0 +1,23 @@
+---
+name: Sizing an icon within the icon container
+description: Providing both size and icon-size allows the icon container to maintain a consistent size, even if the icon changes in size.
+---
+<section>
+  <pf-v6-icon icon="plus-circle" size="3xl" icon-size="lg"></pf-v6-icon>
+  <pf-v6-icon icon="plus-circle" size="3xl" icon-size="xl"></pf-v6-icon>
+  <pf-v6-icon icon="plus-circle" size="3xl" icon-size="2xl"></pf-v6-icon>
+  <pf-v6-icon icon="plus-circle" size="3xl"></pf-v6-icon>
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-icon/pf-v6-icon.js';
+</script>
+
+<style>
+  section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1em;
+  }
+</style>

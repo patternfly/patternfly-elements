@@ -147,12 +147,15 @@ describe('<pf-v6-text-input>', function() {
   });
 
   describe('validated="error"', function() {
+    let element: PfV6TextInput;
     let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
-      await createFixture<PfV6TextInput>(html`
+      element = await createFixture<PfV6TextInput>(html`
         <pf-v6-text-input validated="error" accessible-label="error input"></pf-v6-text-input>
       `);
+      await element.updateComplete;
+      await nextFrame();
       snapshot = await a11ySnapshot();
     });
 
@@ -160,6 +163,32 @@ describe('<pf-v6-text-input>', function() {
       const input = snapshot.children?.find(node => node.role === 'textbox');
       expect(input?.invalid).to.equal('true');
     });
+
+    it('fails constraint validation without error-text or a native constraint', function() {
+      expect(element.checkValidity()).to.be.false;
+    });
+
+    it('announces a fallback message when no error-text is provided', function() {
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      const input = snapshot.children?.find(node => node.role === 'textbox');
+      expect(alert?.children?.[0]?.name).to.equal('Invalid value.');
+      expect(input?.description).to.equal('Invalid value.');
+    });
+  });
+
+  it('uses the native validation message before the fallback', async function() {
+    const element = await createFixture<PfV6TextInput>(html`
+      <pf-v6-text-input required
+                        validated="error"
+                        accessible-label="required input"></pf-v6-text-input>
+    `);
+    await element.updateComplete;
+    await nextFrame();
+    const snapshot = await a11ySnapshot();
+    const alert = snapshot.children?.find(node => node.role === 'alert');
+    expect(alert?.children?.[0]?.name).to.be.a('string').and.not.be.empty;
+    expect(alert?.children?.[0]?.name).to.not.equal('Invalid value.');
+    expect(element.checkValidity()).to.be.false;
   });
 
   describe('validated="success"', function() {
@@ -680,7 +709,7 @@ describe('<pf-v6-text-input>', function() {
     });
   });
 
-  describe('error-text and setCustomValidity()', function() {
+  describe('validated="error" with error-text', function() {
     let element: PfV6TextInput;
 
     beforeEach(async function() {
@@ -695,13 +724,48 @@ describe('<pf-v6-text-input>', function() {
       await nextFrame();
     });
 
-    it('uses the declarative message before JavaScript changes it', async function() {
+    it('announces the declarative message and fails constraint validation', async function() {
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
       const input = snapshot.children?.find(node => node.role === 'textbox');
       expect(alert?.children?.[0]?.name).to.equal('Name already taken');
       expect(input?.description).to.equal('Name already taken');
       expect(element.checkValidity()).to.be.false;
+    });
+
+    it('clears the declarative error when validated is removed', async function() {
+      element.removeAttribute('validated');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      const input = snapshot.children?.find(node => node.role === 'textbox');
+      expect(element.checkValidity()).to.be.true;
+      expect(alert).to.not.exist;
+      expect(input?.invalid).to.not.equal('true');
+    });
+
+    it('restores the declarative error when validated is set to error again', async function() {
+      element.removeAttribute('validated');
+      await element.updateComplete;
+      element.setAttribute('validated', 'error');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(element.checkValidity()).to.be.false;
+      expect(alert?.children?.[0]?.name).to.equal('Name already taken');
+    });
+
+    it('keeps an imperative custom error when validated is removed', async function() {
+      element.setCustomValidity('Please choose another name');
+      element.removeAttribute('validated');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(element.checkValidity()).to.be.false;
+      expect(alert?.children?.[0]?.name).to.equal('Please choose another name');
     });
 
     it('shows the custom message when the required input is empty', async function() {
@@ -726,48 +790,133 @@ describe('<pf-v6-text-input>', function() {
       expect(element.checkValidity()).to.be.false;
     });
 
-    it('lets setCustomValidity("") clear the declarative message', async function() {
+    it('restores the declarative message when setCustomValidity("") clears an imperative error', async function() {
+      element.setCustomValidity('Please choose another name');
       element.setCustomValidity('');
       await element.updateComplete;
       await nextFrame();
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
-      expect(alert).to.not.exist;
-      expect(element.checkValidity()).to.be.true;
+      expect(alert?.children?.[0]?.name).to.equal('Name already taken');
+      expect(element.checkValidity()).to.be.false;
     });
 
-    it('clears the custom message when error-text is empty', async function() {
+    it('keeps the imperative message when error-text is empty', async function() {
       element.setCustomValidity('Please choose another name');
       element.setAttribute('error-text', '');
       await element.updateComplete;
       await nextFrame();
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
-      expect(alert).to.not.exist;
-      expect(element.checkValidity()).to.be.true;
+      expect(alert?.children?.[0]?.name).to.equal('Please choose another name');
+      expect(element.checkValidity()).to.be.false;
     });
 
-    it('clears the custom message when error-text is removed', async function() {
+    it('keeps the imperative message when error-text is removed', async function() {
       element.setCustomValidity('Please choose another name');
       element.removeAttribute('error-text');
       await element.updateComplete;
       await nextFrame();
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
-      expect(alert).to.not.exist;
-      expect(element.checkValidity()).to.be.true;
+      expect(alert?.children?.[0]?.name).to.equal('Please choose another name');
+      expect(element.checkValidity()).to.be.false;
     });
 
-    it('lets a later attribute change replace the imperative message', async function() {
+    it('keeps the imperative message when error-text changes later', async function() {
       element.setCustomValidity('Please choose another name');
       element.setAttribute('error-text', 'Name is reserved');
       await element.updateComplete;
       await nextFrame();
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
-      expect(alert?.children?.[0]?.name).to.equal('Name is reserved');
+      expect(alert?.children?.[0]?.name).to.equal('Please choose another name');
       expect(element.checkValidity()).to.be.false;
     });
+
+    it('uses the fallback message when error-text is removed', async function() {
+      element.removeAttribute('error-text');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Invalid value.');
+      expect(element.checkValidity()).to.be.false;
+    });
+
+    it('uses the fallback message when error-text is empty', async function() {
+      element.setAttribute('error-text', '');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Invalid value.');
+      expect(element.checkValidity()).to.be.false;
+    });
+  });
+
+  describe('error-text without validated="error"', function() {
+    let element: PfV6TextInput;
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6TextInput>(html`
+        <pf-v6-text-input accessible-label="field"
+                          value="valid"
+                          error-text="Name already taken"></pf-v6-text-input>
+      `);
+      await element.updateComplete;
+      await nextFrame();
+    });
+
+    it('does not make the input invalid or announce the message', async function() {
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      const input = snapshot.children?.find(node => node.role === 'textbox');
+      expect(element.checkValidity()).to.be.true;
+      expect(alert).to.not.exist;
+      expect(input?.invalid).to.not.equal('true');
+      expect(input?.description).to.be.undefined;
+    });
+  });
+
+  it('updates form validity when validated changes with error-text present', async function() {
+    const form = await createFixture<HTMLFormElement>(html`
+      <form>
+        <pf-v6-text-input name="username"
+                          accessible-label="Username"
+                          value="valid"
+                          error-text="Name already taken"></pf-v6-text-input>
+      </form>
+    `);
+    const element = form.querySelector('pf-v6-text-input')!;
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+
+    element.setAttribute('validated', 'error');
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.false;
+
+    element.removeAttribute('validated');
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+  });
+
+  it('blocks form validation when validated is error without error-text', async function() {
+    const form = await createFixture<HTMLFormElement>(html`
+      <form>
+        <pf-v6-text-input name="username"
+                          accessible-label="Username"
+                          value="valid"
+                          validated="error"></pf-v6-text-input>
+      </form>
+    `);
+    const element = form.querySelector('pf-v6-text-input')!;
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.false;
+
+    element.removeAttribute('validated');
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.true;
   });
 
   describe('select() method', function() {

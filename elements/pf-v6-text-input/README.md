@@ -46,10 +46,9 @@ Consumers always write standard HTML -- the element picks the best mechanism:
 
 ### Error announcements
 
-`validated="error"` shows the error state and sets `aria-invalid`, but does not
-provide a message or cause constraint validation to fail by itself. Use
-`error-text` to provide a custom validation message in HTML, such as one returned
-with a server response:
+`validated="error"` shows the error state, sets `aria-invalid`, and makes the
+field fail constraint validation. Add `error-text` to supply a message, such as
+after a server response:
 
 ```html
 <pf-v6-text-input name="username"
@@ -59,12 +58,16 @@ with a server response:
                   error-text="Name already taken"></pf-v6-text-input>
 ```
 
-`error-text` supplies a custom error, making the input fail validation. The
-message is exposed in an alert linked to the input through `aria-describedby`.
+The message is exposed in an alert linked to the input through
+`aria-describedby`. Without `error-text`, the input uses a native constraint
+message or “Invalid value.” `error-text` alone does not show a message or affect
+validity. For translated errors, provide a localized `error-text` instead of
+relying on the English fallback.
 
-The latest `error-text` change or `setCustomValidity()` call wins. Clear the
-custom error with `error-text=""`, attribute removal, or
-`setCustomValidity('')`. Other constraints still apply.
+Removing `validated="error"` clears the declarative error. `setCustomValidity()`
+sets an independent error, and its message takes precedence over `error-text`.
+Calling `setCustomValidity('')` clears that error; `validated="error"` remains
+invalid until changed or removed. Other constraints still apply.
 
 ## Divergences from React `TextInput`
 
@@ -95,4 +98,4 @@ custom error with `error-text=""`, attribute removal, or
 | Web component API | Notes |
 |---|---|
 | Form-Associated Custom Element | Native form participation, submission, reset, and constraint validation via `ElementInternals`. Exposes standard methods: `checkValidity()`, `reportValidity()`, `setCustomValidity()`. |
-| `error-text` | Declarative custom validation message. Makes the input fail constraint validation and can be overridden or cleared with `setCustomValidity()`. |
+| `error-text` | Declarative message for `validated="error"`; overrides the fallback message. |

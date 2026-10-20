@@ -15,14 +15,17 @@
 - CSS custom properties renamed from `--pf-v5-c-form-control--*` to `--pf-v6-c-form-control--*`
 - `left-truncated` attribute replaced by `truncated="start"` enum
 - `icon` / `custom-icon-url` / `custom-icon-dimensions` attributes replaced by `icon` slot
-- `validate-on` and `error-text` attributes removed
+- `validate-on` attribute removed; `error-text` now supplies the message for `validated="error"`, instead of replacing an existing validation message
 
 **New features**
 
-- `validated="error"` state with `aria-invalid` and `role="alert"` status message
+- `validated="error"` state with `aria-invalid` and constraint validation; messages announced through a `role="alert"` status message
+- Declarative `error-text` message for the error state, with a fallback when none is provided
 - Constraint validation via `checkValidity()`, `reportValidity()`, `setCustomValidity()`
+- `autocomplete` attribute forwarded to the inner input, with browser-autocompleted values restored to form state
 - `maxlength`, `minlength`, and `inputmode` attributes
 - `select()` method
 - `icon` slot for custom icon content
-- Bubbling `change` event re-dispatched from the host
+- Bubbling, non-cancelable `change` event re-dispatched from the host
+- Enter-to-submit ignores Enter while text is being composed
 - v6 design tokens and `light-dark()` support

@@ -24,6 +24,14 @@ export type TextInputType =
 
 export type TextInputValidated = 'success' | 'warning' | 'error';
 
+// This English fallback is a last resort when `validated="error"` has no
+// `error-text`, no `setCustomValidity()` message, and no native validation
+// message. For example, an app may fail to explain why a server rejected a
+// value. ElementInternals.setValidity() needs a nonempty message to mark it
+// invalid. This generic message cannot explain the server's reason; provide
+// a localized `error-text` with the specific reason instead.
+const DEFAULT_VALIDATION_MESSAGE = 'Invalid value.';
+
 /**
  * A **text input** is used to gather free-form text from a user.
  * Use `pf-v6-text-input` for single-line text entry in forms.
@@ -54,11 +62,12 @@ export class PfV6TextInput extends LitElement {
   /**
    * Validation state indicator.
    * When set to `success`, `warning`, or `error`, a status icon appears
-   * and the border color changes accordingly. `error` also sets `aria-invalid`.
+   * and the border color changes accordingly. `error` also sets `aria-invalid`
+   * and fails constraint validation.
    */
   @property({ reflect: true }) validated?: TextInputValidated;
 
-  /** Custom validation message, including one provided in initial HTML. */
+  /** Validation message used when `validated="error"`, including in initial HTML. */
   @property({ attribute: 'error-text' })
   get errorText(): string | undefined {
     return this.#errorText;
@@ -66,10 +75,6 @@ export class PfV6TextInput extends LitElement {
 
   set errorText(value: string | null | undefined) {
     this.#errorText = value ?? undefined;
-    this.#customValidityMessage = value ?? '';
-    if (value) {
-      this.#invalidated = true;
-    }
     this.#setValidityFromInput();
   }
 
@@ -123,7 +128,7 @@ export class PfV6TextInput extends LitElement {
 
   #errorText?: string;
 
-  #customValidityMessage = '';
+  #imperativeValidityMessage = '';
 
   #touched = false;
 
@@ -173,10 +178,13 @@ export class PfV6TextInput extends LitElement {
       || changed.has('pattern')
       || changed.has('minLength')
       || changed.has('maxLength')
-      || changed.has('type')) {
+      || changed.has('type')
+      || changed.has('validated')) {
       const wasInvalid = this.#isInvalid;
+      const previousMessage = this.#internals.validationMessage;
       this.#setValidityFromInput();
-      if (this.#isInvalid !== wasInvalid) {
+      if (this.#isInvalid !== wasInvalid
+        || this.#internals.validationMessage !== previousMessage) {
         this.requestUpdate();
       }
     }
@@ -295,10 +303,16 @@ export class PfV6TextInput extends LitElement {
 
   #setValidityFromInput() {
     const input = this.#input;
-    input?.setCustomValidity(this.#customValidityMessage);
+    input?.setCustomValidity('');
+    const nativeMessage = input?.validationMessage ?? '';
+    let message = this.#imperativeValidityMessage;
+    if (!message && this.validated === 'error') {
+      message = this.errorText || nativeMessage || DEFAULT_VALIDATION_MESSAGE;
+    }
+    input?.setCustomValidity(message);
     this.#internals.setValidity(
-      input?.validity ?? (this.#customValidityMessage ? { customError: true } : {}),
-      input?.validationMessage ?? this.#customValidityMessage,
+      input?.validity ?? (message ? { customError: true } : {}),
+      input?.validationMessage ?? message,
     );
   }
 
@@ -324,7 +338,7 @@ export class PfV6TextInput extends LitElement {
   }
 
   setCustomValidity(message: string): void {
-    this.#customValidityMessage = message;
+    this.#imperativeValidityMessage = message;
     this.#setValidityFromInput();
     if (message) {
       this.#invalidated = true;

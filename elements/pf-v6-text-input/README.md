@@ -46,9 +46,9 @@ Consumers always write standard HTML -- the element picks the best mechanism:
 
 ### Error announcements
 
-`validated="error"` shows the error state, sets `aria-invalid`, and makes the
-field fail constraint validation. Add `error-text` to supply a message, such as
-after a server response:
+`validated="error"` shows the error state and sets `aria-invalid`; it does not
+block form submission by itself. To return a server error in HTML, set
+`error-text`:
 
 ```html
 <pf-v6-text-input name="username"
@@ -58,16 +58,18 @@ after a server response:
                   error-text="Name already taken"></pf-v6-text-input>
 ```
 
-The message is exposed in an alert linked to the input through
-`aria-describedby`. Without `error-text`, the input uses a native constraint
-message or “Invalid value.” `error-text` alone does not show a message or affect
-validity. For translated errors, provide a localized `error-text` instead of
-relying on the English fallback.
+Together, `validated="error"` and a nonempty `error-text` make the field invalid
+and announce the message in an alert linked through `aria-describedby`.
+`error-text` alone does not affect validity. When the user edits or autofills a
+different value, the element clears `validated="error"` and `error-text`.
+Native constraints such as `required` and `pattern` then determine whether the
+new value is invalid. Without a failing constraint, the new value can be
+submitted for another server check.
 
-Removing `validated="error"` clears the declarative error. `setCustomValidity()`
-sets an independent error, and its message takes precedence over `error-text`.
-Calling `setCustomValidity('')` clears that error; `validated="error"` remains
-invalid until changed or removed. Other constraints still apply.
+`setCustomValidity()` sets an independent error that takes precedence over
+`error-text` and remains until cleared with `setCustomValidity('')`. Removing
+or emptying `error-text` clears only the declarative error. Native constraints
+such as `required` and `pattern` still apply.
 
 ## Divergences from React `TextInput`
 
@@ -98,4 +100,4 @@ invalid until changed or removed. Other constraints still apply.
 | Web component API | Notes |
 |---|---|
 | Form-Associated Custom Element | Native form participation, submission, reset, and constraint validation via `ElementInternals`. Exposes standard methods: `checkValidity()`, `reportValidity()`, `setCustomValidity()`. |
-| `error-text` | Declarative message for `validated="error"`; overrides the fallback message. |
+| `error-text` | Declarative custom error message for `validated="error"`; both attributes clear when the user changes the value. |

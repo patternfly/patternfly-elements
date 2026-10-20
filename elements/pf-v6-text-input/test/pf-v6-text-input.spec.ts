@@ -165,19 +165,29 @@ describe('<pf-v6-text-input>', function() {
       expect(input?.invalid).to.equal('true');
     });
 
-    it('fails constraint validation without error-text or a native constraint', function() {
-      expect(element.checkValidity()).to.be.false;
+    it('does not fail constraint validation without an error message or native constraint', function() {
+      expect(element.checkValidity()).to.be.true;
     });
 
-    it('announces a fallback message when no error-text is provided', function() {
+    it('does not announce a message when none was provided', function() {
       const alert = snapshot.children?.find(node => node.role === 'alert');
       const input = snapshot.children?.find(node => node.role === 'textbox');
-      expect(alert?.children?.[0]?.name).to.equal('Invalid value.');
-      expect(input?.description).to.equal('Invalid value.');
+      expect(alert).to.not.exist;
+      expect(input?.description).to.be.undefined;
+    });
+
+    it('clears the error state when the user edits the value', async function() {
+      element.focus();
+      await sendKeys({ type: 'a' });
+      await element.updateComplete;
+      const edited = await a11ySnapshot();
+      expect(element.hasAttribute('validated')).to.be.false;
+      expect(element.checkValidity()).to.be.true;
+      expect(edited.children?.find(node => node.role === 'textbox')?.invalid).to.not.equal('true');
     });
   });
 
-  it('uses the native validation message before the fallback', async function() {
+  it('uses the native validation message when validated is error without error-text', async function() {
     const element = await createFixture<PfV6TextInput>(html`
       <pf-v6-text-input required
                         validated="error"
@@ -188,7 +198,6 @@ describe('<pf-v6-text-input>', function() {
     const snapshot = await a11ySnapshot();
     const alert = snapshot.children?.find(node => node.role === 'alert');
     expect(alert?.children?.[0]?.name).to.be.a('string').and.not.be.empty;
-    expect(alert?.children?.[0]?.name).to.not.equal('Invalid value.');
     expect(element.checkValidity()).to.be.false;
   });
 
@@ -835,24 +844,25 @@ describe('<pf-v6-text-input>', function() {
       expect(element.checkValidity()).to.be.false;
     });
 
-    it('uses the fallback message when error-text is removed', async function() {
+    it('clears the declarative error when error-text is removed', async function() {
       element.removeAttribute('error-text');
       await element.updateComplete;
       await nextFrame();
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
-      expect(alert?.children?.[0]?.name).to.equal('Invalid value.');
-      expect(element.checkValidity()).to.be.false;
+      expect(alert).to.not.exist;
+      expect(element.checkValidity()).to.be.true;
+      expect(element.getAttribute('validated')).to.equal('error');
     });
 
-    it('uses the fallback message when error-text is empty', async function() {
+    it('clears the declarative error when error-text is empty', async function() {
       element.setAttribute('error-text', '');
       await element.updateComplete;
       await nextFrame();
       const snapshot = await a11ySnapshot();
       const alert = snapshot.children?.find(node => node.role === 'alert');
-      expect(alert?.children?.[0]?.name).to.equal('Invalid value.');
-      expect(element.checkValidity()).to.be.false;
+      expect(alert).to.not.exist;
+      expect(element.checkValidity()).to.be.true;
     });
   });
 
@@ -902,7 +912,7 @@ describe('<pf-v6-text-input>', function() {
     expect(form.checkValidity()).to.be.true;
   });
 
-  it('blocks form validation when validated is error without error-text', async function() {
+  it('does not block form validation when validated is error without error-text', async function() {
     const form = await createFixture<HTMLFormElement>(html`
       <form>
         <pf-v6-text-input name="username"
@@ -913,11 +923,145 @@ describe('<pf-v6-text-input>', function() {
     `);
     const element = form.querySelector('pf-v6-text-input')!;
     await element.updateComplete;
-    expect(form.checkValidity()).to.be.false;
+    expect(form.checkValidity()).to.be.true;
 
     element.removeAttribute('validated');
     await element.updateComplete;
     expect(form.checkValidity()).to.be.true;
+  });
+
+  describe('editing a server-rejected value', function() {
+    let form: HTMLFormElement;
+    let element: PfV6TextInput;
+    let wasSubmitted: boolean;
+
+    beforeEach(async function() {
+      wasSubmitted = false;
+      form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-text-input name="username"
+                            accessible-label="Username"
+                            value="taken"
+                            pattern="[a-z]+"
+                            required
+                            validated="error"
+                            error-text="Name already taken"></pf-v6-text-input>
+          <button type="submit">Submit</button>
+        </form>
+      `);
+      element = form.querySelector('pf-v6-text-input')!;
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        wasSubmitted = true;
+      });
+      await element.updateComplete;
+    });
+
+    it('blocks submission of the value rejected by the server', function() {
+      form.requestSubmit();
+      expect(wasSubmitted).to.be.false;
+    });
+
+    it('clears the old error and submits a corrected value', async function() {
+      element.focus();
+      element.select();
+      await sendKeys({ type: 'newname' });
+      await element.updateComplete;
+      await nextFrame();
+
+      expect(element.hasAttribute('error-text')).to.be.false;
+      expect(element.errorText).to.be.undefined;
+      expect(element.hasAttribute('validated')).to.be.false;
+      expect(element.checkValidity()).to.be.true;
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children?.find(node => node.role === 'alert')).to.not.exist;
+      expect(snapshot.children?.find(node => node.role === 'textbox')?.invalid).to.not.equal('true');
+
+      form.requestSubmit();
+      expect(wasSubmitted).to.be.true;
+      expect(new FormData(form).get('username')).to.equal('newname');
+    });
+
+    it('still enforces native constraints after the server error clears', async function() {
+      element.focus();
+      element.select();
+      await sendKeys({ type: '123' });
+      await element.updateComplete;
+
+      expect(element.hasAttribute('error-text')).to.be.false;
+      expect(element.hasAttribute('validated')).to.be.false;
+      expect(element.checkValidity()).to.be.false;
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children?.find(node => node.role === 'textbox')?.invalid).to.equal('true');
+      form.requestSubmit();
+      expect(wasSubmitted).to.be.false;
+    });
+
+    it('does not clear an imperative custom error on edit', async function() {
+      element.setCustomValidity('Still unavailable');
+      element.focus();
+      element.select();
+      await sendKeys({ type: 'newname' });
+      await element.updateComplete;
+      await nextFrame();
+
+      expect(element.hasAttribute('error-text')).to.be.false;
+      expect(element.hasAttribute('validated')).to.be.false;
+      expect(element.checkValidity()).to.be.false;
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Still unavailable');
+    });
+
+    it('accepts a new server error after the value changes', async function() {
+      element.focus();
+      element.select();
+      await sendKeys({ type: 'newname' });
+      await element.updateComplete;
+      expect(element.checkValidity()).to.be.true;
+
+      element.setAttribute('validated', 'error');
+      element.setAttribute('error-text', 'Name is reserved');
+      await element.updateComplete;
+      await nextFrame();
+      expect(element.checkValidity()).to.be.false;
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Name is reserved');
+    });
+
+    it('clears the old server error when browser autofill changes the value', async function() {
+      await element.formStateRestoreCallback('newname', 'autocomplete');
+      await element.updateComplete;
+
+      expect(element.hasAttribute('error-text')).to.be.false;
+      expect(element.hasAttribute('validated')).to.be.false;
+      expect(element.checkValidity()).to.be.true;
+      expect(new FormData(form).get('username')).to.equal('newname');
+    });
+  });
+
+  it('accepts an edited server-rejected value without native constraints', async function() {
+    const element = await createFixture<PfV6TextInput>(html`
+      <pf-v6-text-input value="taken"
+                        accessible-label="Username"
+                        validated="error"
+                        error-text="Name already taken"></pf-v6-text-input>
+    `);
+    expect(element.checkValidity()).to.be.false;
+
+    element.focus();
+    element.select();
+    await sendKeys({ type: 'newname' });
+    await element.updateComplete;
+    await nextFrame();
+
+    expect(element.hasAttribute('validated')).to.be.false;
+    expect(element.hasAttribute('error-text')).to.be.false;
+    expect(element.checkValidity()).to.be.true;
+    const snapshot = await a11ySnapshot();
+    expect(snapshot.children?.find(node => node.role === 'alert')).to.not.exist;
+    expect(snapshot.children?.find(node => node.role === 'textbox')?.invalid).to.not.equal('true');
   });
 
   describe('select() method', function() {

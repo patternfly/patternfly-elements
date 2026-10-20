@@ -24,14 +24,6 @@ export type TextInputType =
 
 export type TextInputValidated = 'success' | 'warning' | 'error';
 
-// This English fallback is a last resort when `validated="error"` has no
-// `error-text`, no `setCustomValidity()` message, and no native validation
-// message. For example, an app may fail to explain why a server rejected a
-// value. ElementInternals.setValidity() needs a nonempty message to mark it
-// invalid. This generic message cannot explain the server's reason; provide
-// a localized `error-text` with the specific reason instead.
-const DEFAULT_VALIDATION_MESSAGE = 'Invalid value.';
-
 /**
  * A **text input** is used to gather free-form text from a user.
  * Use `pf-v6-text-input` for single-line text entry in forms.
@@ -62,12 +54,11 @@ export class PfV6TextInput extends LitElement {
   /**
    * Validation state indicator.
    * When set to `success`, `warning`, or `error`, a status icon appears
-   * and the border color changes accordingly. `error` also sets `aria-invalid`
-   * and fails constraint validation.
+   * and the border color changes accordingly. `error` also sets `aria-invalid`.
    */
   @property({ reflect: true }) validated?: TextInputValidated;
 
-  /** Validation message used when `validated="error"`, including in initial HTML. */
+  /** Declarative custom validation message for `validated="error"`. */
   @property({ attribute: 'error-text' })
   get errorText(): string | undefined {
     return this.#errorText;
@@ -164,7 +155,6 @@ export class PfV6TextInput extends LitElement {
     // Copies external label text to aria-label on the inner input, since
     // <label for> cannot reach across the shadow boundary.
     this.#derivedLabel = this.accessibleLabel || this.#internals.computedLabelText;
-    this.#internals.ariaInvalid = this.validated === 'error' ? 'true' : null;
     this.#internals.setFormValue(this.value || null);
   }
 
@@ -272,8 +262,25 @@ export class PfV6TextInput extends LitElement {
   }
 
   #onInput(event: Event & { target: HTMLInputElement }) {
-    this.value = event.target.value;
+    this.#setUserValue(event.target.value);
     this.#touched = true;
+  }
+
+  #setUserValue(value: string) {
+    const valueChanged = this.value !== value;
+    this.value = value;
+    if (valueChanged) {
+      // A server error describes the previous value. Clear that state so
+      // native constraints can validate the edited value.
+      if (this.validated === 'error') {
+        this.validated = undefined;
+        this.removeAttribute('validated');
+      }
+      if (this.errorText) {
+        this.errorText = undefined;
+        this.removeAttribute('error-text');
+      }
+    }
   }
 
   #onFocus(event: FocusEvent & { target: HTMLInputElement }) {
@@ -321,11 +328,9 @@ export class PfV6TextInput extends LitElement {
   #setValidityFromInput() {
     const input = this.#input;
     input?.setCustomValidity('');
-    const nativeMessage = input?.validationMessage ?? '';
-    let message = this.#imperativeValidityMessage;
-    if (!message && this.validated === 'error') {
-      message = this.errorText || nativeMessage || DEFAULT_VALIDATION_MESSAGE;
-    }
+    const message = this.#imperativeValidityMessage
+      || (this.validated === 'error' ? this.errorText : '')
+      || '';
     input?.setCustomValidity(message);
     this.#internals.setValidity(
       input?.validity ?? (message ? { customError: true } : {}),
@@ -335,7 +340,11 @@ export class PfV6TextInput extends LitElement {
 
   async formStateRestoreCallback(state: string, mode: string): Promise<void> {
     if (mode === 'restore' || mode === 'autocomplete') {
-      this.value = state;
+      if (mode === 'autocomplete') {
+        this.#setUserValue(state);
+      } else {
+        this.value = state;
+      }
       this.requestUpdate();
       await this.updateComplete;
       this.#setValidityFromInput();

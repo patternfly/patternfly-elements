@@ -330,6 +330,7 @@ describe('<pf-v6-text-input>', function() {
 
   describe('keyboard interaction', function() {
     let form: HTMLFormElement;
+    let element: PfV6TextInput;
     let wasSubmitted: boolean;
 
     beforeEach(async function() {
@@ -343,7 +344,7 @@ describe('<pf-v6-text-input>', function() {
         </form>
       `);
       form = container as unknown as HTMLFormElement;
-      const element = form.querySelector('pf-v6-text-input')!;
+      element = form.querySelector('pf-v6-text-input')!;
       form.addEventListener('submit', function(event) {
         event.preventDefault();
         wasSubmitted = true;
@@ -357,6 +358,34 @@ describe('<pf-v6-text-input>', function() {
       await sendKeys({ press: 'Enter' });
       await nextFrame();
       expect(wasSubmitted).to.be.true;
+    });
+
+    // Enter selects a suggested Japanese character before composition ends.
+    // The browser marks this keydown with isComposing true.
+    it('does not submit form when Enter confirms an IME composition', async function() {
+      const input = element.shadowRoot!.querySelector('input')!;
+      input.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
+      input.dispatchEvent(new KeyboardEvent('keydown', {
+        key: 'Enter',
+        isComposing: true,
+        bubbles: true,
+      }));
+      input.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+      await nextFrame();
+      expect(wasSubmitted).to.be.false;
+    });
+
+    // Safari can report the Enter that selects a suggested Japanese character
+    // after composition ends. isComposing is false, but keyCode is 229.
+    it('does not submit when an IME Enter arrives after compositionend', async function() {
+      const input = element.shadowRoot!.querySelector('input')!;
+      input.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
+      input.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+      const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
+      Object.defineProperty(event, 'keyCode', { value: 229 });
+      input.dispatchEvent(event);
+      await nextFrame();
+      expect(wasSubmitted).to.be.false;
     });
   });
 

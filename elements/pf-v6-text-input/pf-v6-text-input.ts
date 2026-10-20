@@ -257,6 +257,12 @@ export class PfV6TextInput extends LitElement {
   #onKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Enter':
+        // When typing Japanese, Enter can choose a suggested character.
+        // Safari may report that Enter with isComposing false and keyCode 229,
+        // so skip it instead of submitting the form.
+        if (event.isComposing || event.keyCode === 229) {
+          return;
+        }
         if (this.reportValidity()) {
           this.#internals.form?.requestSubmit();
         }

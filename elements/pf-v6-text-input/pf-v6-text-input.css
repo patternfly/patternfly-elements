@@ -28,6 +28,8 @@
 
 :host([disabled]),
 :host(:disabled) {
+  --pf-v6-c-form-control--BackgroundColor: var(--pf-v6-c-form-control--m-disabled--BackgroundColor,
+    var(--pf-t--global--background--color--disabled--default, light-dark(#c7c7c7, #a3a3a3)));
   pointer-events: none;
 }
 
@@ -67,8 +69,6 @@
   }
 
   &.disabled {
-    --pf-v6-c-form-control--BackgroundColor: var(--pf-v6-c-form-control--m-disabled--BackgroundColor,
-      var(--pf-t--global--background--color--disabled--default, light-dark(#c7c7c7, #a3a3a3)));
     --pf-v6-c-form-control--Color: var(--pf-v6-c-form-control--m-disabled--Color,
       var(--pf-t--global--text--color--on-disabled, light-dark(#4d4d4d, #383838)));
     cursor: not-allowed;

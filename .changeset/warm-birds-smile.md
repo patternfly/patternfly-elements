@@ -19,11 +19,10 @@
 
 **New features**
 
-- `referenceTarget` support for native cross-root label association
 - `validated="error"` state with `aria-invalid` and `role="alert"` status message
 - Constraint validation via `checkValidity()`, `reportValidity()`, `setCustomValidity()`
 - `maxlength`, `minlength`, and `inputmode` attributes
 - `select()` method
 - `icon` slot for custom icon content
-- Cancelable `change` event
+- Bubbling `change` event re-dispatched from the host
 - v6 design tokens and `light-dark()` support

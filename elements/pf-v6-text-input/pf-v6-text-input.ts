@@ -223,6 +223,7 @@ export class PfV6TextInput extends LitElement {
                minlength="${ifDefined(this.minLength)}"
                inputmode="${ifDefined(this.inputMode)}"
                @focus="${this.#onFocus}"
+               @wheel="${this.#onWheel}"
                @input="${this.#onInput}"
                @change="${this.#onChange}"
                @keydown="${this.#onKeydown}"
@@ -278,6 +279,15 @@ export class PfV6TextInput extends LitElement {
   #onFocus(event: FocusEvent & { target: HTMLInputElement }) {
     if (this.truncated === 'start') {
       event.target.scrollLeft = event.target.scrollWidth;
+    }
+  }
+
+  #onWheel(event: WheelEvent & { target: HTMLInputElement }) {
+    // Keep the truncated preview fixed until focus allows scrolling through the full value.
+    if (this.truncated === 'start'
+      && !event.target.matches(':focus')
+      && (event.deltaX !== 0 || event.shiftKey)) {
+      event.preventDefault();
     }
   }
 

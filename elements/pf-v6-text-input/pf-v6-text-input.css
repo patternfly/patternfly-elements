@@ -165,6 +165,7 @@
 .start-truncated input:not(:focus) {
   direction: rtl;
   text-overflow: ellipsis;
+  touch-action: pan-y;
 }
 
 input {

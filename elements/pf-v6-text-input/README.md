@@ -45,7 +45,25 @@ Consumers always write standard HTML -- the element picks the best mechanism:
 
 ### Error announcements
 
-When `validated="error"` or constraint validation fails, the element renders a visually-hidden status message linked via `aria-describedby` with `role="alert"`. Screen readers announce the `error-text` content when it appears.
+`validated="error"` shows the error state and sets `aria-invalid`, but does not
+provide a message or cause constraint validation to fail by itself. Use
+`error-text` to provide a custom validation message in HTML, such as one returned
+with a server response:
+
+```html
+<pf-v6-text-input name="username"
+                  accessible-label="Username"
+                  value="taken"
+                  validated="error"
+                  error-text="Name already taken"></pf-v6-text-input>
+```
+
+`error-text` supplies a custom error, making the input fail validation. The
+message is exposed in an alert linked to the input through `aria-describedby`.
+
+The latest `error-text` change or `setCustomValidity()` call wins. Clear the
+custom error with `error-text=""`, attribute removal, or
+`setCustomValidity('')`. Other constraints still apply.
 
 ## Divergences from React `TextInput`
 
@@ -76,3 +94,4 @@ When `validated="error"` or constraint validation fails, the element renders a v
 | Web component API | Notes |
 |---|---|
 | Form-Associated Custom Element | Native form participation, submission, reset, and constraint validation via `ElementInternals`. Exposes standard methods: `checkValidity()`, `reportValidity()`, `setCustomValidity()`. |
+| `error-text` | Declarative custom validation message. Makes the input fail constraint validation and can be overridden or cleared with `setCustomValidity()`. |

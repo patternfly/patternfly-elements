@@ -58,6 +58,21 @@ export class PfV6TextInput extends LitElement {
    */
   @property({ reflect: true }) validated?: TextInputValidated;
 
+  /** Custom validation message, including one provided in initial HTML. */
+  @property({ attribute: 'error-text' })
+  get errorText(): string | undefined {
+    return this.#errorText;
+  }
+
+  set errorText(value: string | null | undefined) {
+    this.#errorText = value ?? undefined;
+    this.#customValidityMessage = value ?? '';
+    if (value) {
+      this.#invalidated = true;
+    }
+    this.#setValidityFromInput();
+  }
+
   /** Accessible label for the input when no `<label>` element is provided. */
   @property({ reflect: true, attribute: 'accessible-label' }) accessibleLabel?: string;
 
@@ -102,6 +117,10 @@ export class PfV6TextInput extends LitElement {
   #derivedLabel = '';
 
   #initialValue: string | null = null;
+
+  #errorText?: string;
+
+  #customValidityMessage = '';
 
   #touched = false;
 
@@ -271,9 +290,11 @@ export class PfV6TextInput extends LitElement {
 
 
   #setValidityFromInput() {
+    const input = this.#input;
+    input?.setCustomValidity(this.#customValidityMessage);
     this.#internals.setValidity(
-      this.#input?.validity,
-      this.#input?.validationMessage,
+      input?.validity ?? (this.#customValidityMessage ? { customError: true } : {}),
+      input?.validationMessage ?? this.#customValidityMessage,
     );
   }
 
@@ -299,7 +320,8 @@ export class PfV6TextInput extends LitElement {
   }
 
   setCustomValidity(message: string): void {
-    this.#internals.setValidity(message ? { customError: true } : {}, message);
+    this.#customValidityMessage = message;
+    this.#setValidityFromInput();
     if (message) {
       this.#invalidated = true;
     }

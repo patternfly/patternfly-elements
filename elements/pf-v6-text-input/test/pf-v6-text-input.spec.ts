@@ -628,6 +628,131 @@ describe('<pf-v6-text-input>', function() {
     });
   });
 
+  describe('custom error on a filled required input', function() {
+    let element: PfV6TextInput;
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6TextInput>(html`
+        <pf-v6-text-input accessible-label="field" required value="valid"></pf-v6-text-input>
+      `);
+      await element.updateComplete;
+      // The value satisfies `required`, so only the custom error makes it invalid.
+      expect(element.checkValidity()).to.be.true;
+      await element.updateComplete;
+      element.setCustomValidity('Name already taken');
+      await element.updateComplete;
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Name already taken');
+    });
+
+    it('keeps the custom error when checkValidity() is called', async function() {
+      expect(element.checkValidity()).to.be.false;
+      await element.updateComplete;
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Name already taken');
+    });
+
+    it('keeps the custom error when reportValidity() is called', async function() {
+      expect(element.reportValidity()).to.be.false;
+      await element.updateComplete;
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Name already taken');
+    });
+  });
+
+  describe('error-text and setCustomValidity()', function() {
+    let element: PfV6TextInput;
+
+    beforeEach(async function() {
+      element = await createFixture<PfV6TextInput>(html`
+        <pf-v6-text-input accessible-label="field"
+                          required
+                          value="valid"
+                          validated="error"
+                          error-text="Name already taken"></pf-v6-text-input>
+      `);
+      await element.updateComplete;
+      await nextFrame();
+    });
+
+    it('uses the declarative message before JavaScript changes it', async function() {
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      const input = snapshot.children?.find(node => node.role === 'textbox');
+      expect(alert?.children?.[0]?.name).to.equal('Name already taken');
+      expect(input?.description).to.equal('Name already taken');
+      expect(element.checkValidity()).to.be.false;
+    });
+
+    it('shows the custom message when the required input is empty', async function() {
+      element.value = '';
+      element.setAttribute('error-text', 'Incorrect text format');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Incorrect text format');
+      expect(element.checkValidity()).to.be.false;
+    });
+
+    it('lets setCustomValidity() override an earlier attribute change', async function() {
+      element.setAttribute('error-text', 'Server changed the message');
+      element.setCustomValidity('Please choose another name');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Please choose another name');
+      expect(element.checkValidity()).to.be.false;
+    });
+
+    it('lets setCustomValidity("") clear the declarative message', async function() {
+      element.setCustomValidity('');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert).to.not.exist;
+      expect(element.checkValidity()).to.be.true;
+    });
+
+    it('clears the custom message when error-text is empty', async function() {
+      element.setCustomValidity('Please choose another name');
+      element.setAttribute('error-text', '');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert).to.not.exist;
+      expect(element.checkValidity()).to.be.true;
+    });
+
+    it('clears the custom message when error-text is removed', async function() {
+      element.setCustomValidity('Please choose another name');
+      element.removeAttribute('error-text');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert).to.not.exist;
+      expect(element.checkValidity()).to.be.true;
+    });
+
+    it('lets a later attribute change replace the imperative message', async function() {
+      element.setCustomValidity('Please choose another name');
+      element.setAttribute('error-text', 'Name is reserved');
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot();
+      const alert = snapshot.children?.find(node => node.role === 'alert');
+      expect(alert?.children?.[0]?.name).to.equal('Name is reserved');
+      expect(element.checkValidity()).to.be.false;
+    });
+  });
+
   describe('select() method', function() {
     let element: PfV6TextInput;
 

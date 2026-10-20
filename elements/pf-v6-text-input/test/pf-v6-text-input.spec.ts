@@ -2,6 +2,7 @@ import type { A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.
 import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
+import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 import { sendKeys } from '@web/test-runner-commands';
 
 import { PfV6TextInput } from '@patternfly/elements/pf-v6-text-input/pf-v6-text-input.js';
@@ -954,6 +955,21 @@ describe('<pf-v6-text-input>', function() {
       const snapshot = await a11ySnapshot();
       const input = snapshot.children?.find(node => node.role === 'textbox');
       expect(input?.value).to.equal('Lorem ipsum dolor sit amet consectetur');
+    });
+
+    it('keeps the end of an overflowing value visible when clicked', async function() {
+      const value = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+      element.style.width = '12rem';
+      element.value = value;
+      await element.updateComplete;
+      const input = element.shadowRoot!.querySelector('input')!;
+      expect(input.scrollWidth).to.be.greaterThan(input.clientWidth);
+
+      await clickElementAtCenter(element);
+
+      expect(input.scrollLeft).to.be.closeTo(input.scrollWidth - input.clientWidth, 2);
+      const snapshot = await a11ySnapshot();
+      expect(snapshot.children?.find(node => node.role === 'textbox')?.value).to.equal(value);
     });
   });
 

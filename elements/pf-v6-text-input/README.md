@@ -84,7 +84,7 @@ invalid until changed or removed. Other constraints still apply.
 
 | React prop | Web component | Difference |
 |---|---|---|
-| `isStartTruncated` / `isLeftTruncated` | `truncated="start"` | Enum attribute for future extensibility. |
+| `isStartTruncated` / `isLeftTruncated` | `truncated="start"` | Enum attribute for future extensibility. The full value is only visually truncated, so clicking leaves the caret near the clicked text. React replaces the input value for truncation, then restores it on focus, moving the caret to the end. |
 | `isDisabled` | `disabled` | Dropped `is-` prefix per web component convention. |
 | `isRequired` | `required` | Dropped `is-` prefix per web component convention. |
 | `readOnlyVariant` | `readonly` + `plain` | Separate readonly state from plain styling; `readonly` is native HTML, `plain` is a boolean modifier. |

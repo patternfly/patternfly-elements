@@ -222,6 +222,7 @@ export class PfV6TextInput extends LitElement {
                maxlength="${ifDefined(this.maxLength)}"
                minlength="${ifDefined(this.minLength)}"
                inputmode="${ifDefined(this.inputMode)}"
+               @focus="${this.#onFocus}"
                @input="${this.#onInput}"
                @change="${this.#onChange}"
                @keydown="${this.#onKeydown}"
@@ -272,6 +273,12 @@ export class PfV6TextInput extends LitElement {
   #onInput(event: Event & { target: HTMLInputElement }) {
     this.value = event.target.value;
     this.#touched = true;
+  }
+
+  #onFocus(event: FocusEvent & { target: HTMLInputElement }) {
+    if (this.truncated === 'start') {
+      event.target.scrollLeft = event.target.scrollWidth;
+    }
   }
 
   #onInvalid(): void {

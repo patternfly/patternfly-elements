@@ -22,7 +22,7 @@ entries like names, emails, or search queries.
 
 ```html
 <pf-v6-text-input accessible-label="Search">
-  <svg slot="icon" viewBox="0 0 512 512">...</svg>
+  <svg slot="icon" aria-hidden="true" viewBox="0 0 512 512">...</svg>
 </pf-v6-text-input>
 ```
 

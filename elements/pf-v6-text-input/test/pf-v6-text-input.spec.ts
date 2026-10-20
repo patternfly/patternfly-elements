@@ -434,6 +434,23 @@ describe('<pf-v6-text-input>', function() {
       });
     });
 
+    describe('browser autocomplete', function() {
+      beforeEach(async function() {
+        await element.formStateRestoreCallback('saveduser', 'autocomplete');
+        await element.updateComplete;
+      });
+
+      it('shows the autocompleted value in the input', async function() {
+        const snapshot = await a11ySnapshot();
+        const input = snapshot.children?.find(node => node.role === 'textbox');
+        expect(input?.value).to.equal('saveduser');
+      });
+
+      it('uses the autocompleted value in form data', function() {
+        expect(new FormData(form).get('username')).to.equal('saveduser');
+      });
+    });
+
     describe('form reset', function() {
       beforeEach(async function() {
         element.focus();

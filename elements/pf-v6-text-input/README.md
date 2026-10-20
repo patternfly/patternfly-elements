@@ -15,6 +15,7 @@ entries like names, emails, or search queries.
 ```html
 <pf-v6-text-input type="email"
                   accessible-label="Email address"
+                  autocomplete="email"
                   required></pf-v6-text-input>
 ```
 

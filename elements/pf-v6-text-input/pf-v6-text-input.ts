@@ -97,6 +97,9 @@ export class PfV6TextInput extends LitElement {
   /** Input placeholder. */
   @property() placeholder?: string;
 
+  /** Browser autofill hint forwarded to the inner input. */
+  @property() autocomplete?: string;
+
   /** Value of the input. */
   @property() value = '';
 
@@ -206,6 +209,7 @@ export class PfV6TextInput extends LitElement {
         <input id="input"
                .placeholder="${this.placeholder ?? ''}"
                .value="${this.value}"
+               autocomplete="${ifDefined(this.autocomplete)}"
                pattern="${ifDefined(this.pattern)}"
                maxlength="${ifDefined(this.maxLength)}"
                minlength="${ifDefined(this.minLength)}"
@@ -299,7 +303,7 @@ export class PfV6TextInput extends LitElement {
   }
 
   async formStateRestoreCallback(state: string, mode: string): Promise<void> {
-    if (mode === 'restore') {
+    if (mode === 'restore' || mode === 'autocomplete') {
       this.value = state;
       this.requestUpdate();
       await this.updateComplete;

@@ -169,14 +169,20 @@ export class PfV6TextInput extends LitElement {
       || changed.has('minLength')
       || changed.has('maxLength')
       || changed.has('type')
+      || changed.has('disabled')
+      || changed.has('readonly')
       || changed.has('validated')) {
-      const wasInvalid = this.#isInvalid;
-      const previousMessage = this.#internals.validationMessage;
-      this.#setValidityFromInput();
-      if (this.#isInvalid !== wasInvalid
-        || this.#internals.validationMessage !== previousMessage) {
-        this.requestUpdate();
-      }
+      this.#syncValidityAndRender();
+    }
+  }
+
+  #syncValidityAndRender() {
+    const wasInvalid = this.#isInvalid;
+    const previousMessage = this.#internals.validationMessage;
+    this.#setValidityFromInput();
+    if (this.#isInvalid !== wasInvalid
+      || this.#internals.validationMessage !== previousMessage) {
+      this.requestUpdate();
     }
   }
 
@@ -332,6 +338,12 @@ export class PfV6TextInput extends LitElement {
       || (this.validated === 'error' ? this.errorText : '')
       || '';
     input?.setCustomValidity(message);
+    if (!this.#internals.willValidate || (input && !input.willValidate)) {
+      // Barred inputs can retain a custom error with no validation message.
+      // Clear form validity until the field can be validated again.
+      this.#internals.setValidity({});
+      return;
+    }
     this.#internals.setValidity(
       input?.validity ?? (message ? { customError: true } : {}),
       input?.validationMessage ?? message,
@@ -354,6 +366,8 @@ export class PfV6TextInput extends LitElement {
   async formDisabledCallback(): Promise<void> {
     await this.updateComplete;
     this.requestUpdate();
+    await this.updateComplete;
+    this.#syncValidityAndRender();
   }
 
   formResetCallback(): void {

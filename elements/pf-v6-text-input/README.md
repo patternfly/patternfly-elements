@@ -46,9 +46,8 @@ Consumers always write standard HTML -- the element picks the best mechanism:
 
 ### Error announcements
 
-`validated="error"` shows the error state and sets `aria-invalid`; it does not
-block form submission by itself. To return a server error in HTML, set
-`error-text`:
+`validated="error"` shows error styling and sets `aria-invalid`, but does not
+block form submission by itself. For a server error, also set `error-text`:
 
 ```html
 <pf-v6-text-input name="username"
@@ -58,18 +57,17 @@ block form submission by itself. To return a server error in HTML, set
                   error-text="Name already taken"></pf-v6-text-input>
 ```
 
-Together, `validated="error"` and a nonempty `error-text` make the field invalid
-and announce the message in an alert linked through `aria-describedby`.
-`error-text` alone does not affect validity. When the user edits or autofills a
-different value, the element clears `validated="error"` and `error-text`.
-Native constraints such as `required` and `pattern` then determine whether the
-new value is invalid. Without a failing constraint, the new value can be
-submitted for another server check.
+Together, these attributes make an enabled, editable field fail validation and
+announce the message in an alert linked through `aria-describedby`. `error-text`
+alone does not affect validity. Disabled and readonly fields, including those
+in disabled fieldsets, skip validation and hide the alert, but retain the error
+until they become editable again. Editing or autofilling a different value
+clears both attributes; native constraints such as `required` and `pattern`
+then apply.
 
-`setCustomValidity()` sets an independent error that takes precedence over
-`error-text` and remains until cleared with `setCustomValidity('')`. Removing
-or emptying `error-text` clears only the declarative error. Native constraints
-such as `required` and `pattern` still apply.
+Use `setCustomValidity()` for an independent error that overrides `error-text`.
+`setCustomValidity('')` clears only that error; removing or emptying `error-text`
+clears only the declarative error.
 
 ## Divergences from React `TextInput`
 

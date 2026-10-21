@@ -1064,6 +1064,145 @@ describe('<pf-v6-text-input>', function() {
     expect(snapshot.children?.find(node => node.role === 'textbox')?.invalid).to.not.equal('true');
   });
 
+  describe('validation while disabled or readonly', function() {
+    let form: HTMLFormElement;
+    let element: PfV6TextInput;
+
+    beforeEach(async function() {
+      form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-text-input name="shipping"
+                            accessible-label="Shipping address"
+                            value="old address"
+                            validated="error"
+                            error-text="Address rejected"></pf-v6-text-input>
+        </form>
+      `);
+      element = form.querySelector('pf-v6-text-input')!;
+      expect(form.checkValidity()).to.be.false;
+    });
+
+    it('restores a declarative error when a directly disabled field is enabled again', async function() {
+      element.disabled = true;
+      await element.updateComplete;
+      expect(form.checkValidity()).to.be.true;
+      expect(element.checkValidity()).to.be.true;
+      expect(element.getAttribute('error-text')).to.equal('Address rejected');
+      expect(element.getAttribute('validated')).to.equal('error');
+      const disabled = await a11ySnapshot();
+      expect(disabled.children?.find(node => node.role === 'textbox')?.disabled).to.be.true;
+      expect(disabled.children?.find(node => node.role === 'alert')).to.not.exist;
+
+      element.disabled = false;
+      await element.updateComplete;
+      await nextFrame();
+      expect(form.checkValidity()).to.be.false;
+      const enabled = await a11ySnapshot();
+      expect(enabled.children?.find(node => node.role === 'textbox')?.invalid).to.equal('true');
+      expect(enabled.children?.find(node => node.role === 'alert')?.children?.[0]?.name)
+          .to.equal('Address rejected');
+    });
+
+    it('restores a declarative error when a readonly field becomes editable', async function() {
+      element.readonly = true;
+      await element.updateComplete;
+      expect(form.checkValidity()).to.be.true;
+      expect(element.checkValidity()).to.be.true;
+      const readonly = await a11ySnapshot();
+      expect(readonly.children?.find(node => node.role === 'textbox')?.readonly).to.be.true;
+      expect(readonly.children?.find(node => node.role === 'alert')).to.not.exist;
+
+      element.readonly = false;
+      await element.updateComplete;
+      await nextFrame();
+      expect(form.checkValidity()).to.be.false;
+      const editable = await a11ySnapshot();
+      expect(editable.children?.find(node => node.role === 'textbox')?.invalid).to.equal('true');
+      expect(editable.children?.find(node => node.role === 'alert')?.children?.[0]?.name)
+          .to.equal('Address rejected');
+    });
+  });
+
+  it('restores a server error after a disabled fieldset is enabled', async function() {
+    const form = await createFixture<HTMLFormElement>(html`
+      <form>
+        <fieldset>
+          <pf-v6-text-input name="shipping"
+                            accessible-label="Shipping address"
+                            value="old address"
+                            validated="error"
+                            error-text="Address rejected"></pf-v6-text-input>
+        </fieldset>
+      </form>
+    `);
+    const fieldset = form.querySelector('fieldset')!;
+    const element = form.querySelector('pf-v6-text-input')!;
+    expect(form.checkValidity()).to.be.false;
+
+    fieldset.disabled = true;
+    await nextFrame();
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+    expect(element.checkValidity()).to.be.true;
+    const disabled = await a11ySnapshot();
+    expect(disabled.children?.find(node => node.role === 'textbox')?.disabled).to.be.true;
+    expect(disabled.children?.find(node => node.role === 'alert')).to.not.exist;
+
+    fieldset.disabled = false;
+    await nextFrame();
+    await element.updateComplete;
+    await nextFrame();
+    expect(form.checkValidity()).to.be.false;
+    const enabled = await a11ySnapshot();
+    expect(enabled.children?.find(node => node.role === 'textbox')?.invalid).to.equal('true');
+    expect(enabled.children?.find(node => node.role === 'alert')?.children?.[0]?.name)
+        .to.equal('Address rejected');
+  });
+
+  it('retains setCustomValidity() when a disabled field is enabled', async function() {
+    const form = await createFixture<HTMLFormElement>(html`
+      <form><pf-v6-text-input name="username"
+                              accessible-label="Username"
+                              disabled
+                              value="taken"></pf-v6-text-input></form>
+    `);
+    const element = form.querySelector('pf-v6-text-input')!;
+    expect(() => element.setCustomValidity('Name already taken')).to.not.throw();
+    await element.updateComplete;
+    expect(form.checkValidity()).to.be.true;
+
+    element.disabled = false;
+    await element.updateComplete;
+    await nextFrame();
+    expect(form.checkValidity()).to.be.false;
+    const snapshot = await a11ySnapshot();
+    expect(snapshot.children?.find(node => node.role === 'textbox')?.invalid).to.equal('true');
+    expect(snapshot.children?.find(node => node.role === 'alert')?.children?.[0]?.name)
+        .to.equal('Name already taken');
+  });
+
+  it('restores native required validation when a disabled field is enabled', async function() {
+    const form = await createFixture<HTMLFormElement>(html`
+      <form><pf-v6-text-input name="username"
+                              accessible-label="Username"
+                              required></pf-v6-text-input></form>
+    `);
+    const element = form.querySelector('pf-v6-text-input')!;
+    expect(form.checkValidity()).to.be.false;
+
+    element.disabled = true;
+    await element.updateComplete;
+    expect(element.checkValidity()).to.be.true;
+    expect(form.checkValidity()).to.be.true;
+
+    element.disabled = false;
+    await element.updateComplete;
+    await nextFrame();
+    expect(form.checkValidity()).to.be.false;
+    const snapshot = await a11ySnapshot();
+    expect(snapshot.children?.find(node => node.role === 'textbox')?.invalid).to.equal('true');
+  });
+
   describe('select() method', function() {
     let element: PfV6TextInput;
 

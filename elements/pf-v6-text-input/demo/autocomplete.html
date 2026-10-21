@@ -1,0 +1,43 @@
+---
+name: Autocomplete
+description: Uses standard autocomplete hints to let the browser fill contact details.
+---
+<form id="autocomplete-form">
+  <fieldset>
+    <legend>Contact details</legend>
+    <p>Use saved contact details from your browser, or enter them yourself.</p>
+
+    <!-- Standard autocomplete tokens:
+         https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofilling-form-controls:-the-autocomplete-attribute -->
+    <label for="first-name">First name</label>
+    <pf-v6-text-input id="first-name"
+                      name="first-name"
+                      autocomplete="given-name"
+                      required></pf-v6-text-input>
+
+    <label for="email-address">Email address</label>
+    <pf-v6-text-input id="email-address"
+                      name="email-address"
+                      type="email"
+                      autocomplete="email"
+                      required></pf-v6-text-input>
+
+    <button type="submit">Submit</button>
+    <output id="result" aria-live="polite">Submit to see the form values.</output>
+  </fieldset>
+</form>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-text-input/pf-v6-text-input.js';
+
+  const form = document.getElementById('autocomplete-form');
+  const result = document.getElementById('result');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const data = new FormData(form);
+    result.textContent = `Submitted: ${data.get('first-name')} (${data.get('email-address')})`;
+  });
+</script>
+
+<link rel="stylesheet" href="demo.css">

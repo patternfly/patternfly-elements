@@ -1,0 +1,57 @@
+---
+name: Validation
+description: Demonstrates native constraint validation with pattern matching. The input requires exactly three digits (e.g. "123").
+---
+<fieldset>
+  <legend>Constraint Validation</legend>
+  <label for="validated">Enter a three-digit number (e.g. 123)</label>
+  <pf-v6-text-input id="validated"
+                    pattern="\d{3}"
+                    required></pf-v6-text-input>
+  <div id="controls">
+    <button id="validate" type="button">Validate</button>
+    <label>Validate on blur? <pf-v6-switch id="onblur"></pf-v6-switch></label>
+  </div>
+  <output id="result"></output>
+</fieldset>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-text-input/pf-v6-text-input.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+
+  const validated = document.getElementById('validated');
+  const validate = document.getElementById('validate');
+  const onblur = document.getElementById('onblur');
+  const result = document.getElementById('result');
+
+  validate.addEventListener('click', function() {
+    const valid = validated.checkValidity();
+    result.textContent = valid ? 'Valid!' : 'Invalid — must be exactly 3 digits';
+  });
+
+  onblur.addEventListener('change', function() {
+    if (this.checked) {
+      validated.addEventListener('blur', onBlurValidate);
+    } else {
+      validated.removeEventListener('blur', onBlurValidate);
+    }
+  });
+
+  function onBlurValidate() {
+    const valid = validated.checkValidity();
+    result.textContent = valid ? 'Valid!' : 'Invalid — must be exactly 3 digits';
+  }
+</script>
+
+<link rel="stylesheet" href="demo.css">
+
+<style>
+  #controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  #result {
+    font-style: italic;
+  }
+</style>

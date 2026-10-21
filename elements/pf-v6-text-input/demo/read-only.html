@@ -1,0 +1,26 @@
+---
+name: Read only
+description: A read only text input prevents modification but allows selection and copying.
+---
+<fieldset>
+  <legend>Read only</legend>
+  <label for="read-only-input">Read only input</label>
+  <pf-v6-text-input id="read-only-input"
+                    readonly
+                    value="read only text input example"></pf-v6-text-input>
+  <label>
+    <pf-v6-switch id="plain-switch"></pf-v6-switch>
+    Plain read only variant
+  </label>
+</fieldset>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-text-input/pf-v6-text-input.js';
+  import '@patternfly/elements/pf-v6-switch/pf-v6-switch.js';
+  document.getElementById('plain-switch')
+    .addEventListener('change', function() {
+      document.getElementById('read-only-input').plain = this.checked;
+    });
+</script>
+
+<link rel="stylesheet" href="demo.css">

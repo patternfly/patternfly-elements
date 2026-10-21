@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { PfeDemoPage } from '@patternfly/pfe-tools/test/playwright/PfeDemoPage.js';
 import { SSRPage } from '@patternfly/pfe-tools/test/playwright/SSRPage.js';
 
-const tagName = 'pf-v5-text-input';
+const tagName = 'pf-v6-text-input';
 
 test.describe(tagName, () => {
   test('snapshot', async ({ page }) => {

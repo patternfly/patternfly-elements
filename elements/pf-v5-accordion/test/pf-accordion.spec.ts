@@ -675,7 +675,8 @@ describe('<pf-v5-accordion>', function() {
           describe('Shift+Tab', function() {
             beforeEach(press('Shift+Tab'));
             it('moves focus to the body', async function() {
-              expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
+              const snapshot = await a11ySnapshot();
+              expect(querySnapshot(snapshot, { focused: true })).to.not.be.ok;
             });
           });
 
@@ -1165,7 +1166,7 @@ describe('<pf-v5-accordion>', function() {
       describe('Tab', function() {
         beforeEach(press('Tab'));
         it('moves focus to the body', async function() {
-          expect(await a11ySnapshot()).to.not.axContainQuery({ role: 'button', focused: true });
+          expect(await a11ySnapshot()).to.have.axTreeFocusOn(document.body);
         });
       });
     });

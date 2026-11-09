@@ -760,7 +760,7 @@ export class ComboboxController<
     }
   };
 
-  #onFocusoutListbox = (event: FocusEvent) => {
+  #onFocusoutListbox = async (event: FocusEvent) => {
     if (!this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
       // Check if focus moved to the toggle button via mouse click
@@ -771,7 +771,17 @@ export class ComboboxController<
       if ((root instanceof ShadowRoot || root instanceof Document)
           && !this.items.includes(event.relatedTarget as Item)
           && !isClickOnToggleButton) {
-        this.#hide();
+        const related = event.relatedTarget as Node | null;
+        const focusStayedInsideElement = !!related && !!this.#element?.contains(related);
+        if (!focusStayedInsideElement) {
+          // Wait for the browser to finish moving focus (e.g. Tab out of the
+          // listbox) before hiding it. Hiding while the focused option is
+          // removed can cancel the focus move and leave focus on the combobox.
+          await new Promise(requestAnimationFrame);
+        }
+        if (this.options.isExpanded() && !this.#listbox?.contains(root.activeElement)) {
+          this.#hide();
+        }
       }
     }
   };

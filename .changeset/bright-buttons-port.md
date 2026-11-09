@@ -29,4 +29,4 @@
 - `disabled-focusable`, `favorite`/`favorited`, `hamburger`/`expanded`, `settings`, `no-padding`
 - Link rendering via `href`/`target` with `variant="link"`
 
-Also fixes `RovingTabindexController` so index updates do not steal focus after Tab leaves a widget.
+Also fixes `RovingTabindexController` so index updates do not steal focus after Tab leaves a widget, and `ComboboxController` so an open listbox waits for the browser to finish moving focus before hiding, preventing Tab/Shift+Tab from being cancelled.

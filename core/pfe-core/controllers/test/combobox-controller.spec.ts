@@ -4,7 +4,7 @@ import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 
 import { customElement } from 'lit/decorators/custom-element.js';
 import { query } from 'lit/decorators/query.js';
-import { ReactiveElement, html, render, type PropertyValues, type TemplateResult } from 'lit';
+import { LitElement, ReactiveElement, html, render, type PropertyValues, type TemplateResult } from 'lit';
 
 import { ComboboxController } from '../combobox-controller.js';
 
@@ -303,8 +303,94 @@ class XComboboxShadow extends TestCombobox {
   }
 }
 
+/**
+ * Toggle-button-only combobox (no text input): listbox items receive DOM focus.
+ */
+@customElement('x-combobox-toggle')
+class XComboboxToggle extends LitElement {
+  static template = html`
+    <x-combobox-toggle>
+      <div class="opt" tabindex="0">1</div>
+      <div class="opt" tabindex="0">2</div>
+      <div class="opt" tabindex="0">3</div>
+    </x-combobox-toggle>
+  `;
+
+  hideCount = 0;
+
+  controller = ComboboxController.of(this, {
+    getItems: () => [...this.querySelectorAll<HTMLElement>('.opt')],
+    isItem: (item): item is HTMLElement =>
+      item instanceof HTMLElement && item.classList.contains('opt'),
+    getFallbackLabel: () => 'options',
+    getListboxElement: () => this.listbox ?? null,
+    getToggleButton: () => this.button ?? null,
+    getComboboxInput: () => null,
+    isExpanded: () => !this.listbox.hidden,
+    requestShowListbox: () => void (this.listbox.hidden = false),
+    requestHideListbox: () => void (this.hideCount += 1, this.listbox.hidden = true),
+  });
+
+  @query('#listbox') listbox!: HTMLElement;
+  @query('#button') button!: HTMLButtonElement;
+
+  get options(): HTMLElement[] {
+    return [...this.querySelectorAll<HTMLElement>('.opt')];
+  }
+
+  override render(): TemplateResult {
+    return html`
+      <button id="button">Show Options</button>
+      <div id="listbox" hidden><slot></slot></div>`;
+  }
+}
+
 describe('ComboboxController', function() {
   describe('Cross-root ARIA', XComboboxCrossRoot.test.bind(XComboboxCrossRoot));
   describe('Light-DOM only', XComboboxLight.test.bind(XComboboxLight));
   describe('Shadow-DOM only', XComboboxShadow.test.bind(XComboboxShadow));
+
+  describe('listbox focusout', function() {
+    let element: XComboboxToggle;
+
+    beforeEach(async function() {
+      element = await fixture<XComboboxToggle>(XComboboxToggle.template);
+      // open the listbox and focus the first option
+      element.button.click();
+      await element.updateComplete;
+      element.options[0]!.focus();
+    });
+
+    function nextFrame() {
+      return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
+
+    it('hides the listbox one frame after focus leaves it', async function() {
+      expect(element.listbox.hidden, 'listbox starts expanded').to.be.false;
+      await sendKeys({ press: 'Tab' });
+      await nextFrame();
+      expect(element.listbox.hidden, 'listbox hides after the frame').to.be.true;
+      expect(element.hideCount).to.equal(1);
+    });
+
+    it('does not hide when focus returns to an item within the frame', async function() {
+      expect(element.listbox.hidden, 'listbox starts expanded').to.be.false;
+      // focusout with focus headed outside the element ...
+      element.options[0]!.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+      // ... but focus lands on another item before the pending frame resolves
+      element.options[1]!.focus();
+      await nextFrame();
+      expect(element.listbox.hidden, 'listbox stays expanded').to.be.false;
+      expect(element.hideCount).to.equal(0);
+    });
+
+    it('does not throw or hide when the host disconnects during the pending frame', async function() {
+      expect(element.listbox.hidden, 'listbox starts expanded').to.be.false;
+      element.options[0]!.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+      element.remove();
+      await nextFrame();
+      expect(element.hideCount, 'no hide after disconnect').to.equal(0);
+      expect(element.listbox.hidden, 'listbox stays expanded').to.be.false;
+    });
+  });
 });

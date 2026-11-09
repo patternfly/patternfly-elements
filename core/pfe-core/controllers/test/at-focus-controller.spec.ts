@@ -295,6 +295,13 @@ describe('ATFocusController', function() {
         expect(items[0].tabIndex).to.equal(-1);
         expect(items[1].tabIndex).to.equal(0);
       });
+
+      it('moves DOM focus to the item via focusItem()', function() {
+        element.controller.focusItem(1);
+        expect(document.activeElement).to.equal(items[1]);
+        expect(items[1].tabIndex).to.equal(0);
+        expect(items[0].tabIndex).to.equal(-1);
+      });
     });
   });
 });

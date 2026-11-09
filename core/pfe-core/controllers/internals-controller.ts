@@ -341,8 +341,11 @@ export class InternalsController implements ReactiveController, ARIAMixin {
       try {
         form.requestSubmit(submitter);
         return;
-      } catch {
+      } catch (error) {
         // FACE hosts are not yet accepted as submitters in all engines.
+        if (!(error instanceof TypeError)) {
+          throw error;
+        }
       }
     }
     form.requestSubmit();

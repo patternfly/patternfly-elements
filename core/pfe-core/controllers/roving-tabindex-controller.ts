@@ -56,6 +56,19 @@ export class RovingTabindexController<
     return !!container?.matches(':focus-within');
   }
 
+  /**
+   * Sets assistive-technology focus to the item at `index` and moves DOM focus
+   * to it, even when focus is currently outside the widget. Use this for
+   * documented focus APIs; prefer the `atFocusedItemIndex` setter for keyboard
+   * navigation, which does not steal focus from outside the widget.
+   * @param index item index
+   */
+  focusItem(index: number): void {
+    this.atFocusedItemIndex = index;
+    const item = this.items.at(this.atFocusedItemIndex);
+    item?.focus();
+  }
+
   get items() {
     return this._items;
   }

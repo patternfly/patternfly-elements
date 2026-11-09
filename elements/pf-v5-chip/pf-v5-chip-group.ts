@@ -117,7 +117,7 @@ export class PfV5ChipGroup extends LitElement {
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button');
     if (button) {
-      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(button);
+      this.#tabindex.focusItem(this.#tabindex.items.indexOf(button));
     }
   }
 
@@ -234,7 +234,7 @@ export class PfV5ChipGroup extends LitElement {
    * @param chip pf-v5-chip element
    */
   focusOnChip(chip: PfV5Chip): void {
-    this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(chip);
+    this.#tabindex.focusItem(this.#tabindex.items.indexOf(chip));
   }
 }
 

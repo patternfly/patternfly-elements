@@ -59,7 +59,7 @@ tags:
 | --------------------- | ------------------------------------------ | --------------------------------------------------------------- |
 | `--directory`         | Output directory                           | string [default: "/path/to/patternfly-elements"] |
 | `--silent`            | Do not log anything to stdout              | boolean [default: false]                                        |
-| `-n`, `--tagName`     | Custom element tag name. e.g. `pf-v5-button`  | string                                                          |
+| `-n`, `--tagName`     | Custom element tag name. e.g. `pf-v6-button`  | string                                                          |
 | `-p`, `--packageName` | NPM package scope. e.g. `@patternfly/elements`| string                                                   |
 | `--overwrite`         | Overwrite files without prompting          | boolean [default: false]                                        |
 | `--help`              | Show help                                  | boolean                                                         |
@@ -123,7 +123,7 @@ npm run new -- --tagName pf-v5-cool-element
 
   ```bash
   # Run a single test in watch mode.
-  npm run test:watch --files "./elements/pf-v5-button/test/pf-v5-button.spec.ts"
+  npm run test:watch --files "./elements/pf-v6-button/test/pf-v6-button.spec.ts"
 
   # Or multiple:
   npm run test:watch --files "./elements/pf-v5-{avatar,card,tabs}/test/*.spec.ts"

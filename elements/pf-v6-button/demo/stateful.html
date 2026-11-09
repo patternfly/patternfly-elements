@@ -1,0 +1,60 @@
+---
+name: Stateful
+description: Stateful buttons communicate notification state with variant="stateful" and state set to read, unread (default), or attention.
+---
+
+<div class="stateful-demo">
+  <div>
+    <div><strong>Read</strong></div>
+    <pf-v6-button variant="stateful" state="read">
+      <svg slot="icon" fill="currentColor" height="1em" width="1em" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M28.75 22v3.5c0 .689-.561 1.25-1.25 1.25h-7.521c.005.084.021.166.021.25 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.084.016-.166.021-.25H4.5c-.689 0-1.25-.561-1.25-1.25V22a.75.75 0 0 1 .75-.75c1.24 0 2.25-1.009 2.25-2.25v-4c0-4.826 3.528-8.833 8.138-9.605A2.482 2.482 0 0 1 13.5 3.5C13.5 2.122 14.621 1 16 1s2.5 1.122 2.5 2.5c0 .761-.349 1.436-.888 1.895 4.61.772 8.138 4.779 8.138 9.605v4c0 1.241 1.01 2.25 2.25 2.25a.75.75 0 0 1 .75.75Z"></path>
+      </svg>
+      10<span class="pf-v6-screen-reader">items</span>
+    </pf-v6-button>
+  </div>
+  <div>
+    <div><strong>Unread</strong></div>
+    <pf-v6-button variant="stateful" state="unread">
+      <svg slot="icon" fill="currentColor" height="1em" width="1em" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M28.75 22v3.5c0 .689-.561 1.25-1.25 1.25h-7.521c.005.084.021.166.021.25 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.084.016-.166.021-.25H4.5c-.689 0-1.25-.561-1.25-1.25V22a.75.75 0 0 1 .75-.75c1.24 0 2.25-1.009 2.25-2.25v-4c0-4.826 3.528-8.833 8.138-9.605A2.482 2.482 0 0 1 13.5 3.5C13.5 2.122 14.621 1 16 1s2.5 1.122 2.5 2.5c0 .761-.349 1.436-.888 1.895 4.61.772 8.138 4.779 8.138 9.605v4c0 1.241 1.01 2.25 2.25 2.25a.75.75 0 0 1 .75.75Z"></path>
+      </svg>
+      10<span class="pf-v6-screen-reader">unread items</span>
+    </pf-v6-button>
+  </div>
+  <div>
+    <div><strong>Attention</strong></div>
+    <pf-v6-button variant="stateful" state="attention">
+      <svg slot="icon" fill="currentColor" height="1em" width="1em" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M28.75 22v3.5c0 .689-.561 1.25-1.25 1.25h-7.521c.005.084.021.166.021.25 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.084.016-.166.021-.25H4.5c-.689 0-1.25-.561-1.25-1.25V22a.75.75 0 0 1 .75-.75c1.24 0 2.25-1.009 2.25-2.25v-4c0-4.826 3.528-8.833 8.138-9.605A2.482 2.482 0 0 1 13.5 3.5C13.5 2.122 14.621 1 16 1s2.5 1.122 2.5 2.5c0 .761-.349 1.436-.888 1.895 4.61.772 8.138 4.779 8.138 9.605v4c0 1.241 1.01 2.25 2.25 2.25a.75.75 0 0 1 .75.75Z"></path>
+      </svg>
+      10<span class="pf-v6-screen-reader">unread items, needs attention</span>
+    </pf-v6-button>
+  </div>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+  .stateful-demo {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .stateful-demo strong {
+    font-family: var(--pf-t--global--font--family--body, "Red Hat Text", RedHatText, Helvetica, Arial, sans-serif);
+    font-size: 0.875rem;
+  }
+
+  .pf-v6-screen-reader {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+</style>

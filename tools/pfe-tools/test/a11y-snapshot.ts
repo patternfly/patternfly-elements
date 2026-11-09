@@ -18,6 +18,7 @@ export interface A11yTreeSnapshot {
   focused?: boolean;
   haspopup?: string;
   level?: number;
+  pressed?: boolean | 'mixed';
   selected?: boolean;
   value?: number;
   valuetext?: string;

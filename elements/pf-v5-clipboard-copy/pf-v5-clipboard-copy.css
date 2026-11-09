@@ -166,7 +166,7 @@ textarea {
 }
 
 #container:is(.compact, .inline) #input-group {
-  background-color: var(--pf-v5-c-button--m-plain--BackgroundColor,
+  background-color: var(--pf-v6-c-button--m-plain--BackgroundColor,
     var(--pf-global--BackgroundColor--200, #f0f0f0));
 }
 
@@ -177,11 +177,16 @@ textarea {
 
 #container:is(.compact, .inline) #copy-button,
 #container:is(.compact, .inline) slot[name="actions"]::slotted(*) {
-  --pf-v5-c-button--PaddingTop: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingTop) !important;
-  --pf-v5-c-button--PaddingRight: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingRight) !important;
-  --pf-v5-c-button--PaddingBottom: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingBottom) !important;
-  --pf-v5-c-button--PaddingLeft: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingLeft) !important;
-  margin-block-start: calc(-1 * var(--pf-v5-c-button--PaddingTop));
-  margin-block-end: calc(-1 * var(--pf-v5-c-button--PaddingBottom));
+  --_button-padding-block-start: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingTop);
+  --_button-padding-block-end: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingBottom);
+  --pf-v6-c-button--PaddingBlockStart: var(--_button-padding-block-start) !important;
+  --pf-v6-c-button--PaddingBlockEnd: var(--_button-padding-block-end) !important;
+  /* Buttons here are variant="plain" or variant="control"; both map inline padding from variant tokens */
+  --pf-v6-c-button--m-plain--PaddingInlineStart: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingLeft) !important;
+  --pf-v6-c-button--m-plain--PaddingInlineEnd: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingRight) !important;
+  --pf-v6-c-button--m-control--PaddingInlineStart: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingLeft) !important;
+  --pf-v6-c-button--m-control--PaddingInlineEnd: var(--pf-v5-c-clipboard-copy__actions-item--button--PaddingRight) !important;
+  margin-block-start: calc(-1 * var(--_button-padding-block-start));
+  margin-block-end: calc(-1 * var(--_button-padding-block-end));
 }
 

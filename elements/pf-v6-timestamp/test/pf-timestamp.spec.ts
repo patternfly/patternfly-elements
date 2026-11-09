@@ -59,7 +59,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" date-format="full" time-format="short"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" date-format="full" time-format="short"></pf-v6-timestamp>
       `);
     });
 
@@ -74,7 +74,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" date-format="full"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" date-format="full"></pf-v6-timestamp>
       `);
     });
 
@@ -89,7 +89,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" time-format="short"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" time-format="short"></pf-v6-timestamp>
       `);
     });
 
@@ -111,7 +111,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" .customFormat=${options}></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" .customFormat=${options}></pf-v6-timestamp>
       `);
     });
 
@@ -127,7 +127,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" display-suffix="${suffix}"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" display-suffix="${suffix}"></pf-v6-timestamp>
       `);
     });
 
@@ -142,7 +142,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" hour-cycle="h23"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" hour-cycle="h23"></pf-v6-timestamp>
       `);
     });
 
@@ -157,7 +157,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" hour-cycle="h12"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" hour-cycle="h12"></pf-v6-timestamp>
       `);
     });
 
@@ -295,7 +295,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" time-zone="UTC"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" time-zone="UTC"></pf-v6-timestamp>
       `);
     });
 
@@ -310,7 +310,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" time-zone="UTC" display-suffix="UTC"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" time-zone="UTC" display-suffix="UTC"></pf-v6-timestamp>
       `);
     });
 
@@ -325,7 +325,7 @@ describe('<pf-v6-timestamp>', function() {
 
     beforeEach(async function() {
       element = await createFixture<PfV6Timestamp>(html`
-        <pf-v6-timestamp date="${dateString}" time-zone="America/New_York"></pf-v6-timestamp>
+        <pf-v6-timestamp date="${dateString}" locale="en-US" time-zone="America/New_York"></pf-v6-timestamp>
       `);
     });
 

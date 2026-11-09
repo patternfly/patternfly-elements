@@ -13,15 +13,15 @@
       Custom modal footer.
     </h4>
   </pf-v5-modal>
-  <pf-v5-button id="custom-header-footer-trigger" slot="footer">Show modal</pf-v5-button>
+  <pf-v6-button id="custom-header-footer-trigger" slot="footer">Show modal</pf-v6-button>
 </section>
 
 <script type="module">
-  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
   import '@patternfly/elements/pf-v5-modal/pf-v5-modal.js';
   import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 
-  for (const button of document.querySelectorAll('pf-v5-modal pf-v5-button:not([slot="trigger"])')) {
+  for (const button of document.querySelectorAll('pf-v5-modal pf-v6-button:not([slot="trigger"])')) {
     button.addEventListener('click', e => {
       e.target.closest('pf-v5-modal').close(e.target.textContent.toLowerCase());
     });

@@ -117,7 +117,7 @@ export class PfV5ChipGroup extends LitElement {
   set activeChip(chip: HTMLElement) {
     const button = chip.shadowRoot?.querySelector('button');
     if (button) {
-      this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(button);
+      this.#tabindex.focusItem(this.#tabindex.items.indexOf(button));
     }
   }
 
@@ -158,14 +158,14 @@ export class PfV5ChipGroup extends LitElement {
         >${this.remaining < 1 ? ''
          : this.open ? this.expandedText
          : this.collapsedText.replace(REMAINING_RE, this.remaining.toString())}</pf-v5-chip>
-        <pf-v5-button id="close-button"
-                   plain
+        <pf-v6-button id="close-button"
+                   variant="plain"
                    icon="times-circle"
                    icon-set="fas"
-                   label="${this.accessibleCloseLabel}"
+                   accessible-label="${this.accessibleCloseLabel}"
                    aria-describedby="category"
                    ?hidden="${!this.closeable}"
-                   @click="${this.#onCloseClick}"></pf-v5-button>
+                   @click="${this.#onCloseClick}"></pf-v6-button>
       </div>
     `;
   }
@@ -234,7 +234,7 @@ export class PfV5ChipGroup extends LitElement {
    * @param chip pf-v5-chip element
    */
   focusOnChip(chip: PfV5Chip): void {
-    this.#tabindex.atFocusedItemIndex = this.#tabindex.items.indexOf(chip);
+    this.#tabindex.focusItem(this.#tabindex.items.indexOf(chip));
   }
 }
 

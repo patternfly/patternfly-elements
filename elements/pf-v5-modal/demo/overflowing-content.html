@@ -30,18 +30,18 @@
       mollis risus at ligula finibus, vitae volutpat ex auctor. Morbi vel cursus felis. Maecenas lobortis porttitor
       odio, non venenatis risus varius vitae. Proin gravida mi odio, sed pretium neque luctus vitae. Mauris ut libero
       bibendum, finibus dui non, rutrum sapien. Quisque ac bibendum erat. Vestibulum tincidunt risus nisi.</p>
-    <pf-v5-button slot="footer">Confirm</pf-v5-button>
-    <pf-v5-button variant="secondary" slot="footer">Cancel</pf-v5-button>
+    <pf-v6-button slot="footer">Confirm</pf-v6-button>
+    <pf-v6-button variant="secondary" slot="footer">Cancel</pf-v6-button>
   </pf-v5-modal>
-  <pf-v5-button id="overflowing-content-trigger" slot="footer">Show modal</pf-v5-button>
+  <pf-v6-button id="overflowing-content-trigger" slot="footer">Show modal</pf-v6-button>
 </section>
 
 <script type="module">
-  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
   import '@patternfly/elements/pf-v5-modal/pf-v5-modal.js';
   import '@patternfly/elements/pf-v5-icon/pf-v5-icon.js';
 
-  for (const button of document.querySelectorAll('pf-v5-modal pf-v5-button:not([slot="trigger"])')) {
+  for (const button of document.querySelectorAll('pf-v5-modal pf-v6-button:not([slot="trigger"])')) {
     button.addEventListener('click', e => {
       e.target.closest('pf-v5-modal').close(e.target.textContent.toLowerCase());
     });

@@ -14,7 +14,7 @@ import { context, type PfV5DropdownContext } from './context.js';
 import { PfV5DropdownItem } from './pf-v5-dropdown-item.js';
 import { PfV5DropdownMenu } from './pf-v5-dropdown-menu.js';
 
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
 import styles from './pf-v5-dropdown.css';
 
@@ -99,10 +99,10 @@ export class PfV5Dropdown extends LitElement {
       <slot name="toggle"
             @keydown="${this.#onButtonKeydown}"
             @click="${() => this.toggle()}">
-        <pf-v5-button id="default-toggle" variant="control">
+        <pf-v6-button id="default-toggle" variant="control">
           Dropdown
           <pf-v5-icon icon="caret-down" size="md"></pf-v5-icon>
-        </pf-v5-button>
+        </pf-v6-button>
       </slot>
       <!-- when using a custom toggle, you must slot a \`<pf-v5-dropdown-menu>\` in alongside it -->
       <slot name="menu"

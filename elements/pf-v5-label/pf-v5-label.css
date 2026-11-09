@@ -283,16 +283,17 @@ pf-v5-icon, ::slotted(pf-v5-icon) {
   color: var(--_label-icon-color);
 }
 
-pf-v5-button {
-  --pf-v5-c-button--FontSize: var(--pf-v5-c-label__c-button--FontSize,
+pf-v6-button {
+  --pf-v6-c-button--FontSize: var(--pf-v5-c-label__c-button--FontSize,
     var(--pf-global--FontSize--xs, 0.75rem));
-  --pf-v5-c-button--PaddingTop: var(--pf-v5-c-label__c-button--PaddingTop,
+  --pf-v6-c-button--PaddingBlockStart: var(--pf-v5-c-label__c-button--PaddingTop,
     var(--pf-global--spacer--xs, 0.25rem));
-  --pf-v5-c-button--PaddingRight: var(--pf-v5-c-label__c-button--PaddingRight,
+  --pf-v6-c-button--PaddingBlockEnd: var(--pf-v5-c-label__c-button--PaddingBottom,
+    var(--pf-global--spacer--xs, 0.25rem));
+  /* The close button is variant="plain", which maps inline padding from the variant tokens */
+  --pf-v6-c-button--m-plain--PaddingInlineStart: var(--pf-v5-c-label__c-button--PaddingLeft,
     var(--pf-global--spacer--sm, 0.5rem));
-  --pf-v5-c-button--PaddingBottom: var(--pf-v5-c-label__c-button--PaddingBottom,
-    var(--pf-global--spacer--xs, 0.25rem));
-  --pf-v5-c-button--PaddingLeft: var(--pf-v5-c-label__c-button--PaddingLeft,
+  --pf-v6-c-button--m-plain--PaddingInlineEnd: var(--pf-v5-c-label__c-button--PaddingRight,
     var(--pf-global--spacer--sm, 0.5rem));
     margin-top: var(--pf-v5-c-label__c-button--MarginTop, -0.5rem);
     margin-right: var(--pf-v5-c-label__c-button--MarginRight, -0.5rem);

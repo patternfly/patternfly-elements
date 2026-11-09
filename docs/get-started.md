@@ -68,14 +68,14 @@ title: Get started
   <pf-v5-card>
     <h3 slot="header">Card header</h3>
     <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
   </pf-v5-card>
   ```
 
   <pf-v5-card>
     <h3 slot="header">Card header</h3>
     <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
   </pf-v5-card>
 
 ### Importmap and Markup
@@ -94,14 +94,14 @@ Altogether your import map code could look something like this [Lit Playground D
   <pf-v5-card rounded>
     <h3 slot="header">Card header</h3>
     <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
   </pf-v5-card>
   ```
 
   <pf-v5-card rounded>
     <h3 slot="header">Card header</h3>
     <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
   </pf-v5-card>
 {% endband %}
 
@@ -122,7 +122,7 @@ Altogether your import map code could look something like this [Lit Playground D
   <pf-v5-card flat rounded style="--pf-v5-c-card--BackgroundColor: var(--pf-global--active-color--200, #bee1f4);">
     <h3 slot="header">Card header</h3>
     <p>This is the pf-v5-card body.</p>
-    <pf-v5-button slot="footer">OK</pf-v5-button>
+    <pf-v6-button slot="footer">OK</pf-v6-button>
   </pf-v5-card>
 {% endband %}
 

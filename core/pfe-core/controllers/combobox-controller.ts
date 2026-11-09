@@ -244,6 +244,7 @@ export class ComboboxController<
   #listbox: HTMLElement | null = null;
   #buttonInitialRole: string | null = null;
   #buttonHasMouseDown = false;
+  #focusoutGeneration = 0;
   #mo = new MutationObserver(() => this.#initItems());
   #microcopy = new Map<string, Record<Lang, string>>(Object.entries({
     dimmed: {
@@ -375,6 +376,7 @@ export class ComboboxController<
   }
 
   hostDisconnected(): void {
+    this.#focusoutGeneration++;
     this.#fc?.hostDisconnected();
   }
 
@@ -760,7 +762,7 @@ export class ComboboxController<
     }
   };
 
-  #onFocusoutListbox = (event: FocusEvent) => {
+  #onFocusoutListbox = async (event: FocusEvent) => {
     if (!this.#hasTextInput && this.options.isExpanded()) {
       const root = this.#element?.getRootNode();
       // Check if focus moved to the toggle button via mouse click
@@ -771,7 +773,27 @@ export class ComboboxController<
       if ((root instanceof ShadowRoot || root instanceof Document)
           && !this.items.includes(event.relatedTarget as Item)
           && !isClickOnToggleButton) {
-        this.#hide();
+        const related = event.relatedTarget as Node | null;
+        const focusStayedInsideElement = !!related && !!this.#element?.contains(related);
+        if (!focusStayedInsideElement) {
+          // Wait for the browser to finish moving focus (e.g. Tab out of the
+          // listbox) before hiding it. Hiding while the focused option is
+          // removed can cancel the focus move and leave focus on the combobox.
+          const generation = ++this.#focusoutGeneration;
+          await new Promise(requestAnimationFrame);
+          if (generation !== this.#focusoutGeneration || !this.host.isConnected) {
+            return;
+          }
+        }
+        // Slotted options are not DOM descendants of the shadow listbox div,
+        // so check both the item list and `contains()`; focus on the toggle
+        // button is neither an item nor a listbox descendant, and should hide.
+        const { activeElement } = root;
+        if (this.options.isExpanded()
+            && !this.items.includes(activeElement as Item)
+            && !this.#listbox?.contains(activeElement)) {
+          this.#hide();
+        }
       }
     }
   };

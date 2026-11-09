@@ -67,7 +67,8 @@ jobs:
 
   test:
     name: Unit Tests (Web Test Runner)
-    runs-on: ubuntu-latest
+    # Playwright 1.57 does not support ubuntu-26.04, which ubuntu-latest now resolves to.
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

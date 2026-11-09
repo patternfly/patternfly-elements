@@ -33,9 +33,9 @@
   <pf-v5-hint>
     <span slot="title">Do more with Find it Fix it capabilities</span>
     Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
-    <pf-v5-button slot="footer" variant="link" inline>
+    <pf-v6-button slot="footer" variant="link" inline>
       <a href="#">Try it for 90 days</a>
-    </pf-v5-button>
+    </pf-v6-button>
   </pf-v5-hint>
   {% endhtmlexample %}
 
@@ -45,7 +45,7 @@
   {% htmlexample %}
   <pf-v5-hint>
     <pf-v5-dropdown slot="actions">
-      <pf-v5-button slot="toggle" plain icon="ellipsis-v" aria-label="Actions"></pf-v5-button>
+      <pf-v6-button slot="toggle" variant="plain" icon="ellipsis-v" accessible-label="Actions"></pf-v6-button>
       <pf-v5-dropdown-menu slot="menu">
         <pf-v5-dropdown-item>
           <a href="#">Link</a>
@@ -66,7 +66,7 @@
   {% htmlexample %}
   <pf-v5-hint>
     <pf-v5-dropdown slot="actions">
-      <pf-v5-button slot="toggle" plain icon="ellipsis-v" aria-label="Actions"></pf-v5-button>
+      <pf-v6-button slot="toggle" variant="plain" icon="ellipsis-v" accessible-label="Actions"></pf-v6-button>
       <pf-v5-dropdown-menu slot="menu">
         <pf-v5-dropdown-item>
           <a href="#">Link</a>
@@ -81,9 +81,9 @@
     </pf-v5-dropdown>
     <span slot="title">Do more with Find it Fix it capabilities</span>
     Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
-    <pf-v5-button slot="footer" variant="link" inline>
+    <pf-v6-button slot="footer" variant="link" inline>
       <a href="#">Try it for 90 days</a>
-    </pf-v5-button>
+    </pf-v6-button>
   </pf-v5-hint>
   {% endhtmlexample %}
 

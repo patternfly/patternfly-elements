@@ -186,7 +186,7 @@ slot[name="toggle"] {
   cursor: pointer;
 }
 
-pf-v5-button#default-toggle,
+pf-v6-button#default-toggle,
 ::slotted([slot="toggle"]) {
   position: relative;
   display: flex;
@@ -248,7 +248,7 @@ pf-v5-dropdown-menu,
   margin: 0 !important;
 }
 
-pf-v5-button svg {
+pf-v6-button svg {
   width: 1em;
   height: 1em;
   flex: 0 0 auto;
@@ -277,72 +277,77 @@ pf-v5-button svg {
     background-color: var(--pf-v5-theme--color--surface--lighter, #f0f0f0) !important;
     cursor: not-allowed !important;
   }
-  & pf-v5-button#default-toggle,
+  & pf-v6-button#default-toggle,
   & ::slotted([slot="toggle"]) {
-    --pf-v5-c-button--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--after--BorderColor: var(--pf-v5-c-button--disabled--after--BorderColor);
+    --_disabled-color: var(--pf-t--global--text--color--on-disabled, #707070);
+    --_disabled-background: var(--pf-t--global--background--color--disabled--default, #c7c7c7);
+    --_disabled-icon-color: var(--pf-t--global--icon--color--on-disabled, #707070);
 
-    --pf-v5-c-button--m-primary--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-primary--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
+    /* Variants which inherit the surface tokens (e.g. secondary) */
+    --pf-v6-c-button--Color: var(--_disabled-color);
+    --pf-v6-c-button--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--BorderColor: transparent;
+    --pf-v6-c-button--hover--Color: var(--_disabled-color);
+    --pf-v6-c-button--hover--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--hover--BorderColor: transparent;
+    --pf-v6-c-button--m-clicked--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-clicked--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-clicked--BorderColor: transparent;
 
-    --pf-v5-c-button--m-secondary--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-secondary--focus--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-secondary--hover--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-secondary--active--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-secondary--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-secondary--after--BorderColor: transparent;
-    --pf-v5-c-button--m-secondary--hover--after--BorderColor: transparent;
-    --pf-v5-c-button--m-secondary--focus--after--BorderColor: transparent;
-    --pf-v5-c-button--m-secondary--active--after--BorderColor: transparent;
-    --pf-v5-c-button--m-secondary--focus--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
+    /* Primary */
+    --pf-v6-c-button--m-primary--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-primary--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-primary--hover--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-primary--hover--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-primary--m-clicked--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-primary--m-clicked--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-primary__icon--Color: var(--_disabled-icon-color);
+    --pf-v6-c-button--m-primary--hover__icon--Color: var(--_disabled-icon-color);
+    --pf-v6-c-button--m-primary--m-clicked__icon--Color: var(--_disabled-icon-color);
 
-    --pf-v5-c-button--m-control--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-control--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-control--focus--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-control--hover--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-control--active--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-control--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-control--after--BorderColor: transparent;
-    --pf-v5-c-button--m-control--hover--after--BorderColor: transparent;
-    --pf-v5-c-button--m-control--focus--after--BorderColor: transparent;
-    --pf-v5-c-button--m-control--active--after--BorderColor: transparent;
-    --pf-v5-c-button--m-control--focus--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-control--hover--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-control--active--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-control--focus--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-control--after--BorderBottomColor: transparent;
-    --pf-v5-c-button--m-control--focus--after--BorderBottomColor: transparent;
-    --pf-v5-c-button--m-control--hover--after--BorderBottomColor: transparent;
-    --pf-v5-c-button--m-control--active--after--BorderBottomColor: transparent;
+    /* Secondary */
+    --pf-v6-c-button--m-secondary--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-secondary--hover--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-secondary--m-clicked--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-secondary--BorderColor: transparent;
+    --pf-v6-c-button--m-secondary--hover--BorderColor: transparent;
+    --pf-v6-c-button--m-secondary--m-clicked--BorderColor: transparent;
+    --pf-v6-c-button--m-secondary__icon--Color: var(--_disabled-icon-color);
+    --pf-v6-c-button--m-secondary--hover__icon--Color: var(--_disabled-icon-color);
+    --pf-v6-c-button--m-secondary--m-clicked__icon--Color: var(--_disabled-icon-color);
 
-    --pf-v5-c-button--m-plain--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-plain--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-plain--focus--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-plain--hover--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-plain--active--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-plain--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-plain--after--BorderColor: transparent;
-    --pf-v5-c-button--m-plain--hover--after--BorderColor: transparent;
-    --pf-v5-c-button--m-plain--focus--after--BorderColor: transparent;
-    --pf-v5-c-button--m-plain--active--after--BorderColor: transparent;
-    --pf-v5-c-button--m-plain--focus--Color: var(--pf-v5-c-button--disabled--Color);
-    --pf-v5-c-button--m-plain--hover--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-plain--active--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
-    --pf-v5-c-button--m-plain--focus--BackgroundColor: var(--pf-v5-c-button--disabled--BackgroundColor);
+    /* Control */
+    --pf-v6-c-button--m-control--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-control--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-control--BorderColor: transparent;
+    --pf-v6-c-button--m-control--hover--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-control--hover--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-control--hover--BorderColor: transparent;
+    --pf-v6-c-button--m-control--m-clicked--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-control--m-clicked--BackgroundColor: var(--_disabled-background);
+    --pf-v6-c-button--m-control--m-clicked--BorderColor: transparent;
+    --pf-v6-c-button--m-control__icon--Color: var(--_disabled-icon-color);
+    --pf-v6-c-button--m-control--hover__icon--Color: var(--_disabled-icon-color);
+    --pf-v6-c-button--m-control--m-clicked__icon--Color: var(--_disabled-icon-color);
+
+    /* Plain */
+    --pf-v6-c-button--m-plain--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-plain--BackgroundColor: transparent;
+    --pf-v6-c-button--m-plain--hover--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-plain--hover--BackgroundColor: transparent;
+    --pf-v6-c-button--m-plain--m-clicked--Color: var(--_disabled-color);
+    --pf-v6-c-button--m-plain--m-clicked--BackgroundColor: transparent;
+    --pf-v6-c-button--m-plain__icon--Color: var(--_disabled-icon-color);
   }
 
-  & pf-v5-button:focus,
+  & pf-v6-button:focus,
   & ::slotted([slot="toggle"]:focus) {
     outline: 3px solid var(--pf-global--link--Color, #0066cc);
   }
 }
 
-pf-v5-button#default-toggle,
-::slotted(pf-v5-button[variant="control"]) {
+pf-v6-button#default-toggle,
+::slotted(pf-v6-button[variant="control"]) {
   --_button-icon-vertical-align: -0.25em;
   --_button-icon-padding-inline-start: var(--pf-v5-c-dropdown__toggle--PaddingLeft,
     var(--pf-global--spacer--md, 1rem));

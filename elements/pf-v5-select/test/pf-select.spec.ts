@@ -395,6 +395,7 @@ describe('<pf-v5-select>', function() {
 
   describe('with 8 items', function() {
     let element: PfV5Select;
+    let focusAfter: HTMLButtonElement;
     const updateComplete = () => element.updateComplete;
     const focus = () => element.focus();
 
@@ -410,6 +411,16 @@ describe('<pf-v5-select>', function() {
           <pf-v5-option value="7">7</pf-v5-option>
           <pf-v5-option value="8">8</pf-v5-option>
         </pf-v5-select>`);
+      // A focusable element after the select gives Tab a deterministic
+      // destination instead of relying on where the browser puts focus when
+      // the select is the last tabbable element.
+      focusAfter = document.createElement('button');
+      focusAfter.textContent = 'after';
+      document.body.append(focusAfter);
+    });
+
+    afterEach(function() {
+      focusAfter?.remove();
     });
 
     it('does not pass aXe audit', async function() {
@@ -441,8 +452,8 @@ describe('<pf-v5-select>', function() {
 
       describe('Tab', function() {
         beforeEach(press('Tab'));
-        it('does not focus the combobox button', async function() {
-          expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
+        it('moves focus out of the combobox', function() {
+          expect(document.activeElement).to.equal(focusAfter);
         });
       });
     });
@@ -682,8 +693,8 @@ describe('<pf-v5-select>', function() {
             expect(element.expanded).to.be.false;
             expect(await a11ySnapshot()).to.not.axContainRole('listbox');
           });
-          it('does not focus on the combobox button', async function() {
-            expect(await a11ySnapshot()).to.not.have.axTreeFocusedNode;
+          it('moves focus out of the combobox', function() {
+            expect(document.activeElement).to.equal(focusAfter);
           });
         });
 

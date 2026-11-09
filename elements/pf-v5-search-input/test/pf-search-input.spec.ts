@@ -566,7 +566,7 @@ describe('<pf-v5-search-input>', function() {
         });
 
         // Skipping the test case as the role is visible in the accessibility tree,
-        // and since the pf-v5-button uses ElementInternals, the test case is unable to access the role.
+        // and since the pf-v6-button uses ElementInternals, the test case is unable to access the role.
         it.skip('labels the close button with the label', async function() {
           expect(await a11ySnapshot()).to.axContainQuery({
             role: 'button',

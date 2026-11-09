@@ -1,0 +1,39 @@
+---
+name: Links as buttons
+description: Buttons that link to another resource may take the form of primary, secondary, tertiary, or link variants. Set the href attribute to designate the button's target link.
+---
+
+<section>
+  <pf-v6-button href="https://www.patternfly.org/" target="_blank"
+    >Link to PatternFly home</pf-v6-button
+  >
+  <pf-v6-button
+    variant="secondary"
+    href="https://www.patternfly.org/"
+    target="_blank"
+    >Secondary link to PatternFly home</pf-v6-button
+  >
+  <pf-v6-button
+    variant="tertiary"
+    href="https://www.patternfly.org/"
+    target="_blank"
+    disabled
+    >Tertiary link to PatternFly home</pf-v6-button
+  >
+  <pf-v6-button variant="link" href="https://www.patternfly.org/"
+    >Jump to PatternFly home</pf-v6-button
+  >
+</section>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>
+
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

@@ -1,4 +1,5 @@
 import { expect, fixture } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { LitElement, html } from 'lit';
 
@@ -237,6 +238,69 @@ describe('ATFocusController', function() {
       it('stores index as-is', function() {
         element.controller.atFocusedItemIndex = 0;
         expect(element.controller.atFocusedItemIndex).to.equal(0);
+      });
+    });
+  });
+
+  describe('DOM focus', function() {
+    let wrapper: HTMLElement;
+    let element: TestElement;
+    let outside: HTMLButtonElement;
+    let items: HTMLElement[];
+
+    beforeEach(async function() {
+      wrapper = await fixture(html`
+        <div>
+          <x-at-focus-test>
+            <div class="item">0</div>
+            <div class="item">1</div>
+            <div class="item">2</div>
+          </x-at-focus-test>
+          <button id="outside">outside</button>
+        </div>
+      `);
+      element = wrapper.querySelector('x-at-focus-test')!;
+      outside = wrapper.querySelector('#outside')!;
+      items = [...element.querySelectorAll<HTMLElement>('.item')];
+    });
+
+    describe('while focus is inside the container', function() {
+      beforeEach(async function() {
+        await sendKeys({ press: 'Tab' });
+        await element.updateComplete;
+      });
+
+      it('moves focus when the index changes', function() {
+        expect(document.activeElement).to.equal(items[0]);
+        element.controller.atFocusedItemIndex = 1;
+        expect(document.activeElement).to.equal(items[1]);
+      });
+    });
+
+    describe('after focus leaves the container', function() {
+      beforeEach(async function() {
+        await sendKeys({ press: 'Tab' });
+        await sendKeys({ press: 'Tab' });
+        await element.updateComplete;
+        expect(document.activeElement).to.equal(outside);
+      });
+
+      it('does not steal focus back when the index changes', function() {
+        element.controller.atFocusedItemIndex = 1;
+        expect(document.activeElement).to.equal(outside);
+      });
+
+      it('still updates the roving tabindex', function() {
+        element.controller.atFocusedItemIndex = 1;
+        expect(items[0].tabIndex).to.equal(-1);
+        expect(items[1].tabIndex).to.equal(0);
+      });
+
+      it('moves DOM focus to the item via focusItem()', function() {
+        element.controller.focusItem(1);
+        expect(document.activeElement).to.equal(items[1]);
+        expect(items[1].tabIndex).to.equal(0);
+        expect(items[0].tabIndex).to.equal(-1);
       });
     });
   });

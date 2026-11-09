@@ -1,0 +1,27 @@
+---
+name: Plain with no padding
+description: To display a plain/icon button inline with text, use the no-padding attribute in addition to variant="plain".
+---
+
+<p>
+  This is an example of a button
+  <pf-v6-button variant="plain" no-padding accessible-label="More info">
+    <svg
+      slot="icon"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      <path
+        d="M16 1C7.729 1 1 7.729 1 16s6.729 15 15 15 15-6.729 15-15S24.271 1 16 1Zm0 26.014a2 2 0 1 1-.001-3.999A2 2 0 0 1 16 27.014Zm1.25-9.914V19a1.25 1.25 0 0 1-2.5 0v-3c0-.69.56-1.25 1.25-1.25 1.517 0 2.75-1.233 2.75-2.75S17.517 9.25 16 9.25s-2.75 1.233-2.75 2.75a1.25 1.25 0 0 1-2.5 0c0-2.895 2.355-5.25 5.25-5.25s5.25 2.355 5.25 5.25a5.26 5.26 0 0 1-4 5.1Z"
+      ></path>
+    </svg>
+  </pf-v6-button>
+  which is placed inline with text
+</p>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>

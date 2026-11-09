@@ -108,6 +108,15 @@ describe('<pf-v5-dropdown>', function() {
             .to.axContainQuery({ disabled: true });
       });
 
+      it('styles the operand toggle with v6 button tokens', async function() {
+        const toggle = element.shadowRoot!.querySelector('pf-v6-button')!;
+        const computed = getComputedStyle(toggle);
+        expect(computed.getPropertyValue('--pf-v6-c-button--m-control--Color').trim())
+            .to.not.be.empty;
+        expect(computed.getPropertyValue('--pf-v5-c-button--m-control--Color').trim())
+            .to.be.empty;
+      });
+
       describe('pressing Enter', function() {
         beforeEach(async function() {
           await sendKeys({ press: 'Tab' });

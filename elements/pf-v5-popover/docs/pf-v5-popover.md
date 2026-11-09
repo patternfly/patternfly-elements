@@ -5,7 +5,7 @@
 <pf-v5-popover heading="Popover heading"
             body="Popovers are triggered by click rather than hover."
             footer="Popover footer">
-  <pf-v5-button>Toggle popover</pf-v5-button>
+  <pf-v6-button>Toggle popover</pf-v6-button>
 </pf-v5-popover>
 
 {% endrenderOverview %}
@@ -15,7 +15,7 @@
   <pf-v5-popover heading="Popover heading"
               body="Popovers are triggered by click rather than hover."
               footer="Popover footer">
-    <pf-v5-button>Toggle popover</pf-v5-button>
+    <pf-v6-button>Toggle popover</pf-v6-button>
   </pf-v5-popover>
   {% endhtmlexample %}
 
@@ -33,10 +33,10 @@
 
 ```html
 <script type="module">
-  import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
   import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
 
-  const button = document.querySelector('pf-v5-button');
+  const button = document.querySelector('pf-v6-button');
 
   const popover = document.querySelector('pf-v5-popover');
 
@@ -49,7 +49,7 @@
   });
 </script>
 
-<pf-v5-button>Hover to cite</pf-v5-button>
+<pf-v6-button>Hover to cite</pf-v6-button>
 
 <pf-v5-popover>
   <cite slot="body">Richard M. Stallman</cite>
@@ -63,14 +63,14 @@
 
 ```js
 import { LitElement, html } from 'lit';
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 import '@patternfly/elements/pf-v5-popover/pf-v5-popover.js';
 
 class Citer extends LitElement {
   render() {
     return html`
-      <pf-v5-button @mouseover="${this.#onMouseover}"
-                 @mouseout="${this.#onMouseout}">Hover to Cite</pf-v5-button>
+      <pf-v6-button @mouseover="${this.#onMouseover}"
+                 @mouseout="${this.#onMouseout}">Hover to Cite</pf-v6-button>
 
       <pf-v5-popover>
         <cite slot="body">Richard M. Stallman</cite>
@@ -92,7 +92,7 @@ class Citer extends LitElement {
   <pf-v5-tab-panel>
 
 ```jsx
-import { Button } from '@patternfly/elements/react/pf-v5-button/pf-v5-button.js';
+import { Button } from '@patternfly/elements/react/pf-v6-button/pf-v6-button.js';
 import { Popover } from '@patternfly/elements/react/pf-v5-popover/pf-v5-popover.js';
 import { useRef } from 'react';
 

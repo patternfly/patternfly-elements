@@ -13,7 +13,7 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 import { bound } from '@patternfly/pfe-core/decorators/bound.js';
 import { ComposedEvent, StringListConverter } from '@patternfly/pfe-core/core.js';
 
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
 import styles from './pf-v5-popover.css';
 
@@ -258,17 +258,17 @@ export class PfV5Popover extends LitElement {
           <!-- The content wrapper -->
           <div id="content" part="content">
             <!-- The close button -->
-            <pf-v5-button id="close-button"
+            <pf-v6-button id="close-button"
                        part="close-button"
-                       plain
-                       label="${this.accessibleCloseLabel ?? 'Close popover'}"
+                       variant="plain"
+                       accessible-label="${this.accessibleCloseLabel ?? 'Close popover'}"
                        @click="${this.hide}"
                        @keydown="${this.#onKeydown}"
                        ?hidden="${this.hideClose}">
               <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 352 512">
                 <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
               </svg>
-            </pf-v5-button>
+            </pf-v6-button>
             ${!(hasHeading && hasIcon) ? headingSlotWithFallback : html`
             <!-- The header element; only visible if both an icon annd heading are provided. -->
             <header part="header">

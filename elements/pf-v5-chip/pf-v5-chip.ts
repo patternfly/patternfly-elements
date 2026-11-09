@@ -2,7 +2,7 @@ import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
-import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
 
 import styles from './pf-v5-chip.css';
 import shared from './pf-v5-chip-shared.css';
@@ -59,13 +59,13 @@ export class PfV5Chip extends LitElement {
           <!-- chip text -->
           <slot></slot>
         </span>
-        <pf-v5-button id="close-button"
-                plain
+        <pf-v6-button id="close-button"
+                variant="plain"
                 icon="close" icon-set="patternfly"
-                label="${this.accessibleCloseLabel}"
+                accessible-label="${this.accessibleCloseLabel}"
                 aria-describedby="chip-text"
                 ?hidden="${this.readonly || this.overflowChip}"
-                @click="${this.#onClick}"></pf-v5-button>
+                @click="${this.#onClick}"></pf-v6-button>
       </div>
     `;
   }

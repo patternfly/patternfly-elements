@@ -935,6 +935,78 @@ describe('<pf-v6-button>', function() {
       await sendKeys({ press: 'Enter' });
       expect(submitted).to.be.true;
     });
+
+    it('reports the button as submitter and includes its name/value on Enter', async function() {
+      let submitter: Element | null = null;
+      let data: FormData | null = null;
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <input name="q">
+          <input name="scope">
+          <pf-v6-button type="submit" name="action" value="search">Search</pf-v6-button>
+        </form>
+      `);
+      const button = form.querySelector('pf-v6-button')!;
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        ({ submitter } = event as SubmitEvent);
+        data = new FormData(form);
+      });
+      form.querySelector('input')!.focus();
+      await sendKeys({ press: 'Enter' });
+      expect(submitter === button, 'submitter is the button').to.be.true;
+      expect(data!.get('action')).to.equal('search');
+    });
+
+    it('disables the helper when every submit button is disabled', async function() {
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-button type="submit">Save</pf-v6-button>
+        </form>
+      `);
+      const button = form.querySelector('pf-v6-button')!;
+      const helper = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
+      await button.updateComplete;
+      await nextFrame();
+      expect(helper.disabled).to.be.true;
+      button.disabled = false;
+      await button.updateComplete;
+      await nextFrame();
+      expect(helper.disabled).to.be.false;
+    });
+
+    it('restores the helper when the form children are replaced', async function() {
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <input name="q">
+          <pf-v6-button type="submit">Save</pf-v6-button>
+        </form>
+      `);
+      form.innerHTML = '<input name="q"><pf-v6-button type="submit">Save</pf-v6-button>';
+      await nextFrame();
+      expect(form.querySelector('button[type="submit"]')).to.be.ok;
+    });
+  });
+
+  describe('text part', function() {
+    it('renders part=text for text content', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button>Save</pf-v6-button>
+      `);
+      await element.updateComplete;
+      expect(element.shadowRoot!.querySelector('[part="text"]')).to.be.ok;
+    });
+
+    it('does not render part=text for count-only content', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button>
+          <span slot="count">3</span>
+        </pf-v6-button>
+      `);
+      await element.updateComplete;
+      expect(element.shadowRoot!.querySelector('[part="text"]')).to.be.null;
+    });
   });
 
   describe('in a fieldset', function() {

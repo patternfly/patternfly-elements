@@ -67,7 +67,9 @@ const submitHelperTemplate = html`
 
 interface SubmitHelperRegistration {
   wrapper: HTMLElement;
+  helper: HTMLButtonElement;
   buttons: Set<PfV6Button>;
+  observer: MutationObserver;
 }
 
 const submitHelpers = new WeakMap<HTMLFormElement, SubmitHelperRegistration>();
@@ -448,11 +450,75 @@ export class PfV6Button extends LitElement {
       wrapper.style.display = 'contents';
       form.append(wrapper);
       render(submitHelperTemplate, wrapper);
-      registration = { wrapper, buttons: new Set() };
+      const helper = wrapper.querySelector('button')!;
+      const observer = new MutationObserver(() => {
+        if (!form.contains(wrapper)) {
+          form.append(wrapper);
+        }
+      });
+      observer.observe(form, { childList: true });
+      helper.addEventListener('click', () => PfV6Button.#submitImplicitly(form));
+      registration = { wrapper, helper, buttons: new Set(), observer };
       submitHelpers.set(form, registration);
     }
     registration.buttons.add(this);
     this.#submitHelperForm = form;
+    this.#syncSubmitHelperDisabled(form);
+  }
+
+  /**
+   * Handles activation of the hidden native submit button (implicit submission).
+   * Exposes the default submit button's value for this submission and reports it
+   * as `SubmitEvent.submitter`, matching native default-button semantics.
+   * @param form form whose helper was activated
+   */
+  static #submitImplicitly(form: HTMLFormElement): void {
+    const registration = submitHelpers.get(form);
+    if (!registration) {
+      return;
+    }
+    const [submitter] = [...registration.buttons]
+        .filter(button => !button.#disabled)
+        .sort((a, b) => {
+          const position = a.compareDocumentPosition(b);
+          if (position & Node.DOCUMENT_POSITION_DISCONNECTED) {
+            return 0;
+          }
+          return position & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+        });
+    if (!submitter) {
+      return;
+    }
+    submitter.#submitting = true;
+    submitter.#internals.setFormValue(submitter.#formValue);
+    const patchSubmitter = (event: Event): void => {
+      try {
+        Object.defineProperty(event, 'submitter', {
+          configurable: true,
+          value: submitter,
+        });
+      } catch {
+        // Some engines may not allow shadowing the prototype getter.
+      }
+    };
+    form.addEventListener('submit', patchSubmitter, { capture: true, once: true });
+    setTimeout(() => {
+      form.removeEventListener('submit', patchSubmitter, { capture: true });
+      submitter.#submitting = false;
+      submitter.#internals.setFormValue(submitter.#formValue);
+    }, 0);
+  }
+
+  #syncSubmitHelperDisabled(form: HTMLFormElement | null = this.#submitHelperForm): void {
+    if (!form) {
+      return;
+    }
+    const registration = submitHelpers.get(form);
+    if (!registration || registration.buttons.size === 0) {
+      return;
+    }
+    registration.helper.disabled =
+      [...registration.buttons].every(button => button.#disabled);
   }
 
   #unregisterSubmitHelper(): void {
@@ -467,8 +533,11 @@ export class PfV6Button extends LitElement {
     }
     registration.buttons.delete(this);
     if (registration.buttons.size === 0) {
+      registration.observer.disconnect();
       registration.wrapper.remove();
       submitHelpers.delete(form);
+    } else {
+      this.#syncSubmitHelperDisabled(form);
     }
   }
 
@@ -508,6 +577,7 @@ export class PfV6Button extends LitElement {
 
     if (!isServer) {
       this.#syncSubmitHelper();
+      this.#syncSubmitHelperDisabled();
     }
   }
 
@@ -620,7 +690,20 @@ export class PfV6Button extends LitElement {
   }
 
   #hasTextContent(): boolean {
-    return this.#slots.hasSlotted();
+    if (this.#slots.hasSlotted()) {
+      return true;
+    }
+    // SlotController records populate asynchronously, so the first render and
+    // SSR would otherwise miss existing light-DOM text. Inspect child nodes
+    // directly, excluding content assigned to named slots.
+    let text = '';
+    for (const node of this.childNodes) {
+      if (node.nodeType === 1 && (node as Element).hasAttribute('slot')) {
+        continue;
+      }
+      text += node.textContent ?? '';
+    }
+    return !!text.trim();
   }
 
   #syncCountBadgeDisabled(): void {

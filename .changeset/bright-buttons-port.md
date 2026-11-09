@@ -14,9 +14,10 @@
 
 - Renamed tag from `<pf-v5-button>` to `<pf-v6-button>`
 - CSS custom properties renamed from `--pf-v5-c-button--*` to `--pf-v6-c-button--*`
-- Boolean flags drop the `is-` prefix (`disabled`, `loading`, `block`, `danger`, …)
+- Boolean flag names reflect React Button parity (`disabled`, `loading`, `block`, `danger`, …); the v5 flags were already unprefixed
 - `label` renamed to `accessible-label`
 - `plain` boolean replaced by `variant="plain"`
+- `warning` boolean replaced by `variant="warning"`
 - `size="small"|"large"` replaced by `sm`/`lg`
 - Default `type` no longer submits forms (matches React); set `type="submit"` explicitly
 

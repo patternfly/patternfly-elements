@@ -6,6 +6,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { clickElementAtCenter } from '@patternfly/pfe-tools/test/utils.js';
 
 import { PfV6Button } from '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+import { PfV6Badge } from '@patternfly/elements/pf-v6-badge/pf-v6-badge.js';
 
 function press(key: string) {
   return async function() {
@@ -173,8 +174,53 @@ describe('<pf-v6-button>', function() {
           <pf-v6-button variant="${variant}" accessible-label="${variant}"></pf-v6-button>
         `);
         expect(element.variant).to.equal(variant);
+        const part = element.shadowRoot!.querySelector('[part="button"]')!;
+        expect(part.classList.contains(variant), `renders the ${variant} class`).to.be.true;
       });
     }
+
+    describe('filled variants', function() {
+      const variants = ['primary', 'secondary', 'tertiary', 'danger', 'warning'] as const;
+      let elements: Record<string, PfV6Button>;
+
+      beforeEach(async function() {
+        elements = {};
+        for (const variant of variants) {
+          const element = await createFixture<PfV6Button>(html`
+            <pf-v6-button variant="${variant}" accessible-label="${variant}"></pf-v6-button>
+          `);
+          await element.updateComplete;
+          elements[variant] = element;
+        }
+      });
+
+      function background(element: PfV6Button): string {
+        const part = element.shadowRoot!.querySelector('[part="button"]')!;
+        return getComputedStyle(part).backgroundColor;
+      }
+
+      it('renders the filled variants with distinct backgrounds', function() {
+        const backgrounds = ['primary', 'danger', 'warning'].map(v => background(elements[v]!));
+        expect(new Set(backgrounds).size, 'unique backgrounds').to.equal(3);
+      });
+
+      it('renders secondary and tertiary unfilled', function() {
+        for (const variant of ['secondary', 'tertiary'] as const) {
+          expect(background(elements[variant]!), `${variant} background`).to.equal('rgba(0, 0, 0, 0)');
+        }
+      });
+    });
+
+    describe('stateful variant', function() {
+      it('remains a button in the accessibility tree', async function() {
+        await createFixture<PfV6Button>(html`
+          <pf-v6-button variant="stateful" state="unread">Messages</pf-v6-button>
+        `);
+        const snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
+        expect(snapshot.role).to.equal('button');
+        expect(snapshot.name).to.equal('Messages');
+      });
+    });
   });
 
   describe('loading', function() {
@@ -224,6 +270,18 @@ describe('<pf-v6-button>', function() {
         expect(element.loading).to.be.false;
         expect(element.getAttribute('loading')).to.equal('false');
       });
+
+      it('renders no spinner', function() {
+        expect(element.shadowRoot!.querySelector('pf-v6-spinner')).to.not.be.ok;
+        expect(element.shadowRoot!.querySelector('[part="progress"]')).to.not.be.ok;
+      });
+
+      it('reserves progress padding', async function() {
+        const idle = await createFixture<PfV6Button>(html`<pf-v6-button>Reserved</pf-v6-button>`);
+        await idle.updateComplete;
+        await element.updateComplete;
+        expect(element.offsetWidth, 'wider than an idle button').to.be.greaterThan(idle.offsetWidth);
+      });
     });
 
     describe('icon-only button loading with a custom loading-label', function() {
@@ -258,6 +316,15 @@ describe('<pf-v6-button>', function() {
         <pf-v6-button icon-position="right" icon="arrow-right">Next</pf-v6-button>
       `);
       expect(element.iconPosition).to.equal('right');
+    });
+
+    it('applies icon-end styling for the deprecated right alias', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button icon-position="right" icon="angle-right">Label</pf-v6-button>
+      `);
+      await element.updateComplete;
+      const icon = element.shadowRoot!.querySelector('#icon')!;
+      expect(icon.classList.contains('icon-end')).to.be.true;
     });
   });
 
@@ -487,18 +554,94 @@ describe('<pf-v6-button>', function() {
     });
   });
 
+  describe('dev warnings', function() {
+    let errors: string[];
+    let originalError: typeof console.error;
+
+    beforeEach(function() {
+      originalError = console.error;
+      errors = [];
+      console.error = function(...args: unknown[]) {
+        errors.push(args.join(' '));
+      };
+    });
+
+    afterEach(function() {
+      console.error = originalError;
+    });
+
+    it('warns when hamburger is set without expanded', async function() {
+      await createFixture<PfV6Button>(html`
+        <pf-v6-button hamburger accessible-label="Toggle navigation"></pf-v6-button>
+      `);
+      expect(errors.some(x => x.includes('hamburger'))).to.be.true;
+    });
+
+    it('warns when icon-only has no accessible-label', async function() {
+      await createFixture<PfV6Button>(html`
+        <pf-v6-button variant="plain" icon="bars"></pf-v6-button>
+      `);
+      expect(errors.some(x => x.includes('accessible-label'))).to.be.true;
+    });
+
+    it('does not warn when the host has aria-label', async function() {
+      await createFixture<PfV6Button>(html`
+        <pf-v6-button variant="plain" icon="bars" aria-label="Menu"></pf-v6-button>
+      `);
+      expect(errors).to.have.length(0);
+    });
+  });
+
   describe('link with href', function() {
     let element: PfV6Button;
+    let snapshot: A11yTreeSnapshot;
 
     beforeEach(async function() {
       element = await createFixture<PfV6Button>(html`
         <pf-v6-button variant="link" href="#destination">Docs</pf-v6-button>
       `);
+      snapshot = await a11ySnapshot({ selector: 'pf-v6-button' });
     });
 
     it('exposes href for link buttons', function() {
       expect(element.href).to.equal('#destination');
       expect(element.variant).to.equal('link');
+    });
+
+    it('does not expose role button on the host', function() {
+      expect(snapshot.role).to.not.equal('button');
+    });
+
+    it('exposes a link in the accessibility tree', async function() {
+      const tree = await a11ySnapshot();
+      expect(tree).to.axContainQuery({ role: 'link', name: 'Docs' });
+    });
+
+    it('renders an anchor with the href', function() {
+      const anchor = element.shadowRoot!.querySelector('a#button')!;
+      expect(anchor).to.be.ok;
+      expect(anchor.getAttribute('href')).to.equal('#destination');
+    });
+
+    it('sets tabindex -1 on the anchor when disabled', async function() {
+      element.disabled = true;
+      await element.updateComplete;
+      const anchor = element.shadowRoot!.querySelector('a#button')!;
+      expect(anchor.tabIndex).to.equal(-1);
+    });
+
+    it('does not dispatch a synthetic click on Space or Enter', function() {
+      let clicks = 0;
+      element.addEventListener('click', function() {
+        clicks += 1;
+      });
+      element.dispatchEvent(new KeyboardEvent('keydown', {
+        key: 'Enter', bubbles: true, composed: true,
+      }));
+      element.dispatchEvent(new KeyboardEvent('keydown', {
+        key: ' ', bubbles: true, composed: true,
+      }));
+      expect(clicks).to.equal(0);
     });
   });
 
@@ -670,13 +813,34 @@ describe('<pf-v6-button>', function() {
         expect(submitData!.getAll('action')).to.deep.equal(['cancel']);
       });
     });
+
+    it('submits a programmatically set name and value', async function() {
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-button type="submit">Save</pf-v6-button>
+        </form>
+      `);
+      const element = form.querySelector('pf-v6-button')!;
+      let submitData: FormData | null = null;
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitData = new FormData(form);
+      });
+      await element.updateComplete;
+      element.name = 'save';
+      element.value = 'yes';
+      await element.updateComplete;
+      await clickElementAtCenter(element);
+      expect(submitData).to.be.ok;
+      expect(submitData!.get('save')).to.equal('yes');
+    });
   });
 
   describe('in a fieldset', function() {
     let element: PfV6Button;
     let fieldset: HTMLFieldSetElement;
     let form: HTMLFormElement;
-    let submitEvent: SubmitEvent;
+    let submitEvent: SubmitEvent | undefined;
 
     beforeEach(async function() {
       form = await createFixture(html`
@@ -699,7 +863,6 @@ describe('<pf-v6-button>', function() {
     });
 
     afterEach(function() {
-      // @ts-expect-error: resetting fixture
       submitEvent = undefined;
     });
 
@@ -771,6 +934,47 @@ describe('<pf-v6-button>', function() {
           });
         });
       });
+    });
+  });
+
+  describe('count badge in a fieldset', function() {
+    let element: PfV6Button;
+    let badge: PfV6Badge;
+    let fieldset: HTMLFieldSetElement;
+
+    beforeEach(async function() {
+      const form = await createFixture(html`
+        <form>
+          <fieldset>
+            <pf-v6-button>
+              Issues
+              <pf-v6-badge slot="count">3</pf-v6-badge>
+            </pf-v6-button>
+          </fieldset>
+        </form>
+      `);
+      fieldset = form.querySelector('fieldset')!;
+      element = form.querySelector('pf-v6-button')!;
+      badge = element.querySelector('pf-v6-badge')!;
+      await element.updateComplete;
+      await badge.updateComplete;
+    });
+
+    it('disables the slotted badge when the fieldset is disabled', async function() {
+      fieldset.disabled = true;
+      await element.updateComplete;
+      await element.updateComplete;
+      expect(badge.hasAttribute('disabled'), 'badge disabled attribute').to.be.true;
+    });
+
+    it('re-enables the slotted badge when the fieldset is re-enabled', async function() {
+      fieldset.disabled = true;
+      await element.updateComplete;
+      await element.updateComplete;
+      fieldset.disabled = false;
+      await element.updateComplete;
+      await element.updateComplete;
+      expect(badge.hasAttribute('disabled'), 'badge disabled attribute').to.be.false;
     });
   });
 });

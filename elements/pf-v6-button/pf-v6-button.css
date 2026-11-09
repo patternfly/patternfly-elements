@@ -4,15 +4,6 @@
   box-sizing: border-box;
 }
 
-:where(button) {
-  margin: 0;
-  font-family: inherit;
-  font-size: 100%;
-  line-height: var(--pf-t--global--font--line-height--body, 1.5);
-  color: var(--pf-t--global--text--color--regular, #151515);
-  cursor: pointer;
-}
-
 :host {
   color-scheme: light dark;
 
@@ -1071,6 +1062,10 @@
   text-decoration-color: var(--pf-v6-c-button--hover--TextDecorationColor);
   text-underline-offset: var(--pf-v6-c-button--hover--TextUnderlineOffset, auto);
   outline-offset: var(--pf-t--global--focus-ring--position--offset, 0.125rem);
+}
+
+:host(:focus-visible) #button {
+  outline: var(--pf-t--global--focus-ring--width--offset, 2px) solid var(--pf-t--global--focus-ring--color--default, #0066cc);
 }
 
 :host([disabled]),

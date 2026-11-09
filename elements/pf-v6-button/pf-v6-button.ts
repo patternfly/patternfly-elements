@@ -141,7 +141,7 @@ export class PfV6Button extends LitElement {
   @property() value?: string;
 
   /** Form element name for the button */
-  @property() name?: string;
+  @property({ reflect: true }) name?: string;
 
   /** Accessible name when the button has no visible text */
   @property({ attribute: 'accessible-label' }) accessibleLabel?: string;
@@ -237,6 +237,71 @@ export class PfV6Button extends LitElement {
    */
   #submitting = false;
 
+  #onClick = (event: Event): void => {
+    if (!this.#operable) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+    if (this.href) {
+      return;
+    }
+    switch (this.type) {
+      case 'submit':
+        // Expose the value only while this button is submitting, so multiple
+        // named submit buttons (or a named type=button) cannot contribute
+        // duplicate or spurious entries the way a native button would not.
+        this.#submitting = true;
+        this.#internals.setFormValue(this.#formValue);
+        try {
+          // Prefer this as submitter when the UA allows FACE submitters;
+          // otherwise InternalsController falls back to requestSubmit().
+          this.#internals.submit(this);
+        } finally {
+          queueMicrotask(() => {
+            this.#submitting = false;
+            this.#internals.setFormValue(this.#formValue);
+          });
+        }
+        break;
+      case 'reset':
+        this.#internals.reset();
+        break;
+      case 'button':
+      default:
+        // Default matches React Button (`type="button"`): no form action.
+        break;
+    }
+  };
+
+  #onKeydown = (event: KeyboardEvent): void => {
+    if (this.href) {
+      return;
+    }
+    switch (event.key) {
+      case ' ':
+        event.preventDefault();
+        event.stopPropagation();
+        this.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          })
+        );
+        break;
+      case 'Enter':
+        this.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          })
+        );
+        break;
+    }
+  };
+
   /** Owning form via ElementInternals when `formAssociated` is true. */
   get form(): HTMLFormElement | null {
     return this.#internals.form;
@@ -313,6 +378,8 @@ export class PfV6Button extends LitElement {
       this.#hasIcon()
       && !this.textContent?.trim()
       && !this.accessibleLabel
+      && !this.getAttribute('aria-label')
+      && !this.getAttribute('aria-labelledby')
     ) {
       // eslint-disable-next-line no-console
       console.error(
@@ -320,9 +387,10 @@ export class PfV6Button extends LitElement {
       );
     }
 
-    if (changed.has('disabled')) {
-      this.#syncCountBadgeDisabled();
-    }
+    // Called on every update (not only when `disabled` changes) so that
+    // fieldset disable/enable via `formDisabledCallback` also syncs the
+    // slotted count badge.
+    this.#syncCountBadgeDisabled();
   }
 
   override render(): TemplateResult<1> {
@@ -442,7 +510,7 @@ export class PfV6Button extends LitElement {
       return;
     }
     for (const badge of this.querySelectorAll('pf-v6-badge[slot="count"]')) {
-      if (this.disabled) {
+      if (this.#disabled) {
         badge.setAttribute('disabled', '');
       } else {
         badge.removeAttribute('disabled');
@@ -481,8 +549,8 @@ export class PfV6Button extends LitElement {
         part="icon"
         class="${classMap({
           'icon': true,
-          'icon-start': hasText && this.iconPosition !== 'end',
-          'icon-end': hasText && this.iconPosition === 'end',
+          'icon-start': hasText && !(this.iconPosition === 'end' || this.iconPosition === 'right'),
+          'icon-end': hasText && (this.iconPosition === 'end' || this.iconPosition === 'right'),
         })}"
         ?hidden="${!hasIcon}"
         >${iconContent}</span
@@ -544,71 +612,6 @@ export class PfV6Button extends LitElement {
       </span>
     `;
   }
-
-  #onClick = (event: Event): void => {
-    if (!this.#operable) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      return;
-    }
-    if (this.href) {
-      return;
-    }
-    switch (this.type) {
-      case 'submit':
-        // Expose the value only while this button is submitting, so multiple
-        // named submit buttons (or a named type=button) cannot contribute
-        // duplicate or spurious entries the way a native button would not.
-        this.#submitting = true;
-        this.#internals.setFormValue(this.#formValue);
-        try {
-          // Prefer this as submitter when the UA allows FACE submitters;
-          // otherwise InternalsController falls back to requestSubmit().
-          this.#internals.submit(this);
-        } finally {
-          queueMicrotask(() => {
-            this.#submitting = false;
-            this.#internals.setFormValue(this.#formValue);
-          });
-        }
-        break;
-      case 'reset':
-        this.#internals.reset();
-        break;
-      case 'button':
-      default:
-        // Default matches React Button (`type="button"`): no form action.
-        break;
-    }
-  };
-
-  #onKeydown = (event: KeyboardEvent): void => {
-    if (this.href) {
-      return;
-    }
-    switch (event.key) {
-      case ' ':
-        event.preventDefault();
-        event.stopPropagation();
-        this.dispatchEvent(
-          new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-          })
-        );
-        break;
-      case 'Enter':
-        this.dispatchEvent(
-          new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-          })
-        );
-        break;
-    }
-  };
 }
 
 declare global {

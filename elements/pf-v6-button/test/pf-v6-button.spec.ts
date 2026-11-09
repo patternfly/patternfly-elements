@@ -882,6 +882,61 @@ describe('<pf-v6-button>', function() {
     });
   });
 
+  describe('implicit submission helper', function() {
+    it('adds one hidden native submit button per form', async function() {
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-button type="submit">One</pf-v6-button>
+          <pf-v6-button type="submit">Two</pf-v6-button>
+        </form>
+      `);
+      const helpers = form.querySelectorAll<HTMLButtonElement>(':scope > div > button[type="submit"]');
+      expect(helpers.length).to.equal(1);
+      expect(helpers[0].getAttribute('aria-hidden')).to.equal('true');
+      expect(helpers[0].tabIndex).to.equal(-1);
+      expect(getComputedStyle(helpers[0]).position).to.equal('absolute');
+    });
+
+    it('removes the helper when the last submit button disconnects', async function() {
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-button type="submit">Save</pf-v6-button>
+        </form>
+      `);
+      const button = form.querySelector('pf-v6-button')!;
+      button.remove();
+      await nextFrame();
+      expect(form.querySelector('button[type="submit"]')).to.be.null;
+    });
+
+    it('does not add a helper for type=button', async function() {
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <pf-v6-button type="button">Nope</pf-v6-button>
+        </form>
+      `);
+      expect(form.querySelector('button[type="submit"]')).to.be.null;
+    });
+
+    it('submits the form on Enter from a text field', async function() {
+      let submitted = false;
+      const form = await createFixture<HTMLFormElement>(html`
+        <form>
+          <input name="q">
+          <input name="scope">
+          <pf-v6-button type="submit">Search</pf-v6-button>
+        </form>
+      `);
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitted = true;
+      });
+      form.querySelector('input')!.focus();
+      await sendKeys({ press: 'Enter' });
+      expect(submitted).to.be.true;
+    });
+  });
+
   describe('in a fieldset', function() {
     let element: PfV6Button;
     let fieldset: HTMLFieldSetElement;

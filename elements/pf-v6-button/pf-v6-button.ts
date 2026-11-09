@@ -2,6 +2,7 @@ import {
   LitElement,
   html,
   isServer,
+  render,
   type ComplexAttributeConverter,
   type PropertyValues,
   type TemplateResult,
@@ -40,6 +41,36 @@ export type ButtonType = 'button' | 'submit' | 'reset';
 export type ButtonIconPosition = 'start' | 'end' | 'left' | 'right';
 
 export type ButtonHamburgerVariant = 'expand' | 'collapse';
+
+/**
+ * Visually hidden native submit button. The browser only performs implicit form
+ * submission (Enter in a text field) when the form has a native submit button,
+ * which a form-associated custom element is not. One helper is rendered into
+ * each form that contains at least one `type="submit"` button.
+ */
+const submitHelperTemplate = html`
+  <button type="submit"
+          tabindex="-1"
+          aria-hidden="true"
+          style="position: absolute;
+                 top: 0;
+                 left: 0;
+                 clip: rect(0 0 0 0);
+                 clip-path: inset(50%);
+                 overflow: hidden;
+                 white-space: nowrap;
+                 height: 1px;
+                 width: 1px;
+                 padding: 0;
+                 border: 0;"></button>
+`;
+
+interface SubmitHelperRegistration {
+  wrapper: HTMLElement;
+  buttons: Set<PfV6Button>;
+}
+
+const submitHelpers = new WeakMap<HTMLFormElement, SubmitHelperRegistration>();
 
 /**
  * Tri-state loading converter matching React `isLoading`:
@@ -245,6 +276,9 @@ export class PfV6Button extends LitElement {
 
   #hasCapturedTabIndex = false;
 
+  /** Form this button registered its implicit-submit helper with, if any. */
+  #submitHelperForm: HTMLFormElement | null = null;
+
   #onClick = (event: Event): void => {
     if (!this.#operable) {
       event.preventDefault();
@@ -334,10 +368,12 @@ export class PfV6Button extends LitElement {
     if (!isServer) {
       this.addEventListener('click', this.#onClick);
       this.addEventListener('keydown', this.#onKeydown);
+      this.#syncSubmitHelper();
     }
   }
 
   override disconnectedCallback(): void {
+    this.#unregisterSubmitHelper();
     super.disconnectedCallback();
     this.removeEventListener('click', this.#onClick);
     this.removeEventListener('keydown', this.#onKeydown);
@@ -392,6 +428,50 @@ export class PfV6Button extends LitElement {
     }
   }
 
+  #syncSubmitHelper(): void {
+    const shouldRegister = this.type === 'submit' && this.isConnected;
+    if (shouldRegister && !this.#submitHelperForm) {
+      this.#registerSubmitHelper();
+    } else if (!shouldRegister && this.#submitHelperForm) {
+      this.#unregisterSubmitHelper();
+    }
+  }
+
+  #registerSubmitHelper(): void {
+    const { form } = this.#internals;
+    if (!form) {
+      return;
+    }
+    let registration = submitHelpers.get(form);
+    if (!registration) {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'contents';
+      form.append(wrapper);
+      render(submitHelperTemplate, wrapper);
+      registration = { wrapper, buttons: new Set() };
+      submitHelpers.set(form, registration);
+    }
+    registration.buttons.add(this);
+    this.#submitHelperForm = form;
+  }
+
+  #unregisterSubmitHelper(): void {
+    const form = this.#submitHelperForm;
+    this.#submitHelperForm = null;
+    if (!form) {
+      return;
+    }
+    const registration = submitHelpers.get(form);
+    if (!registration) {
+      return;
+    }
+    registration.buttons.delete(this);
+    if (registration.buttons.size === 0) {
+      registration.wrapper.remove();
+      submitHelpers.delete(form);
+    }
+  }
+
   protected override updated(changed: PropertyValues<this>): void {
     if (changed.has('hamburger') || changed.has('expanded')) {
       if (this.hamburger && this.expanded === undefined) {
@@ -425,6 +505,10 @@ export class PfV6Button extends LitElement {
     // fieldset disable/enable via `formDisabledCallback` also syncs the
     // slotted count badge.
     this.#syncCountBadgeDisabled();
+
+    if (!isServer) {
+      this.#syncSubmitHelper();
+    }
   }
 
   override render(): TemplateResult<1> {

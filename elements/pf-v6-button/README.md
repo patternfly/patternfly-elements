@@ -87,7 +87,7 @@ pf-v6-button::part(progress) { /* spinner wrapper */ }
 | `countOptions`                              | `slot="count"`           | Slot a `<pf-v6-badge>` instead of an options object.                                             |
 | `spinnerAriaLabel` / `spinnerAriaValueText` | `loading-label`          | Reactive attribute/property for the spinner accessible name.                                     |
 | `size="default"`                            | omit `size`              | Default size is the absence of the attribute.                                                    |
-| `component="a"` + `href`                    | `href` / `target`        | Renders an inner anchor when `variant="link"` and `href` are set.                                |
+| `component="a"` + `href`                    | `href` / `target`        | Renders an inner anchor whenever `href` is set, on any variant; use `variant="link"` for link styling. |
 | `type` default                              | omit / unset             | Same as React: no form action until `type="submit"` or `type="reset"`.                           |
 
 ### Added
@@ -95,7 +95,8 @@ pf-v6-button::part(progress) { /* spinner wrapper */ }
 | Web component API                                      | Notes                                                                                  |
 | ------------------------------------------------------ | -------------------------------------------------------------------------------------- |
 | Form association (`formAssociated`)                    | Host participates in forms like a native button; supports `type`, `name`, and `value`. |
-| `href` / `target`                                      | Progressive-enhancement link rendering for `variant="link"`.                           |
+| Implicit form submission                               | A hidden native submit button is added to the owning form so Enter in a text field submits the form. |
+| `href` / `target`                                      | Progressive-enhancement link rendering on any variant; use `variant="link"` for link styling. |
 | `slot="icon"` / `slot="count"`                         | Composition slots for icons and count badges.                                          |
 | `icon` / `icon-set`                                    | Optional shorthand that renders `<pf-v5-icon>` in the icon slot.                       |
 | CSS parts `button`, `icon`, `text`, `count`, `progress` | Styling hooks for shadow internals.                                                   |

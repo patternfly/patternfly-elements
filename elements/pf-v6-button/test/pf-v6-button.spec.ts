@@ -672,7 +672,7 @@ describe('<pf-v6-button>', function() {
     it('sets tabindex -1 on the anchor when disabled', async function() {
       element.disabled = true;
       await element.updateComplete;
-      const anchor = element.shadowRoot!.querySelector('a#button')!;
+      const anchor = element.shadowRoot!.querySelector<HTMLAnchorElement>('a#button')!;
       expect(anchor.tabIndex).to.equal(-1);
     });
 

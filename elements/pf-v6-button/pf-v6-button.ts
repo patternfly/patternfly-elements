@@ -70,6 +70,8 @@ interface SubmitHelperRegistration {
   helper: HTMLButtonElement;
   buttons: Set<PfV6Button>;
   observer: MutationObserver;
+  /** Runs implicit submission for this form. Bound to the registering element. */
+  activate: () => void;
 }
 
 const submitHelpers = new WeakMap<HTMLFormElement, SubmitHelperRegistration>();
@@ -457,8 +459,14 @@ export class PfV6Button extends LitElement {
         }
       });
       observer.observe(form, { childList: true });
-      helper.addEventListener('click', () => PfV6Button.#submitImplicitly(form));
-      registration = { wrapper, helper, buttons: new Set(), observer };
+      registration = {
+        wrapper,
+        helper,
+        buttons: new Set(),
+        observer,
+        activate: () => this.#submitImplicitly(form),
+      };
+      helper.addEventListener('click', () => registration?.activate());
       submitHelpers.set(form, registration);
     }
     registration.buttons.add(this);
@@ -472,7 +480,7 @@ export class PfV6Button extends LitElement {
    * as `SubmitEvent.submitter`, matching native default-button semantics.
    * @param form form whose helper was activated
    */
-  static #submitImplicitly(form: HTMLFormElement): void {
+  #submitImplicitly(form: HTMLFormElement): void {
     const registration = submitHelpers.get(form);
     if (!registration) {
       return;

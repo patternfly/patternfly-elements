@@ -111,11 +111,11 @@ button#outer span {
 
 #close-button {
   --pf-v5-icon--size: 12px;
-  --pf-v5-c-button--PaddingTop: var(--pf-v5-c-chip__c-button--PaddingTop);
-  --pf-v5-c-button--PaddingRight: var(--pf-v5-c-chip__c-button--PaddingRight);
-  --pf-v5-c-button--PaddingBottom: var(--pf-v5-c-chip__c-button--PaddingBottom);
-  --pf-v5-c-button--PaddingLeft: var(--pf-v5-c-chip__c-button--PaddingLeft);
-  --pf-v5-c-button--FontSize: var(--pf-v5-c-chip__c-button--FontSize);
+  --pf-v6-c-button--PaddingBlockStart: var(--pf-v5-c-chip__c-button--PaddingTop);
+  --pf-v6-c-button--PaddingBlockEnd: var(--pf-v5-c-chip__c-button--PaddingBottom);
+  --pf-v6-c-button--m-plain--PaddingInlineStart: var(--pf-v5-c-chip__c-button--PaddingLeft);
+  --pf-v6-c-button--m-plain--PaddingInlineEnd: var(--pf-v5-c-chip__c-button--PaddingRight);
+  --pf-v6-c-button--FontSize: var(--pf-v5-c-chip__c-button--FontSize);
   margin-top: var(--pf-v5-c-chip__c-button--MarginTop);
   margin-right: var(--pf-v5-c-chip__c-button--MarginRight);
   margin-bottom: var(--pf-v5-c-chip__c-button--MarginBottom);

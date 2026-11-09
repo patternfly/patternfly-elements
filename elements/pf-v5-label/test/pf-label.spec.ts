@@ -54,6 +54,21 @@ describe('<pf-v5-label>', function() {
         .to.be.an.instanceOf(PfV5Label);
   });
 
+  describe('with a removable close button', function() {
+    it('styles the close button with v6 button tokens', async function() {
+      const el = await createFixture<PfV5Label>(html`
+        <pf-v5-label removable>Removable</pf-v5-label>
+      `);
+      await el.updateComplete;
+      const button = el.shadowRoot!.querySelector('pf-v6-button')!;
+      const computed = getComputedStyle(button);
+      expect(computed.getPropertyValue('--pf-v6-c-button--m-plain--PaddingInlineStart').trim())
+          .to.not.be.empty;
+      expect(computed.getPropertyValue('--pf-v5-c-button--PaddingLeft').trim())
+          .to.be.empty;
+    });
+  });
+
   it('should display default variant', async function() {
     const el = await createFixture<PfV5Label>(example);
     await el.updateComplete;

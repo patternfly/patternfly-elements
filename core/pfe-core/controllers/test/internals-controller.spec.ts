@@ -1,6 +1,6 @@
 import { expect, fixture } from '@open-wc/testing';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { LitElement, html } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 
 import { InternalsController } from '../internals-controller.js';
 
@@ -8,9 +8,9 @@ import { InternalsController } from '../internals-controller.js';
 class TestInternalsElement extends LitElement {
   static readonly formAssociated = true;
 
-  internals = InternalsController.of(this);
+  internals: InternalsController = InternalsController.of(this);
 
-  protected override render() {
+  protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

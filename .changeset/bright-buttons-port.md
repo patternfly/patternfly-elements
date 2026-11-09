@@ -30,6 +30,6 @@
 - `icon-position` (`start`/`end`, with deprecated `left`/`right` aliases)
 - `disabled-focusable`, `favorite`/`favorited`, `hamburger`/`expanded`, `settings`, `no-padding`
 - Link rendering via `href`/`target` on any variant (`variant="link"` for link styling)
-- Implicit form submission: a hidden native submit button is added to the owning form so Enter in a text field submits it. The button's `name`/`value` participates only on click-initiated submissions.
+- Implicit form submission: a hidden native submit button is added to the owning form so Enter in a text field submits it. The button's `name`/`value` participates in both click-initiated and implicit submissions, matching a native default submit button.
 
 Also fixes `RovingTabindexController` so index updates do not steal focus after Tab leaves a widget, and `ComboboxController` so an open listbox waits for the browser to finish moving focus before hiding, preventing Tab/Shift+Tab from being cancelled.

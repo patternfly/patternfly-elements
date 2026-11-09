@@ -64,7 +64,7 @@ pf-v6-button::part(progress) { /* spinner wrapper */ }
 | `isCircle` / `isDocked` / `isTextExpanded` | Beta React APIs; omitted until design stabilizes.                                                         |
 | `innerRef`                                 | Use a normal element reference to the host.                                                               |
 | `formaction` / `formenctype` / etc.        | Not reliably supported on FACE submitters; use form-level attributes or a native submit control.          |
-| `SubmitEvent.submitter`                    | Engines may reject FACE hosts as `requestSubmit(submitter)`; the form still submits. `name`/`value` participate via `setFormValue` while the button is the active submitter; implicit submission (e.g. Enter in a text field) does not include the button value. |
+| `SubmitEvent.submitter`                    | `name`/`value` participate on both click-initiated and implicit (Enter) submissions, matching a native default submit button. When the engine accepts FACE hosts in `requestSubmit(submitter)`, `SubmitEvent.submitter` is the button; when it rejects them, the form still submits but `submitter` is `null` for click-initiated submissions. Implicit submission goes through a hidden native button, whose `submitter` is patched back to this element. |
 
 ### Changed API
 

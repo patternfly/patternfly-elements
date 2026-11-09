@@ -1,5 +1,5 @@
 import type { A11yTreeSnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
-import { expect, html } from '@open-wc/testing';
+import { expect, html, nextFrame } from '@open-wc/testing';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { a11ySnapshot } from '@patternfly/pfe-tools/test/a11y-snapshot.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -48,6 +48,52 @@ describe('<pf-v6-button>', function() {
 
     it('defaults to the primary variant', function() {
       expect(element.variant).to.equal('primary');
+    });
+  });
+
+  describe('tabindex', function() {
+    it('defaults to 0', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button>Save</pf-v6-button>
+      `);
+      await element.updateComplete;
+      expect(element.tabIndex).to.equal(0);
+    });
+
+    it('preserves an authored tabindex=-1 across updates', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button tabindex="-1">Save</pf-v6-button>
+      `);
+      await element.updateComplete;
+      element.requestUpdate();
+      await element.updateComplete;
+      expect(element.getAttribute('tabindex')).to.equal('-1');
+    });
+
+    it('preserves a tabindex assigned after the first render', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button>Save</pf-v6-button>
+      `);
+      await element.updateComplete;
+      element.tabIndex = -1;
+      element.requestUpdate();
+      await element.updateComplete;
+      expect(element.getAttribute('tabindex')).to.equal('-1');
+    });
+
+    it('restores an authored tabindex after being disabled', async function() {
+      const element = await createFixture<PfV6Button>(html`
+        <pf-v6-button tabindex="-1">Save</pf-v6-button>
+      `);
+      await element.updateComplete;
+      element.disabled = true;
+      await element.updateComplete;
+      await nextFrame();
+      expect(element.hasAttribute('tabindex')).to.be.false;
+      element.disabled = false;
+      await element.updateComplete;
+      await nextFrame();
+      expect(element.getAttribute('tabindex')).to.equal('-1');
     });
   });
 

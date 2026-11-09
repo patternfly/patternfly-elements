@@ -237,6 +237,14 @@ export class PfV6Button extends LitElement {
    */
   #submitting = false;
 
+  /** Author-supplied or externally assigned tabindex to restore across updates. */
+  #authoredTabIndex: string | null = null;
+
+  /** The tabindex value this element last wrote, to detect external changes. */
+  #lastWrittenTabIndex: string | null = null;
+
+  #hasCapturedTabIndex = false;
+
   #onClick = (event: Event): void => {
     if (!this.#operable) {
       event.preventDefault();
@@ -346,15 +354,41 @@ export class PfV6Button extends LitElement {
     this.#internals.setFormValue(this.#formValue);
 
     if (isLink) {
-      this.removeAttribute('tabindex');
       this.#internals.role = 'none';
     } else {
       this.#internals.role = 'button';
-      if (this.#disabled) {
+    }
+    this.#syncTabIndex(isLink);
+  }
+
+  /**
+   * Manages the host tabindex without clobbering an author-supplied value or a
+   * value assigned by a roving-tabindex controller. The element only writes
+   * `0` when no external value is present, and restores external values after
+   * link mode or disabled state temporarily removes the attribute.
+   * @param isLink whether the button is rendering an anchor
+   */
+  #syncTabIndex(isLink: boolean): void {
+    const current = this.getAttribute('tabindex');
+    if (!this.#hasCapturedTabIndex) {
+      this.#authoredTabIndex = current;
+      this.#hasCapturedTabIndex = true;
+    } else if (current !== this.#lastWrittenTabIndex) {
+      // An author, controller, or other code changed tabindex outside the element.
+      this.#authoredTabIndex = current;
+    }
+
+    const desired = isLink || this.#disabled ? null : (this.#authoredTabIndex ?? '0');
+    if (desired === null) {
+      if (current !== null) {
         this.removeAttribute('tabindex');
-      } else {
-        this.tabIndex = 0;
       }
+      this.#lastWrittenTabIndex = null;
+    } else if (current !== desired) {
+      this.setAttribute('tabindex', desired);
+      this.#lastWrittenTabIndex = desired;
+    } else {
+      this.#lastWrittenTabIndex = desired;
     }
   }
 

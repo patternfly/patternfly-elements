@@ -165,6 +165,7 @@ export class PfV5Alert extends LitElement {
 
       <pf-v6-button id="close"
                  variant="plain"
+                 accessible-label="Close"
                  icon="close"
                  icon-set="patternfly"
                  ?hidden="${!this.dismissable}"

@@ -229,6 +229,14 @@ export class PfV6Button extends LitElement {
 
   #slots = new SlotController(this, 'icon', 'count', null);
 
+  /**
+   * True while this button is acting as the form submitter. A FACE value set
+   * with `setFormValue()` participates in every submission, unlike a native
+   * `<button>` whose value is only included when it is the submitter, so the
+   * value is exposed only for the duration of an initiated submission.
+   */
+  #submitting = false;
+
   /** Owning form via ElementInternals when `formAssociated` is true. */
   get form(): HTMLFormElement | null {
     return this.#internals.form;
@@ -240,6 +248,12 @@ export class PfV6Button extends LitElement {
 
   get #operable() {
     return !(this.#disabled || this.disabledFocusable);
+  }
+
+  get #formValue(): string | null {
+    return this.type === 'submit' && this.#submitting && this.name != null ?
+      this.value ?? ''
+      : null;
   }
 
   override connectedCallback(): void {
@@ -264,9 +278,7 @@ export class PfV6Button extends LitElement {
     this.#internals.ariaExpanded =
       this.expanded === undefined ? null : String(this.expanded);
     this.#internals.ariaPressed = this.favorite ? String(this.favorited) : null;
-    this.#internals.setFormValue(
-      this.name == null ? null : (this.value ?? ''),
-    );
+    this.#internals.setFormValue(this.#formValue);
 
     if (isLink) {
       this.removeAttribute('tabindex');
@@ -544,9 +556,21 @@ export class PfV6Button extends LitElement {
     }
     switch (this.type) {
       case 'submit':
-        // Prefer this as submitter when the UA allows FACE submitters; otherwise
-        // falls back to requestSubmit(). name/value still come from setFormValue.
-        this.#internals.submit(this);
+        // Expose the value only while this button is submitting, so multiple
+        // named submit buttons (or a named type=button) cannot contribute
+        // duplicate or spurious entries the way a native button would not.
+        this.#submitting = true;
+        this.#internals.setFormValue(this.#formValue);
+        try {
+          // Prefer this as submitter when the UA allows FACE submitters;
+          // otherwise InternalsController falls back to requestSubmit().
+          this.#internals.submit(this);
+        } finally {
+          queueMicrotask(() => {
+            this.#submitting = false;
+            this.#internals.setFormValue(this.#formValue);
+          });
+        }
         break;
       case 'reset':
         this.#internals.reset();

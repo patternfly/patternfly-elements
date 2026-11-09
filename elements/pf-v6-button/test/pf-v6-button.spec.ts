@@ -227,11 +227,10 @@ describe('<pf-v6-button>', function() {
     });
 
     describe('icon-only button loading with a custom loading-label', function() {
-      let element: PfV6Button;
       let snapshot: A11yTreeSnapshot;
 
       beforeEach(async function() {
-        element = await createFixture<PfV6Button>(html`
+        await createFixture<PfV6Button>(html`
           <pf-v6-button
             variant="plain"
             loading
@@ -612,6 +611,63 @@ describe('<pf-v6-button>', function() {
       it('does not submit the form (React type=button default)', async function() {
         await clickElementAtCenter(element);
         expect(submitted).to.be.false;
+      });
+    });
+
+    describe('type=button with a name and value', function() {
+      let form: HTMLFormElement;
+      let element: PfV6Button;
+      let submitData: FormData | null;
+
+      beforeEach(async function() {
+        submitData = null;
+        form = await createFixture(html`
+          <form>
+            <pf-v6-button type="button" name="action" value="noop">Nope</pf-v6-button>
+          </form>
+        `);
+        element = form.querySelector('pf-v6-button')!;
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          submitData = new FormData(form);
+        });
+        await element.updateComplete;
+      });
+
+      it('does not contribute a name/value pair to form data', async function() {
+        await clickElementAtCenter(element);
+        form.requestSubmit();
+        expect(submitData).to.be.ok;
+        expect(submitData!.has('action')).to.be.false;
+      });
+    });
+
+    describe('with multiple submit buttons', function() {
+      let form: HTMLFormElement;
+      let save: PfV6Button;
+      let cancel: PfV6Button;
+      let submitData: FormData | null;
+
+      beforeEach(async function() {
+        submitData = null;
+        form = await createFixture(html`
+          <form>
+            <pf-v6-button type="submit" name="action" value="save">Save</pf-v6-button>
+            <pf-v6-button type="submit" name="action" value="cancel">Cancel</pf-v6-button>
+          </form>
+        `);
+        [save, cancel] = form.querySelectorAll('pf-v6-button');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          submitData = new FormData(form);
+        });
+        await Promise.all([save.updateComplete, cancel.updateComplete]);
+      });
+
+      it('only contributes the activated submitter value', async function() {
+        await clickElementAtCenter(cancel);
+        expect(submitData).to.be.ok;
+        expect(submitData!.getAll('action')).to.deep.equal(['cancel']);
       });
     });
   });

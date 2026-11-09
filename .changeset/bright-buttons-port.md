@@ -20,6 +20,7 @@
 - `warning` boolean replaced by `variant="warning"`
 - `size="small"|"large"` replaced by `sm`/`lg`
 - Default `type` no longer submits forms (matches React); set `type="submit"` explicitly
+- Components that previously embedded `<pf-v5-button>` now render `<pf-v6-button>`; page-level `--pf-v5-c-button--*` overrides targeting them no longer apply. Override `--pf-v6-c-button--*` instead.
 
 **New features**
 

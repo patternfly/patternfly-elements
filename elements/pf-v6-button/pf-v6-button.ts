@@ -701,6 +701,11 @@ export class PfV6Button extends LitElement {
     if (this.#slots.hasSlotted()) {
       return true;
     }
+    // Lit's server renderer instantiates the element without a DOM, so there
+    // are no child nodes to inspect.
+    if (isServer) {
+      return false;
+    }
     // SlotController records populate asynchronously, so the first render and
     // SSR would otherwise miss existing light-DOM text. Inspect child nodes
     // directly, excluding content assigned to named slots.

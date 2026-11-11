@@ -1,0 +1,24 @@
+---
+name: Expandable with icon
+description: An image can be placed in the card header to show an icon beside the expansion caret.
+---
+<pf-v6-card expandable accessible-label="PatternFly">
+  <img slot="header"
+       src="/brand/logo/svg/pfe-icon-blue.svg"
+       alt="PatternFly logo"
+       width="27">
+  <div slot="expandable-content">
+    <pf-v6-card-body>Body</pf-v6-card-body>
+  </div>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  pf-v6-card {
+    max-inline-size: 20rem;
+    margin: 1rem;
+  }
+</style>

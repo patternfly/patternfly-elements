@@ -1,0 +1,52 @@
+---
+name: Card with subtitle and Actions
+description: A card with an image, an action, and a subtitle in a single card.
+---
+<!-- TODO: replace native <button> elements with <pf-v6-button> once it ships (PR #3157). -->
+<pf-v6-card>
+  <svg slot="header"
+       viewBox="0 0 200 40"
+       width="200"
+       height="40"
+       role="img"
+       aria-label="PatternFly logo">
+    <rect width="200" height="40" rx="4" fill="#0066cc"></rect>
+    <text x="100" y="25" text-anchor="middle" fill="#ffffff" font-size="14">PatternFly</text>
+  </svg>
+  <button slot="actions" type="button" aria-label="Actions" class="icon-button">
+    <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+      <circle cx="8" cy="3" r="1.5"></circle>
+      <circle cx="8" cy="8" r="1.5"></circle>
+      <circle cx="8" cy="13" r="1.5"></circle>
+    </svg>
+  </button>
+  <h2 slot="title">Title</h2>
+  <span slot="subtitle">Subtitle</span>
+  <pf-v6-card-body>Body</pf-v6-card-body>
+  <span slot="footer">Footer</span>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  pf-v6-card {
+    max-inline-size: 22rem;
+    margin: 1rem;
+  }
+
+  .icon-button {
+    display: inline-flex;
+    padding: 0.5rem;
+    color: inherit;
+    background: none;
+    border: 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .icon-button:hover {
+    background: color-mix(in srgb, currentColor 8%, transparent);
+  }
+</style>

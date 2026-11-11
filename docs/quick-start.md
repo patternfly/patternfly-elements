@@ -58,21 +58,21 @@ production.
   <main>
     <section class="band">
       <h2>Card components</h2>
-      <pf-v5-card>
+      <pf-v6-card>
         <h3 slot="header">Card 1</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis laboriosam eum saepe eius tempora sequi eligendi repudiandae aspernatur beatae totam voluptatum facere unde, vitae inventore eveniet accusamus nulla recusandae aliquam.</p>
         <a slot="footer" class="cta primary" href="https://patternflyelements.org">More about PatternFly Elements</a>
-      </pf-v5-card>
-      <pf-v5-card>
+      </pf-v6-card>
+      <pf-v6-card>
         <h3 slot="header">Card 2</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque necessitatibus sapiente aliquam recusandae maxime consectetur magnam ipsa veniam expedita molestiae. Quis officia minima libero repellat laboriosam sit nemo porro laborum.</p>
         <a class="cta" slot="footer" href="https://patternflyelements.org/get-started">Get started</a>
-      </pf-v5-card>
-      <pf-v5-card>
+      </pf-v6-card>
+      <pf-v6-card>
         <h3 slot="header">Card 3</h3>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate iusto laboriosam molestias, quidem ab voluptates nihil earum sed! Esse repellat quo ut numquam mollitia quis saepe aspernatur fuga error in!</p>
         <a class="cta" slot="footer" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">About web components</a>
-      </pf-v5-card>
+      </pf-v6-card>
       <a class="cta" slot="footer" href="https://patternflyelements.org/components">View all of the components</a>
     </section>
     <section>

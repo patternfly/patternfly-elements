@@ -1,0 +1,60 @@
+---
+name: Multi selectable tiles
+description: Selectable cards used as tiles hide their input. Do not set selection to allow more than one tile to be selected. Wrap the group in an element with role="group" and an accessible label.
+---
+<div class="tile-grid" role="group" aria-label="Tile selection">
+  <pf-v6-card selectable hide-input accessible-label="Tile 1">
+    <span slot="header">
+      <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+        <path d="M8 1v6H2v2h6v6h2V9h6V7H10V1z"></path>
+      </svg>
+      <b>Tile header</b>
+    </span>
+    <pf-v6-card-body>Tile content and description</pf-v6-card-body>
+  </pf-v6-card>
+
+  <pf-v6-card selectable hide-input accessible-label="Tile 2">
+    <span slot="header">
+      <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+        <path d="M8 1v6H2v2h6v6h2V9h6V7H10V1z"></path>
+      </svg>
+      <b>Tile header</b>
+    </span>
+    <pf-v6-card-body>Tile content and description</pf-v6-card-body>
+  </pf-v6-card>
+
+  <pf-v6-card selectable hide-input disabled accessible-label="Tile 3 (disabled)">
+    <span slot="header">
+      <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+        <path d="M8 1v6H2v2h6v6h2V9h6V7H10V1z"></path>
+      </svg>
+      <b>Tile header (disabled)</b>
+    </span>
+    <pf-v6-card-body>Tile content and description</pf-v6-card-body>
+  </pf-v6-card>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+
+  for (const card of document.querySelectorAll('pf-v6-card')) {
+    card.addEventListener('change', function() {
+      console.log(this.getAttribute('accessible-label'), this.selected);
+    });
+  }
+</script>
+
+<style>
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin: 1rem;
+  }
+
+  [slot="header"] {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+</style>

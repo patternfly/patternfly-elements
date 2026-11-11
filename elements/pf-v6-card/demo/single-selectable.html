@@ -1,0 +1,39 @@
+---
+name: Single selectable
+description: When a group of single selectable cards are related, pass the same name to each card and set selection to single. Wrap the group in an element with role="radiogroup" and an accessible label.
+---
+<div class="card-grid" role="radiogroup" aria-label="Card selection">
+  <pf-v6-card selectable selection="single" name="single-card" accessible-label="First card">
+    <h2 slot="header">First card</h2>
+    <pf-v6-card-body>This card is single selectable.</pf-v6-card-body>
+  </pf-v6-card>
+
+  <pf-v6-card selectable selection="single" name="single-card" accessible-label="Second card">
+    <h2 slot="header">Second card</h2>
+    <pf-v6-card-body>This card is single selectable.</pf-v6-card-body>
+  </pf-v6-card>
+
+  <pf-v6-card selectable selection="single" name="single-card" disabled accessible-label="Third card">
+    <h2 slot="header">Third card</h2>
+    <pf-v6-card-body>This card is single selectable but disabled.</pf-v6-card-body>
+  </pf-v6-card>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+
+  for (const card of document.querySelectorAll('pf-v6-card')) {
+    card.addEventListener('change', function() {
+      console.log(this.getAttribute('accessible-label'), this.selected);
+    });
+  }
+</script>
+
+<style>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin: 1rem;
+  }
+</style>

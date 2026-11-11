@@ -1,0 +1,20 @@
+---
+name: Secondary cards
+description: Apply secondary background color styling to a card by setting the variant attribute to secondary.
+---
+<pf-v6-card variant="secondary">
+  <h2 slot="title">Title</h2>
+  <pf-v6-card-body>Body</pf-v6-card-body>
+  <span slot="footer">Footer</span>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  pf-v6-card {
+    max-inline-size: 20rem;
+    margin: 1rem;
+  }
+</style>

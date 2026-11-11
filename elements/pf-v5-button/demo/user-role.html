@@ -1,4 +1,4 @@
-<pf-v5-card id="custom-tabs-card">
+<pf-v6-card id="custom-tabs-card">
   <h2 id="title" slot="header">Button Role Example</h2>
   <div id="custom-tab-group"
        slot="header"
@@ -41,7 +41,7 @@
     However, we recommend always using <code>&lt;pf-v5-tabs&gt;</code>, and avoiding custom
     implementations of existing design system patterns
   </small>
-</pf-v5-card>
+</pf-v6-card>
 
 <style>
   #custom-tabs-card {
@@ -55,6 +55,7 @@
 
 <script type="module">
   import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
   const tabs = document.getElementById('custom-tab-group');
   const panels = document.querySelectorAll('[role=tabpanel]');
   tabs.addEventListener('click', function(event) {

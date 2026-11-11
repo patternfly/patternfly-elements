@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { PfeDemoPage } from '@patternfly/pfe-tools/test/playwright/PfeDemoPage.js';
 import { SSRPage } from '@patternfly/pfe-tools/test/playwright/SSRPage.js';
 
-const tagName = 'pf-v5-card';
+const tagName = 'pf-v6-card';
 
 const html = String.raw;
 
@@ -31,16 +31,26 @@ test.describe(tagName, () => {
       browser,
       importSpecifiers: [`@patternfly/elements/${tagName}/${tagName}.js`],
       demoContent: html`
-        <pf-v5-card ssr-hint-has-slotted-default
-                 ssr-hint-has-slotted="header,footer">
+        <pf-v6-card id="hinted"
+                    ssr-hint-has-slotted-default
+                    ssr-hint-has-slotted="header,footer">
           <h2 slot="header">Header</h2>
-          <span>Body</span>
+          <p>Body</p>
           <span slot="footer">Footer</span>
-        </pf-v5-card>
+        </pf-v6-card>
+        <pf-v6-card id="titled"
+                    ssr-hint-has-slotted-default
+                    ssr-hint-has-slotted="title">
+          <h2 slot="title">Title</h2>
+          <p>Body</p>
+        </pf-v6-card>
       `,
     });
-    await fixture.updateCompleteFor('pf-v5-card');
-    await expect(fixture.page.locator('pf-v5-card #title')).toHaveAttribute('hidden');
-    await expect(fixture.page.locator('pf-v5-card #header')).not.toHaveAttribute('hidden');
+    await fixture.updateCompleteFor(tagName);
+    await expect(fixture.page.locator(`${tagName}#hinted #header`)).not.toHaveAttribute('hidden');
+    await expect(fixture.page.locator(`${tagName}#hinted #footer`)).not.toHaveAttribute('hidden');
+    await expect(fixture.page.locator(`${tagName}#hinted #title`)).toHaveAttribute('hidden');
+    await expect(fixture.page.locator(`${tagName}#titled #title`)).not.toHaveAttribute('hidden');
+    await expect(fixture.page.locator(`${tagName}#titled #footer`)).toHaveAttribute('hidden');
   });
 });

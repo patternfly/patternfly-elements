@@ -1,0 +1,22 @@
+---
+name: With multiple body sections
+description: Use multiple card bodies to visually separate blocks of content.
+---
+<pf-v6-card>
+  <h2 slot="title">Title</h2>
+  <pf-v6-card-body>Body</pf-v6-card-body>
+  <pf-v6-card-body>Second body</pf-v6-card-body>
+  <pf-v6-card-body>Third body</pf-v6-card-body>
+  <span slot="footer">Footer</span>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  pf-v6-card {
+    max-inline-size: 20rem;
+    margin: 1rem;
+  }
+</style>

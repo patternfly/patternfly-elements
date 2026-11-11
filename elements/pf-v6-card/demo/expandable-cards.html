@@ -1,0 +1,58 @@
+---
+name: Expandable cards
+description: A card can be made expandable with the expandable attribute. Content in the expandable-content slot is hidden until the caret is clicked.
+---
+<!-- TODO: replace native <button> elements with <pf-v6-button> once it ships (PR #3157). -->
+<label class="toggle">
+  <input type="checkbox" id="toggle-right"> Toggle right aligned
+</label>
+<pf-v6-card expandable accessible-label="Title">
+  <h2 slot="header">Title</h2>
+  <button slot="actions" type="button" aria-label="Actions" class="icon-button">
+    <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+      <circle cx="8" cy="3" r="1.5"></circle>
+      <circle cx="8" cy="8" r="1.5"></circle>
+      <circle cx="8" cy="13" r="1.5"></circle>
+    </svg>
+  </button>
+  <div slot="expandable-content">
+    <pf-v6-card-body>Body</pf-v6-card-body>
+    <pf-v6-card-body no-fill>Footer</pf-v6-card-body>
+  </div>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+
+  const card = document.querySelector('pf-v6-card');
+  const toggle = document.getElementById('toggle-right');
+  toggle.addEventListener('change', () => {
+    card.toggleAttribute('toggle-right', toggle.checked);
+  });
+  card.addEventListener('expand', () => console.log('expanded'));
+  card.addEventListener('collapse', () => console.log('collapsed'));
+</script>
+
+<style>
+  .toggle {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 1rem 1rem 0;
+  }
+
+  pf-v6-card {
+    max-inline-size: 20rem;
+    margin: 1rem;
+  }
+
+  .icon-button {
+    display: inline-flex;
+    padding: 0.5rem;
+    color: inherit;
+    background: none;
+    border: 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

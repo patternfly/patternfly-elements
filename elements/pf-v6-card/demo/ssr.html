@@ -1,0 +1,50 @@
+---
+name: SSR
+description: Server-side rendering hints for cards with slotted content.
+---
+<div class="grid">
+  <pf-v6-card ssr-hint-has-slotted-default
+               ssr-hint-has-slotted="header,footer">
+    <h2 slot="header">Header</h2>
+    <p>Body</p>
+    <span slot="footer">Footer</span>
+  </pf-v6-card>
+
+  <pf-v6-card ssr-hint-has-slotted-default>
+    <p>Body</p>
+  </pf-v6-card>
+
+  <pf-v6-card ssr-hint-has-slotted="title">
+    <h2 slot="title">Title</h2>
+  </pf-v6-card>
+
+  <pf-v6-card ssr-hint-has-slotted-default
+               ssr-hint-has-slotted="title,subtitle">
+    <h2 slot="title">Title</h2>
+    <span slot="subtitle">Subtitle</span>
+    <p>Body</p>
+  </pf-v6-card>
+
+  <pf-v6-card ssr-hint-has-slotted="header,footer">
+    <h2 slot="header">Header</h2>
+    <span slot="footer">Footer</span>
+  </pf-v6-card>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+    background: var(--pf-t--global--background--color--secondary--default, #eeeeee);
+  }
+
+  pf-v6-card {
+    max-inline-size: 20rem;
+  }
+</style>

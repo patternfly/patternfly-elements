@@ -1,0 +1,29 @@
+---
+name: With a primary body section that fills
+description: Card bodies fill the available height by default. Set no-fill on all but one body to let a primary section consume the remaining space.
+---
+<div class="card-container">
+  <pf-v6-card>
+    <h2 slot="title">Title</h2>
+    <pf-v6-card-body no-fill>Body</pf-v6-card-body>
+    <pf-v6-card-body no-fill>Second body</pf-v6-card-body>
+    <pf-v6-card-body>Primary body section that fills</pf-v6-card-body>
+    <span slot="footer">Footer</span>
+  </pf-v6-card>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  .card-container {
+    block-size: 20rem;
+    margin: 1rem;
+  }
+
+  pf-v6-card {
+    block-size: 100%;
+    max-inline-size: 20rem;
+  }
+</style>

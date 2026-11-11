@@ -36,7 +36,7 @@
   <script type="module">
     import 'construct-style-sheets-polyfill';
     import '@patternfly/elements/pf-v5-button/pf-v5-button.js';
-    import '@patternfly/elements/pf-v5-card/pf-v5-card.js';
+    import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
     import '@patternfly/pfe-tools/dev-server/demo.js';
   </script>
 </head>
@@ -122,7 +122,7 @@
     <section id="components">
         {% for primary, group in groupeddemos %}
         {% set first = group['0'] %}
-        <pf-v5-card rounded compact>
+        <pf-v6-card size="compact">
           <h2 slot="header">{{ first.title }}</h2>
           <a href="{{ first.permalink | replace(demoURLPrefix, '/') }}">
             <img src="/elements/{{ primary }}/docs/screenshot.png" alt="{{ primary }}">
@@ -132,7 +132,7 @@
               <a href="{{ d.permalink | replace(demoURLPrefix, '/') }}">{{ d.title }}</a>
             </li>{% endif %}{% endfor %}
           </ul>
-        </pf-v5-card>{% endfor %}
+        </pf-v6-card>{% endfor %}
     </section>
     {% endif %}
   </main>

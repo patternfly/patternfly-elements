@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  padding-block-end:
+    var(--pf-v6-c-card--child--PaddingBlockEnd,
+      var(--pf-t--global--spacer--lg, 1.5rem));
+  padding-inline-end:
+    var(--pf-v6-c-card--child--PaddingInlineEnd,
+      var(--pf-t--global--spacer--lg, 1.5rem));
+  padding-inline-start:
+    var(--pf-v6-c-card--child--PaddingInlineStart,
+      var(--pf-t--global--spacer--lg, 1.5rem));
+  font-size:
+    var(--pf-v6-c-card__body--FontSize,
+      var(--pf-t--global--font--size--body--default, 0.875rem));
+  color:
+    var(--pf-v6-c-card__body--Color,
+      var(--pf-t--global--text--color--regular, #151515));
+  flex: 1 1 auto;
+}
+
+:host(:first-child) {
+  padding-block-start:
+    var(--pf-v6-c-card--first-child--PaddingBlockStart,
+      var(--pf-t--global--spacer--lg, 1.5rem));
+}
+
+:host([no-fill]) {
+  flex: 0 0 auto;
+}
+
+:host([hidden]) {
+  display: none !important;
+}

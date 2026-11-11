@@ -1,0 +1,57 @@
+---
+name: Modifiers
+description: Enable compact, large, full-height, and plain styling with attributes. Most modifiers can be combined, except size="compact" and size="large".
+---
+<form id="card-settings">
+  <label><input type="checkbox" data-attribute="size" data-value="compact"> Compact</label>
+  <label><input type="checkbox" data-attribute="size" data-value="large"> Large</label>
+  <label><input type="checkbox" data-attribute="full-height"> Full height</label>
+  <label><input type="checkbox" data-attribute="plain"> Plain</label>
+</form>
+
+<div id="card-container">
+  <pf-v6-card>
+    <h2 slot="title">Title</h2>
+    <pf-v6-card-body>Body</pf-v6-card-body>
+    <span slot="footer">Footer</span>
+  </pf-v6-card>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+
+  const form = document.getElementById('card-settings');
+  const card = document.querySelector('pf-v6-card');
+
+  form.addEventListener('change', function(event) {
+    const input = event.target;
+    const { attribute, value } = input.dataset;
+
+    if (attribute === 'size') {
+      card.size = input.checked ? value : undefined;
+      form.querySelectorAll('[data-attribute="size"]').forEach(other => {
+        if (other !== input) other.checked = false;
+      });
+    } else {
+      card.toggleAttribute(attribute, input.checked);
+    }
+  });
+</script>
+
+<style>
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem;
+  }
+
+  #card-container {
+    block-size: 15rem;
+    margin: 1rem;
+  }
+
+  pf-v6-card {
+    max-inline-size: 20rem;
+  }
+</style>

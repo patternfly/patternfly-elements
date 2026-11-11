@@ -107,7 +107,7 @@ npm run new -- --tagName pf-v5-cool-element
   Running that command launches the demo app in a new browser tab, and refreshes the page on save.
 
   From there you can navigate to the demo page of the element you're working on.
-  For example, if you want to preview the `pf-v5-card` component, then navigate in the browser to `http://localhost:8000/demo/pf-v5-card/`.
+  For example, if you want to preview the `pf-v6-card` component, then navigate in the browser to `http://localhost:8000/components/v6-card/demo/`.
 {% endband %}
 
 {% band header="Testing" %}

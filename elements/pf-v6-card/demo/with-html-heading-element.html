@@ -1,0 +1,20 @@
+---
+name: With HTML heading element
+description: Use a heading element in the title slot to place the card title within the document outline.
+---
+<pf-v6-card>
+  <h4 slot="title">Title within an <code>h4</code> element</h4>
+  <pf-v6-card-body>Body</pf-v6-card-body>
+  <span slot="footer">Footer</span>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  pf-v6-card {
+    max-inline-size: 20rem;
+    margin: 1rem;
+  }
+</style>

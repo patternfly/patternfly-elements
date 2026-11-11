@@ -93,7 +93,7 @@ module.exports = function(eleventyConfig) {
       if (
         !existingids.includes($.attr('id'))
         && $.attr('slot')
-        && $.closest('pf-v5-card')
+        && $.closest('pf-v6-card')
       ) {
         return null;
       } else {

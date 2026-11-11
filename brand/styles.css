@@ -17,13 +17,13 @@ h1 {
     height: 36px;
 }
 
-pf-card .img-link {
+pf-v6-card .img-link {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-pf-card h2 {
+pf-v6-card h2 {
     margin-bottom: 0;
     padding-bottom: .5rem;
     margin-top: 0;
@@ -44,17 +44,17 @@ pf-card h2 {
     margin-bottom: 0;
 }
 
-pf-card h2,
-pf-card h3 {
+pf-v6-card h2,
+pf-v6-card h3 {
     margin-top: 8px;
 }
 
-pf-card h3 {
+pf-v6-card h3 {
     font-weight: 700;
     margin-bottom: 16px;
 }
 
-pf-card .cta {
+pf-v6-card .cta {
     min-width: 100%;
 }
 

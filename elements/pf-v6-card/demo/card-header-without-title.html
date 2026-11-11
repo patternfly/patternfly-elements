@@ -1,0 +1,45 @@
+---
+name: Card header without title
+description: Card actions and images can be placed in the card header even without a title.
+---
+<!-- TODO: replace native <button> elements with <pf-v6-button> once it ships (PR #3157). -->
+<pf-v6-card>
+  <svg slot="header"
+       viewBox="0 0 300 60"
+       width="300"
+       height="60"
+       role="img"
+       aria-label="PatternFly logo">
+    <rect width="300" height="60" rx="6" fill="#0066cc"></rect>
+    <text x="150" y="37" text-anchor="middle" fill="#ffffff" font-size="20">PatternFly</text>
+  </svg>
+  <button slot="actions" type="button" aria-label="Actions" class="icon-button">
+    <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+      <circle cx="8" cy="3" r="1.5"></circle>
+      <circle cx="8" cy="8" r="1.5"></circle>
+      <circle cx="8" cy="13" r="1.5"></circle>
+    </svg>
+  </button>
+  <pf-v6-card-body>Body</pf-v6-card-body>
+</pf-v6-card>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+</script>
+
+<style>
+  pf-v6-card {
+    max-inline-size: 22rem;
+    margin: 1rem;
+  }
+
+  .icon-button {
+    display: inline-flex;
+    padding: 0.5rem;
+    color: inherit;
+    background: none;
+    border: 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+name: Actionable
+description: An actionable card performs an action or navigates to a link when clicked anywhere within the card. Set href to render a link; avoid other interactive content in actionable-only cards.
+---
+<div class="card-grid">
+  <pf-v6-card clickable accessible-label="First card in the actionable example">
+    <h2 slot="header">First card in the actionable example</h2>
+    <pf-v6-card-body>This card performs an action on click.</pf-v6-card-body>
+  </pf-v6-card>
+
+  <pf-v6-card clickable href="#" accessible-label="Second card in the actionable example">
+    <h2 slot="header">Second card in the actionable example</h2>
+    <pf-v6-card-body>This card can navigate to a link on click.</pf-v6-card-body>
+  </pf-v6-card>
+
+  <pf-v6-card clickable disabled accessible-label="Third card in the actionable example">
+    <h2 slot="header">Third card in the actionable example</h2>
+    <pf-v6-card-body>This card is clickable but disabled.</pf-v6-card-body>
+  </pf-v6-card>
+</div>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-card/pf-v6-card.js';
+
+  document.querySelector('pf-v6-card').addEventListener('click', () => {
+    console.log('First card in the actionable example clicked');
+  });
+</script>
+
+<style>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin: 1rem;
+  }
+</style>

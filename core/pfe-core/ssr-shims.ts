@@ -33,6 +33,24 @@ function getComputedStyle() {
 
 type RenderOption = (typeof LitElementRenderer.renderOptions)[number];
 
+type ElementPredicate = (element: { localName: string }) => boolean;
+
+/** Options for {@link ssrCallConnectedCallback}. */
+export interface SsrCallConnectedCallbackOptions {
+  /**
+   * Return true for elements that should receive `connectedCallback` during SSR.
+   * @default () => true
+   */
+  include?: ElementPredicate;
+
+  /**
+   * Return true for elements that should not receive `connectedCallback` during SSR.
+   * Takes precedence over {@link include}.
+   * @default () => false
+   */
+  exclude?: ElementPredicate;
+}
+
 /** Callback this module last registered on `LitElementRenderer.renderOptions`. */
 let registered: RenderOption | undefined;
 
@@ -40,17 +58,33 @@ let registered: RenderOption | undefined;
  * Opt elements into `connectedCallback` during SSR.
  * Importing this module registers a default that matches all elements, so a
  * bare `import '@patternfly/pfe-core/ssr-shims.js'` keeps the previous behavior.
- * A later call with a predicate replaces that default.
+ * A later call replaces that default.
  * Lit evaluates `renderOptions` first-match, so a second push would never
  * restrict the set.
- * @param predicate return true for elements that should receive `connectedCallback`
+ *
+ * Elements matched by `exclude` never receive `connectedCallback` from this
+ * module, even when `include` also matches them.
+ *
+ * @example Restrict the opt-in to PatternFly and Red Hat elements
+ * ```ts
+ * ssrCallConnectedCallback({
+ *   include: el => el.localName.startsWith('pf-') || el.localName.startsWith('rh-'),
+ *   exclude: el => el.localName === 'pf-icon',
+ * });
+ * ```
+ * @example Opt out entirely
+ * ```ts
+ * ssrCallConnectedCallback({ exclude: () => true });
+ * ```
+ * @param options which elements receive `connectedCallback`
  */
 export function ssrCallConnectedCallback(
-  predicate?: (element: { localName: string }) => boolean,
+  options: SsrCallConnectedCallbackOptions = {},
 ): void {
-  const filter = predicate ?? (() => true);
+  const include = options.include ?? (() => true);
+  const exclude = options.exclude ?? (() => false);
   const option: RenderOption = element =>
-    filter(element) ? { connectedCallback: true } : undefined;
+    include(element) && !exclude(element) ? { connectedCallback: true } : undefined;
 
   if (registered) {
     const i = LitElementRenderer.renderOptions.indexOf(registered);

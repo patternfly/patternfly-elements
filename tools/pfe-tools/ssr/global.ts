@@ -4,7 +4,8 @@
  * @param html string to render
  * @param importSpecifiers list of web component definition module import specifiers
  * @param connectedCallbackOptions which elements receive `connectedCallback`
- *   during SSR. Defaults to all elements.
+ *   during SSR. Defaults to all elements, matching previous behavior and
+ *   leaving existing `LitElementRenderer.renderOptions` configuration intact.
  * @param connectedCallbackOptions.include return true for elements that should receive `connectedCallback`
  * @param connectedCallbackOptions.exclude return true for elements that should not receive `connectedCallback`
  * @example Call `connectedCallback` only for elements whose tag starts with `my-`

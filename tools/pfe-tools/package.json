@@ -68,7 +68,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@changesets/cli": "^2.29.8",
     "@koa/router": "^15.1.1",
-    "@lit-labs/ssr": "^4.0.0",
+    "@lit-labs/ssr": "^4.1.0",
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "~1.57.0",
     "@pwrs/mappa": "^0.0.4",

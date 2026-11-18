@@ -95,17 +95,17 @@
   grid-auto-flow: column;
   align-self: start;
   margin-block-start:
-    /** Block-start offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--control--vertical--plain` token. */
+    /** Block-start offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--sm` token. */
     var(--pf-v6-c-hint__actions--c-menu-toggle--MarginBlockStart,
       calc(
-        /** Design system plain control padding token. */
-        var(--pf-t--global--spacer--control--vertical--plain, 0.5rem) * -1));
+        /** Design system small spacer token. */
+        var(--pf-t--global--spacer--sm, 0.5rem) * -1));
   margin-block-end:
-    /** Block-end offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--control--vertical--plain` token. */
+    /** Block-end offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--sm` token. */
     var(--pf-v6-c-hint__actions--c-menu-toggle--MarginBlockEnd,
       calc(
-        /** Design system plain control padding token. */
-        var(--pf-t--global--spacer--control--vertical--plain, 0.5rem) * -1));
+        /** Design system small spacer token. */
+        var(--pf-t--global--spacer--sm, 0.5rem) * -1));
   margin-inline-start:
     /** Space before the actions. Defaults to the design system `--pf-t--global--spacer--2xl` token. */
     var(--pf-v6-c-hint__actions--MarginInlineStart,

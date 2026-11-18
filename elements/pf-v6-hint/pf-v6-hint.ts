@@ -38,8 +38,8 @@ import styles from './pf-v6-hint.css';
  * @cssprop {<length>} --pf-v6-c-hint__footer--MarginBlockStart - Space before the footer. Defaults to the design system `--pf-t--global--spacer--sm`.
  * @cssprop {<length>} --pf-v6-c-hint__footer--child--MarginInlineEnd - Space between footer items. Defaults to the design system `--pf-t--global--spacer--md`.
  * @cssprop {<length>} --pf-v6-c-hint__actions--MarginInlineStart - Space before the actions. Defaults to the design system `--pf-t--global--spacer--2xl`.
- * @cssprop {<length>} --pf-v6-c-hint__actions--c-menu-toggle--MarginBlockStart - Block-start offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--control--vertical--plain` token.
- * @cssprop {<length>} --pf-v6-c-hint__actions--c-menu-toggle--MarginBlockEnd - Block-end offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--control--vertical--plain` token.
+ * @cssprop {<length>} --pf-v6-c-hint__actions--c-menu-toggle--MarginBlockStart - Block-start offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--sm` token.
+ * @cssprop {<length>} --pf-v6-c-hint__actions--c-menu-toggle--MarginBlockEnd - Block-end offset for plain actions. Defaults to the negative of the design system `--pf-t--global--spacer--sm` token.
  */
 @customElement('pf-v6-hint')
 export class PfV6Hint extends LitElement {

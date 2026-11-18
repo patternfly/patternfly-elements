@@ -1,0 +1,41 @@
+---
+name: With actions
+description: >
+  Actions let users respond to a hint. Plain actions are offset to align with
+  the title. For a larger title or a button action, set no-actions-offset.
+---
+
+<label for="toggle-actions-offset">
+  <input id="toggle-actions-offset" type="checkbox" name="toggle-actions-offset">
+  actions hasNoOffset
+</label>
+
+<pf-v6-hint id="actions-hint" ssr-hint-has-slotted="title,actions">
+  <pf-v6-button slot="actions" variant="primary">Action</pf-v6-button>
+  <span slot="title">Do more with Find it Fix it capabilities</span>
+  Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+</pf-v6-hint>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-hint/pf-v6-hint.js';
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+
+  const hint = document.getElementById('actions-hint');
+  const toggle = document.getElementById('toggle-actions-offset');
+
+  toggle.addEventListener('change', function() {
+    hint.toggleAttribute('no-actions-offset', toggle.checked);
+  });
+</script>
+
+<style>
+  label {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  #actions-hint {
+    margin-block-start: 15px;
+  }
+</style>

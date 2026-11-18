@@ -1,0 +1,23 @@
+---
+name: Basic with title
+description: A hint with a title, message, footer link, and actions menu.
+---
+
+<pf-v6-hint ssr-hint-has-slotted="title,actions,footer">
+  <pf-v6-button
+      slot="actions"
+      variant="plain"
+      accessible-label="With title example kebab toggle">
+    <svg slot="icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" width="1em" height="1em">
+      <path d="M12.25 5c0-2.068 1.683-3.75 3.75-3.75S19.75 2.932 19.75 5 18.067 8.75 16 8.75 12.25 7.068 12.25 5ZM16 12.25c-2.067 0-3.75 1.682-3.75 3.75s1.683 3.75 3.75 3.75 3.75-1.682 3.75-3.75-1.683-3.75-3.75-3.75Zm0 11c-2.067 0-3.75 1.682-3.75 3.75s1.683 3.75 3.75 3.75 3.75-1.682 3.75-3.75-1.683-3.75-3.75-3.75Z"></path>
+    </svg>
+  </pf-v6-button>
+  <span slot="title">Do more with Find it Fix it capabilities</span>
+  Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+  <pf-v6-button slot="footer" variant="link" inline>Try it for 90 days</pf-v6-button>
+</pf-v6-hint>
+
+<script type="module">
+  import '@patternfly/elements/pf-v6-hint/pf-v6-hint.js';
+  import '@patternfly/elements/pf-v6-button/pf-v6-button.js';
+</script>

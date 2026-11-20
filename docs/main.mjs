@@ -27,6 +27,7 @@ import '@patternfly/elements/pf-v5-text-area/pf-v5-text-area.js';
 import '@patternfly/elements/pf-v5-text-input/pf-v5-text-input.js';
 import '@patternfly/elements/pf-v5-tile/pf-v5-tile.js';
 import '@patternfly/elements/pf-v5-tooltip/pf-v5-tooltip.js';
+import '@patternfly/elements/pf-v6-checkbox/pf-v6-checkbox.js';
 
 import '@patternfly/elements/pf-v6-avatar/pf-v6-avatar.js';
 import '@patternfly/elements/pf-v6-background-image/pf-v6-background-image.js';

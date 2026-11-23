@@ -47,6 +47,8 @@ export class PfV6Checkbox extends LitElement {
 
   #defaultChecked = false;
 
+  #hasConnected = false;
+
   #authorTabIndex: string | null = null;
 
   #customValidity = '';
@@ -114,12 +116,27 @@ export class PfV6Checkbox extends LitElement {
         .filter((element): element is PfV6Checkbox => element instanceof PfV6Checkbox);
   }
 
+  /**
+   * Descendants that take part in controlled toggling and aggregate state:
+   * checkboxes that are not effectively disabled, whether by their own
+   * attribute or by an enclosing disabled fieldset.
+   */
+  get #controlledCheckboxes(): PfV6Checkbox[] {
+    return this.#nestedCheckboxes.filter(checkbox => !checkbox.#disabled);
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
     if (isServer) {
       return;
     }
-    this.#defaultChecked = this.checked;
+    // Capture the form-reset baseline only on the first connection, so that
+    // moving the element in the DOM cannot overwrite it with a value the user
+    // has since toggled.
+    if (!this.#hasConnected) {
+      this.#hasConnected = true;
+      this.#defaultChecked = this.checked;
+    }
     this.#authorTabIndex = this.getAttribute('tabindex');
     this.addEventListener('click', this.#onClick);
     this.addEventListener('keydown', this.#onKeydown);
@@ -137,6 +154,15 @@ export class PfV6Checkbox extends LitElement {
   }
 
   override willUpdate(): void {
+    this.#syncInternals();
+  }
+
+  /**
+   * Applies the state that event listeners and form submission must observe
+   * synchronously. Called both from the update lifecycle and immediately before
+   * input/change events are dispatched, while rendering stays asynchronous.
+   */
+  #syncInternals(): void {
     const disabled = this.#disabled;
 
     this.#internals.ariaChecked = this.indeterminate ? 'mixed' : String(this.checked);
@@ -224,6 +250,7 @@ export class PfV6Checkbox extends LitElement {
     const label = hasLabel ? html`
       <span id="label"
             part="label"
+            ${ref(this.#labelRef)}
             class="${classMap({ disabled })}">${this.label}${!this.required ? nothing : html`
         <span id="required" part="required" aria-hidden="true">*</span>`}</span>
     ` : nothing;
@@ -378,20 +405,23 @@ export class PfV6Checkbox extends LitElement {
   }
 
   #dispatchChangeEvents(): void {
+    // Listeners and form submission read form value and validity synchronously,
+    // so update this checkbox and its controlled descendants before dispatching.
+    this.#syncInternals();
+    for (const checkbox of this.#controlledCheckboxes) {
+      checkbox.#syncInternals();
+    }
     this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
   #toggleNested(checked: boolean): void {
-    const nested = this.#nestedCheckboxes;
+    const nested = this.#controlledCheckboxes;
     if (!nested.length) {
       return;
     }
     this.#batching = true;
     for (const checkbox of nested) {
-      if (checkbox.disabled) {
-        continue;
-      }
       checkbox.checked = checked;
       checkbox.indeterminate = false;
     }
@@ -399,7 +429,7 @@ export class PfV6Checkbox extends LitElement {
   }
 
   #syncNestedState(): void {
-    const nested = this.#nestedCheckboxes;
+    const nested = this.#controlledCheckboxes;
     if (!nested.length) {
       return;
     }

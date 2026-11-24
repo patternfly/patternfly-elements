@@ -1,5 +1,15 @@
 ---
-'@patternfly/elements': minor
+"@patternfly/elements": minor
 ---
 
-Adds `<pf-v6-checkbox>`, a checkbox with a shadow label, description and body slots, indeterminate state, controlled nested checkboxes, and native form submission, validation, and reset.
+✨ Added `<pf-v6-checkbox>` component
+
+A checkbox is used to select a single item or multiple items, typically to choose elements to perform an action or to reflect a binary setting.
+
+```html
+<pf-v6-checkbox 
+    name="subscribe"
+    label="Subscribe to newsletter"
+    checked>
+</pf-v6-checkbox>
+```

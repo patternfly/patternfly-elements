@@ -231,6 +231,84 @@ describe('<pf-v6-checkbox>', function() {
     });
   });
 
+  describe('with a visible label and an author-provided name', function() {
+    let snapshot: A11yTreeSnapshot;
+
+    describe('with a non-empty aria-label', function() {
+      beforeEach(async function() {
+        await createFixture(html`
+          <pf-v6-checkbox label="Visible label" aria-label="Aria label"></pf-v6-checkbox>
+        `);
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('prefers the author-provided aria-label', function() {
+        expect(snapshot.name).to.equal('Aria label');
+      });
+    });
+
+    describe('with an empty aria-label', function() {
+      beforeEach(async function() {
+        const container = await createFixture<HTMLElement>(html`<div></div>`);
+        const element = document.createElement('pf-v6-checkbox');
+        element.label = 'Visible label';
+        element.setAttribute('aria-label', '');
+        container.append(element);
+        await element.updateComplete;
+        await nextFrame();
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('falls back to the visible label', function() {
+        expect(snapshot.name).to.equal('Visible label');
+      });
+    });
+
+    describe('with a non-empty aria-labelledby', function() {
+      beforeEach(async function() {
+        await createFixture(html`
+          <span id="name-source">Labelled by</span>
+          <pf-v6-checkbox label="Visible label" aria-labelledby="name-source"></pf-v6-checkbox>
+        `);
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('prefers the author-provided aria-labelledby', function() {
+        expect(snapshot.name).to.equal('Labelled by');
+      });
+    });
+
+    describe('with an empty aria-labelledby', function() {
+      beforeEach(async function() {
+        const container = await createFixture<HTMLElement>(html`<div></div>`);
+        const element = document.createElement('pf-v6-checkbox');
+        element.label = 'Visible label';
+        element.setAttribute('aria-labelledby', '');
+        container.append(element);
+        await element.updateComplete;
+        await nextFrame();
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('falls back to the visible label', function() {
+        expect(snapshot.name).to.equal('Visible label');
+      });
+    });
+
+    describe('with an accessible-label', function() {
+      beforeEach(async function() {
+        await createFixture(html`
+          <pf-v6-checkbox label="Visible label" accessible-label="Accessible label"></pf-v6-checkbox>
+        `);
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('prefers the visible label', function() {
+        expect(snapshot.name).to.equal('Visible label');
+      });
+    });
+  });
+
   describe('tab order', function() {
     let first: PfV6Checkbox;
     let second: PfV6Checkbox;
@@ -440,6 +518,50 @@ describe('<pf-v6-checkbox>', function() {
     });
   });
 
+  describe('moving in the DOM', function() {
+    let container: HTMLElement;
+    let element: PfV6Checkbox;
+    beforeEach(async function() {
+      container = await createFixture<HTMLElement>(html`
+        <div><pf-v6-checkbox label="Movable"></pf-v6-checkbox></div>
+      `);
+      element = container.querySelector('pf-v6-checkbox')!;
+      await element.updateComplete;
+      element.disabled = true;
+      await element.updateComplete;
+      container.append(element);
+      await element.updateComplete;
+      element.disabled = false;
+      await element.updateComplete;
+    });
+
+    it('is tabbable again after being re-enabled', function() {
+      expect(element.tabIndex).to.equal(0);
+    });
+  });
+
+  describe('moving in the DOM with an authored tabindex', function() {
+    let container: HTMLElement;
+    let element: PfV6Checkbox;
+    beforeEach(async function() {
+      container = await createFixture<HTMLElement>(html`
+        <div><pf-v6-checkbox label="Custom" tabindex="-2"></pf-v6-checkbox></div>
+      `);
+      element = container.querySelector('pf-v6-checkbox')!;
+      await element.updateComplete;
+      element.disabled = true;
+      await element.updateComplete;
+      container.append(element);
+      await element.updateComplete;
+      element.disabled = false;
+      await element.updateComplete;
+    });
+
+    it('preserves the authored tabindex across reconnection', function() {
+      expect(element.tabIndex).to.equal(-2);
+    });
+  });
+
   describe('when required', function() {
     let element: PfV6Checkbox;
     beforeEach(async function() {
@@ -458,6 +580,20 @@ describe('<pf-v6-checkbox>', function() {
 
     it('exposes aria-required', function() {
       expect(internalsOf(element).ariaRequired).to.equal('true');
+    });
+
+    it('announces the checkbox as invalid while unchecked', async function() {
+      await nextFrame();
+      const snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      expect(snapshot.invalid).to.equal('true');
+    });
+
+    it('does not announce the checkbox as invalid once checked', async function() {
+      element.click();
+      await element.updateComplete;
+      await nextFrame();
+      const snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      expect(snapshot.invalid).to.not.equal('true');
     });
 
     it('renders a required indicator', function() {
@@ -493,10 +629,21 @@ describe('<pf-v6-checkbox>', function() {
       expect(element.validationMessage).to.equal('Nope');
     });
 
+    it('announces the custom error as invalid', function() {
+      element.setCustomValidity('Nope');
+      expect(internalsOf(element).ariaInvalid).to.equal('true');
+    });
+
     it('clears a custom error', function() {
       element.setCustomValidity('Nope');
       element.setCustomValidity('');
       expect(element.validity.valid).to.be.true;
+    });
+
+    it('clears the invalid announcement when the custom error is cleared', function() {
+      element.setCustomValidity('Nope');
+      element.setCustomValidity('');
+      expect(internalsOf(element).ariaInvalid).to.not.equal('true');
     });
   });
 
@@ -542,6 +689,55 @@ describe('<pf-v6-checkbox>', function() {
 
     it('uses the description as the accessible description', function() {
       expect(snapshot.description).to.equal('Helpful description');
+    });
+  });
+
+  describe('with an author-provided aria-describedby', function() {
+    let element: PfV6Checkbox;
+    let snapshot: A11yTreeSnapshot;
+
+    describe('and a description slot', function() {
+      beforeEach(async function() {
+        const container = await createFixture<HTMLElement>(html`
+          <div>
+            <span id="external-description">External description</span>
+            <pf-v6-checkbox label="With content" aria-describedby="external-description">
+              <span slot="description">Slot description</span>
+            </pf-v6-checkbox>
+          </div>
+        `);
+        element = container.querySelector('pf-v6-checkbox')!;
+        await element.updateComplete;
+        await nextFrame();
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('uses the author-provided description', function() {
+        expect(snapshot.description).to.equal('External description');
+      });
+
+      it('keeps the author-provided attribute', function() {
+        expect(element.getAttribute('aria-describedby')).to.equal('external-description');
+      });
+    });
+
+    describe('without a description slot', function() {
+      beforeEach(async function() {
+        const container = await createFixture<HTMLElement>(html`
+          <div>
+            <span id="external-description">External description</span>
+            <pf-v6-checkbox label="With content" aria-describedby="external-description"></pf-v6-checkbox>
+          </div>
+        `);
+        element = container.querySelector('pf-v6-checkbox')!;
+        await element.updateComplete;
+        await nextFrame();
+        snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+      });
+
+      it('uses the author-provided description', function() {
+        expect(snapshot.description).to.equal('External description');
+      });
     });
   });
 
@@ -623,6 +819,60 @@ describe('<pf-v6-checkbox>', function() {
         expect(internalsOf(element).ariaChecked).to.equal('mixed');
       });
     });
+
+    describe('disabling a nested checkbox', function() {
+      beforeEach(async function() {
+        nested[1].disabled = true;
+        await nested[1].updateComplete;
+        await element.updateComplete;
+      });
+
+      it('excludes it from the aggregate state', function() {
+        expect(element.checked).to.be.false;
+        expect(element.indeterminate).to.be.false;
+      });
+
+      describe('re-enabling it', function() {
+        beforeEach(async function() {
+          nested[1].disabled = false;
+          await nested[1].updateComplete;
+          await element.updateComplete;
+        });
+
+        it('includes it in the aggregate state again', function() {
+          expect(element.checked).to.be.false;
+          expect(element.indeterminate).to.be.true;
+        });
+      });
+    });
+  });
+
+  // The checkbox role sits on the host, so slotted content is a descendant of
+  // the checkbox in the accessibility tree. `checkbox` is a children-presentational
+  // role, so the exposure of those descendants relies on the UA keeping
+  // interactive nodes. This test guards against nested checkboxes silently
+  // disappearing from the accessibility tree. Firefox behaviour is not covered here.
+  describe('accessibility tree exposure of slotted content', function() {
+    let element: PfV6Checkbox;
+    let snapshot: A11yTreeSnapshot;
+    beforeEach(async function() {
+      element = await createFixture<PfV6Checkbox>(html`
+        <pf-v6-checkbox label="Select all">
+          <pf-v6-checkbox label="One"></pf-v6-checkbox>
+          <pf-v6-checkbox label="Two"></pf-v6-checkbox>
+        </pf-v6-checkbox>
+      `);
+      await element.updateComplete;
+      await nextFrame();
+      snapshot = await a11ySnapshot({ selector: 'pf-v6-checkbox' });
+    });
+
+    it('exposes the nested checkboxes', function() {
+      expect(snapshot.children?.map(child => [child.role, child.name])).to.deep.equal([
+        ['checkbox', 'One'],
+        ['checkbox', 'Two'],
+      ]);
+    });
   });
 
   describe('form association', function() {
@@ -635,6 +885,10 @@ describe('<pf-v6-checkbox>', function() {
         </form>
       `);
       element = form.querySelector('pf-v6-checkbox')!;
+    });
+
+    it('exposes the name attribute as a property', function() {
+      expect(element.name).to.equal('choice');
     });
 
     describe('when unchecked', function() {
@@ -675,6 +929,24 @@ describe('<pf-v6-checkbox>', function() {
 
       it('does not submit a value', function() {
         expect(new FormData(form).has('choice')).to.be.false;
+      });
+    });
+
+    describe('the name property', function() {
+      beforeEach(async function() {
+        element.checked = true;
+        element.name = 'renamed';
+        await element.updateComplete;
+      });
+
+      it('reflects to the name attribute', function() {
+        expect(element.getAttribute('name')).to.equal('renamed');
+      });
+
+      it('submits under the new name', function() {
+        const data = new FormData(form);
+        expect(data.get('renamed')).to.equal('on');
+        expect(data.has('choice')).to.be.false;
       });
     });
   });

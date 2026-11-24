@@ -130,8 +130,15 @@ only and is hidden from assistive technology.
   cursor to show that it can be clicked.
 - A checkbox without a visible label must have an accessible name. Use
   `accessible-label`, `aria-label`, or `aria-labelledby`.
+- A non-empty `aria-label` or `aria-labelledby` names the checkbox instead of
+  the visible label, following the accessible name computation, as on a native
+  checkbox. Empty values are ignored and fall back to the visible label.
+  `accessible-label` applies only when there is no visible label.
 - The `description` slot is exposed as the checkbox's accessible description
   automatically.
+- A non-empty `aria-describedby` on the host describes the checkbox instead of
+  the `description` slot, following the accessible description computation and
+  matching React. Empty values fall back to the slot.
 
 `ShadowRoot.referenceTarget` is not needed for label association: the host
 element is the labeled control, so a native `<label for="id">` is associated

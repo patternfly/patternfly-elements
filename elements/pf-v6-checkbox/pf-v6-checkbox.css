@@ -1,0 +1,138 @@
+/**
+ * PatternFly v6 checkbox styles.
+ * Mirrors `@patternfly/patternfly/components/Check/check.css`, scoped to the
+ * shadow root. Each component custom property falls back to the value of its
+ * PatternFly token so the element renders correctly without PatternFly's
+ * global stylesheet.
+ */
+:host {
+  /** Gap between the input and the text. Overrides the `--pf-t--global--spacer--gap--group--vertical` and `--pf-t--global--spacer--gap--text-to-element--default` design tokens. */
+  --pf-v6-c-check--GridGap: var(--pf-t--global--spacer--gap--group--vertical, 0.5rem) var(--pf-t--global--spacer--gap--text-to-element--default, 0.5rem);
+  /** Checkbox accent color. Overrides the `--pf-t--global--color--brand--default` design token. */
+  --pf-v6-c-check--AccentColor: var(--pf-t--global--color--brand--default, light-dark(#0066cc, #92c5f9));
+  /** Minimum height of a standalone checkbox. */
+  --pf-v6-c-check--m-standalone--MinHeight: calc(var(--pf-v6-c-check__label--FontSize) * var(--pf-v6-c-check__label--LineHeight));
+  /** Inset of a standalone checkbox's extended click area. Overrides the `--pf-t--global--spacer--sm` design token. */
+  --pf-v6-c-check--m-standalone--before--Inset: calc(var(--pf-t--global--spacer--sm, 0.5rem) * -1);
+  /** Label text color when disabled. Overrides the `--pf-t--global--text--color--disabled` design token. */
+  --pf-v6-c-check__label--disabled--Color: var(--pf-t--global--text--color--disabled, light-dark(#a3a3a3, #707070));
+  /** Label text color. Overrides the `--pf-t--global--text--color--regular` design token. */
+  --pf-v6-c-check__label--Color: var(--pf-t--global--text--color--regular, light-dark(#151515, #ffffff));
+  /** Label font weight. Overrides the `--pf-t--global--font--weight--body--default` design token. */
+  --pf-v6-c-check__label--FontWeight: var(--pf-t--global--font--weight--body--default, 400);
+  /** Label font size. Overrides the `--pf-t--global--font--size--body--default` design token. */
+  --pf-v6-c-check__label--FontSize: var(--pf-t--global--font--size--body--default, 0.875rem);
+  /** Label line height. Overrides the `--pf-t--global--font--line-height--body` design token. */
+  --pf-v6-c-check__label--LineHeight: var(--pf-t--global--font--line-height--body, 1.5);
+  /** Description font size. Overrides the `--pf-t--global--font--size--body--sm` design token. */
+  --pf-v6-c-check__description--FontSize: var(--pf-t--global--font--size--body--sm, 0.75rem);
+  /** Description text color. Overrides the `--pf-t--global--text--color--subtle` design token. */
+  --pf-v6-c-check__description--Color: var(--pf-t--global--text--color--subtle, light-dark(#4d4d4d, #c7c7c7));
+  /** Space before the required indicator. Overrides the `--pf-t--global--spacer--xs` design token. */
+  --pf-v6-c-check__label-required--MarginInlineStart: var(--pf-t--global--spacer--xs, 0.25rem);
+  /** Required indicator font size. Overrides the `--pf-t--global--font--size--body--sm` design token. */
+  --pf-v6-c-check__label-required--FontSize: var(--pf-t--global--font--size--body--sm, 0.75rem);
+  /** Required indicator color. Overrides the `--pf-t--global--color--status--danger--default` design token. */
+  --pf-v6-c-check__label-required--Color: var(--pf-t--global--color--status--danger--default, light-dark(#b1380b, #f0561d));
+  /** Vertical alignment of the input. Offsets half of the first line's height. */
+  --pf-v6-c-check__input--TranslateY: calc((var(--pf-v6-c-check__label--LineHeight) * var(--pf-v6-c-check__label--FontSize) / 2) - 50%);
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--pf-v6-c-check--GridGap);
+  accent-color: var(--pf-v6-c-check--AccentColor);
+}
+
+/* A checkbox without a visible label behaves like PF's standalone modifier. */
+:host(:not([label])) {
+  display: inline-grid;
+  grid-template-columns: auto;
+  min-height: var(--pf-v6-c-check--m-standalone--MinHeight);
+  position: relative;
+  isolation: isolate;
+}
+
+/* Extend the click area of a standalone checkbox, like PF's label.pf-m-standalone. */
+:host(:not([label]))::before {
+  position: absolute;
+  inset: var(--pf-v6-c-check--m-standalone--before--Inset);
+  z-index: -1;
+  pointer-events: auto;
+  cursor: inherit;
+  content: '';
+}
+
+:host(:not([label])) #input {
+  align-self: center;
+  transform: none;
+}
+
+:host(:focus-visible) {
+  outline: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#input {
+  align-self: start;
+  justify-self: start;
+  /* PatternFly's base stylesheet resets form-control margins; repeat it here
+     because the UA checkbox margin is not inherited into the shadow root. */
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--pf-v6-c-check__label--FontSize);
+  line-height: var(--pf-v6-c-check__label--LineHeight);
+  transform: translateY(var(--pf-v6-c-check__input--TranslateY));
+  cursor: pointer;
+  /* The host is the accessible control; the shadow input is its visual affordance. */
+  pointer-events: none;
+}
+
+:host(:focus-visible) #input {
+  outline: var(--pf-t--global--focus-ring--width--offset, 2px) solid var(--pf-t--global--focus-ring--color--default, light-dark(#0066cc, #92c5f9));
+  outline-offset: var(--pf-t--global--focus-ring--position--offset, 2px);
+}
+
+#label {
+  justify-self: start;
+  font-size: var(--pf-v6-c-check__label--FontSize);
+  font-weight: var(--pf-v6-c-check__label--FontWeight);
+  line-height: var(--pf-v6-c-check__label--LineHeight);
+  color: var(--pf-v6-c-check__label--Color);
+  cursor: pointer;
+}
+
+#input.disabled,
+#label.disabled {
+  --pf-v6-c-check__label--Color: var(--pf-v6-c-check__label--disabled--Color);
+  cursor: not-allowed;
+}
+
+/* The host covers the clickable area, so show the disabled cursor here too. */
+:host([disabled]) {
+  cursor: not-allowed;
+}
+
+#required {
+  margin-inline-start: var(--pf-v6-c-check__label-required--MarginInlineStart);
+  font-size: var(--pf-v6-c-check__label-required--FontSize);
+  color: var(--pf-v6-c-check__label-required--Color);
+}
+
+#description {
+  grid-column: 2;
+  font-size: var(--pf-v6-c-check__description--FontSize);
+  color: var(--pf-v6-c-check__description--Color);
+}
+
+#body {
+  grid-column: 2;
+  /* PF6 body content inherits the base body typography. Set it explicitly so
+     slotted content matches PF6 even when the host page uses other base styles. */
+  font-size: var(--pf-t--global--font--size--body--default, 0.875rem);
+  font-weight: var(--pf-t--global--font--weight--body--default, 400);
+  line-height: var(--pf-t--global--font--line-height--body, 1.5);
+  color: var(--pf-t--global--text--color--regular, light-dark(#151515, #ffffff));
+}

@@ -17,6 +17,7 @@ export interface A11yTreeSnapshot {
   expanded?: boolean;
   focused?: boolean;
   haspopup?: string;
+  invalid?: string;
   level?: number;
   selected?: boolean;
   value?: number;
